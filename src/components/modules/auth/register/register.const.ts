@@ -13,3 +13,5 @@ export const allergyOptions: string[] = [
   "None",
   "Dairy",
 ];
+
+export const isCertified: string[] = ["true", "false"];

@@ -13,6 +13,16 @@ import { FaArrowAltCircleLeft } from "react-icons/fa";
 import AcceptTermsInput from "../../formInput/AcceptTermsInput";
 import Link from "next/link";
 import { allergyOptions, genderOptions } from "./register.const";
+import { calculateAge } from "@/utills/calculateAge";
+import { toast } from "sonner";
+import {
+  TAlergies,
+  TCustomerRegistrationData,
+  TGender,
+} from "@/types/customerRegistration";
+import { useRouter } from "next/navigation";
+import { imageUpload } from "@/utills/imageUploader";
+import { registerCustomer } from "@/services/authService";
 
 type FormValues = {
   email: string;
@@ -32,6 +42,7 @@ const RegisterCustomer = ({
 }: {
   setRegisteredRole: Dispatch<SetStateAction<string | null>>;
 }) => {
+  const router = useRouter();
   useEffect(() => {
     const savedRole = localStorage.getItem("customerForm");
     if (!savedRole) {
@@ -43,11 +54,12 @@ const RegisterCustomer = ({
   }, [setRegisteredRole]);
   const [imageFile, setImageFile] = useState<File | "">("");
   const [imagePreview, setImagePreview] = useState<string>("");
+
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     reset,
   } = useForm<FormValues>({
     defaultValues: {
@@ -56,9 +68,61 @@ const RegisterCustomer = ({
     mode: "onChange",
   });
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
+  const onSubmit = async (data: FormValues) => {
+    const age = calculateAge(data?.dateOfBirth);
+    if (age < 18) {
+      toast.error("your age is under 18. you are not permitted to register", {
+        duration: 3000,
+      });
+      return;
+    }
+    const user = {
+      email: data?.email,
+      phone: data?.phone,
+      password: data?.password,
+    };
+    type TCustomer = {
+      name: string;
+      profileImage?: string;
+      address: string;
+      allergies?: TAlergies[];
+      gender: TGender;
+      dateOfBirth: string;
+    };
+    const customer: TCustomer = {
+      name: data?.name,
+      address: data?.address,
+      dateOfBirth: data?.dateOfBirth,
+      gender: data?.gender as TGender,
+      allergies: data?.allergies as TAlergies[],
+    };
+    try {
+      const profileImage = imageFile ? await imageUpload(imageFile) : undefined;
+      if (profileImage) {
+        customer.profileImage = profileImage;
+      }
+      const customerRegisterInfo: TCustomerRegistrationData = {
+        user,
+        customer,
+      };
+      const res = await registerCustomer(customerRegisterInfo);
+      if (res?.success) {
+        toast.success(res?.message, { duration: 3000 });
+        reset();
+      } else {
+        toast.error(res?.message, { duration: 3000 });
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
   };
+
+  const handleClearState = () => {
+    router.push("/login");
+    localStorage.removeItem("customerForm");
+    localStorage.removeItem("mealProviderForm");
+  };
+
   return (
     <div className="max-w-2xl mx-auto p-6 bg-gray-200 dark:bg-gray-900 rounded-2xl shadow-xl text-gray-800 dark:text-white">
       <button
@@ -97,7 +161,7 @@ const RegisterCustomer = ({
             label="Phone"
             name="phone"
             register={register}
-            error={errors.name}
+            error={errors.phone}
             required={true}
           />
           <InputType
@@ -148,8 +212,10 @@ const RegisterCustomer = ({
         </div>
         <InputSelect
           register={register}
+          name="gender"
+          label="Select Gender"
           error={errors.gender}
-          genderOptions={genderOptions}
+          options={genderOptions}
           required={true}
         />
         <InputCheckboxArray
@@ -157,7 +223,6 @@ const RegisterCustomer = ({
           options={allergyOptions}
           name="allergies"
           errors={errors}
-          required={false}
         />
 
         <AcceptTermsInput
@@ -176,15 +241,18 @@ const RegisterCustomer = ({
           type="submit"
           className="w-full bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition"
         >
-          Regester
+          {isSubmitting ? "Registering" : "Register"}
         </button>
       </form>
       <div className="flex gap-2 items-center mt-2">
         <h1>Already have an Account? Please</h1>
-        <Link className="text-blue-700" href="/login">
+        <button
+          onClick={handleClearState}
+          className="text-blue-700 cursor-pointer"
+        >
           {" "}
           Login
-        </Link>
+        </button>
       </div>
     </div>
   );

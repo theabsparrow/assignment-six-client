@@ -1,6 +1,7 @@
 "use client";
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
+import { IoEye, IoEyeOff } from "react-icons/io5";
 
 interface PasswordInputProps {
   register: UseFormRegister<any>;
@@ -19,13 +20,14 @@ const InputTypePassword: React.FC<PasswordInputProps> = ({
   required = false,
   validateMatch,
 }) => {
+  const [showPassword, setShowPassword] = useState(false);
   return (
-    <div className="w-full">
+    <div className="w-full relative">
       <label className="block font-medium mb-1 text-gray-700 dark:text-gray-200">
         {label} <span className="text-red-500">*</span>
       </label>
       <input
-        type="password"
+        type={showPassword ? "text" : "password"}
         {...register(name, {
           ...(required && { required: `${name} is required` }),
           ...(name === "password" && {
@@ -52,6 +54,16 @@ const InputTypePassword: React.FC<PasswordInputProps> = ({
             border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-400 focus:dark:border-blue-400`}
         placeholder="Enter your password"
       />
+      <span
+        className="absolute top-9 right-3 cursor-pointer text-gray-500 "
+        onClick={() => setShowPassword(!showPassword)}
+      >
+        {showPassword ? (
+          <IoEye className="text-xl" />
+        ) : (
+          <IoEyeOff className="text-xl" />
+        )}
+      </span>
       {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
     </div>
   );

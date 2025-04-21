@@ -28,7 +28,7 @@ const ImagePreviewer = ({
       <button
         type="button"
         onClick={() => handleRemove()}
-        className="bg-red-300 hover:bg-red-400 absolute -top-0 -right-0 w-6 h-6 p-0 rounded-full"
+        className="bg-red-300 hover:bg-red-400 absolute -top-0 -right-0 w-6 h-6 p-0 rounded-full cursor-pointer"
       >
         <X className="w-4 h-4 mx-auto" />
       </button>

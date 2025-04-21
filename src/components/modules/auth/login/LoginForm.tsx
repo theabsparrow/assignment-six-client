@@ -1,0 +1,87 @@
+"use client";
+
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import LoginFormInput from "../../formInput/LoginFormInput";
+import { TLogin } from "@/types/loginTypes";
+import { loginUser } from "@/services/authService";
+import { toast } from "sonner";
+
+type FormValues = {
+  identifier: string;
+  password: string;
+};
+
+const LoginForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<FormValues>({
+    mode: "onChange",
+  });
+
+  const onSubmit = async (data: FormValues) => {
+    const userInput = data.identifier.trim();
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userInput);
+    const finalPayload: TLogin = {
+      ...(isEmail ? { email: userInput } : { phone: userInput }),
+      password: data?.password,
+    };
+    try {
+      const res = await loginUser(finalPayload);
+      if (res?.success) {
+        toast.success(res?.message, { duration: 3000 });
+        reset();
+      } else {
+        toast.error(res?.message, { duration: 3000 });
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+  return (
+    <div className="max-w-2xl mx-auto p-6 bg-gray-200 dark:bg-gray-900 rounded-2xl shadow-xl text-gray-800 dark:text-white md:mt-20">
+      <h2 className="text-3xl font-bold mb-6 text-center text-blue-600 dark:text-blue-400">
+        Login you account
+      </h2>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div className="w-full"></div>
+        <LoginFormInput
+          label="Email or Phone"
+          name="identifier"
+          placeholder="enter your valid email or phone"
+          register={register}
+          error={errors.identifier}
+          type="text"
+          required={true}
+        />
+        <LoginFormInput
+          label="Password"
+          name="password"
+          placeholder="enter your password"
+          register={register}
+          error={errors.password}
+          type="password"
+          required={true}
+        />
+        <button
+          type="submit"
+          className="w-full bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition"
+        >
+          {isSubmitting ? "Logging in" : "Login"}
+        </button>
+      </form>
+      <div className="flex gap-2 items-center mt-2">
+        <h1>New to this site? Please</h1>
+        <Link className="text-blue-700" href="/register">
+          {" "}
+          Register
+        </Link>
+      </div>
+    </div>
+  );
+};
+
+export default LoginForm;

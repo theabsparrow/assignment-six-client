@@ -25,14 +25,14 @@ const InputPhone: React.FC<TPhoneInput> = ({
       </label>
       <div className="relative flex">
         <span className="flex items-center px-3 rounded-l-xl border border-r-0 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-600 text-sm">
-          +880
+          +88
         </span>
         <input
           type="tel"
           {...register(name, {
             ...(required && { required: `${name} is required` }),
             pattern: {
-              value: /^[1-9][0-9]{9}$/,
+              value: /^01[0-9]{9}$/,
               message: "Enter a valid phone number",
             },
           })}
