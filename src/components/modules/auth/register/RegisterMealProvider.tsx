@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 const RegisterMealProvider = ({
   setRegisteredRole,
 }: {
-  setRegisteredRole: Dispatch<SetStateAction<string>>;
+  setRegisteredRole: Dispatch<SetStateAction<string | null>>;
 }) => {
   return (
     <div>

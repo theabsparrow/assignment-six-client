@@ -1,10 +1,12 @@
+"use client";
+
 import { ChefHat, User } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 
 const SelectOptionComponent = ({
   setRegisteredRole,
 }: {
-  setRegisteredRole: Dispatch<SetStateAction<string>>;
+  setRegisteredRole: Dispatch<SetStateAction<string | null>>;
 }) => {
   return (
     <section className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950 px-4 py-12">
@@ -13,9 +15,11 @@ const SelectOptionComponent = ({
           Register As
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {/* Customer Option */}
           <button
-            onClick={() => setRegisteredRole("customer")}
+            onClick={() => {
+              localStorage.setItem("customerForm", "customer");
+              setRegisteredRole("customer");
+            }}
             className="flex flex-col items-center justify-center gap-4 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:bg-blue-50 dark:hover:bg-gray-800 transition shadow-sm hover:shadow-lg cursor-pointer"
           >
             <User size={40} className="text-blue-600 dark:text-blue-400" />
@@ -24,9 +28,11 @@ const SelectOptionComponent = ({
             </span>
           </button>
 
-          {/* Meal Provider Option */}
           <button
-            onClick={() => setRegisteredRole("mealProvider")}
+            onClick={() => {
+              localStorage.setItem("mealProviderForm", "mealProvider");
+              setRegisteredRole("mealProvider");
+            }}
             className="flex flex-col items-center justify-center gap-4 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:bg-green-50 dark:hover:bg-gray-800 transition shadow-sm hover:shadow-lg cursor-pointer"
           >
             <ChefHat size={40} className="text-green-600 dark:text-green-400" />
