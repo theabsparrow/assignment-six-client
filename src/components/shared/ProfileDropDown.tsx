@@ -1,7 +1,8 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
+import { FaUserCircle } from "react-icons/fa";
 
 const ProfileDropdown = () => {
   const [open, setOpen] = useState(false);
@@ -26,15 +27,16 @@ const ProfileDropdown = () => {
       {/* Profile Image Button */}
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300 dark:border-gray-600 focus:outline-none"
+        className="w-12 h-12 rounded-full overflow-hidden border-2 "
       >
-        <Image
+        <FaUserCircle size={45} />
+        {/* <Image
           src="/default-avatar.jpg"
           alt="Profile"
           width={40}
           height={40}
           className="object-cover w-full h-full"
-        />
+        /> */}
       </button>
 
       {/* Dropdown Menu */}

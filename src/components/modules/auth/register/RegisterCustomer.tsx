@@ -22,7 +22,12 @@ import {
 } from "@/types/customerRegistration";
 import { useRouter } from "next/navigation";
 import { imageUpload } from "@/utills/imageUploader";
-import { registerCustomer } from "@/services/authService";
+import {
+  reCaptchaTokenVerification,
+  registerCustomer,
+} from "@/services/authService";
+import ReCAPTCHA from "react-google-recaptcha";
+import { config } from "@/config";
 
 type FormValues = {
   email: string;
@@ -52,9 +57,6 @@ const RegisterCustomer = ({
       setRegisteredRole(savedRole);
     }
   }, [setRegisteredRole]);
-  const [imageFile, setImageFile] = useState<File | "">("");
-  const [imagePreview, setImagePreview] = useState<string>("");
-
   const {
     register,
     handleSubmit,
@@ -67,6 +69,20 @@ const RegisterCustomer = ({
     },
     mode: "onChange",
   });
+  const [imageFile, setImageFile] = useState<File | "">("");
+  const [imagePreview, setImagePreview] = useState<string>("");
+  const [recaptchaStatus, setRecaptchaStatus] = useState(false);
+
+  const handleRecaptcha = async (value: string | null) => {
+    try {
+      const res = await reCaptchaTokenVerification(value as string);
+      if (res?.success) {
+        setRecaptchaStatus(true);
+      }
+    } catch (error: any) {
+      console.error(error);
+    }
+  };
 
   const onSubmit = async (data: FormValues) => {
     const age = calculateAge(data?.dateOfBirth);
@@ -237,9 +253,15 @@ const RegisterCustomer = ({
             Forget Password?
           </Link>
         </div>
+
+        <ReCAPTCHA
+          sitekey={config.next_public_recaptcha_client_key as string}
+          onChange={handleRecaptcha}
+        />
         <button
+          disabled={recaptchaStatus ? false : true}
           type="submit"
-          className="w-full bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition"
+          className="w-full bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition disabled:bg-gray-400"
         >
           {isSubmitting ? "Registering" : "Register"}
         </button>

@@ -4,6 +4,8 @@ import { config } from "@/config";
 import { TCustomerRegistrationData } from "@/types/customerRegistration";
 import { TLogin } from "@/types/loginTypes";
 import { TMealproviderRegistrationData } from "@/types/mealProviderRegistration";
+import { jwtDecode } from "jwt-decode";
+import { cookies } from "next/headers";
 
 export const registerCustomer = async (
   customerData: TCustomerRegistrationData
@@ -19,7 +21,11 @@ export const registerCustomer = async (
         body: JSON.stringify(customerData),
       }
     );
-    return res.json();
+    const result = await res.json();
+    if (result?.success) {
+      (await cookies()).set("refreshToken", result.data?.refreshToken);
+    }
+    return result;
   } catch (error: any) {
     return Error(error);
   }
@@ -39,7 +45,11 @@ export const registerMealprovider = async (
         body: JSON.stringify(mealProviderdata),
       }
     );
-    return res.json();
+    const result = await res.json();
+    if (result?.success) {
+      (await cookies()).set("refreshToken", result.data?.refreshToken);
+    }
+    return result;
   } catch (error: any) {
     return Error(error);
   }
@@ -54,8 +64,41 @@ export const loginUser = async (loginData: TLogin) => {
       },
       body: JSON.stringify(loginData),
     });
-    return res.json();
+    const result = await res.json();
+    if (result?.success) {
+      (await cookies()).set("refreshToken", result.data?.refreshToken);
+    }
+    return result;
   } catch (error: any) {
     return Error(error);
+  }
+};
+
+export const getCurrentUser = async () => {
+  const refreshToken = (await cookies()).get("refreshToken")!.value;
+  let decodedData = null;
+  if (refreshToken) {
+    decodedData = await jwtDecode(refreshToken);
+    return decodedData;
+  } else {
+    return null;
+  }
+};
+
+export const reCaptchaTokenVerification = async (token: string) => {
+  try {
+    const res = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        secret: config.next_public_recaptcha_server_key as string,
+        response: token,
+      }),
+    });
+    return res.json();
+  } catch (error: any) {
+    Error(error);
   }
 };
