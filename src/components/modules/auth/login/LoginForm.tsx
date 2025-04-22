@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import LoginFormInput from "../../formInput/LoginFormInput";
 import { TLogin } from "@/types/loginTypes";
 import { loginUser } from "@/services/authService";
 import { toast } from "sonner";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 type FormValues = {
   identifier: string;
@@ -22,11 +23,15 @@ const LoginForm = () => {
   } = useForm<FormValues>({
     mode: "onChange",
   });
-  const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirectPath");
+  const [redirect, setRedirect] = useState<string | null>(null);
   const router = useRouter();
 
-  const onSubmit = async (data: FormValues) => {
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    setRedirect(searchParams.get("redirectPath"));
+  }, []);
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     const userInput = data.identifier.trim();
     const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userInput);
     const finalPayload: TLogin = {

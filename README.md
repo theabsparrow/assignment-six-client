@@ -43,7 +43,7 @@ Welcome to **Daily Dish**, a modern, responsive, and user-friendly car selling p
 
 ## 🔗 Live Demo
 
-👉 [Live Website link](https://lambo-car-frontend.vercel.app/)  
+👉 [Live Website link](https://mealbx-client.vercel.app/)  
 👉 [Server Live Link] https://mealbox-server-kappa.vercel.app
 👉 [Server GitHub Repository](https://github.com/theabsparrow/assignment-six-server.git)
 
