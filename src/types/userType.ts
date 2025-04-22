@@ -1,4 +1,4 @@
-type TUSerRole = "admin" | "customer" | "superAdmin" | "meal provider";
+export type TUSerRole = "admin" | "customer" | "superAdmin" | "meal provider";
 
 export type TUSer = {
   exp?: number;

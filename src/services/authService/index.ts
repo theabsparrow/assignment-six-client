@@ -75,7 +75,7 @@ export const loginUser = async (loginData: TLogin) => {
 };
 
 export const getCurrentUser = async () => {
-  const refreshToken = (await cookies()).get("refreshToken")!.value;
+  const refreshToken = (await cookies()).get("refreshToken")?.value;
   let decodedData = null;
   if (refreshToken) {
     decodedData = await jwtDecode(refreshToken);
@@ -101,4 +101,8 @@ export const reCaptchaTokenVerification = async (token: string) => {
   } catch (error: any) {
     Error(error);
   }
+};
+
+export const logout = async () => {
+  (await cookies()).delete("refreshToken");
 };

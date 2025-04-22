@@ -1,10 +1,9 @@
 "use client";
 
-import { useUser } from "@/context/UserContext";
+// import { useUser } from "@/context/UserContext";
 
 const HomePage = () => {
-  const user = useUser();
-  console.log(user);
+  // const user = useUser();
   return (
     <div>
       <h1>this is home page</h1>

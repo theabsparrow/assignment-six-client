@@ -6,6 +6,7 @@ import LoginFormInput from "../../formInput/LoginFormInput";
 import { TLogin } from "@/types/loginTypes";
 import { loginUser } from "@/services/authService";
 import { toast } from "sonner";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type FormValues = {
   identifier: string;
@@ -21,6 +22,9 @@ const LoginForm = () => {
   } = useForm<FormValues>({
     mode: "onChange",
   });
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirectPath");
+  const router = useRouter();
 
   const onSubmit = async (data: FormValues) => {
     const userInput = data.identifier.trim();
@@ -33,7 +37,13 @@ const LoginForm = () => {
       const res = await loginUser(finalPayload);
       if (res?.success) {
         toast.success(res?.message, { duration: 3000 });
-        reset();
+        if (redirect) {
+          router.push(redirect);
+          reset();
+        } else {
+          router.push("/");
+          reset();
+        }
       } else {
         toast.error(res?.message, { duration: 3000 });
       }

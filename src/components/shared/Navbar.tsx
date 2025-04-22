@@ -8,9 +8,12 @@ import DarkModeToggle from "./DarkModeToggle";
 import ProfileDropdown from "./ProfileDropDown";
 import Image from "next/image";
 import logo from "../../app/assets/logo.svg";
+import { useUser } from "@/context/UserContext";
+import { logout } from "@/services/authService";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, setIsLoading } = useUser();
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -19,6 +22,12 @@ const Navbar = () => {
     { name: "About Us", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
+
+  const handleLogout = async () => {
+    await logout();
+    setIsOpen(false);
+    setIsLoading(true);
+  };
 
   return (
     <nav className="bg-gray-200 dark:bg-gray-900 shadow-xl sticky top-0 w-full z-50 transition duration-300 md:px-16 px-5">
@@ -41,12 +50,14 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          <Link
-            href="/kitchens"
-            className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
-          >
-            Kitchen
-          </Link>
+          {user && (
+            <Link
+              href="/kitchen"
+              className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
+            >
+              Kitchen
+            </Link>
+          )}
         </div>
 
         {/* dropdown */}
@@ -79,41 +90,56 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          <Link
-            href="/login"
-            className="block text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Login
-          </Link>
-          <Link
-            href="/dashboard"
-            className="block text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Dashboard
-          </Link>
-          <Link
-            href="/settings"
-            className="block text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Settings
-          </Link>
-          <Link
-            href="/kitchens"
-            className="block text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Kitchen
-          </Link>
-          <Link
-            href="/register"
-            className="block text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Register
-          </Link>
+          {user ? (
+            <>
+              <Link
+                href="/kitchen"
+                className="block text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
+                onClick={() => setIsOpen(false)}
+              >
+                Kitchen
+              </Link>
+              <Link
+                href="/profile"
+                className="block text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
+                onClick={() => setIsOpen(false)}
+              >
+                Dashboard
+              </Link>
+              <Link
+                href="/settings"
+                className="block text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
+                onClick={() => setIsOpen(false)}
+              >
+                Settings
+              </Link>
+
+              <button
+                onClick={handleLogout}
+                className="block text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition cursor-pointer"
+              >
+                Log Out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="block text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
+                onClick={() => setIsOpen(false)}
+              >
+                Login
+              </Link>
+              <Link
+                href="/register"
+                className="block text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
+                onClick={() => setIsOpen(false)}
+              >
+                Register
+              </Link>
+            </>
+          )}
+
           <DarkModeToggle />
         </div>
       )}
