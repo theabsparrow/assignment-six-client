@@ -8,6 +8,7 @@ import { loginUser } from "@/services/authService";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useUser } from "@/context/UserContext";
 
 type FormValues = {
   identifier: string;
@@ -23,6 +24,7 @@ const LoginForm = () => {
   } = useForm<FormValues>({
     mode: "onChange",
   });
+  const { setIsLoading } = useUser();
   const [redirect, setRedirect] = useState<string | null>(null);
   const router = useRouter();
 
@@ -40,6 +42,7 @@ const LoginForm = () => {
     };
     try {
       const res = await loginUser(finalPayload);
+      setIsLoading(true);
       if (res?.success) {
         toast.success(res?.message, { duration: 3000 });
         if (redirect) {
@@ -83,7 +86,7 @@ const LoginForm = () => {
         />
         <button
           type="submit"
-          className="w-full bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition"
+          className="w-full bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition cursor-pointer"
         >
           {isSubmitting ? "Logging in" : "Login"}
         </button>

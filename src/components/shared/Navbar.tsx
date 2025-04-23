@@ -10,10 +10,12 @@ import Image from "next/image";
 import logo from "../../app/assets/logo.svg";
 import { useUser } from "@/context/UserContext";
 import { logout } from "@/services/authService";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, setIsLoading } = useUser();
+  const router = useRouter();
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -27,6 +29,7 @@ const Navbar = () => {
     await logout();
     setIsOpen(false);
     setIsLoading(true);
+    router.push("/login");
   };
 
   return (

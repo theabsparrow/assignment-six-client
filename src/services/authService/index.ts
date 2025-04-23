@@ -23,7 +23,8 @@ export const registerCustomer = async (
     );
     const result = await res.json();
     if (result?.success) {
-      (await cookies()).set("refreshToken", result.data?.refreshToken);
+      (await cookies()).set("refreshToken", result?.data?.refreshToken);
+      (await cookies()).set("accessToken", result?.data?.accessToken);
     }
     return result;
   } catch (error: any) {
@@ -47,7 +48,8 @@ export const registerMealprovider = async (
     );
     const result = await res.json();
     if (result?.success) {
-      (await cookies()).set("refreshToken", result.data?.refreshToken);
+      (await cookies()).set("refreshToken", result?.data?.refreshToken);
+      (await cookies()).set("accessToken", result?.data?.accessToken);
     }
     return result;
   } catch (error: any) {
@@ -65,8 +67,10 @@ export const loginUser = async (loginData: TLogin) => {
       body: JSON.stringify(loginData),
     });
     const result = await res.json();
+    console.log(result);
     if (result?.success) {
-      (await cookies()).set("refreshToken", result.data?.refreshToken);
+      (await cookies()).set("refreshToken", result?.data?.refreshToken);
+      (await cookies()).set("accessToken", result?.data?.accessToken);
     }
     return result;
   } catch (error: any) {
@@ -75,7 +79,7 @@ export const loginUser = async (loginData: TLogin) => {
 };
 
 export const getCurrentUser = async () => {
-  const refreshToken = (await cookies()).get("refreshToken")?.value;
+  const refreshToken = (await cookies()).get("refreshToken")!.value;
   let decodedData = null;
   if (refreshToken) {
     decodedData = await jwtDecode(refreshToken);
@@ -105,4 +109,24 @@ export const reCaptchaTokenVerification = async (token: string) => {
 
 export const logout = async () => {
   (await cookies()).delete("refreshToken");
+  // (await cookies()).delete("refreshToken");
+  // await fetch(`${config.next_public_base_api}/auth/logout`, {
+  //   method: "POST",
+  //   credentials: "include",
+  // });
+};
+
+export const getNewToken = async () => {
+  try {
+    const res = await fetch(`${config.next_public_base_api}/auth/get-token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: (await cookies()).get("refreshToken")!.value,
+      },
+    });
+    return res.json();
+  } catch (error: any) {
+    return Error(error);
+  }
 };

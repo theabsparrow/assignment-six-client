@@ -24,6 +24,7 @@ import {
 } from "@/services/authService";
 import { config } from "@/config";
 import ReCAPTCHA from "react-google-recaptcha";
+import { useUser } from "@/context/UserContext";
 
 type FormValues = {
   email: string;
@@ -65,6 +66,7 @@ const RegisterMealProvider = ({
   } = useForm<FormValues>({
     mode: "onChange",
   });
+  const { setIsLoading } = useUser();
   const [imageFile, setImageFile] = useState<File | "">("");
   const [imagePreview, setImagePreview] = useState<string>("");
   const [recaptchaStatus, setRecaptchaStatus] = useState(false);
@@ -128,6 +130,7 @@ const RegisterMealProvider = ({
         mealProvider,
       };
       const res = await registerMealprovider(mealProviderRegisterInfo);
+      setIsLoading(true);
       if (res?.success) {
         toast.success(res?.message, { duration: 3000 });
         reset();

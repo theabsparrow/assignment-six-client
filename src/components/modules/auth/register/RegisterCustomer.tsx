@@ -28,6 +28,7 @@ import {
 } from "@/services/authService";
 import ReCAPTCHA from "react-google-recaptcha";
 import { config } from "@/config";
+import { useUser } from "@/context/UserContext";
 
 type FormValues = {
   email: string;
@@ -69,6 +70,7 @@ const RegisterCustomer = ({
     },
     mode: "onChange",
   });
+  const { setIsLoading } = useUser();
   const [imageFile, setImageFile] = useState<File | "">("");
   const [imagePreview, setImagePreview] = useState<string>("");
   const [recaptchaStatus, setRecaptchaStatus] = useState(false);
@@ -122,6 +124,7 @@ const RegisterCustomer = ({
         customer,
       };
       const res = await registerCustomer(customerRegisterInfo);
+      setIsLoading(true);
       if (res?.success) {
         toast.success(res?.message, { duration: 3000 });
         reset();

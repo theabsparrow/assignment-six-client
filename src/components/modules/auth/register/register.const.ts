@@ -1,5 +1,7 @@
+import { TAlergies } from "@/types/customerRegistration";
+
 export const genderOptions: string[] = ["Male", "Female", "Other"];
-export const allergyOptions: string[] = [
+export const allergyOptions: TAlergies[] = [
   "Egg",
   "Nuts",
   "Milk",
