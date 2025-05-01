@@ -2,6 +2,7 @@
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 interface TCheckboxGroup {
+  label: string;
   register: UseFormRegister<any>;
   options: string[];
   name: string;
@@ -10,6 +11,7 @@ interface TCheckboxGroup {
 }
 
 const InputCheckboxArray: React.FC<TCheckboxGroup> = ({
+  label,
   register,
   options,
   name,
@@ -19,7 +21,7 @@ const InputCheckboxArray: React.FC<TCheckboxGroup> = ({
   return (
     <div className="w-full">
       <label className="block font-semibold text-gray-700 dark:text-gray-200 mb-1">
-        Allergies
+        {label}
       </label>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {options.map((allergy) => (

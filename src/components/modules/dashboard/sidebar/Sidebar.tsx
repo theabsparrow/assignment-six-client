@@ -15,12 +15,19 @@ import {
 import { LogOut } from "lucide-react";
 import { logout } from "@/services/authService";
 
-const Sidebar = () => {
+const Sidebar = ({
+  name,
+  profileImage,
+  role,
+}: {
+  name: string;
+  profileImage: string;
+  role: string;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  const { user, setIsLoading } = useUser();
-  const role = user?.userRole as string;
+  const { setIsLoading } = useUser();
 
   const handleLogout = async () => {
     await logout();
@@ -92,15 +99,18 @@ const Sidebar = () => {
           <div className="px-4 w-full space-y-2">
             <div className="flex items-center gap-3 bg-gradient-to-r from-green-800 to-emerald-700 text-white px-4 py-3 rounded-lg shadow-md">
               <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white">
-                {/* <img
-        src="https://i.pravatar.cc/100"
-        alt="User Avatar"
-        className="w-full h-full object-cover"
-      /> */}
+                {profileImage && (
+                  <Image
+                    src={profileImage}
+                    alt="Profile"
+                    width={40}
+                    height={40}
+                    className="object-cover w-full h-full"
+                  />
+                )}
               </div>
               <div>
-                <p className="text-sm font-semibold">Bashar</p>
-                <p className="text-xs text-white/80">Admin</p>
+                <p className="text-sm font-semibold">{name}</p>
               </div>
             </div>
             <button

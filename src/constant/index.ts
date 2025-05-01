@@ -30,17 +30,17 @@ export const mealProviderItems = [
 export const customerItems = [
   {
     name: "My Plans",
-    href: "/user/my-plans",
+    href: "/user/myPlans",
     icon: "📊",
   },
   {
     name: "Create Plan",
-    href: "/user/create-plan",
+    href: "/user/createPlan",
     icon: "📝",
   },
   {
     name: "My Orders",
-    href: "/user/my-orders",
+    href: "/user/myOrders",
     icon: "🛒",
   },
 ];

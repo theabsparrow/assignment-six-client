@@ -67,7 +67,6 @@ export const loginUser = async (loginData: TLogin) => {
       body: JSON.stringify(loginData),
     });
     const result = await res.json();
-    console.log(result);
     if (result?.success) {
       (await cookies()).set("refreshToken", result?.data?.refreshToken);
       (await cookies()).set("accessToken", result?.data?.accessToken);
@@ -79,7 +78,8 @@ export const loginUser = async (loginData: TLogin) => {
 };
 
 export const getCurrentUser = async () => {
-  const refreshToken = (await cookies()).get("refreshToken")!.value;
+  const refreshToken = (await cookies()).get("refreshToken")?.value;
+  console.log(refreshToken);
   let decodedData = null;
   if (refreshToken) {
     decodedData = await jwtDecode(refreshToken);
@@ -109,6 +109,7 @@ export const reCaptchaTokenVerification = async (token: string) => {
 
 export const logout = async () => {
   (await cookies()).delete("refreshToken");
+  (await cookies()).delete("accessToken");
   // (await cookies()).delete("refreshToken");
   // await fetch(`${config.next_public_base_api}/auth/logout`, {
   //   method: "POST",

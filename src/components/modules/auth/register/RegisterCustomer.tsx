@@ -23,11 +23,11 @@ import {
 import { useRouter } from "next/navigation";
 import { imageUpload } from "@/utills/imageUploader";
 import {
-  reCaptchaTokenVerification,
+  // reCaptchaTokenVerification,
   registerCustomer,
 } from "@/services/authService";
-import ReCAPTCHA from "react-google-recaptcha";
-import { config } from "@/config";
+// import ReCAPTCHA from "react-google-recaptcha";
+// import { config } from "@/config";
 import { useUser } from "@/context/UserContext";
 
 type FormValues = {
@@ -73,18 +73,18 @@ const RegisterCustomer = ({
   const { setIsLoading } = useUser();
   const [imageFile, setImageFile] = useState<File | "">("");
   const [imagePreview, setImagePreview] = useState<string>("");
-  const [recaptchaStatus, setRecaptchaStatus] = useState(false);
+  // const [recaptchaStatus, setRecaptchaStatus] = useState(false);
 
-  const handleRecaptcha = async (value: string | null) => {
-    try {
-      const res = await reCaptchaTokenVerification(value as string);
-      if (res?.success) {
-        setRecaptchaStatus(true);
-      }
-    } catch (error: any) {
-      console.error(error);
-    }
-  };
+  // const handleRecaptcha = async (value: string | null) => {
+  //   try {
+  //     const res = await reCaptchaTokenVerification(value as string);
+  //     if (res?.success) {
+  //       setRecaptchaStatus(true);
+  //     }
+  //   } catch (error: any) {
+  //     console.error(error);
+  //   }
+  // };
 
   const onSubmit = async (data: FormValues) => {
     const age = calculateAge(data?.dateOfBirth);
@@ -171,7 +171,7 @@ const RegisterCustomer = ({
             label="Email"
             name="email"
             register={register}
-            error={errors.name}
+            error={errors.email}
             type="email"
             required={true}
           />
@@ -238,6 +238,7 @@ const RegisterCustomer = ({
           required={true}
         />
         <InputCheckboxArray
+          label="allergies"
           register={register}
           options={allergyOptions}
           name="allergies"
@@ -257,12 +258,12 @@ const RegisterCustomer = ({
           </Link>
         </div>
 
-        <ReCAPTCHA
+        {/* <ReCAPTCHA
           sitekey={config.next_public_recaptcha_client_key as string}
           onChange={handleRecaptcha}
-        />
+        /> */}
         <button
-          disabled={recaptchaStatus ? false : true}
+          // disabled={recaptchaStatus ? false : true}
           type="submit"
           className="w-full bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition disabled:bg-gray-400"
         >

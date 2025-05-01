@@ -4,17 +4,17 @@ import { config } from "@/config";
 import { getValidToken } from "@/lib/verifyToken";
 import { TUpdatedUserData } from "@/types";
 import { revalidateTag } from "next/cache";
+import { cookies } from "next/headers";
 
 export const getMyProfle = async () => {
-  const token = await getValidToken();
-  // (await cookies()).set("accessToken", token);
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refreshToken")!.value;
   try {
     const res = await fetch(`${config.next_public_base_api}/user/my-profile`, {
       method: "GET",
       headers: {
         Authorization: token,
       },
-      credentials: "include",
       next: {
         tags: ["Profile"],
       },

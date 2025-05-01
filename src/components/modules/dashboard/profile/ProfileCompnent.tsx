@@ -22,6 +22,8 @@ import {
 } from "@/services/profileService";
 import { toast } from "sonner";
 import { imageUpload } from "@/utills/imageUploader";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const ProfileCompnent = ({
   user,
@@ -42,6 +44,19 @@ const ProfileCompnent = ({
   const [licenseDocument, setLicenseDocument] = useState(
     userdata?.licenseDocument ?? ""
   );
+  const [isEditingBio, setIsEditingBio] = useState(false);
+  const [bio, setBio] = useState(userdata?.bio ?? "");
+
+  const [isNameEditing, setIsEditingName] = useState(false);
+  const [name, setName] = useState(userdata?.name ?? "");
+
+  const [isEditingDate, setIsEditingDate] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(
+    userdata?.dateOfBirth ? new Date(userdata.dateOfBirth) : null
+  );
+
+  const [isAdressEditing, setIsEditingAdress] = useState(false);
+  const [adress, setAdress] = useState(userdata?.name ?? "");
 
   const [isEditing, setIsEditing] = useState(false);
   const [selectedAllergies, setSelectedAllergies] = useState<TAlergies[]>([]);
@@ -109,6 +124,20 @@ const ProfileCompnent = ({
     setIsEditingLicense(!isEditingLicense);
     setLicenseDocument(userdata?.licenseDocument as string);
   };
+  const toggleBioEdit = () => {
+    setIsEditingBio(!isEditingBio);
+    setBio(userdata?.bio as string);
+  };
+
+  const toggleNameEdit = () => {
+    setIsEditingName(!isNameEditing);
+    setName(userdata?.name as string);
+  };
+
+  const toggleAdressEdit = () => {
+    setIsEditingAdress(!isAdressEditing);
+    setAdress(userdata?.address as string);
+  };
 
   const handleEditToggle = () => {
     if (isEditing && userdata?.allergies?.length) {
@@ -145,7 +174,18 @@ const ProfileCompnent = ({
     removeAllergies: TAlergies[]
   ) => {
     const updatedData: Partial<TUpdatedUserData> = {};
+    if (field === "name") {
+      updatedData.name = name;
+    }
+    if (field === "address") {
+      updatedData.address = adress;
+    }
+    if (field === "date") {
+      updatedData.dateOfBirth = selectedDate?.toString();
+    }
+
     if (user?.role === USER_ROLE.mealProvider) {
+      console.log(updatedData);
       if (field === "experience") {
         updatedData.experienceYears = experience;
         setIsEditingExperience(false);
@@ -156,6 +196,10 @@ const ProfileCompnent = ({
       }
       if (field === "license") {
         updatedData.licenseDocument = licenseDocument;
+        setIsEditingLicense(false);
+      }
+      if (field === "bio") {
+        updatedData.bio = licenseDocument;
         setIsEditingLicense(false);
       }
       try {
@@ -194,7 +238,7 @@ const ProfileCompnent = ({
 
   return (
     <div className="max-w-4xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-6 ">
-      <div className="col-span-2 flex flex-col md:flex-row items-center gap-6 p-6 bg-gradient-to-r from-indigo-100 to-blue-100 shadow-lg rounded-2xl">
+      <div className="col-span-2 flex flex-col md:flex-row items-center gap-6 p-6 bg-gradient-to-r from-indigo-100 to-blue-100 dark:from-indigo-900 dark:to-blue-900 shadow-lg rounded-2xl">
         <label className="relative group cursor-pointer">
           {userdata?.profileImage ? (
             <Image
@@ -220,13 +264,89 @@ const ProfileCompnent = ({
             className="hidden"
           />
         </label>
-        <div className="text-center md:text-left">
-          <h2 className="text-3xl font-semibold text-indigo-900 dark:text-indigo-300">
-            {userdata?.name || "Unknown User"}
-          </h2>
-          <p className="text-lg font-light text-gray-500 italic mt-2">
-            {userdata?.bio || "No bio provided."}
-          </p>
+        <div className="text-center md:text-left ">
+          <div className="flex gap-2 ">
+            {isNameEditing ? (
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="px-2 py-1 border rounded-md w-44 dark:bg-gray-800 dark:text-white dark:border-gray-600"
+              />
+            ) : (
+              <h2 className="text-3xl font-semibold text-indigo-900 dark:text-indigo-300">
+                {userdata?.name || "Unknown User"}
+              </h2>
+            )}
+            {isNameEditing ? (
+              <>
+                <button
+                  onClick={() => {
+                    handleSubmit("name", [], []);
+                  }}
+                  className="ml-4 text-blue-500 cursor-pointer"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={toggleNameEdit}
+                  className="ml-4 text-purple-500 cursor-pointer"
+                >
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={toggleNameEdit}
+                  className=" text-blue-500 cursor-pointer"
+                >
+                  Edit
+                </button>
+              </>
+            )}
+          </div>
+
+          {user?.role === USER_ROLE.mealProvider && (
+            <div>
+              {isEditingBio ? (
+                <textarea
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  className="px-2 py-1 border rounded-md w-66 h-24 resize-none outline-none"
+                />
+              ) : (
+                <p className="text-lg font-light text-gray-500 italic mt-2">
+                  {userdata?.bio || "No bio provided."}
+                </p>
+              )}
+              {isEditingBio ? (
+                <div>
+                  <button
+                    onClick={() => {
+                      handleSubmit("bio", [], []);
+                    }}
+                    className="ml-4 text-blue-500 cursor-pointer"
+                  >
+                    Save
+                  </button>
+                  <button
+                    onClick={toggleBioEdit}
+                    className="ml-4 text-purple-500 cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={toggleBioEdit}
+                  className="text-blue-500 cursor-pointer"
+                >
+                  Edit
+                </button>
+              )}
+            </div>
+          )}
           <div className="mt-4 flex flex-wrap gap-3 justify-center md:justify-start">
             <span className="inline-block px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition rounded-full">
               {user?.role}
@@ -236,16 +356,47 @@ const ProfileCompnent = ({
                 {userdata?.gender}
               </span>
             )}
-            {userdata?.dateOfBirth && (
-              <span className="inline-block px-4 py-2 text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 transition rounded-full">
-                {new Date(userdata?.dateOfBirth).toDateString()}
-              </span>
-            )}
-            {userdata?.dateOfBirth && (
-              <span className="inline-block px-4 py-2 text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 transition rounded-full">
-                {new Date(userdata?.dateOfBirth).toDateString()} (
-                {calculateAge(userdata?.dateOfBirth)} years old)
-              </span>
+          </div>
+          <div className="inline-block mt-2">
+            {isEditingDate ? (
+              <div className="flex items-center gap-2">
+                <DatePicker
+                  selected={selectedDate}
+                  onChange={(date) => setSelectedDate(date)}
+                  dateFormat="yyyy-MM-dd"
+                  className="border p-2 rounded"
+                  maxDate={new Date()}
+                  showYearDropdown
+                  scrollableYearDropdown
+                />
+                <button
+                  onClick={() => handleSubmit("date", [], [])}
+                  className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 transition cursor pointer"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={() => setIsEditingDate(!isEditingDate)}
+                  className="px-3 py-1 bg-purple-500 text-white rounded hover:bg-gray-500 transition cursor pointer"
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              userdata?.dateOfBirth && (
+                <div className="space-x-2">
+                  <span className="inline-block px-4 py-2 text-sm font-medium text-white bg-purple-600  transition rounded-full">
+                    {new Date(userdata.dateOfBirth).toDateString()} (
+                    {calculateAge(userdata.dateOfBirth)} years old)
+                  </span>
+                  <button
+                    onClick={() => setIsEditingDate(!isEditingDate)}
+                    className=" text-blue-500 cursor-pointer"
+                  >
+                    Edit
+                  </button>
+                </div>
+              )
             )}
           </div>
         </div>
@@ -277,23 +428,60 @@ const ProfileCompnent = ({
             <span>{user?.phone}</span>
           </p>
 
-          <p className="flex items-center gap-3 text-lg font-medium text-gray-800 bg-white px-4 py-3 rounded-lg shadow-md hover:bg-yellow-50 transition duration-300 ease-in-out">
-            <FaMapMarkerAlt className="text-yellow-500" />
-            <span>{userdata?.address || "Not Provided"}</span>
-          </p>
+          <div className="flex items-center gap-3 bg-white px-4 py-3 rounded-lg shadow-md hover:bg-yellow-50 transition duration-300 ease-in-out">
+            {isAdressEditing ? (
+              <input
+                type="text"
+                value={adress}
+                onChange={(e) => setAdress(e.target.value)}
+                className="px-2 py-1 border rounded-md w-44"
+              />
+            ) : (
+              <p className="flex items-center gap-3 text-lg font-medium text-gray-800 ">
+                <FaMapMarkerAlt className="text-yellow-500" />
+                <span>{userdata?.address || "Not Provided"}</span>
+              </p>
+            )}
+            {isAdressEditing ? (
+              <>
+                <button
+                  onClick={() => {
+                    handleSubmit("address", [], []);
+                  }}
+                  className="ml-4 text-blue-500 cursor-pointer"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={toggleAdressEdit}
+                  className="ml-4 text-purple-500 cursor-pointer"
+                >
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={toggleAdressEdit}
+                  className=" text-blue-500 cursor-pointer"
+                >
+                  Edit
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </div>
 
       <div className="p-6 bg-gradient-to-r from-teal-100 to-cyan-200 shadow-lg rounded-xl space-y-6">
         <div className="flex justify-between items-center">
           <h3 className="text-2xl font-semibold text-indigo-800">Details</h3>
-          {user?.role === USER_ROLE.mealProvider && !userdata?.hasKitchen && (
+          {user?.role === USER_ROLE.mealProvider && (
             <Link
               className="bg-purple-500 px-2 py-1 rounded-xl text-white hover:bg-indigo-800 dark:bg-gray-500 duration-500"
               href="/mealProvider/myKitchen"
             >
-              {" "}
-              Create Kitchen{" "}
+              {userdata?.hasKitchen ? "View Kitchen" : "Create Kitchen"}
             </Link>
           )}
         </div>

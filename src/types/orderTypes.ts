@@ -1,0 +1,21 @@
+import { TCookingDay, TMealTime } from "./mealType";
+export type TOrderType = "once" | "regular";
+export type TDeliveryMode = "mealPlanner" | "manual";
+export type TOrderStatus = "Pending" | "Confirmed" | "Delivered" | "Cancelled";
+export type TOrder = {
+  quantity: number;
+  price: number;
+  totalPrice: number;
+  status: TOrderStatus;
+  deliveryTime: TMealTime[];
+  deliveryMode: TDeliveryMode;
+  deliveryDays?: TCookingDay[];
+  orderType: TOrderType;
+  isActive?: boolean;
+  deliveredCount?: number;
+  startDate: string;
+  note?: string;
+  deliveryAddress: string;
+  payment: "online" | "cash on delivery";
+  _id?: string;
+};

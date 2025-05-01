@@ -4,7 +4,7 @@ import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import LoginFormInput from "../../formInput/LoginFormInput";
 import { TLogin } from "@/types/loginTypes";
-import { loginUser } from "@/services/authService";
+import { getCurrentUser, loginUser } from "@/services/authService";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -24,7 +24,7 @@ const LoginForm = () => {
   } = useForm<FormValues>({
     mode: "onChange",
   });
-  const { setIsLoading } = useUser();
+  const { setIsLoading, setUser } = useUser();
   const [redirect, setRedirect] = useState<string | null>(null);
   const router = useRouter();
 
@@ -48,6 +48,9 @@ const LoginForm = () => {
         if (redirect) {
           router.push(redirect);
           reset();
+          const currentUser = await getCurrentUser();
+          setUser(currentUser);
+          setIsLoading(false);
         } else {
           router.push("/");
           reset();

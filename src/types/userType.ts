@@ -37,4 +37,8 @@ export type TUpdatedUserData = {
   addAllergies: TAlergies[];
   removeAllergies: TAlergies[];
   profileImage: string;
+  bio: string;
+  address: string;
+  name: string;
+  dateOfBirth: string;
 };

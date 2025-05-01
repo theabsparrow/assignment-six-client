@@ -1,4 +1,3 @@
-// components/Navbar.jsx
 "use client";
 
 import { useState } from "react";
@@ -10,13 +9,19 @@ import Image from "next/image";
 import logo from "../../app/assets/logo.svg";
 import { useUser } from "@/context/UserContext";
 import { logout } from "@/services/authService";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
-const Navbar = () => {
+const Navbar = ({
+  name,
+  profileImage,
+}: {
+  name?: string;
+  profileImage?: string;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, setIsLoading } = useUser();
+  const { user, setIsLoading, setUser } = useUser();
   const router = useRouter();
-
+  const pathname = usePathname();
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Meals", href: "/meals" },
@@ -27,6 +32,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     await logout();
+    setUser(null);
     setIsOpen(false);
     setIsLoading(true);
     router.push("/login");
@@ -44,19 +50,31 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-6">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
-            >
-              {link.name}
-            </Link>
-          ))}
-          {user && (
+          {navLinks.map((link) => {
+            const isActive = pathname === link?.href;
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                className={` transition font-medium ${
+                  isActive
+                    ? "text-blue-600 dark:text-blue-400 font-semibold"
+                    : "text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400"
+                }`}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
+
+          {name && (
             <Link
               href="/kitchen"
-              className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
+              className={`text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition font-medium ${
+                pathname.startsWith("/kitchen")
+                  ? "text-blue-600 dark:text-blue-400 font-semibold"
+                  : ""
+              }`}
             >
               Kitchen
             </Link>
@@ -65,7 +83,7 @@ const Navbar = () => {
 
         {/* dropdown */}
         <div className="hidden md:flex items-center gap-6">
-          <ProfileDropdown />
+          <ProfileDropdown name={name} profileImage={profileImage} />
           <DarkModeToggle />
         </div>
 
