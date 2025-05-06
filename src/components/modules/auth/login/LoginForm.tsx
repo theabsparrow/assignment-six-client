@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useUser } from "@/context/UserContext";
+import { FaHome } from "react-icons/fa";
 
 type FormValues = {
   identifier: string;
@@ -47,10 +48,10 @@ const LoginForm = () => {
         toast.success(res?.message, { duration: 3000 });
         if (redirect) {
           router.push(redirect);
-          reset();
           const currentUser = await getCurrentUser();
           setUser(currentUser);
           setIsLoading(false);
+          reset();
         } else {
           router.push("/");
           reset();
@@ -64,6 +65,12 @@ const LoginForm = () => {
   };
   return (
     <div className="max-w-2xl mx-auto p-6 bg-gray-200 dark:bg-gray-900 rounded-2xl shadow-xl text-gray-800 dark:text-white md:mt-20">
+      <Link
+        href="/"
+        className="cursor-pointer flex items-center gap-1 text-blue-600 text-lg font-semibold hover:underline duration-500"
+      >
+        <FaHome /> Back to home
+      </Link>
       <h2 className="text-3xl font-bold mb-6 text-center text-blue-600 dark:text-blue-400">
         Login you account
       </h2>
@@ -87,6 +94,11 @@ const LoginForm = () => {
           type="password"
           required={true}
         />
+        <div>
+          <Link className="text-blue-700" href="/forget-pass">
+            Forget Password?
+          </Link>
+        </div>
         <button
           type="submit"
           className="w-full bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition cursor-pointer"

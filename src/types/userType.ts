@@ -42,3 +42,8 @@ export type TUpdatedUserData = {
   name: string;
   dateOfBirth: string;
 };
+
+export type TSettingsInfo = {
+  email?: string;
+  phone?: string;
+};

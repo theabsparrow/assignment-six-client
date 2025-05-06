@@ -1,9 +1,10 @@
 "use server";
 
 import { config } from "@/config";
-import { getValidToken } from "@/lib/verifyToken";
+
 import { TOrder, TOrderStatus } from "@/types/orderTypes";
 import { revalidateTag } from "next/cache";
+import { getValidToken } from "../authService/validToken";
 
 export const createOrder = async (orderInfo: TOrder, id: string) => {
   const token = await getValidToken();

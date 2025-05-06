@@ -24,7 +24,6 @@ const SelectOption = () => {
 
   return (
     <>
-      {" "}
       {registeredRole === "customer" ? (
         <RegisterCustomer setRegisteredRole={setRegisteredRole} />
       ) : registeredRole === "mealProvider" ? (

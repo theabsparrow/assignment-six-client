@@ -200,7 +200,7 @@ const ProfileCompnent = ({
       }
       if (field === "bio") {
         updatedData.bio = licenseDocument;
-        setIsEditingLicense(false);
+        setIsEditingBio(false);
       }
       try {
         const result = await updateMealProviderProfile(updatedData);

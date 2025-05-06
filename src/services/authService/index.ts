@@ -4,8 +4,10 @@ import { config } from "@/config";
 import { TCustomerRegistrationData } from "@/types/customerRegistration";
 import { TLogin } from "@/types/loginTypes";
 import { TMealproviderRegistrationData } from "@/types/mealProviderRegistration";
+import { TPassword } from "@/types/passwordTypes";
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
+import { getValidToken } from "./validToken";
 
 export const registerCustomer = async (
   customerData: TCustomerRegistrationData
@@ -25,6 +27,7 @@ export const registerCustomer = async (
     if (result?.success) {
       (await cookies()).set("refreshToken", result?.data?.refreshToken);
       (await cookies()).set("accessToken", result?.data?.accessToken);
+      (await cookies()).set("refresh1Token", result?.data?.refresh1Token);
     }
     return result;
   } catch (error: any) {
@@ -50,6 +53,7 @@ export const registerMealprovider = async (
     if (result?.success) {
       (await cookies()).set("refreshToken", result?.data?.refreshToken);
       (await cookies()).set("accessToken", result?.data?.accessToken);
+      (await cookies()).set("refresh1Token", result?.data?.refresh1Token);
     }
     return result;
   } catch (error: any) {
@@ -79,7 +83,6 @@ export const loginUser = async (loginData: TLogin) => {
 
 export const getCurrentUser = async () => {
   const refreshToken = (await cookies()).get("refreshToken")?.value;
-  console.log(refreshToken);
   let decodedData = null;
   if (refreshToken) {
     decodedData = await jwtDecode(refreshToken);
@@ -110,6 +113,7 @@ export const reCaptchaTokenVerification = async (token: string) => {
 export const logout = async () => {
   (await cookies()).delete("refreshToken");
   (await cookies()).delete("accessToken");
+  (await cookies()).delete("refresh1Token");
   // (await cookies()).delete("refreshToken");
   // await fetch(`${config.next_public_base_api}/auth/logout`, {
   //   method: "POST",
@@ -127,6 +131,47 @@ export const getNewToken = async () => {
       },
     });
     return res.json();
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const changePassword = async (passwordInfo: Partial<TPassword>) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/auth/change-password`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(passwordInfo),
+      }
+    );
+    const result = await res.json();
+    if (result?.success) {
+      (await cookies()).set("refreshToken", result?.data?.refreshToken);
+      (await cookies()).set("accessToken", result?.data?.accessToken);
+    }
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const resendOtp = async () => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(`${config.next_public_base_api}/auth/resend-otp`, {
+      method: "GET",
+      headers: {
+        Authorization: token,
+      },
+    });
+    const result = await res.json();
+    return result;
   } catch (error: any) {
     return Error(error);
   }

@@ -1,9 +1,9 @@
 "use server";
 
 import { config } from "@/config";
-import { getValidToken } from "@/lib/verifyToken";
 import { TKitchen } from "@/types/kitchenType";
 import { revalidateTag } from "next/cache";
+import { getValidToken } from "../authService/validToken";
 
 export const createKitchen = async (kitchenInfo: TKitchen) => {
   const token = await getValidToken();

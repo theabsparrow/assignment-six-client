@@ -1,9 +1,10 @@
 "use server";
 
 import { config } from "@/config";
-import { getValidToken } from "@/lib/verifyToken";
+
 import { TMealPlanner } from "@/types/MealPlanType";
 import { revalidateTag } from "next/cache";
+import { getValidToken } from "../authService/validToken";
 
 export const createMealPlan = async (MealPlanner: TMealPlanner) => {
   const token = await getValidToken();

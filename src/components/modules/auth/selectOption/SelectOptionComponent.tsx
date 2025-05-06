@@ -1,6 +1,7 @@
 "use client";
 
 import { ChefHat, User } from "lucide-react";
+import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 
 const SelectOptionComponent = ({
@@ -11,6 +12,14 @@ const SelectOptionComponent = ({
   return (
     <section className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950 px-4 py-12">
       <div className="max-w-2xl w-full bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-8 space-y-6">
+        <div>
+          <Link
+            className="text-blue-600 text-lg font-semibold hover:underline duration-500"
+            href="/"
+          >
+            Back to home
+          </Link>
+        </div>
         <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 dark:text-white">
           Register As
         </h2>

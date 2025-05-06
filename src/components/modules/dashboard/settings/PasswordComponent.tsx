@@ -4,12 +4,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import LoginFormInput from "../../formInput/LoginFormInput";
 import InputTypePassword from "../../formInput/InputTypePassword";
-
-type TPassword = {
-  oldPassword: string;
-  newPassword: string;
-  confirmPass: string;
-};
+import { TPassword } from "@/types/passwordTypes";
+import { changePassword } from "@/services/authService";
+import { toast } from "sonner";
 
 const PasswordComponent = () => {
   const [open, setOpen] = useState(false);
@@ -23,12 +20,22 @@ const PasswordComponent = () => {
     mode: "onChange",
   });
 
-  const onSubmit = (data: TPassword) => {
+  const onSubmit = async (data: TPassword) => {
     const passwordInfo = {
       oldPassword: data?.oldPassword,
       newPassword: data?.newPassword,
     };
-    console.log(passwordInfo);
+    try {
+      const res = await changePassword(passwordInfo);
+      if (res?.success) {
+        toast.success(res?.message, { duration: 3000 });
+        reset();
+      } else {
+        toast.error(res?.message, { duration: 3000 });
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
   };
   return (
     <div className="border border-gray-400 px-10 py-5">
@@ -77,7 +84,7 @@ const PasswordComponent = () => {
                 type="submit"
                 className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
               >
-                Save
+                {isSubmitting ? "Changing" : "Save"}
               </button>
               <button
                 type="button"

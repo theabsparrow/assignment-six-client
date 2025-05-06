@@ -40,7 +40,7 @@ const InputPhone: React.FC<TPhoneInput> = ({
           className={`w-full px-4 py-2 rounded-r-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 outline-none transition-all duration-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-400`}
         />
       </div>
-      {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+      {error && <p className="text-red-500 text-xs mt-1">{error?.message}</p>}
     </div>
   );
 };

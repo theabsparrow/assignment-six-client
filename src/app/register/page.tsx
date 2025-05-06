@@ -1,10 +1,10 @@
-import SemiNavbar from "@/components/modules/auth/authNav/SemiNavbar";
+// import SemiNavbar from "@/components/modules/auth/authNav/SemiNavbar";
 import SelectOption from "@/components/modules/auth/selectOption/SelectOption";
 
 const Register = () => {
   return (
-    <div className="min-h-screen">
-      <SemiNavbar />
+    <div className="min-h-screen pt-5">
+      {/* <SemiNavbar /> */}
       <SelectOption />
     </div>
   );

@@ -5,16 +5,17 @@ import { useForm } from "react-hook-form";
 import InputType from "../../formInput/InputType";
 import InputPhone from "../../formInput/InputPhone";
 import PasswordComponent from "./PasswordComponent";
-type TSettingsInfo = {
-  email?: string;
-  phone?: string;
-};
+import { TSettingsInfo } from "@/types";
+import { toast } from "sonner";
+import { updatePhoneEmail } from "@/services/profileService";
+import { useRouter } from "next/navigation";
 
 const SettingsComponent = ({ user }: { user: TSettingsInfo }) => {
   const [email, setEmail] = useState(user?.email || "");
   const [phone, setPhone] = useState(user?.phone || "");
   const [isEditingEmail, setIsEditingEmail] = useState(false);
   const [isEditingPhone, setIsEditingPhone] = useState(false);
+  const router = useRouter();
 
   const {
     register,
@@ -28,7 +29,7 @@ const SettingsComponent = ({ user }: { user: TSettingsInfo }) => {
     },
   });
 
-  const onSubmit = (data: TSettingsInfo) => {
+  const onSubmit = async (data: TSettingsInfo) => {
     const dirtyOnly: Partial<TSettingsInfo> = {};
     if (dirtyFields.email) {
       dirtyOnly.email = data.email;
@@ -36,7 +37,23 @@ const SettingsComponent = ({ user }: { user: TSettingsInfo }) => {
     if (dirtyFields.phone) {
       dirtyOnly.phone = data.phone;
     }
-    console.log(dirtyOnly);
+    if (Object.entries(dirtyOnly).length === 0) {
+      toast.error("nothing to update", { duration: 3000 });
+      return;
+    }
+    try {
+      const res = await updatePhoneEmail(dirtyOnly);
+      if (res?.success) {
+        toast.success(res?.message, { duration: 3000 });
+
+        setIsEditingEmail(false);
+        router.refresh();
+      } else {
+        toast.error(res?.message, { duration: 3000 });
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
   };
 
   return (
@@ -64,17 +81,17 @@ const SettingsComponent = ({ user }: { user: TSettingsInfo }) => {
                 <div className="flex gap-3">
                   <button
                     type="submit"
-                    className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+                    className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 cursor-pointer"
                   >
                     Save
                   </button>
                   <button
                     onClick={() => {
                       setEmail(user?.email as string);
-                      setIsEditingEmail(false);
+                      setIsEditingEmail(!isEditingEmail);
                       reset({ email });
                     }}
-                    className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
+                    className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 cursor-pointer"
                   >
                     Cancel
                   </button>
@@ -86,8 +103,8 @@ const SettingsComponent = ({ user }: { user: TSettingsInfo }) => {
                   <span className="text-gray-600">{email}</span>
                 </p>
                 <button
-                  onClick={() => setIsEditingEmail(true)}
-                  className="text-sm font-semibold text-purple-600 hover:text-purple-700 hover:underline transition"
+                  onClick={() => setIsEditingEmail(!isEditingEmail)}
+                  className="text-sm font-semibold text-purple-600 hover:text-purple-700 hover:underline transition cursor-pointer"
                 >
                   Edit
                 </button>
@@ -104,11 +121,12 @@ const SettingsComponent = ({ user }: { user: TSettingsInfo }) => {
                   name="phone"
                   register={register}
                   error={errors?.phone}
+                  required={true}
                 />
                 <div className="flex gap-3">
                   <button
                     type="submit"
-                    className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+                    className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 cursor-pointer"
                   >
                     Save
                   </button>
@@ -117,9 +135,9 @@ const SettingsComponent = ({ user }: { user: TSettingsInfo }) => {
                     onClick={() => {
                       reset({ phone });
                       setPhone(user?.phone as string);
-                      setIsEditingPhone(false);
+                      setIsEditingPhone(!isEditingPhone);
                     }}
-                    className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
+                    className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 cursor-pointer"
                   >
                     Cancel
                   </button>
@@ -129,8 +147,8 @@ const SettingsComponent = ({ user }: { user: TSettingsInfo }) => {
               <div className="flex justify-between items-center">
                 <p className="text-gray-600">{phone}</p>
                 <button
-                  onClick={() => setIsEditingPhone(true)}
-                  className="text-purple-600 hover:underline font-medium"
+                  onClick={() => setIsEditingPhone(!isEditingPhone)}
+                  className="text-purple-600 hover:underline font-medium cursor-pointer"
                 >
                   Edit
                 </button>

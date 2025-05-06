@@ -9,7 +9,6 @@ export const isTokenExpired = async (token: string): Promise<boolean> => {
 
   try {
     const decoded: { exp: number } = jwtDecode(token);
-
     return decoded.exp * 1000 < Date.now();
   } catch (err: any) {
     console.error(err);
@@ -19,12 +18,11 @@ export const isTokenExpired = async (token: string): Promise<boolean> => {
 
 export const getValidToken = async (): Promise<string> => {
   const cookieStore = await cookies();
-  let token = cookieStore.get("accessToken")?.value;
+  let token = cookieStore.get("accessToken")!.value;
   if (!token || (await isTokenExpired(token))) {
     const { data } = await getNewToken();
     token = data?.accessToken;
-    // (await cookies()).set("accessToken", token);
+    (await cookies()).set("accessToken", token);
   }
-
   return token as string;
 };
