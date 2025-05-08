@@ -18,7 +18,6 @@ const InputSelect = ({
   options: string[];
   required?: boolean;
 }) => {
-  console.log(name);
   return (
     <div className="w-full">
       <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1">

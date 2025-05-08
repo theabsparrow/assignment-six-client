@@ -62,7 +62,6 @@ const OtpVerification = ({
   };
 
   const resendOTP = async () => {
-    console.log("resend otp ");
     timerRef.current?.reset();
     setIsExpired(false);
   };

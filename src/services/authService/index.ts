@@ -176,3 +176,22 @@ export const resendOtp = async () => {
     return Error(error);
   }
 };
+
+export const SearchWithEmailResult = async (data: { email: string }) => {
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/auth/search-email`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};

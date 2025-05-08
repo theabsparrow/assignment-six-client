@@ -61,7 +61,7 @@ const OtpTimer = forwardRef<OtpTimerHandle, TOtpTimerProps>(
     };
 
     return (
-      <p className="text-center mt-6 px-4 py-2 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-300 rounded-lg border border-yellow-300 dark:border-yellow-700 shadow-sm text-sm sm:text-base">
+      <p className="text-center mt-3 px-4 py-2 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-300 rounded-lg border border-yellow-300 dark:border-yellow-700 shadow-sm text-sm sm:text-base">
         ⏳ You can resend the code after{" "}
         <span className="font-semibold text-red-600 dark:text-red-400">
           {formatTime(timeLeft)} sec

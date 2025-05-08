@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import LoginFormInput from "../../formInput/LoginFormInput";
 import { TLogin } from "@/types/loginTypes";
@@ -10,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useUser } from "@/context/UserContext";
 import { FaHome } from "react-icons/fa";
+import Link from "next/link";
 
 type FormValues = {
   identifier: string;
@@ -22,9 +22,7 @@ const LoginForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<FormValues>({
-    mode: "onChange",
-  });
+  } = useForm<FormValues>();
   const { setIsLoading, setUser } = useUser();
   const [redirect, setRedirect] = useState<string | null>(null);
   const router = useRouter();
@@ -95,7 +93,7 @@ const LoginForm = () => {
           required={true}
         />
         <div>
-          <Link className="text-blue-700" href="/forget-pass">
+          <Link className="text-blue-700" href="/forgot-password">
             Forget Password?
           </Link>
         </div>
@@ -106,6 +104,7 @@ const LoginForm = () => {
           {isSubmitting ? "Logging in" : "Login"}
         </button>
       </form>
+
       <div className="flex gap-2 items-center mt-2">
         <h1>New to this site? Please</h1>
         <Link className="text-blue-700" href="/register">
