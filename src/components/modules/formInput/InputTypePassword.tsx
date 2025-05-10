@@ -29,7 +29,7 @@ const InputTypePassword: React.FC<PasswordInputProps> = ({
       <input
         type={showPassword ? "text" : "password"}
         {...register(name, {
-          ...(required && { required: `${name} is required` }),
+          ...(required && { required: `${label} is required` }),
           ...(name !== "confirmPass" && {
             minLength: {
               value: 6,

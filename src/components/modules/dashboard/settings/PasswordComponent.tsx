@@ -37,6 +37,7 @@ const PasswordComponent = () => {
       console.log(error);
     }
   };
+
   return (
     <div className="border border-gray-400 px-10 py-5">
       <h3 className="text-2xl font-bold text-gray-700 text-center">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import InputType from "../../formInput/InputType";
 import { SearchWithEmailResult } from "@/services/authService";
@@ -32,14 +32,12 @@ const ForgetPass = () => {
     reset,
   } = useForm<FormValues>();
 
-  // useEffect(() => {
-  //   const otpForm = localStorage.getItem("forgetPass");
-  //   if (otpForm) {
-  //     setEmailPage(true);
-  //   } else {
-  //     setEmailPage(false);
-  //   }
-  // }, []);
+  useEffect(() => {
+    const otpForm = localStorage.getItem("otpExpiry");
+    if (otpForm) {
+      localStorage.removeItem("otpExpiry");
+    }
+  }, []);
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {

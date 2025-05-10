@@ -3,6 +3,8 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import OtpTimer, { OtpTimerHandle } from "./OtpTimer";
 import { useRouter } from "next/navigation";
+import { skipVerification, verifyEmail } from "@/services/profileService";
+import { toast } from "sonner";
 
 const OtpVerification = ({
   setOtpPage,
@@ -68,10 +70,29 @@ const OtpVerification = ({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(otpNum);
+    const data = {
+      otp: otpNum.join(""),
+    };
+    try {
+      const res = await verifyEmail(data);
+      if (res?.success) {
+        toast.success(res?.message, { duration: 3000 });
+        localStorage.removeItem("otpExpiry");
+        localStorage.removeItem("verifyOtpForm");
+        localStorage.removeItem("mealProviderForm");
+        localStorage.removeItem("customerForm");
+        setIsExpired(true);
+        router.push("/");
+      } else {
+        toast.error(res?.message, { duration: 3000 });
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
   };
 
-  const handleSkip = () => {
+  const handleSkip = async () => {
+    await skipVerification();
     router.push("/");
     localStorage.removeItem("otpExpiry");
     localStorage.removeItem("verifyOtpForm");

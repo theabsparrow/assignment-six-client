@@ -1,10 +1,14 @@
 "use client";
 import Image from "next/image";
 import { TUSerWithEmail } from "./ForgetPass";
-import { useRouter } from "next/navigation";
+import { sendingOTP } from "@/services/authService";
+import { toast } from "sonner";
+import { useState } from "react";
+import ForgetPassOtpPage from "./ForgetPassOtpPage";
 
 const ResetPassword = ({ userInfo }: { userInfo: Partial<TUSerWithEmail> }) => {
-  const router = useRouter();
+  const [open, setOpen] = useState(false);
+
   // useEffect(() => {
   //   const otpPage = localStorage.getItem("forgetPass") ? true : false;
   //   if (!otpPage) {
@@ -15,8 +19,22 @@ const ResetPassword = ({ userInfo }: { userInfo: Partial<TUSerWithEmail> }) => {
   //   }
   // }, [setEmailPage]);
 
-  const handleOptPage = () => {
-    router.push("/reset-password");
+  const handleOptPage = async () => {
+    const data = {
+      email: userInfo?.email as string,
+    };
+    setOpen(true);
+    try {
+      const res = await sendingOTP(data);
+      if (res?.success) {
+        toast.success("otp sent successfully", { duration: 3000 });
+        setOpen(true);
+      } else {
+        toast.error(res?.message, { duration: 3000 });
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
   };
 
   return (
@@ -35,12 +53,15 @@ const ResetPassword = ({ userInfo }: { userInfo: Partial<TUSerWithEmail> }) => {
         <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white text-center">
           Hello, {userInfo?.userInfo?.name}
         </h2>
-        <button
-          onClick={handleOptPage}
-          className="mt-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-2 rounded-lg shadow-md transition duration-300 cursor-pointer"
-        >
-          Send OTP
-        </button>
+        {!open && (
+          <button
+            onClick={handleOptPage}
+            className="mt-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-2 rounded-lg shadow-md transition duration-300 cursor-pointer"
+          >
+            Send OTP
+          </button>
+        )}
+        {open && <ForgetPassOtpPage email={userInfo?.email as string} />}
       </div>
     </div>
   );

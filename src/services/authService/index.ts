@@ -171,6 +171,9 @@ export const resendOtp = async () => {
       },
     });
     const result = await res.json();
+    if (result?.success) {
+      (await cookies()).set("refresh1Token", result?.data);
+    }
     return result;
   } catch (error: any) {
     return Error(error);
@@ -190,6 +193,83 @@ export const SearchWithEmailResult = async (data: { email: string }) => {
       }
     );
     const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const sendingOTP = async (data: { email: string }) => {
+  try {
+    const res = await fetch(`${config.next_public_base_api}/auth/send-otp`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const result = await res.json();
+    if (result?.success) {
+      (await cookies()).set("refresh1Token", result?.data);
+    }
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const resetPassword = async (data: { otp: string }) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refresh1Token")?.value;
+  if (!token) {
+    throw new Error("you are not authorized");
+  }
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/auth/reset-password`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const result = await res.json();
+    if (result?.success) {
+      (await cookies()).set("refresh1Token", result?.data);
+    }
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const setNewPassword = async (data: { newPassword: string }) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refresh1Token")?.value;
+  if (!token) {
+    throw new Error("you are not authorized");
+  }
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/auth/set-password`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const result = await res.json();
+    if (result?.success) {
+      (await cookies()).set("refreshToken", result?.data?.refreshToken);
+      (await cookies()).set("accessToken", result?.data?.accessToken);
+      (await cookies()).delete("refresh1Token");
+    }
     return result;
   } catch (error: any) {
     return Error(error);

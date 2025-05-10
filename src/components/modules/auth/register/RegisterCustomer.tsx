@@ -126,6 +126,8 @@ const RegisterCustomer = ({
       gender: data?.gender as TGender,
       allergies: data?.allergies as TAlergies[],
     };
+    setOtpPage(true);
+    localStorage.setItem("verifyOtpForm", "otpForm");
     try {
       const profileImage = imageFile ? await imageUpload(imageFile) : undefined;
       if (profileImage) {

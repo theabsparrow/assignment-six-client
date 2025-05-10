@@ -1,30 +1,22 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import OtpTimer, { OtpTimerHandle } from "../OtpComponent/OtpTimer";
-// import { useRouter } from "next/navigation";
+import { resetPassword, sendingOTP } from "@/services/authService";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
-const ForgetPassOtpPage = () => {
+const ForgetPassOtpPage = ({ email }: { email: string }) => {
   const [otpNum, setOtpNum] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [isDisabled, setIsDisabled] = useState(true);
   const [isExpired, setIsExpired] = useState(false);
   const timerRef = useRef<OtpTimerHandle>(null);
-  //   const router = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
     const allFilled = otpNum.every((digit) => digit !== "");
     setIsDisabled(!allFilled);
   }, [otpNum]);
-
-  //   useEffect(() => {
-  //     const otpPage = localStorage.getItem("verifyOtpForm") ? true : false;
-  //     if (!otpPage) {
-  //       setOtpPage(true);
-  //       localStorage.setItem("verifyOtpForm", "otpForm");
-  //     } else {
-  //       setOtpPage(otpPage);
-  //     }
-  //   }, [setOtpPage]);
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -57,14 +49,42 @@ const ForgetPassOtpPage = () => {
   };
 
   const resendOTP = async () => {
-    console.log("resend otp ");
-    timerRef.current?.reset();
-    setIsExpired(false);
+    const data = {
+      email,
+    };
+    try {
+      const res = await sendingOTP(data);
+      if (res?.success) {
+        timerRef.current?.reset();
+        toast.success(res?.message, { duration: 3000 });
+      } else {
+        toast.error(res?.message, { duration: 3000 });
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const data = {
+      otp: otpNum.join(""),
+    };
+    router.push("/set-password");
+    try {
+      const res = await resetPassword(data);
+      if (res?.success) {
+        toast.success(res?.message, { duration: 3000 });
+        router.push("/set-password");
+        localStorage.removeItem("otpExpiry");
+      } else {
+        toast.error(res?.message, { duration: 3000 });
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
   };
+
   return (
     <div className="w-full max-w-md bg-indigo-100 dark:bg-indigo-900 rounded-2xl border border-indigo-300 dark:border-indigo-700 shadow-2xl  relative mx-auto px-8 py-3">
       <div className="space-y-4">

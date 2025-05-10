@@ -109,10 +109,38 @@ export const updatePhoneEmail = async (info: Partial<TSettingsInfo>) => {
       },
       body: JSON.stringify(info),
     });
-    // revalidateTag("UserInfo");
     revalidateTag("Profile");
     return res.json();
   } catch (error: any) {
     return Error(error);
   }
+};
+
+export const verifyEmail = async (data: { otp: string }) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/user/verify-email`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    revalidateTag("Profile");
+    const result = await res.json();
+    if (result?.success) {
+      (await cookies()).delete("refresh1Token");
+    }
+    return res.json();
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const skipVerification = async () => {
+  (await cookies()).delete("refresh1Token");
 };
