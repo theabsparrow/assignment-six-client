@@ -7,6 +7,7 @@ import InputTypePassword from "../../formInput/InputTypePassword";
 import { TPassword } from "@/types/passwordTypes";
 import { changePassword } from "@/services/authService";
 import { toast } from "sonner";
+import Link from "next/link";
 
 const PasswordComponent = () => {
   const [open, setOpen] = useState(false);
@@ -46,7 +47,7 @@ const PasswordComponent = () => {
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="text-purple-800 font-semibold "
+          className="text-purple-800 font-semibold cursor-pointer hover:underline"
         >
           {" "}
           change password
@@ -80,6 +81,11 @@ const PasswordComponent = () => {
               required={true}
               validateMatch={watch("newPassword")}
             />
+            <div>
+              <Link className="text-blue-700" href="/forgot-password">
+                Forget Password?
+              </Link>
+            </div>
             <div className="flex gap-3">
               <button
                 type="submit"

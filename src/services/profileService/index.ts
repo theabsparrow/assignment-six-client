@@ -135,7 +135,7 @@ export const verifyEmail = async (data: { otp: string }) => {
     if (result?.success) {
       (await cookies()).delete("refresh1Token");
     }
-    return res.json();
+    return result;
   } catch (error: any) {
     return Error(error);
   }
@@ -143,4 +143,30 @@ export const verifyEmail = async (data: { otp: string }) => {
 
 export const skipVerification = async () => {
   (await cookies()).delete("refresh1Token");
+};
+
+export const deleteMyAccount = async (data: { password: string }) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/user/delete/my-account`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const result = await res.json();
+    if (result?.success) {
+      (await cookies()).delete("refreshToken");
+      (await cookies()).delete("accessToken");
+      (await cookies()).delete("refresh1Token");
+    }
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
 };

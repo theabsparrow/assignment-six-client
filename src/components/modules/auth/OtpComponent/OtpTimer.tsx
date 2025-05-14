@@ -13,7 +13,10 @@ export type OtpTimerHandle = {
 };
 
 const OtpTimer = forwardRef<OtpTimerHandle, TOtpTimerProps>(
-  ({ duration = 30 * 1000, storageKey = "otpExpiry", setIsExpired }, ref) => {
+  (
+    { duration = 2 * 60 * 1000, storageKey = "otpExpiry", setIsExpired },
+    ref
+  ) => {
     const [timeLeft, setTimeLeft] = useState(0);
     const [resetCounter, setResetCounter] = useState(0);
 

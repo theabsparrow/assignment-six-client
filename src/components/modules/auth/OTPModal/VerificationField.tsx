@@ -1,38 +1,22 @@
 "use client";
 
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import OtpTimer, { OtpTimerHandle } from "./OtpTimer";
-import { useRouter } from "next/navigation";
-import { skipVerification, verifyEmail } from "@/services/profileService";
+import { verifyEmail } from "@/services/profileService";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import OtpTimer, { OtpTimerHandle } from "../OtpComponent/OtpTimer";
 import { resendOtp } from "@/services/authService";
 
-const OtpVerification = ({
-  setOtpPage,
-}: {
-  setOtpPage: Dispatch<SetStateAction<boolean>>;
-}) => {
+const VerificationField = () => {
   const [otpNum, setOtpNum] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [isDisabled, setIsDisabled] = useState(true);
   const [isExpired, setIsExpired] = useState(false);
   const timerRef = useRef<OtpTimerHandle>(null);
-  const router = useRouter();
 
   useEffect(() => {
     const allFilled = otpNum.every((digit) => digit !== "");
     setIsDisabled(!allFilled);
   }, [otpNum]);
-
-  useEffect(() => {
-    const otpPage = localStorage.getItem("verifyOtpForm") ? true : false;
-    if (!otpPage) {
-      setOtpPage(true);
-      localStorage.setItem("verifyOtpForm", "otpForm");
-    } else {
-      setOtpPage(otpPage);
-    }
-  }, [setOtpPage]);
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -88,12 +72,9 @@ const OtpVerification = ({
       const res = await verifyEmail(data);
       if (res?.success) {
         toast.success(res?.message, { duration: 3000 });
-        localStorage.removeItem("otpExpiry");
-        localStorage.removeItem("verifyOtpForm");
-        localStorage.removeItem("mealProviderForm");
+
         localStorage.removeItem("customerForm");
         setIsExpired(true);
-        router.push("/");
       } else {
         toast.error(res?.message, { duration: 3000 });
       }
@@ -102,25 +83,14 @@ const OtpVerification = ({
     }
   };
 
-  const handleSkip = async () => {
-    await skipVerification();
-    router.push("/");
-    localStorage.removeItem("otpExpiry");
-    localStorage.removeItem("verifyOtpForm");
-    localStorage.removeItem("mealProviderForm");
-    localStorage.removeItem("customerForm");
-    setIsExpired(true);
-  };
-
   return (
-    <div className=" h-[80vh] flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4 ">
-      <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl  shadow-2xl p-6 sm:p-8 relative">
-        {/* OTP Timer */}
+    <div className="  flex items-center justify-center bg-gray-100 dark:bg-gray-900  mt-4">
+      <div className="w-full bg-white dark:bg-gray-800 rounded-2xl shadow-2xl px-6 py-3 relative space-y-4">
         <div>
           <OtpTimer ref={timerRef} setIsExpired={setIsExpired} />
         </div>
 
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-center text-gray-900 dark:text-white">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-center text-gray-900 dark:text-white ">
           Verify With OTP
         </h2>
         <p className="mt-2 text-center text-sm sm:text-base text-gray-600 dark:text-gray-300">
@@ -149,14 +119,6 @@ const OtpVerification = ({
 
           {/* Button Group */}
           <div className="flex justify-between items-center mt-6">
-            <button
-              type="button"
-              onClick={handleSkip}
-              className="px-4 py-1.5 text-sm sm:text-base font-medium text-gray-600 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition duration-300 cursor-pointer"
-            >
-              Skip
-            </button>
-
             <button
               type="submit"
               disabled={isDisabled}
@@ -190,4 +152,4 @@ const OtpVerification = ({
   );
 };
 
-export default OtpVerification;
+export default VerificationField;

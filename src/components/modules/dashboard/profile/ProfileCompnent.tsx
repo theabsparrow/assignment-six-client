@@ -5,6 +5,8 @@ import {
   FaEnvelope,
   FaMapMarkerAlt,
   FaCamera,
+  FaCheckCircle,
+  FaExclamationTriangle,
 } from "react-icons/fa";
 import { MdVerified } from "react-icons/md";
 import { GiCookingGlove } from "react-icons/gi";
@@ -304,6 +306,19 @@ const ProfileCompnent = ({
                   Edit
                 </button>
               </>
+            )}
+          </div>
+          <div>
+            {user?.verifiedWithEmail ? (
+              <span className="inline-flex items-center gap-1 px-3 py-1 mt-1 text-sm font-semibold text-green-700 bg-green-100 border border-green-300 rounded-full dark:bg-green-900 dark:text-green-300 dark:border-green-600">
+                <FaCheckCircle className="text-green-500" />
+                Verified
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 px-3 py-1 mt-1 text-sm font-semibold text-yellow-800 bg-yellow-100 border border-yellow-300 rounded-full dark:bg-yellow-900 dark:text-yellow-300 dark:border-yellow-600">
+                <FaExclamationTriangle className="text-yellow-500" />
+                Not Verified
+              </span>
             )}
           </div>
 

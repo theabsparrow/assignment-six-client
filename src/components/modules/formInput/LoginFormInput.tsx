@@ -56,6 +56,16 @@ const LoginFormInput: React.FC<LoginFormProps> = ({
                 }),
               }),
             })}
+            {...(name === "email" && {
+              ...register(name, {
+                ...(required && {
+                  required: `${label} is required`,
+                  validate: (value) =>
+                    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ||
+                    "Enter a valid email",
+                }),
+              }),
+            })}
             {...register(name, {
               ...(required && { required: `${label} is required` }),
             })}

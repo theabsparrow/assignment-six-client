@@ -14,6 +14,7 @@ export type TUserInfo = {
   phone: string;
   password: string;
   role: TUSerRole;
+  verifiedWithEmail: boolean;
 };
 
 export type TUserData = {
@@ -44,6 +45,8 @@ export type TUpdatedUserData = {
 };
 
 export type TSettingsInfo = {
-  email?: string;
-  phone?: string;
+  email: string;
+  phone: string;
+  verifiedWithEmail: boolean;
+  password: string;
 };
