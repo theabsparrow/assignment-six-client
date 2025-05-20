@@ -8,7 +8,7 @@ import InputDate from "../../formInput/InputDate";
 import ImagePreviewer from "../../imageUploader/ImagePreviewer";
 import ImageUploader from "../../imageUploader/ImageUploader";
 import InputSelect from "../../formInput/InputSelect";
-import { genderOptions, isCertified } from "./register.const";
+import { genderOptions } from "./register.const";
 import AcceptTermsInput from "../../formInput/AcceptTermsInput";
 import InputTextArea from "../../formInput/InputTextArea";
 import { calculateAge } from "@/utills/calculateAge";
@@ -38,8 +38,6 @@ type FormValues = {
   confirmPass: string;
   bio: string;
   experienceYears?: number;
-  isCertified: boolean;
-  licenseDocument?: string;
 };
 
 const RegisterMealProvider = ({
@@ -115,11 +113,7 @@ const RegisterMealProvider = ({
       dateOfBirth: string;
       bio: string;
       experienceYears?: number;
-      isCertified: boolean;
-      licenseDocument?: string;
     };
-    const isCertified: boolean =
-      (data?.isCertified as unknown as string) === "true" ? true : false;
     const mealProvider: TMealProvider = {
       name: data?.name,
       address: data?.address,
@@ -127,11 +121,7 @@ const RegisterMealProvider = ({
       gender: data?.gender as TGender,
       bio: data?.bio,
       experienceYears: Number(data?.experienceYears),
-      isCertified: isCertified,
     };
-    if (data?.licenseDocument) {
-      mealProvider.licenseDocument = data?.licenseDocument;
-    }
     try {
       const profileImage = imageFile ? await imageUpload(imageFile) : undefined;
       if (profileImage) {
@@ -282,22 +272,6 @@ const RegisterMealProvider = ({
                 register={register}
                 error={errors.experienceYears}
                 type="number"
-              />
-              <InputSelect
-                register={register}
-                name="isCertified"
-                label="is Certified ?"
-                error={errors.isCertified}
-                options={isCertified}
-                required={true}
-              />
-              <InputType
-                label="license Number"
-                name="licenseDocument"
-                register={register}
-                error={errors.licenseDocument}
-                type="text"
-                validateMatch={watch("isCertified")}
               />
             </div>
 

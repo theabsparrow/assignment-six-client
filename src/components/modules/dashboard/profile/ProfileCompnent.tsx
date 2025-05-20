@@ -4,15 +4,12 @@ import {
   FaPhoneAlt,
   FaEnvelope,
   FaMapMarkerAlt,
-  FaCamera,
   FaCheckCircle,
   FaExclamationTriangle,
 } from "react-icons/fa";
-import { MdVerified } from "react-icons/md";
 import { GiCookingGlove } from "react-icons/gi";
 import { TUpdatedUserData, TUserData, TUserInfo } from "@/types";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { calculateAge } from "@/utills/calculateAge";
 import { USER_ROLE } from "@/constant";
 import Link from "next/link";
@@ -23,9 +20,11 @@ import {
   updateMealProviderProfile,
 } from "@/services/profileService";
 import { toast } from "sonner";
-import { imageUpload } from "@/utills/imageUploader";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import EditComponent from "../editComponent/EditComponent";
+import ImageSection from "./ImageSection";
+import EditArray from "../editArrayComponent/EditArray";
 
 const ProfileCompnent = ({
   user,
@@ -34,153 +33,35 @@ const ProfileCompnent = ({
   user: TUserInfo;
   userdata: Partial<TUserData>;
 }) => {
+  // name state
+  const [isNameEditing, setIsEditingName] = useState(false);
+  const [name, setName] = useState(userdata?.name ?? "");
+  // bio state
+  const [isEditingBio, setIsEditingBio] = useState(false);
+  const [bio, setBio] = useState(userdata?.bio ?? "");
+  // date state
+  const [isEditingDate, setIsEditingDate] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date>(
+    new Date(userdata?.dateOfBirth as string) ?? ""
+  );
+  // adress state
+  const [isAddressEditing, setIsAddressEditing] = useState(false);
+  const [address, setAddress] = useState(userdata?.address ?? "");
+  // experience state
   const [isEditingExperience, setIsEditingExperience] = useState(false);
   const [experience, setExperience] = useState(userdata?.experienceYears ?? 0);
 
-  const [isEditingCertified, setIsEditingCertified] = useState(false);
-  const [isCertified, setIsCertified] = useState(
-    userdata?.isCertified ?? false
-  );
-
-  const [isEditingLicense, setIsEditingLicense] = useState(false);
-  const [licenseDocument, setLicenseDocument] = useState(
-    userdata?.licenseDocument ?? ""
-  );
-  const [isEditingBio, setIsEditingBio] = useState(false);
-  const [bio, setBio] = useState(userdata?.bio ?? "");
-
-  const [isNameEditing, setIsEditingName] = useState(false);
-  const [name, setName] = useState(userdata?.name ?? "");
-
-  const [isEditingDate, setIsEditingDate] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(
-    userdata?.dateOfBirth ? new Date(userdata.dateOfBirth) : null
-  );
-
-  const [isAdressEditing, setIsEditingAdress] = useState(false);
-  const [adress, setAdress] = useState(userdata?.name ?? "");
-
-  const [isEditing, setIsEditing] = useState(false);
-  const [selectedAllergies, setSelectedAllergies] = useState<TAlergies[]>([]);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [backupAllergies, setBackupAllergies] = useState<TAlergies[]>([]);
-  const [availableAllergies, setAvailableAllergies] = useState<TAlergies[]>([]);
-
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    const allergies: TAlergies[] = userdata?.allergies ?? [];
-    setSelectedAllergies(allergies as TAlergies[]);
-    setAvailableAllergies(
-      allergyOptions.filter((item) => !allergies.includes(item))
-    );
-  }, [userdata?.allergies]);
-
-  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) {
-      toast.error("faild to upload image", { duration: 3000 });
-      return;
-    }
-    try {
-      const imageUrl = await imageUpload(file);
-      if (!imageUrl) {
-        toast.error("faild to upload image", { duration: 3000 });
-        return;
-      }
-      if (user?.role === USER_ROLE.mealProvider) {
-        const updatedData = { profileImage: imageUrl };
-        const result = await updateMealProviderProfile(updatedData);
-        if (result?.success) {
-          toast.success(result?.message, { duration: 3000 });
-        } else {
-          toast.error(result?.message, { duration: 3000 });
-        }
-        return;
-      }
-      if (user?.role === USER_ROLE.admin || user?.role === USER_ROLE.customer) {
-        const updatedData = { profileImage: imageUrl };
-        const result = await updateCustomerProfile(updatedData);
-        if (result?.success) {
-          toast.success(result?.message, { duration: 3000 });
-        } else {
-          toast.error(result?.message, { duration: 3000 });
-        }
-        return;
-      }
-    } catch (error: any) {
-      console.log(error);
-    }
-  };
-
-  const toggleExperienceEdit = () => {
-    setIsEditingExperience(!isEditingExperience);
-    setExperience(userdata?.experienceYears as number);
-  };
-
-  const toggleCertifiedEdit = () => {
-    setIsEditingCertified(!isEditingCertified);
-    setIsCertified(userdata?.isCertified as boolean);
-  };
-
-  const toggleLicenseEdit = () => {
-    setIsEditingLicense(!isEditingLicense);
-    setLicenseDocument(userdata?.licenseDocument as string);
-  };
-  const toggleBioEdit = () => {
-    setIsEditingBio(!isEditingBio);
-    setBio(userdata?.bio as string);
-  };
-
-  const toggleNameEdit = () => {
-    setIsEditingName(!isNameEditing);
-    setName(userdata?.name as string);
-  };
-
-  const toggleAdressEdit = () => {
-    setIsEditingAdress(!isAdressEditing);
-    setAdress(userdata?.address as string);
-  };
-
-  const handleEditToggle = () => {
-    if (isEditing && userdata?.allergies?.length) {
-      const addedItems: TAlergies[] = selectedAllergies.filter(
-        (item) => !userdata?.allergies!.includes(item)
-      );
-      const removedItems: TAlergies[] = userdata?.allergies!.filter(
-        (item) => !selectedAllergies.includes(item)
-      );
-
-      if (addedItems.length > 0 || removedItems.length > 0) {
-        handleSubmit(" ", addedItems, removedItems);
-      }
-    } else {
-      setBackupAllergies([...selectedAllergies]);
-    }
-
-    setIsEditing(!isEditing);
-  };
-
-  const handleRemove = (item: TAlergies) => {
-    setSelectedAllergies(selectedAllergies.filter((a) => a !== item));
-    setAvailableAllergies([...availableAllergies, item]);
-  };
-
-  const handleAdd = (item: TAlergies) => {
-    setSelectedAllergies([...selectedAllergies, item]);
-    setAvailableAllergies(availableAllergies.filter((a) => a !== item));
-  };
-
   const handleSubmit = async (
     field: string,
-    addAllergies: TAlergies[] | [],
-    removeAllergies: TAlergies[]
+    addOptions: TAlergies[] | [],
+    removeOptions: TAlergies[]
   ) => {
     const updatedData: Partial<TUpdatedUserData> = {};
     if (field === "name") {
       updatedData.name = name;
     }
     if (field === "address") {
-      updatedData.address = adress;
+      updatedData.address = address;
     }
     if (field === "date") {
       updatedData.dateOfBirth = selectedDate?.toString();
@@ -192,16 +73,8 @@ const ProfileCompnent = ({
         updatedData.experienceYears = experience;
         setIsEditingExperience(false);
       }
-      if (field === "certified") {
-        updatedData.isCertified = isCertified;
-        setIsEditingCertified(false);
-      }
-      if (field === "license") {
-        updatedData.licenseDocument = licenseDocument;
-        setIsEditingLicense(false);
-      }
       if (field === "bio") {
-        updatedData.bio = licenseDocument;
+        updatedData.bio = bio;
         setIsEditingBio(false);
       }
       try {
@@ -218,11 +91,11 @@ const ProfileCompnent = ({
     }
 
     if (user?.role === USER_ROLE.customer) {
-      if (addAllergies?.length > 0) {
-        updatedData.addAllergies = addAllergies;
+      if (addOptions?.length > 0) {
+        updatedData.addAllergies = addOptions;
       }
-      if (removeAllergies.length > 0) {
-        updatedData.removeAllergies = removeAllergies;
+      if (removeOptions.length > 0) {
+        updatedData.removeAllergies = removeOptions;
       }
       try {
         const result = await updateCustomerProfile(updatedData);
@@ -231,43 +104,23 @@ const ProfileCompnent = ({
         } else {
           toast.error(result?.message, { duration: 3000 });
         }
-        return;
       } catch (error: any) {
         console.log(error);
       }
     }
+    return;
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-6 ">
+    <section className="max-w-4xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-6 ">
+      {/* personal info starts here*/}
       <div className="col-span-2 flex flex-col md:flex-row items-center gap-6 p-6 bg-gradient-to-r from-indigo-100 to-blue-100 dark:from-indigo-900 dark:to-blue-900 shadow-lg rounded-2xl">
-        <label className="relative group cursor-pointer">
-          {userdata?.profileImage ? (
-            <Image
-              src={userdata?.profileImage}
-              alt="Profile"
-              width={400}
-              height={400}
-              className="rounded-full object-cover border-4 border-white shadow-md h-72 w-72"
-            />
-          ) : (
-            <div className="rounded-full border-4 border-white shadow-md h-72 w-72 bg-green-500"></div>
-          )}
-
-          <div className="absolute inset-0 bg-black bg-opacity-40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100  transition duration-500">
-            <FaCamera className="text-white text-2xl" />
-          </div>
-
-          <input
-            type="file"
-            accept="image/*"
-            ref={fileInputRef}
-            onChange={handleImageChange}
-            className="hidden"
-          />
-        </label>
-        <div className="text-center md:text-left ">
-          <div className="flex gap-2 ">
+        <ImageSection
+          image={userdata?.profileImage as string}
+          role={user?.role}
+        />
+        <div className="text-center md:text-left space-y-4">
+          <div>
             {isNameEditing ? (
               <input
                 type="text"
@@ -280,33 +133,14 @@ const ProfileCompnent = ({
                 {userdata?.name || "Unknown User"}
               </h2>
             )}
-            {isNameEditing ? (
-              <>
-                <button
-                  onClick={() => {
-                    handleSubmit("name", [], []);
-                  }}
-                  className="ml-4 text-blue-500 cursor-pointer"
-                >
-                  Save
-                </button>
-                <button
-                  onClick={toggleNameEdit}
-                  className="ml-4 text-purple-500 cursor-pointer"
-                >
-                  Cancel
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  onClick={toggleNameEdit}
-                  className=" text-blue-500 cursor-pointer"
-                >
-                  Edit
-                </button>
-              </>
-            )}
+            <EditComponent
+              setValue={setName}
+              isEditing={isNameEditing}
+              setIsEditing={setIsEditingName}
+              value={userdata?.name as string}
+              handleSubmit={handleSubmit}
+              field="name"
+            />
           </div>
           <div>
             {user?.verifiedWithEmail ? (
@@ -321,7 +155,6 @@ const ProfileCompnent = ({
               </span>
             )}
           </div>
-
           {user?.role === USER_ROLE.mealProvider && (
             <div>
               {isEditingBio ? (
@@ -335,31 +168,14 @@ const ProfileCompnent = ({
                   {userdata?.bio || "No bio provided."}
                 </p>
               )}
-              {isEditingBio ? (
-                <div>
-                  <button
-                    onClick={() => {
-                      handleSubmit("bio", [], []);
-                    }}
-                    className="ml-4 text-blue-500 cursor-pointer"
-                  >
-                    Save
-                  </button>
-                  <button
-                    onClick={toggleBioEdit}
-                    className="ml-4 text-purple-500 cursor-pointer"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              ) : (
-                <button
-                  onClick={toggleBioEdit}
-                  className="text-blue-500 cursor-pointer"
-                >
-                  Edit
-                </button>
-              )}
+              <EditComponent
+                setValue={setBio}
+                isEditing={isEditingBio}
+                setIsEditing={setIsEditingBio}
+                value={userdata?.bio as string}
+                handleSubmit={handleSubmit}
+                field="bio"
+              />
             </div>
           )}
           <div className="mt-4 flex flex-wrap gap-3 justify-center md:justify-start">
@@ -372,54 +188,54 @@ const ProfileCompnent = ({
               </span>
             )}
           </div>
-          <div className="inline-block mt-2">
+          <div>
             {isEditingDate ? (
               <div className="flex items-center gap-2">
                 <DatePicker
                   selected={selectedDate}
-                  onChange={(date) => setSelectedDate(date)}
+                  onChange={(date) => {
+                    setSelectedDate(date as Date);
+                    const age = calculateAge(date?.toDateString() as string);
+                    if (age < 18) {
+                      toast.error("your age should be over 18", {
+                        duration: 3000,
+                      });
+                      setSelectedDate(new Date(userdata.dateOfBirth as string));
+                      return;
+                    }
+                  }}
                   dateFormat="yyyy-MM-dd"
                   className="border p-2 rounded"
                   maxDate={new Date()}
                   showYearDropdown
                   scrollableYearDropdown
                 />
-                <button
-                  onClick={() => handleSubmit("date", [], [])}
-                  className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 transition cursor pointer"
-                >
-                  Save
-                </button>
-                <button
-                  onClick={() => setIsEditingDate(!isEditingDate)}
-                  className="px-3 py-1 bg-purple-500 text-white rounded hover:bg-gray-500 transition cursor pointer"
-                >
-                  Cancel
-                </button>
               </div>
             ) : (
-              userdata?.dateOfBirth && (
-                <div className="space-x-2">
-                  <span className="inline-block px-4 py-2 text-sm font-medium text-white bg-purple-600  transition rounded-full">
-                    {new Date(userdata.dateOfBirth).toDateString()} (
-                    {calculateAge(userdata.dateOfBirth)} years old)
-                  </span>
-                  <button
-                    onClick={() => setIsEditingDate(!isEditingDate)}
-                    className=" text-blue-500 cursor-pointer"
-                  >
-                    Edit
-                  </button>
-                </div>
-              )
+              <span className="inline-block px-4 py-2 text-sm font-medium text-white bg-purple-600  transition rounded-full">
+                {new Date(userdata.dateOfBirth as string).toDateString()} (
+                {calculateAge(userdata.dateOfBirth as string)} years old)
+              </span>
             )}
+            <EditComponent
+              setValue={setSelectedDate}
+              isEditing={isEditingDate}
+              setIsEditing={setIsEditingDate}
+              value={new Date(userdata.dateOfBirth as string)}
+              handleSubmit={handleSubmit}
+              field="date"
+              saveClass="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 transition cursor pointer ml-4"
+              cancelClass="px-3 py-1 bg-purple-500 text-white rounded hover:bg-gray-500 transition cursor pointer ml-4"
+            />
           </div>
         </div>
       </div>
+      {/* personal info ends here */}
 
+      {/* contact info starts here */}
       <div className="p-6 bg-gradient-to-r from-blue-100 to-indigo-200 shadow-lg rounded-xl">
         <div className="space-y-4">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center gap-4">
             <h3 className="text-2xl font-semibold text-indigo-800">
               {" "}
               Contact Information
@@ -432,23 +248,21 @@ const ProfileCompnent = ({
               Settings{" "}
             </Link>
           </div>
-
           <p className="flex items-center gap-3 text-lg font-medium text-gray-800 bg-white px-4 py-3 rounded-lg shadow-md hover:bg-blue-50 transition duration-300 ease-in-out">
             <FaEnvelope className="text-blue-500" />
             <span>{user?.email}</span>
           </p>
-
           <p className="flex items-center gap-3 text-lg font-medium text-gray-800 bg-white px-4 py-3 rounded-lg shadow-md hover:bg-green-50 transition duration-300 ease-in-out">
             <FaPhoneAlt className="text-green-500" />
             <span>{user?.phone}</span>
           </p>
 
-          <div className="flex items-center gap-3 bg-white px-4 py-3 rounded-lg shadow-md hover:bg-yellow-50 transition duration-300 ease-in-out">
-            {isAdressEditing ? (
+          <div className=" bg-white px-4 py-3 rounded-lg shadow-md hover:bg-yellow-50 transition duration-300 ease-in-out">
+            {isAddressEditing ? (
               <input
                 type="text"
-                value={adress}
-                onChange={(e) => setAdress(e.target.value)}
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
                 className="px-2 py-1 border rounded-md w-44"
               />
             ) : (
@@ -457,37 +271,20 @@ const ProfileCompnent = ({
                 <span>{userdata?.address || "Not Provided"}</span>
               </p>
             )}
-            {isAdressEditing ? (
-              <>
-                <button
-                  onClick={() => {
-                    handleSubmit("address", [], []);
-                  }}
-                  className="ml-4 text-blue-500 cursor-pointer"
-                >
-                  Save
-                </button>
-                <button
-                  onClick={toggleAdressEdit}
-                  className="ml-4 text-purple-500 cursor-pointer"
-                >
-                  Cancel
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  onClick={toggleAdressEdit}
-                  className=" text-blue-500 cursor-pointer"
-                >
-                  Edit
-                </button>
-              </>
-            )}
+            <EditComponent
+              setValue={setAddress}
+              isEditing={isAddressEditing}
+              setIsEditing={setIsAddressEditing}
+              value={userdata?.address as string}
+              handleSubmit={handleSubmit}
+              field="address"
+            />
           </div>
         </div>
       </div>
+      {/* contact info ends here */}
 
+      {/* detailed information starts here */}
       <div className="p-6 bg-gradient-to-r from-teal-100 to-cyan-200 shadow-lg rounded-xl space-y-6">
         <div className="flex justify-between items-center">
           <h3 className="text-2xl font-semibold text-indigo-800">Details</h3>
@@ -506,7 +303,6 @@ const ProfileCompnent = ({
               <GiCookingGlove className="text-green-600" />
               <span>Kitchen : {userdata?.hasKitchen ? "Yes" : "No"}</span>
             </div>
-
             <div className="flex items-center gap-3 text-lg font-medium text-gray-800 bg-white px-4 py-3 rounded-lg shadow-md hover:bg-teal-50 transition duration-300 ease-in-out">
               {isEditingExperience ? (
                 <input
@@ -518,184 +314,27 @@ const ProfileCompnent = ({
               ) : (
                 <span>Experience: {userdata?.experienceYears} years</span>
               )}
-              {isEditingExperience ? (
-                <>
-                  <button
-                    onClick={() => {
-                      handleSubmit("experience", [], []);
-                    }}
-                    className="ml-4 text-teal-500 cursor-pointer"
-                  >
-                    Save
-                  </button>
-                  <button
-                    onClick={toggleExperienceEdit}
-                    className="ml-4 text-teal-500 cursor-pointer"
-                  >
-                    Cancel
-                  </button>
-                </>
-              ) : (
-                <button
-                  onClick={toggleExperienceEdit}
-                  className="ml-4 text-teal-500 cursor-pointer"
-                >
-                  Edit
-                </button>
-              )}
+              <EditComponent
+                setValue={setExperience}
+                isEditing={isEditingExperience}
+                setIsEditing={setIsEditingExperience}
+                value={userdata?.experienceYears as number}
+                handleSubmit={handleSubmit}
+                field="experience"
+              />
             </div>
-
-            <div className="flex items-center gap-3 text-lg font-medium text-gray-800 bg-white px-4 py-3 rounded-lg shadow-md hover:bg-blue-50 transition duration-300 ease-in-out">
-              {isEditingCertified ? (
-                <select
-                  value={isCertified ? "Yes" : "No"}
-                  onChange={(e) => setIsCertified(e.target.value === "Yes")}
-                  className="px-2 py-1 shadow-lg rounded-md outline-none"
-                >
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
-              ) : (
-                <>
-                  <MdVerified className="text-blue-500" />
-                  <span>Certified: {userdata?.isCertified ? "Yes" : "No"}</span>
-                </>
-              )}
-              {isEditingCertified ? (
-                <>
-                  <button
-                    onClick={() => {
-                      handleSubmit("certified", [], []);
-                    }}
-                    className="ml-4 text-blue-500 cursor-pointer"
-                  >
-                    Save
-                  </button>
-                  <button
-                    onClick={toggleCertifiedEdit}
-                    className="ml-4 text-blue-500 cursor-pointer"
-                  >
-                    Cancel
-                  </button>
-                </>
-              ) : (
-                <button
-                  onClick={toggleCertifiedEdit}
-                  className="ml-4 text-blue-500 cursor-pointer"
-                >
-                  Edit
-                </button>
-              )}
-            </div>
-
-            {userdata?.licenseDocument && (
-              <div className="flex items-center gap-3 text-lg font-medium text-gray-800 bg-white px-4 py-3 rounded-lg shadow-md hover:bg-purple-50 transition duration-300 ease-in-out">
-                {isEditingLicense ? (
-                  <input
-                    type="text"
-                    value={licenseDocument}
-                    onChange={(e) => setLicenseDocument(e.target.value)}
-                    className="px-2 py-1 border rounded-md w-44"
-                  />
-                ) : (
-                  <>
-                    <span>
-                      License No:{" "}
-                      {userdata?.licenseDocument
-                        ? userdata?.licenseDocument
-                        : "Not Provided"}
-                    </span>
-                  </>
-                )}
-                {isEditingLicense ? (
-                  <>
-                    <button
-                      onClick={() => {
-                        handleSubmit("license", [], []);
-                      }}
-                      className="ml-4 text-blue-500 cursor-pointer"
-                    >
-                      Save
-                    </button>
-                    <button
-                      onClick={toggleLicenseEdit}
-                      className="ml-4 text-purple-500 cursor-pointer"
-                    >
-                      Cancel
-                    </button>
-                  </>
-                ) : (
-                  <button
-                    onClick={toggleLicenseEdit}
-                    className="ml-4 text-blue-500 cursor-pointer"
-                  >
-                    Edit
-                  </button>
-                )}
-              </div>
-            )}
           </>
         )}
         {user?.role === USER_ROLE.customer && (
-          <div className="mt-4">
-            <div className="flex justify-between items-center">
-              <h4 className="text-lg font-semibold text-indigo-700">
-                Allergies:
-              </h4>
-              <button
-                onClick={handleEditToggle}
-                className="text-sm px-3 py-1 rounded-md bg-indigo-100 hover:bg-indigo-200 text-indigo-700 transition"
-              >
-                {isEditing ? "Done" : "Edit"}
-              </button>
-            </div>
-
-            {selectedAllergies.length > 0 ? (
-              <ul className="flex flex-wrap gap-2 mt-2">
-                {selectedAllergies.map((item, i) => (
-                  <li
-                    key={i}
-                    className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm flex items-center gap-2"
-                  >
-                    {item}
-                    {isEditing && (
-                      <button
-                        onClick={() => handleRemove(item)}
-                        className="text-red-500 hover:text-red-700 text-xs"
-                      >
-                        ✕
-                      </button>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-gray-500 mt-2">None specified</p>
-            )}
-
-            {isEditing && availableAllergies.length > 0 && (
-              <div className="mt-3 flex items-center gap-2">
-                <select
-                  onChange={(e) => {
-                    const selected = e.target.value as TAlergies;
-                    if (selected) handleAdd(selected);
-                    e.target.selectedIndex = 0;
-                  }}
-                  className="border px-3 py-1 rounded text-sm"
-                >
-                  <option value="">Select allergy to add</option>
-                  {availableAllergies.map((item, i) => (
-                    <option key={i} value={item}>
-                      {item}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
-          </div>
+          <EditArray
+            value={userdata?.allergies as TAlergies[]}
+            valueOptions={allergyOptions}
+            handleSubmit={handleSubmit}
+          />
         )}
       </div>
-    </div>
+      {/* detailed information ends here */}
+    </section>
   );
 };
 

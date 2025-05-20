@@ -42,7 +42,7 @@ const InputSelect = ({
             </>
           ) : (
             <>
-              <option value="">Select {label}</option>
+              <option value="">{label}</option>
               {options.map((g) => (
                 <option key={g as string} value={g as string}>
                   {g}

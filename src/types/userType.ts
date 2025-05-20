@@ -26,8 +26,6 @@ export type TUserData = {
   address: string;
   hasKitchen: boolean;
   experienceYears: number;
-  isCertified: boolean;
-  licenseDocument: string;
   allergies: TAlergies[];
 };
 

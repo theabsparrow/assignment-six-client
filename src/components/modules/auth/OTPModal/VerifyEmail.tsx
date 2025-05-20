@@ -38,7 +38,7 @@ const VerifyEmail = ({ isEditing }: { isEditing: boolean }) => {
         <div>
           <button
             onClick={handleModalOpen}
-            className="px-2 py-1 text-white text-sm  font-semibold bg-gradient-to-r from-indigo-500 to-blue-500 hover:from-indigo-600 hover:to-blue-600 transition duration-300 rounded-lg shadow-md focus:outline-none"
+            className="px-2 py-1 text-white text-sm  font-semibold bg-gradient-to-r from-indigo-500 to-blue-500 hover:from-indigo-600 hover:to-blue-600 transition duration-300 rounded-lg shadow-md focus:outline-none cursor-pointer"
           >
             Verify Email
           </button>

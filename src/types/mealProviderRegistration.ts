@@ -14,7 +14,5 @@ export type TMealproviderRegistrationData = {
     dateOfBirth: string;
     bio: string;
     experienceYears?: number;
-    isCertified: boolean;
-    licenseDocument?: string;
   };
 };
