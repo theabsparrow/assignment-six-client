@@ -1,5 +1,5 @@
 import { KitchenProfileCardProps } from "@/types/kitchenType";
-import { CheckCircle, Mail, MapPin, Phone } from "lucide-react";
+import { CheckCircle, MapPin } from "lucide-react";
 import Image from "next/image";
 
 const KitchenProfile = ({
@@ -13,7 +13,7 @@ const KitchenProfile = ({
         <div className="md:flex">
           <div>
             <Image
-              src={kitchenInfo?.kitchenPhotos}
+              src={kitchenInfo?.kitchenPhoto}
               alt="Profile"
               width={900}
               height={900}
@@ -31,12 +31,6 @@ const KitchenProfile = ({
             <div className="flex items-center text-gray-700">
               <MapPin className="w-5 h-5 mr-2" /> {kitchenInfo?.location}
             </div>
-            <div className="flex items-center text-gray-700">
-              <Phone className="w-5 h-5 mr-2" /> {kitchenInfo?.phoneNumber}
-            </div>
-            <div className="flex items-center text-gray-700">
-              <Mail className="w-5 h-5 mr-2" /> {kitchenInfo?.email}
-            </div>
 
             {kitchenInfo?.hygieneCertified && (
               <div className="flex items-center text-green-600 font-medium">
@@ -46,7 +40,12 @@ const KitchenProfile = ({
 
             {kitchenInfo?.licenseOrCertificate && (
               <div className="text-sm text-gray-600">
-                License: {kitchenInfo?.licenseOrCertificate}
+                License:{" "}
+                <iframe
+                  src={`${kitchenInfo?.licenseOrCertificate}?attachment=false`}
+                  width="100%"
+                  height="600px"
+                />
               </div>
             )}
 

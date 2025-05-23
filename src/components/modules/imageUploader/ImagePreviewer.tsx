@@ -1,3 +1,5 @@
+"use client";
+
 import { X } from "lucide-react";
 import Image from "next/image";
 
@@ -16,6 +18,7 @@ const ImagePreviewer = ({
     setImageFile("");
     setImagePreview("");
   };
+
   return (
     <div className="relative w-36 h-36 rounded-md overflow-hidden border border-dashed border-gray-300">
       <Image
@@ -27,7 +30,7 @@ const ImagePreviewer = ({
       />
       <button
         type="button"
-        onClick={() => handleRemove()}
+        onClick={handleRemove}
         className="bg-red-300 hover:bg-red-400 absolute -top-0 -right-0 w-6 h-6 p-0 rounded-full cursor-pointer"
       >
         <X className="w-4 h-4 mx-auto" />

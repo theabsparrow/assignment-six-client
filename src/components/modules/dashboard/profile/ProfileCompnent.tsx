@@ -25,6 +25,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import EditComponent from "../editComponent/EditComponent";
 import ImageSection from "./ImageSection";
 import EditArray from "../editArrayComponent/EditArray";
+import Modal from "../warningModal/Modal";
 
 const ProfileCompnent = ({
   user,
@@ -289,12 +290,32 @@ const ProfileCompnent = ({
         <div className="flex justify-between items-center">
           <h3 className="text-2xl font-semibold text-indigo-800">Details</h3>
           {user?.role === USER_ROLE.mealProvider && (
-            <Link
-              className="bg-purple-500 px-2 py-1 rounded-xl text-white hover:bg-indigo-800 dark:bg-gray-500 duration-500"
-              href="/mealProvider/myKitchen"
-            >
-              {userdata?.hasKitchen ? "View Kitchen" : "Create Kitchen"}
-            </Link>
+            <>
+              {!user?.verifiedWithEmail && !userdata?.hasKitchen ? (
+                <Modal label="create Kitchen" />
+              ) : (
+                <Link
+                  className="bg-purple-500 px-2 py-1 rounded-xl text-white hover:bg-indigo-800 dark:bg-gray-500 duration-500"
+                  href="/mealProvider/myKitchen"
+                >
+                  {userdata?.hasKitchen ? "View Kitchen" : "Create Kitchen"}
+                </Link>
+              )}
+            </>
+          )}
+          {user?.role === USER_ROLE.customer && (
+            <>
+              {user?.verifiedWithEmail ? (
+                <Link
+                  className="bg-purple-500 px-2 py-1 rounded-xl text-white hover:bg-indigo-800 dark:bg-gray-500 duration-500"
+                  href="/user/createPlan"
+                >
+                  Create Plan
+                </Link>
+              ) : (
+                <Modal label="create meal" />
+              )}
+            </>
           )}
         </div>
         {user?.role === USER_ROLE.mealProvider && (

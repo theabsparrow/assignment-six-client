@@ -5,7 +5,7 @@ import { getMyKitchen } from "@/services/kitchenService";
 
 const KitchenComponent = async () => {
   const { data } = await getMyProfle();
-  const userdata = data?.userdata;
+  const { userdata, user } = data;
 
   const { data: kitchenInfo } = await getMyKitchen();
 
@@ -14,7 +14,7 @@ const KitchenComponent = async () => {
       {userdata?.hasKitchen ? (
         <KitchenProfile kitchenInfo={kitchenInfo} />
       ) : (
-        <CreateKitchen />
+        <CreateKitchen verifiedEmail={user?.verifiedWithEmail} />
       )}
     </div>
   );

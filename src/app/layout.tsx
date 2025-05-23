@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import Providers from "@/providers/Providers";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,14 +27,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="light">
-      <Providers>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100`}
-        >
-          <Toaster richColors position="top-center" />
-          {children}
-        </body>
-      </Providers>
+      <EdgeStoreProvider>
+        <Providers>
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100`}
+          >
+            <Toaster richColors position="top-center" />
+            {children}
+          </body>
+        </Providers>
+      </EdgeStoreProvider>
     </html>
   );
 }
