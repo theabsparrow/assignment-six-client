@@ -1,3 +1,5 @@
+"use client";
+
 import { KitchenProfileCardProps } from "@/types/kitchenType";
 import { CheckCircle, MapPin } from "lucide-react";
 import Image from "next/image";

@@ -5,6 +5,7 @@ import { config } from "@/config";
 import { TOrder, TOrderStatus } from "@/types/orderTypes";
 import { revalidateTag } from "next/cache";
 import { getValidToken } from "../authService/validToken";
+import { cookies } from "next/headers";
 
 export const createOrder = async (orderInfo: TOrder, id: string) => {
   const token = await getValidToken();
@@ -28,7 +29,8 @@ export const createOrder = async (orderInfo: TOrder, id: string) => {
 };
 
 export const getCustomerOrder = async () => {
-  const token = await getValidToken();
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refreshToken")!.value;
   try {
     const res = await fetch(`${config.next_public_base_api}/order/myOrders`, {
       method: "GET",
@@ -47,7 +49,8 @@ export const getCustomerOrder = async () => {
 };
 
 export const getMealProviderOrder = async () => {
-  const token = await getValidToken();
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refreshToken")!.value;
   try {
     const res = await fetch(
       `${config.next_public_base_api}/order/mealProvider-orders`,

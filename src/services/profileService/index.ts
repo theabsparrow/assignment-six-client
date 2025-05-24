@@ -29,29 +29,6 @@ export const getMyProfle = async () => {
   }
 };
 
-export const getMyInfo = async () => {
-  try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("refreshToken")?.value;
-    if (!token) {
-      throw new Error("you are not authorized");
-    }
-    const res = await fetch(`${config.next_public_base_api}/user/my-info`, {
-      method: "GET",
-      headers: {
-        Authorization: token,
-      },
-      next: {
-        tags: ["UserInfo"],
-      },
-    });
-    const result = await res.json();
-    return result;
-  } catch (error: any) {
-    return Error(error);
-  }
-};
-
 export const updateCustomerProfile = async (
   updatedData: Partial<TUpdatedUserData>
 ) => {

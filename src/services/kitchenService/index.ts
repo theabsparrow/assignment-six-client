@@ -55,8 +55,12 @@ export const getMyKitchen = async () => {
 };
 
 export const getAllKitchen = async () => {
-  const token = await getValidToken();
   try {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("refreshToken")?.value;
+    if (!token) {
+      throw new Error("you are not authorized");
+    }
     const res = await fetch(
       `${config.next_public_base_api}/kitchen/all-kitchen`,
       {

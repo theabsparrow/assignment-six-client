@@ -135,7 +135,7 @@ const MyMealsComponent = ({
   ];
   return (
     <>
-      {!result?.length && (
+      {!(result as TMealFormData[])?.length && (
         <div className="flex flex-col items-center justify-center py-10 px-4 bg-gradient-to-r from-pink-100 to-blue-100 rounded-xl shadow-md">
           <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
             No Meals Available Right Now

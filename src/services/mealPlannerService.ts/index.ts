@@ -5,6 +5,7 @@ import { config } from "@/config";
 import { TMealPlanner } from "@/types/MealPlanType";
 import { revalidateTag } from "next/cache";
 import { getValidToken } from "../authService/validToken";
+import { cookies } from "next/headers";
 
 export const createMealPlan = async (MealPlanner: TMealPlanner) => {
   const token = await getValidToken();
@@ -29,7 +30,8 @@ export const createMealPlan = async (MealPlanner: TMealPlanner) => {
 };
 
 export const getMyPlans = async () => {
-  const token = await getValidToken();
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refreshToken")!.value;
   try {
     const res = await fetch(
       `${config.next_public_base_api}/mealPlanner/get-myPlans`,

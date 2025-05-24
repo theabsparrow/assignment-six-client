@@ -1,3 +1,5 @@
+"use client";
+
 import { KitchenProfileCardProps } from "@/types/kitchenType";
 import { BadgeCheck, XCircle } from "lucide-react";
 import Image from "next/image";
@@ -11,9 +13,9 @@ const KitchenCard = ({
   return (
     <div className="bg-white dark:bg-gray-800 shadow-md rounded-2xl overflow-hidden max-w-sm w-full transition hover:shadow-lg">
       <div className="relative h-48 w-full">
-        {kitchenData?.kitchenPhotos ? (
+        {kitchenData?.kitchenPhoto ? (
           <Image
-            src={kitchenData.kitchenPhotos}
+            src={kitchenData.kitchenPhoto}
             alt={kitchenData?.kitchenName || "Kitchen Image"}
             fill
             className="object-cover"

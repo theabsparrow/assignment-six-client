@@ -201,7 +201,9 @@ const ProfileCompnent = ({
                       toast.error("your age should be over 18", {
                         duration: 3000,
                       });
-                      setSelectedDate(new Date(userdata.dateOfBirth as string));
+                      setSelectedDate(
+                        new Date(userdata?.dateOfBirth as string)
+                      );
                       return;
                     }
                   }}
@@ -214,15 +216,15 @@ const ProfileCompnent = ({
               </div>
             ) : (
               <span className="inline-block px-4 py-2 text-sm font-medium text-white bg-purple-600  transition rounded-full">
-                {new Date(userdata.dateOfBirth as string).toDateString()} (
-                {calculateAge(userdata.dateOfBirth as string)} years old)
+                {new Date(userdata?.dateOfBirth as string).toDateString()} (
+                {calculateAge(userdata?.dateOfBirth as string)} years old)
               </span>
             )}
             <EditComponent
               setValue={setSelectedDate}
               isEditing={isEditingDate}
               setIsEditing={setIsEditingDate}
-              value={new Date(userdata.dateOfBirth as string)}
+              value={new Date(userdata?.dateOfBirth as string)}
               handleSubmit={handleSubmit}
               field="date"
               saveClass="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 transition cursor pointer ml-4"

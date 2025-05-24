@@ -3,8 +3,8 @@ import { getMyMeals } from "@/services/mealService";
 
 const MyMeals = async () => {
   const { data } = await getMyMeals();
-  const { meta, result } = data;
-  console.log(result);
+  const meta = data?.meta;
+  const result = data?.result;
   return (
     <div className="min-h-screen mx-auto">
       <MyMealsComponent meta={meta} result={result} />
