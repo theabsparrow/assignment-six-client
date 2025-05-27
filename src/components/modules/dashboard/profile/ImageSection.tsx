@@ -52,24 +52,23 @@ const ImageSection = ({ image, role }: { image: string; role: string }) => {
   };
 
   return (
-    <div>
-      <label className="relative group cursor-pointer">
-        {image ? (
-          <Image
-            src={image}
-            alt="Profile"
-            width={400}
-            height={400}
-            className="rounded-full object-cover border-4 border-white shadow-md h-72 w-72"
-          />
-        ) : (
-          <div className="rounded-full border-4 border-white shadow-md h-72 w-72 bg-green-500"></div>
-        )}
+    <div className="relative w-72 h-72">
+      {image ? (
+        <Image
+          src={image}
+          alt="Profile"
+          width={400}
+          height={400}
+          className="rounded-full object-cover border-4 border-white shadow-md w-72 h-72"
+        />
+      ) : (
+        <div className="rounded-full border-4 border-white shadow-md w-72 h-72 bg-green-500"></div>
+      )}
 
-        <div className="absolute inset-0 bg-black bg-opacity-40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100  transition duration-500">
-          <FaCamera className="text-white text-2xl" />
+      <label className="absolute bottom-1 right-18 z-10 cursor-pointer">
+        <div className="bg-white p-2 rounded-full">
+          <FaCamera className="text-black group-hover:text-white text-2xl transition duration-300" />
         </div>
-
         <input
           type="file"
           accept="image/*"

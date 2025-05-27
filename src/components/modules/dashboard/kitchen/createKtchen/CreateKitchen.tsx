@@ -41,8 +41,6 @@ const CreateKitchen = ({ verifiedEmail }: { verifiedEmail: boolean }) => {
   const [imagePreview, setImagePreview] = useState<string>("");
   const [licensePdfFile, setLicensePdfFile] = useState<File | "">("");
   const [hygienePdf, setHygienePdf] = useState<File | "">("");
-  const [licensePdfText, setLicensePdfText] = useState("");
-  const [hyginePdfText, setHyginePdfText] = useState("");
   const { edgestore } = useEdgeStore();
 
   const onSubmit = async (data: TKitchen) => {
@@ -138,14 +136,6 @@ const CreateKitchen = ({ verifiedEmail }: { verifiedEmail: boolean }) => {
               options={dhakaAreas}
               required={true}
             />
-            <InputType
-              label="Experience"
-              name="foodHandlerExperience"
-              register={register}
-              error={errors.foodHandlerExperience}
-              type="text"
-              required={true}
-            />
 
             {imagePreview ? (
               <ImagePreviewer
@@ -164,8 +154,6 @@ const CreateKitchen = ({ verifiedEmail }: { verifiedEmail: boolean }) => {
             {watch("kitchenType") === "Commercial" && (
               <PdfUploader
                 setPdfFile={setLicensePdfFile}
-                setPdfName={setLicensePdfText}
-                pdfName={licensePdfText}
                 label="License Certificate"
                 id="license-upload"
               />
@@ -196,8 +184,6 @@ const CreateKitchen = ({ verifiedEmail }: { verifiedEmail: boolean }) => {
             {watch("hygieneCertified") === true && (
               <PdfUploader
                 setPdfFile={setHygienePdf}
-                setPdfName={setHyginePdfText}
-                pdfName={hyginePdfText}
                 label="Hygiene Certificate"
                 id="hygiene-upload"
               />

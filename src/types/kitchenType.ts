@@ -9,16 +9,15 @@ export type TCookingDay =
   | "Saturday";
 
 export type FoodPreferenceOption = "Veg" | "Non-Veg" | "Mixed";
-
+export type TKitchenType = "Home-based" | "Commercial";
 export type TKitchen = {
   kitchenName: string;
-  kitchenType: "Home-based" | "Commercial";
+  kitchenType: TKitchenType;
   location: string;
   kitchenPhoto: string;
   hygieneCertified: boolean;
   hygieneCertificate?: string;
   licenseOrCertificate?: string;
-  foodHandlerExperience: string;
   foodPreference: FoodPreferenceOption[];
   mealTimePerDay: TMealTime[];
   cookingDays: TCookingDay[];
@@ -34,7 +33,6 @@ export interface KitchenProfileCardProps {
   hygieneCertified: boolean;
   hygieneCertificate?: string;
   licenseOrCertificate?: string;
-  foodHandlerExperience: string;
   foodPreference: string[];
   mealTimePerDay: string[];
   cookingDays: string[];

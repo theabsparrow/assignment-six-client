@@ -1,20 +1,15 @@
 import { X } from "lucide-react";
+import { useState } from "react";
 
 type TPdfUploader = {
   setPdfFile: React.Dispatch<React.SetStateAction<File | "">>;
-  setPdfName: React.Dispatch<React.SetStateAction<string | "">>;
-  pdfName: string;
   label: string;
   id: string;
 };
 
-const PdfUploader = ({
-  setPdfFile,
-  setPdfName,
-  pdfName,
-  label,
-  id,
-}: TPdfUploader) => {
+const PdfUploader = ({ setPdfFile, label, id }: TPdfUploader) => {
+  const [pdfName, setPdfName] = useState("");
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] as File;
     setPdfFile(file);
@@ -40,7 +35,7 @@ const PdfUploader = ({
 
       {pdfName ? (
         <div className="relative border">
-          <h1>
+          <h1 className="px-2">
             {pdfName.length > 15
               ? pdfName.split(".")[0].slice(0, 15) +
                 "..." +

@@ -58,26 +58,72 @@ const ProfileCompnent = ({
     removeOptions: TAlergies[]
   ) => {
     const updatedData: Partial<TUpdatedUserData> = {};
+
     if (field === "name") {
-      updatedData.name = name;
-    }
-    if (field === "address") {
-      updatedData.address = address;
-    }
-    if (field === "date") {
-      updatedData.dateOfBirth = selectedDate?.toString();
+      if (name.trim() === userdata?.name) {
+        toast.error("nothing to update", { duration: 3000 });
+        return;
+      } else {
+        updatedData.name = name;
+        setIsEditingName(false);
+      }
     }
 
-    if (user?.role === USER_ROLE.mealProvider) {
-      console.log(updatedData);
-      if (field === "experience") {
+    if (field === "address") {
+      if (address.trim() === userdata?.address) {
+        toast.error("nothing to update", { duration: 3000 });
+        return;
+      } else {
+        updatedData.address = address;
+        setIsAddressEditing(false);
+      }
+    }
+
+    if (field === "date") {
+      if (selectedDate?.toString() === userdata?.dateOfBirth) {
+        toast.error("nothing to update", { duration: 3000 });
+        return;
+      } else {
+        updatedData.dateOfBirth = selectedDate?.toString();
+        setIsEditingDate(false);
+      }
+    }
+
+    if (addOptions?.length > 0) {
+      updatedData.addAllergies = addOptions;
+    }
+    if (removeOptions.length > 0) {
+      updatedData.removeAllergies = removeOptions;
+    }
+
+    if (field === "experience") {
+      if (experience === userdata?.experienceYears) {
+        toast.error("nothing to update", { duration: 3000 });
+        return;
+      } else {
         updatedData.experienceYears = experience;
         setIsEditingExperience(false);
       }
-      if (field === "bio") {
+    }
+
+    if (field === "bio") {
+      if (bio === userdata?.bio) {
+        toast.error("nothing to update", { duration: 3000 });
+        return;
+      } else {
         updatedData.bio = bio;
         setIsEditingBio(false);
       }
+    }
+
+    const hasEmptyString = Object.values(updatedData).some(
+      (value) => typeof value === "string" && value.trim() === ""
+    );
+    if (hasEmptyString) {
+      toast.error("you have to provide a proper value");
+      return;
+    }
+    if (user?.role === USER_ROLE.mealProvider) {
       try {
         const result = await updateMealProviderProfile(updatedData);
         if (result?.success) {
@@ -92,12 +138,6 @@ const ProfileCompnent = ({
     }
 
     if (user?.role === USER_ROLE.customer) {
-      if (addOptions?.length > 0) {
-        updatedData.addAllergies = addOptions;
-      }
-      if (removeOptions.length > 0) {
-        updatedData.removeAllergies = removeOptions;
-      }
       try {
         const result = await updateCustomerProfile(updatedData);
         if (result?.success) {
@@ -108,8 +148,8 @@ const ProfileCompnent = ({
       } catch (error: any) {
         console.log(error);
       }
+      return;
     }
-    return;
   };
 
   return (
@@ -126,7 +166,10 @@ const ProfileCompnent = ({
               <input
                 type="text"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setName(value);
+                }}
                 className="px-2 py-1 border rounded-md w-44 dark:bg-gray-800 dark:text-white dark:border-gray-600"
               />
             ) : (
