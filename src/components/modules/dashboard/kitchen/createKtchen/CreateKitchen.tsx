@@ -76,6 +76,7 @@ const CreateKitchen = ({ verifiedEmail }: { verifiedEmail: boolean }) => {
           toast.error("faild to upload lisence certificate", {
             duration: 3000,
           });
+          return;
         }
         data.licenseOrCertificate = licenseOrCertificate as string;
       }
@@ -85,12 +86,14 @@ const CreateKitchen = ({ verifiedEmail }: { verifiedEmail: boolean }) => {
           toast.error("faild to upload hygiene certificate", {
             duration: 3000,
           });
+          return;
         }
         data.hygieneCertificate = hygieneCertificate as string;
       }
       const kitchenImage = imageFile ? await imageUpload(imageFile) : undefined;
       if (!kitchenImage) {
         toast.error("faild to upload image", { duration: 3000 });
+        return;
       }
       data.kitchenPhoto = kitchenImage as string;
       const result = await createKitchen(data);

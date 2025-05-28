@@ -391,11 +391,14 @@ const ProfileCompnent = ({
             </div>
           </>
         )}
+
         {user?.role === USER_ROLE.customer && (
           <EditArray
             value={userdata?.allergies as TAlergies[]}
             valueOptions={allergyOptions}
             handleSubmit={handleSubmit}
+            label="Allergies"
+            style="flex justify-between items-center"
           />
         )}
       </div>

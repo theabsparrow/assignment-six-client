@@ -24,6 +24,17 @@ export type TKitchen = {
   specialEquipments?: string | string[];
 };
 
+export interface TExtendedKitchen extends TKitchen {
+  addFoodPreference: FoodPreferenceOption[];
+  removeFoodPreference: FoodPreferenceOption[];
+  addMealTimePerDay: TMealTime[];
+  removeMealTimePerDay: TMealTime[];
+  addCookingDays: TCookingDay[];
+  removeCookingDays: TCookingDay[];
+  addSpecialEquipments: string[];
+  removeSpecialEquipments: string[];
+}
+
 export interface KitchenProfileCardProps {
   kitchenName: string;
   kitchenType: "Home-based" | "Commercial";

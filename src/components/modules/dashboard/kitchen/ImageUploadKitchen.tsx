@@ -1,5 +1,7 @@
 "use client";
 
+import { updateKitchen } from "@/services/kitchenService";
+import { TKitchen } from "@/types/kitchenType";
 import { imageUpload } from "@/utills/imageUploader";
 import Image from "next/image";
 import { useRef } from "react";
@@ -15,11 +17,19 @@ const ImageUploadKitchen = ({ image }: { image: string }) => {
       toast.error("faild to upload image", { duration: 3000 });
       return;
     }
+    const updatedData: Partial<TKitchen> = {};
     try {
       const imageUrl = await imageUpload(file);
       if (!imageUrl) {
         toast.error("faild to upload image", { duration: 3000 });
         return;
+      }
+      updatedData.kitchenPhoto = imageUrl;
+      const result = await updateKitchen(updatedData);
+      if (result?.success) {
+        toast.success(result?.message, { duration: 3000 });
+      } else {
+        toast.error(result?.message, { duration: 3000 });
       }
     } catch (error: any) {
       console.log(error);

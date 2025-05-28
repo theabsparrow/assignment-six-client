@@ -1,18 +1,30 @@
 "use client";
 
 import {
+  FoodPreferenceOption,
   KitchenProfileCardProps,
-  TKitchen,
+  TCookingDay,
+  TExtendedKitchen,
   TKitchenType,
+  TMealTime,
 } from "@/types/kitchenType";
 import { CheckCircle, CircleX, MapPin } from "lucide-react";
 import ImageUploadKitchen from "./ImageUploadKitchen";
 import Link from "next/link";
 import { useState } from "react";
 import EditComponent from "../editComponent/EditComponent";
-import { kitchenType } from "./kitchen.const";
+import {
+  foodPreferance,
+  kitchenType,
+  mealTime,
+  weekDays,
+} from "./kitchen.const";
 import PdfUploader from "../../pdfUploader/PdfUploader";
 import { toast } from "sonner";
+import pdfUpload from "@/utills/pdfUpload";
+import { useEdgeStore } from "@/lib/edgestore";
+import { updateKitchen } from "@/services/kitchenService";
+import EditArray from "../editArrayComponent/EditArray";
 
 const KitchenProfile = ({
   kitchenInfo,
@@ -21,6 +33,7 @@ const KitchenProfile = ({
   kitchenInfo: KitchenProfileCardProps;
   verifiedEmail: boolean;
 }) => {
+  const { edgestore } = useEdgeStore();
   // kitchen name
   const [isKitchenNameEditing, setIsKitchenNameEditing] = useState(false);
   const [KitchenName, setKitchenName] = useState(
@@ -52,18 +65,16 @@ const KitchenProfile = ({
       toast.error("You need to verify your email at first", { duration: 3000 });
       return;
     }
-
-    const updatedData: Partial<TKitchen> = {};
+    const updatedData: Partial<TExtendedKitchen> = {};
     if (field === "kitchenName") {
       if (KitchenName.trim() === kitchenInfo?.kitchenName) {
         toast.error("nothing to update", { duration: 3000 });
         return;
       } else {
-        updatedData.kitchenName = KitchenName;
+        updatedData.kitchenName = KitchenName.trim();
         setIsKitchenNameEditing(false);
       }
     }
-
     if (field === "location") {
       if (location.trim() === kitchenInfo?.location) {
         toast.error("nothing to update", { duration: 3000 });
@@ -73,7 +84,6 @@ const KitchenProfile = ({
         setIsLocationEditing(false);
       }
     }
-
     if (field === "kitchenType") {
       if (typeofKitchen == "Commercial" && !licensePdfFile) {
         toast.error("nothing to update", { duration: 3000 });
@@ -82,7 +92,6 @@ const KitchenProfile = ({
       updatedData.kitchenType = typeofKitchen;
       setIsTypeEditing(false);
     }
-
     if (field === "hygiene") {
       if (hygine && !hygienePdf) {
         toast.error("nothing to update", { duration: 3000 });
@@ -92,12 +101,73 @@ const KitchenProfile = ({
       setIsHygieneEditing(false);
     }
 
+    if (field === "Food Preferences") {
+      if (addOptions?.length > 0) {
+        updatedData.addFoodPreference = addOptions as FoodPreferenceOption[];
+      }
+      if (removeOptions.length > 0) {
+        updatedData.removeFoodPreference =
+          removeOptions as FoodPreferenceOption[];
+      }
+    }
+
+    if (field === "Meal Times") {
+      if (addOptions?.length > 0) {
+        updatedData.addMealTimePerDay = addOptions as TMealTime[];
+      }
+      if (removeOptions.length > 0) {
+        updatedData.removeMealTimePerDay = removeOptions as TMealTime[];
+      }
+    }
+
+    if (field === "Cooking Days") {
+      if (addOptions?.length > 0) {
+        updatedData.addCookingDays = addOptions as TCookingDay[];
+      }
+      if (removeOptions.length > 0) {
+        updatedData.removeCookingDays = removeOptions as TCookingDay[];
+      }
+    }
+
     const hasEmptyString = Object.values(updatedData).some(
       (value) => typeof value === "string" && value.trim() === ""
     );
     if (hasEmptyString) {
       toast.error("you have to provide a proper value");
       return;
+    }
+    try {
+      // upload lisence
+      if (licensePdfFile) {
+        const licenseOrCertificate = await pdfUpload(licensePdfFile, edgestore);
+        if (!licenseOrCertificate) {
+          toast.error("faild to upload lisence certificate", {
+            duration: 3000,
+          });
+          return;
+        }
+        updatedData.licenseOrCertificate = licenseOrCertificate as string;
+      }
+      // upload hygiene certifcate
+      if (hygienePdf) {
+        const hygieneCertificate = await pdfUpload(hygienePdf, edgestore);
+        if (!hygieneCertificate) {
+          toast.error("faild to upload hygiene certificate", {
+            duration: 3000,
+          });
+          return;
+        }
+        updatedData.hygieneCertificate = hygieneCertificate as string;
+      }
+      // update data
+      const result = await updateKitchen(updatedData);
+      if (result?.success) {
+        toast.success(result?.message, { duration: 3000 });
+      } else {
+        toast.error(result?.message, { duration: 3000 });
+      }
+    } catch (error: any) {
+      console.log(error);
     }
   };
 
@@ -295,51 +365,34 @@ const KitchenProfile = ({
 
       <div className=" grid grid-cols-1 md:grid-cols-4 mt-4 space-y-4">
         {kitchenInfo?.foodPreference.length && (
-          <div className="space-y-2">
-            <h3 className="font-semibold text-gray-800">Food Preferences:</h3>
-            <div className="flex flex-wrap gap-2">
-              {kitchenInfo?.foodPreference.map((item, index) => (
-                <div
-                  key={index}
-                  className="bg-orange-200 text-orange-800 px-3 py-1 rounded-full text-sm"
-                >
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
+          <EditArray
+            value={kitchenInfo?.foodPreference as FoodPreferenceOption[]}
+            valueOptions={foodPreferance}
+            handleSubmit={handleSubmit}
+            label="Food Preferences"
+            styleClass="bg-orange-200 text-orange-800 px-3 py-1 rounded-full text-sm"
+            style="flex flex-col justify-start items-start"
+          />
         )}
-
         {kitchenInfo?.mealTimePerDay.length && (
-          <div className="space-y-2">
-            <h3 className="font-semibold text-gray-800">Meal Times Per Day:</h3>
-            <div className="flex flex-wrap gap-2">
-              {kitchenInfo?.mealTimePerDay.map((meal, index) => (
-                <div
-                  key={index}
-                  className="bg-green-200 text-green-800 px-3 py-1 rounded-full text-sm"
-                >
-                  {meal}
-                </div>
-              ))}
-            </div>
-          </div>
+          <EditArray
+            value={kitchenInfo?.mealTimePerDay as TMealTime[]}
+            valueOptions={mealTime}
+            handleSubmit={handleSubmit}
+            label="Meal Times"
+            styleClass="bg-green-200 text-green-800 px-3 py-1 rounded-full text-sm"
+            style="flex flex-col justify-start items-start"
+          />
         )}
-
         {kitchenInfo?.cookingDays.length && (
-          <div className="space-y-2">
-            <h3 className="font-semibold text-gray-800">Cooking Days:</h3>
-            <div className="flex flex-wrap gap-2">
-              {kitchenInfo?.cookingDays.map((day, index) => (
-                <div
-                  key={index}
-                  className="bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm"
-                >
-                  {day}
-                </div>
-              ))}
-            </div>
-          </div>
+          <EditArray
+            value={kitchenInfo?.cookingDays as TCookingDay[]}
+            valueOptions={weekDays}
+            handleSubmit={handleSubmit}
+            label="Cooking Days"
+            styleClass="bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm"
+            style="flex flex-col justify-start items-start"
+          />
         )}
 
         {kitchenInfo?.specialEquipments!.length && (
