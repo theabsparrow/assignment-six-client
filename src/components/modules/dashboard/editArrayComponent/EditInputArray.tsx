@@ -1,29 +1,28 @@
 "use client";
 
 import { TArrayEditProps } from "@/types/kitchenType";
-import { ReactNode, useEffect, useState } from "react";
+import { FormEvent, ReactNode, useEffect, useState } from "react";
+import { toast } from "sonner";
 
-const EditArray = <T,>({
+const MAX_ITEMS = 10;
+const MAX_WORDS_PER_ITEM = 2;
+const MAX_LETTER_PER_WORDS = 30;
+
+const EditInputArray = <T,>({
   value,
-  valueOptions,
   handleSubmit,
   label,
-  styleClass = "bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm flex items-center gap-2",
-  style,
 }: TArrayEditProps<T>) => {
   const [editing, setEditing] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState<T[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [backupOptions, setBackupOptions] = useState<T[]>([]);
-  const [availableOptions, setAvailableOptions] = useState<T[]>([]);
+  const [equipmentsValue, setEquipmentsValue] = useState<string>("");
 
   useEffect(() => {
     const options: T[] = value ?? [];
     setSelectedOptions(options as T[]);
-    setAvailableOptions(
-      valueOptions!.filter((item) => !options.includes(item))
-    );
-  }, [value, valueOptions]);
+  }, [value]);
 
   const handleEditToggle = () => {
     if (editing && value?.length) {
@@ -44,25 +43,47 @@ const EditArray = <T,>({
 
   const handleRemove = (item: T) => {
     setSelectedOptions(selectedOptions.filter((a) => a !== item));
-    setAvailableOptions([...availableOptions, item]);
-  };
-
-  const handleAdd = (item: T) => {
-    setSelectedOptions([...selectedOptions, item]);
-    setAvailableOptions(availableOptions.filter((a) => a !== item));
   };
 
   const handleCancel = () => {
     const options: T[] = value ?? [];
     setSelectedOptions(options as T[]);
-    setAvailableOptions(
-      valueOptions!.filter((item) => !options.includes(item))
-    );
+    setEquipmentsValue("");
     setEditing(false);
   };
+
+  const handleSubmitElement = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const items = equipmentsValue.split(",").map((item) => item.trim());
+    for (const item of items) {
+      const wordCount = item.split(/\s+/).length;
+      const letterCount = item.split("").length;
+      if (letterCount > MAX_LETTER_PER_WORDS) {
+        toast.error(
+          `${item} is too big. it should not be more than ${MAX_LETTER_PER_WORDS} character.`
+        );
+        return;
+      }
+      if (wordCount > MAX_WORDS_PER_ITEM) {
+        toast.error(
+          `Each item should be no more than ${MAX_WORDS_PER_ITEM} words. "${item}" has ${wordCount}.`
+        );
+        return;
+      }
+    }
+    if (items.length > MAX_ITEMS) {
+      toast.error(`You can only enter up to ${MAX_ITEMS} equipment items.`, {
+        duration: 3000,
+      });
+      return;
+    }
+    setSelectedOptions([...selectedOptions, items as T]);
+    setEquipmentsValue("");
+  };
+
   return (
     <div className="mt-4">
-      <div className={style}>
+      <div className="flex flex-col justify-start items-start">
         <h4 className="text-lg font-semibold text-indigo-700">{label}:</h4>
         <div className="flex items-center gap-3">
           <button
@@ -85,7 +106,10 @@ const EditArray = <T,>({
       {selectedOptions.length > 0 ? (
         <ul className="flex flex-wrap gap-2 mt-2">
           {selectedOptions.map((item, i) => (
-            <li key={i} className={styleClass}>
+            <li
+              key={i}
+              className="bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm"
+            >
               {item as ReactNode}
               {editing && (
                 <button
@@ -102,27 +126,30 @@ const EditArray = <T,>({
         <p className="text-gray-500 mt-2">None specified</p>
       )}
 
-      {editing && availableOptions.length > 0 && (
-        <div className="mt-3 flex items-center gap-2">
-          <select
-            onChange={(e) => {
-              const selected = e.target.value as T;
-              if (selected) handleAdd(selected);
-              e.target.selectedIndex = 0;
-            }}
-            className="border px-3 py-1 rounded text-sm"
-          >
-            <option value="">Select allergy to add</option>
-            {availableOptions.map((item, i) => (
-              <option key={i} value={item as string}>
-                {item as ReactNode}
-              </option>
-            ))}
-          </select>
-        </div>
+      {editing && (
+        <form onSubmit={handleSubmitElement} className="mt-4">
+          <div className="flex items-center  gap-2">
+            <input
+              type="text"
+              name="equipments"
+              value={equipmentsValue}
+              onChange={(e) => setEquipmentsValue(e.target.value)}
+              placeholder="e.g. Oven, Mixer, Blender"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400 text-sm placeholder-gray-400"
+            />
+            {equipmentsValue && (
+              <button type="submit" className=" text-blue-500 cursor-pointer">
+                Add
+              </button>
+            )}
+          </div>
+          <p className="text-xs text-gray-500 mt-1">
+            Max 10 items at a time. Separate items with commas ( , )
+          </p>
+        </form>
       )}
     </div>
   );
 };
 
-export default EditArray;
+export default EditInputArray;

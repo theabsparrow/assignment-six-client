@@ -25,6 +25,7 @@ import pdfUpload from "@/utills/pdfUpload";
 import { useEdgeStore } from "@/lib/edgestore";
 import { updateKitchen } from "@/services/kitchenService";
 import EditArray from "../editArrayComponent/EditArray";
+import EditInputArray from "../editArrayComponent/EditInputArray";
 
 const KitchenProfile = ({
   kitchenInfo,
@@ -128,7 +129,14 @@ const KitchenProfile = ({
         updatedData.removeCookingDays = removeOptions as TCookingDay[];
       }
     }
-
+    if (field === "Special Equipments") {
+      if (addOptions?.length > 0) {
+        updatedData.addSpecialEquipments = addOptions as string[];
+      }
+      if (removeOptions.length > 0) {
+        updatedData.removeSpecialEquipments = removeOptions as string[];
+      }
+    }
     const hasEmptyString = Object.values(updatedData).some(
       (value) => typeof value === "string" && value.trim() === ""
     );
@@ -396,19 +404,24 @@ const KitchenProfile = ({
         )}
 
         {kitchenInfo?.specialEquipments!.length && (
-          <div className="space-y-2">
-            <h3 className="font-semibold text-gray-800">Special Equipments:</h3>
-            <div className="flex flex-wrap gap-2">
-              {kitchenInfo?.specialEquipments!.map((item, index) => (
-                <div
-                  key={index}
-                  className="bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm"
-                >
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
+          <EditInputArray
+            value={kitchenInfo?.specialEquipments as TCookingDay[]}
+            handleSubmit={handleSubmit}
+            label="Special Equipments"
+          />
+          // <div className="space-y-2">
+          //   <h3 className="font-semibold text-gray-800">Special Equipments:</h3>
+          //   <div className="flex flex-wrap gap-2">
+          //     {kitchenInfo?.specialEquipments!.map((item, index) => (
+          //       <div
+          //         key={index}
+          //         className="bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm"
+          //       >
+          //         {item}
+          //       </div>
+          //     ))}
+          //   </div>
+          // </div>
         )}
       </div>
     </section>

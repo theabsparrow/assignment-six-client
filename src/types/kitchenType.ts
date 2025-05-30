@@ -51,3 +51,16 @@ export interface KitchenProfileCardProps {
   _id?: string;
   isActive?: boolean;
 }
+
+export type TArrayEditProps<T> = {
+  value: T[];
+  valueOptions?: T[];
+  handleSubmit: (
+    field: string,
+    addOptions: T[] | [],
+    removeOptions: T[]
+  ) => Promise<void>;
+  label: string;
+  styleClass?: string;
+  style?: string;
+};
