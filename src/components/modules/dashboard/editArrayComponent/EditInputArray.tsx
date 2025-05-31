@@ -54,7 +54,10 @@ const EditInputArray = <T,>({
 
   const handleSubmitElement = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const items = equipmentsValue.split(",").map((item) => item.trim());
+    const items = equipmentsValue
+      .split(",")
+      .map((item) => item)
+      .filter((item) => item);
     for (const item of items) {
       const wordCount = item.split(/\s+/).length;
       const letterCount = item.split("").length;
@@ -77,7 +80,7 @@ const EditInputArray = <T,>({
       });
       return;
     }
-    setSelectedOptions([...selectedOptions, items as T]);
+    setSelectedOptions([...selectedOptions, ...(items as T[])]);
     setEquipmentsValue("");
   };
 
@@ -114,7 +117,7 @@ const EditInputArray = <T,>({
               {editing && (
                 <button
                   onClick={() => handleRemove(item)}
-                  className="text-red-500 hover:text-red-700 text-xs"
+                  className="text-red-500 hover:text-red-700 text-xs ml-1"
                 >
                   ✕
                 </button>

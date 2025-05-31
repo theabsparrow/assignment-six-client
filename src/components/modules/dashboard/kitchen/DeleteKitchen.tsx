@@ -1,18 +1,16 @@
 "use client";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaExclamationTriangle, FaTimes, FaTrashAlt } from "react-icons/fa";
+import { toast } from "sonner";
 import LoginFormInput from "../../formInput/LoginFormInput";
 import { useForm } from "react-hook-form";
-import Link from "next/link";
-import { deleteMyAccount } from "@/services/profileService";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-export type TPassword = {
-  password: string;
-};
+import { TPassword } from "../settings/DeleteAccount";
+import { deleteMyKitchen } from "@/services/kitchenService";
 
-const DeleteAccount = () => {
+const DeleteKitchen = ({ verifiedEmail }: { verifiedEmail: boolean }) => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const {
@@ -24,8 +22,12 @@ const DeleteAccount = () => {
   });
 
   const onSubmit = async (data: TPassword) => {
+    if (!verifiedEmail) {
+      toast.error("You need to verify your email at first", { duration: 3000 });
+      return;
+    }
     try {
-      const res = await deleteMyAccount(data);
+      const res = await deleteMyKitchen(data);
       if (res?.success) {
         toast.success(res?.message, { duration: 3000 });
         router.push("/");
@@ -36,19 +38,18 @@ const DeleteAccount = () => {
       console.log(error);
     }
   };
-
   return (
-    <section className="border border-red-400 px-6 md:px-10 py-6 rounded-md bg-white dark:bg-gray-950 shadow-sm">
+    <section className="border border-red-400 px-6 md:px-10 py-6 rounded-md bg-white dark:bg-gray-950 shadow-sm mt-4">
       <div className="flex items-center justify-between mb-2">
         <h3 className="text-xl md:text-2xl font-bold text-red-700 flex items-center gap-2">
           <FaTrashAlt className="text-red-600" />
-          Account Deletion
+          Kitchen Deletion
         </h3>
         <button
           onClick={() => setOpen(true)}
           className="text-sm md:text-base text-red-600 hover:text-red-800 underline cursor-pointer"
         >
-          Delete Account
+          Delete Kitchen
         </button>
       </div>
 
@@ -68,13 +69,13 @@ const DeleteAccount = () => {
               <div className="flex items-center gap-2 text-red-600 dark:text-red-400 mb-4">
                 <FaExclamationTriangle size={20} />
                 <h2 className="text-xl font-semibold">
-                  Confirm Account Deletion
+                  Confirm Kitchen Deletion
                 </h2>
               </div>
 
               <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
                 This action is <strong>permanent</strong> and cannot be undone.
-                Please enter your password to confirm deletion of your account.
+                Please enter your password to confirm deletion of your Kitchen.
               </p>
 
               <form onSubmit={handleSubmit(onSubmit)} className="mb-4">
@@ -117,4 +118,4 @@ const DeleteAccount = () => {
   );
 };
 
-export default DeleteAccount;
+export default DeleteKitchen;

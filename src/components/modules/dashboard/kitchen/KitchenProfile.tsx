@@ -26,6 +26,7 @@ import { useEdgeStore } from "@/lib/edgestore";
 import { updateKitchen } from "@/services/kitchenService";
 import EditArray from "../editArrayComponent/EditArray";
 import EditInputArray from "../editArrayComponent/EditInputArray";
+import DeleteKitchen from "./DeleteKitchen";
 
 const KitchenProfile = ({
   kitchenInfo,
@@ -144,6 +145,7 @@ const KitchenProfile = ({
       toast.error("you have to provide a proper value");
       return;
     }
+    console.log(updatedData);
     try {
       // upload lisence
       if (licensePdfFile) {
@@ -378,7 +380,7 @@ const KitchenProfile = ({
             valueOptions={foodPreferance}
             handleSubmit={handleSubmit}
             label="Food Preferences"
-            styleClass="bg-orange-200 text-orange-800 px-3 py-1 rounded-full text-sm"
+            styleClass="bg-orange-200 text-orange-800 px-3 py-1 rounded-full text-sm "
             style="flex flex-col justify-start items-start"
           />
         )}
@@ -409,21 +411,9 @@ const KitchenProfile = ({
             handleSubmit={handleSubmit}
             label="Special Equipments"
           />
-          // <div className="space-y-2">
-          //   <h3 className="font-semibold text-gray-800">Special Equipments:</h3>
-          //   <div className="flex flex-wrap gap-2">
-          //     {kitchenInfo?.specialEquipments!.map((item, index) => (
-          //       <div
-          //         key={index}
-          //         className="bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm"
-          //       >
-          //         {item}
-          //       </div>
-          //     ))}
-          //   </div>
-          // </div>
         )}
       </div>
+      <DeleteKitchen verifiedEmail={verifiedEmail} />
     </section>
   );
 };

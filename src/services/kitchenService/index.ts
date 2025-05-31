@@ -43,7 +43,7 @@ export const getMyKitchen = async () => {
           Authorization: token,
         },
         next: {
-          tags: ["Profile"],
+          tags: ["kitchen"],
         },
       }
     );
@@ -95,6 +95,29 @@ export const updateKitchen = async (data: Partial<TKitchen>) => {
       }
     );
     const result = await res.json();
+    revalidateTag("kitchen");
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const deleteMyKitchen = async (data: { password: string }) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/kitchen/delete-myKitchen`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const result = await res.json();
+    revalidateTag("kitchen");
     revalidateTag("Profile");
     return result;
   } catch (error: any) {
