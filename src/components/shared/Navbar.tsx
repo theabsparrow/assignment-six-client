@@ -6,7 +6,6 @@ import Link from "next/link";
 import DarkModeToggle from "./DarkModeToggle";
 import ProfileDropdown from "./ProfileDropDown";
 import Image from "next/image";
-import logo from "../../app/assets/logo.svg";
 import { useUser } from "@/context/UserContext";
 import { logout } from "@/services/authService";
 import { usePathname, useRouter } from "next/navigation";
@@ -44,7 +43,7 @@ const Navbar = ({
         {/* Logo */}
         <div className="text-2xl font-bold text-gray-800 dark:text-white">
           <Link href="/">
-            <Image src={logo} alt="logo" width={70} height={70} />
+            <Image src="/logo.PNG" alt="logo" width={70} height={70} />
           </Link>
         </div>
 

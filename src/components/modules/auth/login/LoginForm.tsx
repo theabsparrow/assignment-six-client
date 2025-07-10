@@ -8,8 +8,8 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useUser } from "@/context/UserContext";
-import { FaHome } from "react-icons/fa";
 import Link from "next/link";
+import { TUSerRole } from "@/types";
 
 type FormValues = {
   identifier: string;
@@ -61,18 +61,74 @@ const LoginForm = () => {
       console.log(error);
     }
   };
+
+  const handleLoginAUto = async (role: TUSerRole) => {
+    const loginData: Partial<TLogin> = {};
+    if (role === "customer") {
+      loginData.email = "bashar@outlook.com";
+      loginData.password = "Bashar15@";
+    }
+    if (role === "mealProvider") {
+      loginData.email = "brandon@gmail.com";
+      loginData.password = "Abul15@";
+    }
+    if (role === "admin") {
+      loginData.email = "bashar@gmail.com";
+      loginData.password = "Bashar15@";
+    }
+    try {
+      const res = await loginUser(loginData as TLogin);
+      setIsLoading(true);
+      if (res?.success) {
+        toast.success(res?.message, { duration: 3000 });
+        if (redirect) {
+          router.push(redirect);
+          const currentUser = await getCurrentUser();
+          setUser(currentUser);
+          setIsLoading(false);
+        } else {
+          router.push("/");
+        }
+      } else {
+        toast.error(res?.message, { duration: 3000 });
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-gray-200 dark:bg-gray-900 rounded-2xl shadow-xl text-gray-800 dark:text-white md:mt-20">
-      <Link
-        href="/"
-        className="cursor-pointer flex items-center gap-1 text-blue-600 text-lg font-semibold hover:underline duration-500"
-      >
-        <FaHome /> Back to home
-      </Link>
-      <h2 className="text-3xl font-bold mb-6 text-center text-blue-600 dark:text-blue-400">
+    <div className=" w-[65vw] md:w-[25vw] rounded-2xl text-gray-800 dark:text-white space-y-5 md:space-y-6">
+      <h2 className="text-xl md:text-4xl font-bold text-primary font-playfair">
         Login you account
       </h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div className="flex items gap-2 md:gap-4">
+        <button
+          onClick={() => handleLoginAUto("admin")}
+          type="button"
+          className="w-full bg-secondary hover:bg-white dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-primary border border-primary md:font-semibold py-1 md:py-3 px-1 md:px-4 rounded-lg shadow-md transition cursor-pointer"
+        >
+          {isSubmitting ? "Logging in" : " Admin"}
+        </button>
+        <button
+          onClick={() => handleLoginAUto("customer")}
+          type="button"
+          className="w-full bg-secondary hover:bg-white dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-primary border border-primary md:font-semibold py-1 md:py-3 px-1 md:px-4 rounded-lg shadow-md transition cursor-pointer"
+        >
+          {isSubmitting ? "Logging in" : " Customer"}
+        </button>
+        <button
+          onClick={() => handleLoginAUto("mealProvider")}
+          type="button"
+          className="w-full bg-secondary hover:bg-white dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-primary border border-primary md:font-semibold py-1 md:py-3 px-1 md:px-4 rounded-lg shadow-md transition cursor-pointer"
+        >
+          {isSubmitting ? "Logging in" : "  provider"}
+        </button>
+      </div>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-2 md:space-y-6 font-Inter"
+      >
         <div className="w-full"></div>
         <LoginFormInput
           label="Email or Phone"
@@ -93,21 +149,21 @@ const LoginForm = () => {
           required={true}
         />
         <div>
-          <Link className="text-blue-700" href="/forgot-password">
+          <Link className="text-primary" href="/forgot-password">
             Forget Password?
           </Link>
         </div>
         <button
           type="submit"
-          className="w-full bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition cursor-pointer"
+          className="w-full bg-secondary hover:bg-white dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-primary border border-primary font-semibold py-3 px-4 rounded-lg shadow-md transition cursor-pointer"
         >
           {isSubmitting ? "Logging in" : "Login"}
         </button>
       </form>
 
-      <div className="flex gap-2 items-center mt-2">
+      <div className="flex gap-[2px] md:gap-2 items-center mt-2 font-Inter">
         <h1>New to this site? Please</h1>
-        <Link className="text-blue-700" href="/register">
+        <Link className="text-secondary md:text-primary" href="/register">
           {" "}
           Register
         </Link>

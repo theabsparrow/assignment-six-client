@@ -63,7 +63,6 @@ const MealFiltering = ({
     const params = new URLSearchParams(searchParams.toString());
     params.set(`min${name}`, value[0].toString());
     params.set(`max${name}`, value[1].toString());
-    console.log(params);
     router.push(`${pathName}?${params.toString()}`, { scroll: false });
   };
 

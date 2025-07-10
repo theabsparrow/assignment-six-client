@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import logo from "../../../../app/assets/logo.svg";
 import Image from "next/image";
 
 const SemiNavbar = () => {
@@ -11,7 +10,7 @@ const SemiNavbar = () => {
         {/* Logo */}
         <div className="text-2xl font-bold text-gray-800 dark:text-white">
           <Link href="/">
-            <Image src={logo} alt="logo" width={70} height={70} />
+            <Image src="/logo.PNG" alt="logo" width={70} height={70} />
           </Link>
         </div>
       </div>

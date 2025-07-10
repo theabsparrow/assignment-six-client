@@ -1,6 +1,18 @@
 @import "tailwindcss";
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+:root {
+  --primary: #004b1a;
+  --secondary: #c4ff88;
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --font-Inter: var(--font-inter);
+  --font-playfair: var(--font-playfair);
+}
+
 html,
 body {
   height: 100%;
