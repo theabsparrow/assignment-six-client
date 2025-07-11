@@ -41,9 +41,15 @@ const Navbar = ({
     <nav className="bg-gray-200 dark:bg-gray-900 shadow-xl sticky top-0 w-full z-50 transition duration-300 md:px-16 px-5">
       <div className="flex justify-between h-16 items-center">
         {/* Logo */}
-        <div className="text-2xl font-bold text-gray-800 dark:text-white">
+        <div>
           <Link href="/">
-            <Image src="/logo.PNG" alt="logo" width={70} height={70} />
+            <Image
+              className="w-full"
+              src="/logo.PNG"
+              alt="logo"
+              width={70}
+              height={70}
+            />
           </Link>
         </div>
 

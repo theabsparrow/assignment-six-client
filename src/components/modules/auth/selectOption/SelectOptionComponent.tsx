@@ -1,7 +1,6 @@
 "use client";
 
 import { ChefHat, User } from "lucide-react";
-import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 
 const SelectOptionComponent = ({
@@ -10,48 +9,35 @@ const SelectOptionComponent = ({
   setRegisteredRole: Dispatch<SetStateAction<string | null>>;
 }) => {
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950 px-4 py-12">
-      <div className="max-w-2xl w-full bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-8 space-y-6">
-        <div>
-          <Link
-            className="text-blue-600 text-lg font-semibold hover:underline duration-500"
-            href="/"
-          >
-            Back to home
-          </Link>
-        </div>
-        <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 dark:text-white">
-          Register As
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <button
-            onClick={() => {
-              localStorage.setItem("customerForm", "customer");
-              setRegisteredRole("customer");
-            }}
-            className="flex flex-col items-center justify-center gap-4 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:bg-blue-50 dark:hover:bg-gray-800 transition shadow-sm hover:shadow-lg cursor-pointer"
-          >
-            <User size={40} className="text-blue-600 dark:text-blue-400" />
-            <span className="text-lg font-semibold text-gray-700 dark:text-gray-100">
-              Register as Customer
-            </span>
-          </button>
+    <div className=" w-[30vw] rounded-2xl space-y-6 md:space-y-0 font-Inter">
+      <div className="flex flex-col md:flex-row items-center gap-4">
+        <button
+          onClick={() => {
+            localStorage.setItem("customerForm", "customer");
+            setRegisteredRole("customer");
+          }}
+          className="flex flex-col items-center justify-center gap-4 border border-primary dark:border-gray-700 rounded-xl p-1 md:p-2 hover:bg-blue-50 dark:hover:bg-gray-800 transition shadow-sm hover:shadow-lg cursor-pointer bg-secondary"
+        >
+          <User size={40} className="text-primary dark:text-blue-400" />
+          <span className="md:text-lg text-primary dark:text-gray-100">
+            Register as Customer
+          </span>
+        </button>
 
-          <button
-            onClick={() => {
-              localStorage.setItem("mealProviderForm", "mealProvider");
-              setRegisteredRole("mealProvider");
-            }}
-            className="flex flex-col items-center justify-center gap-4 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:bg-green-50 dark:hover:bg-gray-800 transition shadow-sm hover:shadow-lg cursor-pointer"
-          >
-            <ChefHat size={40} className="text-green-600 dark:text-green-400" />
-            <span className="text-lg font-semibold text-gray-700 dark:text-gray-100">
-              Register as Meal Provider
-            </span>
-          </button>
-        </div>
+        <button
+          onClick={() => {
+            localStorage.setItem("mealProviderForm", "mealProvider");
+            setRegisteredRole("mealProvider");
+          }}
+          className="flex flex-col items-center justify-center gap-4 border border-primary dark:border-gray-700 rounded-xl p-1 md:p-2 hover:bg-green-50 dark:hover:bg-gray-800 transition shadow-sm hover:shadow-lg cursor-pointer bg-secondary"
+        >
+          <ChefHat size={40} className="text-primary dark:text-green-400" />
+          <span className="md:text-lg text-primary dark:text-gray-100">
+            Register as Meal Provider
+          </span>
+        </button>
       </div>
-    </section>
+    </div>
   );
 };
 

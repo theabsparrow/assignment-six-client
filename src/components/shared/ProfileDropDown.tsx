@@ -1,8 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-// import Image from "next/image";
-import { FaUserCircle } from "react-icons/fa";
 import { logout } from "@/services/authService";
 import { useUser } from "@/context/UserContext";
 import { useRouter } from "next/navigation";
@@ -55,7 +53,13 @@ const ProfileDropdown = ({
             className="object-cover w-full h-full"
           />
         ) : (
-          <FaUserCircle size={45} />
+          <Image
+            src="/profile-icon.PNG"
+            alt="Profile"
+            width={40}
+            height={40}
+            className="object-cover w-full h-full"
+          />
         )}
       </button>
 

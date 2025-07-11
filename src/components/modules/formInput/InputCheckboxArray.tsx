@@ -23,7 +23,7 @@ const InputCheckboxArray: React.FC<TCheckboxGroup> = ({
       <label className="block font-semibold text-gray-700 dark:text-gray-200 mb-1">
         {label}
       </label>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {options.map((allergy) => (
           <label
             key={allergy}

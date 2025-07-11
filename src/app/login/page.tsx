@@ -26,7 +26,7 @@ const Login = () => {
           >
             <FaHome /> Back to home
           </Link>
-          <h2 className="text-2xl md:text-6xl font-bold my-2 text-primary font-playfair">
+          <h2 className="text-2xl md:text-5xl font-bold my-2 text-primary font-playfair">
             Welcome to Daily Dish
           </h2>
           <LoginForm />
