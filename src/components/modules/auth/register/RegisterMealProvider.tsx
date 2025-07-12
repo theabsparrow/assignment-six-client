@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaArrowAltCircleLeft, FaHome } from "react-icons/fa";
 import InputType from "../../formInput/InputType";
 import InputPhone from "../../formInput/InputPhone";
 import InputTypePassword from "../../formInput/InputTypePassword";
@@ -153,42 +152,13 @@ const RegisterMealProvider = ({
   };
 
   return (
-    <section className="max-w-2xl mx-auto p-6 bg-gray-200 dark:bg-gray-900 rounded-2xl shadow-xl text-gray-800 dark:text-white">
+    <section className="w-[85vw] md:w-[30vw] rounded-2xl text-gray-800 dark:text-white font-inter bg-gray-200 py-2 px-4">
       {otpPage ? (
         <OtpVerification setOtpPage={setOtpPage} />
       ) : (
         <div>
-          <div className="flex justify-between items-center">
-            <button
-              onClick={() => {
-                localStorage.removeItem("customerForm");
-                localStorage.removeItem("mealProviderForm");
-                localStorage.removeItem("otpExpiry");
-                localStorage.removeItem("verifyOtpForm");
-                setRegisteredRole("");
-              }}
-              className="cursor-pointer"
-            >
-              <FaArrowAltCircleLeft className="text-blue-600 text-xl" />
-            </button>
-            <button
-              onClick={() => {
-                localStorage.removeItem("customerForm");
-                localStorage.removeItem("mealProviderForm");
-                localStorage.removeItem("otpExpiry");
-                localStorage.removeItem("verifyOtpForm");
-                setRegisteredRole("");
-              }}
-              className="cursor-pointer flex items-center gap-1 text-blue-600 text-lg font-semibold hover:underline duration-500"
-            >
-              <FaHome /> Back to home
-            </button>
-          </div>
-          <h2 className="text-3xl font-bold mb-6 text-center text-blue-600 dark:text-blue-400">
-            Meal Provider Registration
-          </h2>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid md:grid-cols-2 grid-cols-1 gap-4 items-center">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+            <div className="grid md:grid-cols-2 grid-cols-1 gap-2 items-center ">
               <InputType
                 label="Name"
                 name="name"
@@ -251,7 +221,7 @@ const RegisterMealProvider = ({
                   setImagePreview={setImagePreview}
                 />
               ) : (
-                <div className="mt-8">
+                <div className="mt-2">
                   <ImageUploader
                     setImageFile={setImageFile}
                     setImagePreview={setImagePreview}

@@ -158,13 +158,13 @@ const RegisterCustomer = ({
   };
 
   return (
-    <section className="w-[65vw] md:w-[30vw] rounded-2xl text-gray-800 dark:text-white font-inter bg-gray-200 py-2 px-4">
+    <section className="w-[85vw] md:w-[30vw] rounded-2xl text-gray-800 dark:text-white font-inter bg-gray-200 py-2 px-4">
       {otpPage ? (
         <OtpVerification setOtpPage={setOtpPage} />
       ) : (
         <div>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid md:grid-cols-2 grid-cols-1 gap-4 items-center ">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+            <div className="grid md:grid-cols-2 grid-cols-1 gap-2 md:gap-4 items-center ">
               <InputType
                 label="Name"
                 name="name"
