@@ -119,7 +119,7 @@ const SelectOption = () => {
                 <RegisterCustomer setRegisteredRole={setRegisteredRole} />
                 <div
                   style={{ backgroundImage: `url(${customerActiveBg})` }}
-                  className={`absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white top-[5%] md:top-[5%] left-[2.5%] md:left-[10%] bg-cover bg-center bg-no-repeat p-3 md:px-10 md:py-4 flex justify-center md:justify-start overflow-hidden`}
+                  className={`absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white dark:bg-gray-800 top-[5%] md:top-[5%] left-[2.5%] md:left-[10%] bg-cover bg-center bg-no-repeat p-3 md:px-10 md:py-4 flex justify-center md:justify-start overflow-hidden`}
                 >
                   <div className="space-y-2">
                     <div className="flex items-center gap-24 md:gap-0 md:justify-between">
@@ -132,7 +132,7 @@ const SelectOption = () => {
                           setRegisteredRole("");
                         }}
                         href="/"
-                        className="cursor-pointer flex items-center gap-1 text-primary font-Inter md:text-lg font-medium hover:underline duration-500 "
+                        className="cursor-pointer flex items-center gap-1 text-primary font-Inter md:text-lg font-medium hover:underline duration-500 dark:text-green-600"
                       >
                         <IoHomeOutline className="text-xl" /> Back to home
                       </Link>
@@ -144,12 +144,12 @@ const SelectOption = () => {
                           localStorage.removeItem("verifyOtpForm");
                           setRegisteredRole("");
                         }}
-                        className="cursor-pointer"
+                        className="cursor-pointer "
                       >
-                        <FaArrowLeft className="text-primary text-xl" />
+                        <FaArrowLeft className="text-primary dark:text-green-600 text-xl" />
                       </button>
                     </div>
-                    <h2 className="text-2xl md:text-3xl md:text-center font-bold text-primary font-playfair">
+                    <h2 className="text-2xl md:text-3xl md:text-center font-bold text-primary dark:text-green-600 font-playfair">
                       Be a Customer
                     </h2>
                     <div className="overflow-y-auto max-h-[75vh] md:max-h-[70vh] pr-2">
@@ -194,7 +194,7 @@ const SelectOption = () => {
                 <RegisterMealProvider setRegisteredRole={setRegisteredRole} />
                 <div
                   style={{ backgroundImage: `url(${providerActiveBg})` }}
-                  className={`absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white top-[5%] md:top-[5%] right-[2.5%] md:left-[10%] bg-cover bg-center bg-no-repeat px-3 py-3 md:px-10 md:py-4 flex justify-end md:justify-end overflow-hidden`}
+                  className={`absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white dark:bg-gray-800 top-[5%] md:top-[5%] right-[2.5%] md:left-[10%] bg-cover bg-center bg-no-repeat px-3 py-3 md:px-10 md:py-4 flex justify-end md:justify-end overflow-hidden`}
                 >
                   <div className="space-y-2">
                     <div className="flex items-center gap-16 md:gap-0 md:justify-between justify-end px-2 md:px-0">
@@ -207,7 +207,7 @@ const SelectOption = () => {
                           setRegisteredRole("");
                         }}
                         href="/"
-                        className="cursor-pointer flex items-center gap-1 text-primary font-Inter md:text-lg font-medium hover:underline duration-500 "
+                        className="cursor-pointer flex items-center gap-1 text-primary font-Inter md:text-lg font-medium hover:underline duration-500 dark:text-green-600"
                       >
                         <IoHomeOutline className="text-xl" /> Back to home
                       </Link>
@@ -221,10 +221,10 @@ const SelectOption = () => {
                         }}
                         className="cursor-pointer"
                       >
-                        <FaArrowLeft className="text-primary text-xl" />
+                        <FaArrowLeft className="text-primary dark:text-green-600 text-xl" />
                       </button>
                     </div>
-                    <h2 className="text-2xl md:text-3xl text-end md:text-center font-bold text-primary font-playfair px-2 md:px-0">
+                    <h2 className="text-2xl md:text-3xl text-end md:text-center font-bold text-primary dark:text-green-600 font-playfair px-2 md:px-0">
                       Be a Meal Provider
                     </h2>
                     <div className="overflow-y-auto max-h-[75vh] pr-2">
@@ -264,27 +264,27 @@ const SelectOption = () => {
               </h2>
               <SelectOptionComponent setRegisteredRole={setRegisteredRole} />
 
-              <div className="absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white top-[4%] md:top-[5%] left-[3%] md:left-[10%] bg-[url('/selection-banner.PNG')] bg-cover bg-center bg-no-repeat p-6 md:p-10 flex justify-end">
+              <div className="absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white dark:bg-gray-800 top-[4%] md:top-[5%] left-[3%] md:left-[10%] bg-[url('/selection-banner.PNG')] bg-cover bg-center bg-no-repeat p-6 md:p-10 flex justify-end">
                 <div className="space-y-2 md:space-y-10">
                   <div className="flex items-center justify-between">
                     <Link
                       href="/"
-                      className="cursor-pointer flex items-center gap-1 text-primary font-Inter md:text-lg font-medium hover:underline duration-500 "
+                      className="cursor-pointer flex items-center gap-1 text-primary font-Inter md:text-lg font-medium hover:underline duration-500 dark:text-green-600"
                     >
                       <IoHomeOutline className="text-2xl md:text-xl" />{" "}
-                      <span className="hidden md:flex">Back to home</span>{" "}
+                      <span className="hidden md:flex ">Back to home</span>{" "}
                       <span className="md:hidden flex">home</span>
                     </Link>
                     <Link
                       href="/login"
-                      className="cursor-pointer flex items-center gap-1 text-primary font-Inter md:text-lg font-medium hover:underline duration-500 "
+                      className="cursor-pointer flex items-center gap-1 text-primary font-Inter md:text-lg font-medium hover:underline duration-500 dark:text-green-600"
                     >
                       <IoIosLogIn className="text-2xl md:text-xl" />{" "}
-                      <span className="hidden md:flex"> Back to login</span>{" "}
+                      <span className="hidden md:flex "> Back to login</span>{" "}
                       <span className="md:hidden flex"> login</span>
                     </Link>
                   </div>
-                  <h2 className="text-2xl md:text-5xl text-end font-bold text-primary font-playfair">
+                  <h2 className="text-2xl md:text-5xl text-end font-bold text-primary font-playfair dark:text-green-600">
                     Register As
                   </h2>
                   <SelectOptionComponent

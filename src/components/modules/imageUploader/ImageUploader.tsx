@@ -17,7 +17,7 @@ const ImageUploader = ({ setImageFile, setImagePreview }: TImageUploader) => {
     e.target.value = "";
   };
   return (
-    <div>
+    <div className="font-Inter">
       <input
         type="file"
         id="image-upload"
@@ -27,10 +27,10 @@ const ImageUploader = ({ setImageFile, setImagePreview }: TImageUploader) => {
       />
       <label
         htmlFor="image-upload"
-        className="md:w-[13vw] w-[40vw] h-[15vh] flex items-center justify-center border-2 border-dashed rounded-lg cursor-pointer bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:border-blue-400 transition"
+        className="md:w-[13vw] w-[40vw] h-[15vh] flex items-center justify-center border-2 border-dashed rounded-lg cursor-pointer bg-white dark:bg-gray-800 border-secondary dark:border-gray-600 hover:border-primary transition"
       >
         {" "}
-        <span className="text-gray-500 dark:text-gray-400 text-sm text-center">
+        <span className="text-gray-500 dark:text-gray-400 text-sm text-center font-playfair">
           Click to upload file <br /> (Only image files)
         </span>
       </label>

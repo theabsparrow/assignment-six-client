@@ -23,7 +23,7 @@ const InputType: React.FC<FloatingInputProps> = ({
   validateMatch,
 }) => {
   return (
-    <div className="w-full">
+    <div className="w-full font-inter">
       <label
         className={`block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1 ${
           name === "licenseDocument" ||
@@ -47,7 +47,7 @@ const InputType: React.FC<FloatingInputProps> = ({
                 }),
               })}
               className={`peer w-full px-4 py-2 rounded-xl border transition-all duration-300 outline-none bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 placeholder-transparent 
-              border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-400 focus:dark:border-blue-400 ${
+              border-gray-300 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-secondary focus:dark:border-blue-400 ${
                 (validateMatch === false || !validateMatch) && "hidden"
               }`}
               placeholder={placeholder || `Enter your ${label.toLowerCase()}`}
@@ -72,7 +72,7 @@ const InputType: React.FC<FloatingInputProps> = ({
                 }),
               })}
               className={`peer w-full px-4 py-2 rounded-xl border transition-all duration-300 outline-none bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 placeholder-transparent 
-            border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-400 focus:dark:border-blue-400 ${
+            border-gray-300 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-secondary focus:dark:border-blue-400 ${
               (validateMatch === "false" || !validateMatch) && "hidden"
             }`}
               placeholder={placeholder || `Enter your ${label.toLowerCase()}`}
@@ -94,7 +94,7 @@ const InputType: React.FC<FloatingInputProps> = ({
               ...(required && { required: `${label} is required` }),
             })}
             className={`peer w-full px-4 py-2 rounded-xl border transition-all duration-300 outline-none bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100  
-        border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-400 focus:dark:border-blue-400`}
+        border-gray-300 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-secondary focus:dark:border-blue-400`}
             placeholder={placeholder || `Enter your ${label.toLowerCase()}`}
           />
         )}

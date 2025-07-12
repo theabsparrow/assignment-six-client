@@ -76,11 +76,12 @@ const LoginForm = () => {
       loginData.email = "bashar@gmail.com";
       loginData.password = "Bashar15@";
     }
+    const loadingId = toast.loading("user logging in");
     try {
       const res = await loginUser(loginData as TLogin);
       setIsLoading(true);
       if (res?.success) {
-        toast.success(res?.message, { duration: 3000 });
+        toast.success(res?.message, { id: loadingId, duration: 3000 });
         if (redirect) {
           router.push(redirect);
           const currentUser = await getCurrentUser();
@@ -99,30 +100,30 @@ const LoginForm = () => {
 
   return (
     <div className=" w-[65vw] md:w-[25vw] rounded-2xl text-gray-800 dark:text-white space-y-5 md:space-y-6">
-      <h2 className="text-xl md:text-4xl font-bold text-primary font-playfair">
+      <h2 className="text-xl md:text-4xl font-bold text-primary dark:text-green-600 font-playfair">
         Login you account
       </h2>
-      <div className="flex items gap-2 md:gap-4">
+      <div className="flex items gap-2 md:gap-4 font-inter">
         <button
           onClick={() => handleLoginAUto("admin")}
           type="button"
-          className="w-full bg-secondary hover:bg-white dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-primary border border-primary md:font-semibold py-1 md:py-3 px-1 md:px-4 rounded-lg shadow-md transition cursor-pointer"
+          className="w-full bg-secondary hover:bg-white dark:bg-primary dark:border dark:border-secondary dark:text-secondary dark:hover:bg-green-700 duration-500 text-primary border border-primary md:font-semibold py-1 md:py-3 px-1 md:px-4 rounded-lg shadow-md transition cursor-pointer"
         >
-          {isSubmitting ? "Logging in" : " Admin"}
+          Admin
         </button>
         <button
           onClick={() => handleLoginAUto("customer")}
           type="button"
-          className="w-full bg-secondary hover:bg-white dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-primary border border-primary md:font-semibold py-1 md:py-3 px-1 md:px-4 rounded-lg shadow-md transition cursor-pointer"
+          className="w-full bg-secondary hover:bg-white dark:bg-primary dark:border dark:border-secondary dark:text-secondary dark:hover:bg-green-700 duration-500 text-primary border border-primary md:font-semibold py-1 md:py-3 px-1 md:px-4 rounded-lg shadow-md transition cursor-pointer"
         >
-          {isSubmitting ? "Logging in" : " Customer"}
+          Customer
         </button>
         <button
           onClick={() => handleLoginAUto("mealProvider")}
           type="button"
-          className="w-full bg-secondary hover:bg-white dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-primary border border-primary md:font-semibold py-1 md:py-3 px-1 md:px-4 rounded-lg shadow-md transition cursor-pointer"
+          className="w-full bg-secondary hover:bg-white dark:bg-primary dark:border dark:border-secondary dark:text-secondary dark:hover:bg-green-700 duration-500 text-primary border border-primary md:font-semibold py-1 md:py-3 px-1 md:px-4 rounded-lg shadow-md transition cursor-pointer"
         >
-          {isSubmitting ? "Logging in" : "  provider"}
+          Provider
         </button>
       </div>
       <form
@@ -149,13 +150,16 @@ const LoginForm = () => {
           required={true}
         />
         <div>
-          <Link className="text-primary" href="/forgot-password">
+          <Link
+            className="text-primary dark:text-green-600"
+            href="/forgot-password"
+          >
             Forget Password?
           </Link>
         </div>
         <button
           type="submit"
-          className="w-full bg-secondary hover:bg-white dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-primary border border-primary font-semibold py-3 px-4 rounded-lg shadow-md transition cursor-pointer"
+          className="w-full bg-secondary hover:bg-white dark:bg-primary dark:border dark:border-secondary dark:text-secondary dark:hover:bg-green-700 duration-500 text-primary border border-primary font-semibold py-3 px-4 rounded-lg shadow-md transition cursor-pointer"
         >
           {isSubmitting ? "Logging in" : "Login"}
         </button>
@@ -163,7 +167,10 @@ const LoginForm = () => {
 
       <div className="flex gap-[2px] md:gap-2 items-center mt-2 font-Inter">
         <h1>New to this site? Please</h1>
-        <Link className="text-secondary md:text-primary" href="/register">
+        <Link
+          className="text-secondary md:text-primary dark:text-green-600"
+          href="/register"
+        >
           {" "}
           Register
         </Link>

@@ -19,7 +19,7 @@ const InputPhone: React.FC<TPhoneInput> = ({
   required = false,
 }) => {
   return (
-    <div className="w-full">
+    <div className="w-full font-inter">
       <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1">
         {label} <span className="text-red-500">*</span>
       </label>
@@ -37,7 +37,7 @@ const InputPhone: React.FC<TPhoneInput> = ({
             },
           })}
           placeholder="1XXXXXXXX"
-          className={`w-full px-4 py-2 rounded-r-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 outline-none transition-all duration-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-400`}
+          className={`w-full px-4 py-2 rounded-r-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 outline-none transition-all duration-300 focus:border-primary focus:ring-2 focus:ring-secondary`}
         />
       </div>
       {error && <p className="text-red-500 text-xs mt-1">{error?.message}</p>}

@@ -19,7 +19,7 @@ const InputCheckboxArray: React.FC<TCheckboxGroup> = ({
   required = false,
 }) => {
   return (
-    <div className="w-full">
+    <div className="w-full font-inter">
       <label className="block font-semibold text-gray-700 dark:text-gray-200 mb-1">
         {label}
       </label>
@@ -27,7 +27,7 @@ const InputCheckboxArray: React.FC<TCheckboxGroup> = ({
         {options.map((allergy) => (
           <label
             key={allergy}
-            className="flex items-center space-x-2 bg-white dark:bg-gray-800 rounded-md px-3 py-2 border border-gray-300 dark:border-gray-600 hover:border-blue-400 transition-all"
+            className="flex items-center space-x-2 bg-white dark:bg-gray-800 rounded-md px-3 py-2 border border-gray-300 dark:border-gray-600 hover:border-primary transition-all cursor-pointer"
           >
             <input
               type="checkbox"
@@ -35,7 +35,7 @@ const InputCheckboxArray: React.FC<TCheckboxGroup> = ({
               {...register(name, {
                 ...(required && { required: `${name} are required` }),
               })}
-              className="accent-blue-500 w-4 h-4"
+              className="accent-secondary w-4 h-4"
             />
             <span className="text-gray-800 dark:text-gray-100">{allergy}</span>
           </label>

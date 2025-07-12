@@ -15,10 +15,10 @@ const SelectOptionComponent = ({
           localStorage.setItem("customerForm", "customer");
           setRegisteredRole("customer");
         }}
-        className="flex flex-col items-center justify-center gap-4 border border-primary dark:border-gray-700 rounded-xl p-1 md:p-2 hover:bg-blue-50 dark:hover:bg-gray-800 transition shadow-sm hover:shadow-lg cursor-pointer bg-secondary"
+        className="flex flex-col items-center justify-center gap-4 border border-primary dark:border-secondary rounded-xl p-1 md:p-2 hover:bg-blue-50 dark:hover:bg-green-800 transition shadow-sm hover:shadow-lg cursor-pointer bg-secondary dark:bg-primary "
       >
-        <User size={40} className="text-primary dark:text-blue-400" />
-        <span className="md:text-lg text-primary dark:text-gray-100">
+        <User size={40} className="text-primary dark:text-secondary" />
+        <span className="md:text-lg text-primary dark:text-secondary">
           Register as Customer
         </span>
       </button>
@@ -28,10 +28,10 @@ const SelectOptionComponent = ({
           localStorage.setItem("mealProviderForm", "mealProvider");
           setRegisteredRole("mealProvider");
         }}
-        className="flex flex-col items-center justify-center gap-4 border border-primary dark:border-gray-700 rounded-xl p-1 md:p-2 hover:bg-green-50 dark:hover:bg-gray-800 transition shadow-sm hover:shadow-lg cursor-pointer bg-secondary"
+        className="flex flex-col items-center justify-center gap-4 border border-primary dark:border-secondary rounded-xl p-1 md:p-2 hover:bg-blue-50 dark:hover:bg-green-800 transition shadow-sm hover:shadow-lg cursor-pointer bg-secondary dark:bg-primary"
       >
-        <ChefHat size={40} className="text-primary dark:text-green-400" />
-        <span className="md:text-lg text-primary dark:text-gray-100">
+        <ChefHat size={40} className="text-primary dark:text-secondary" />
+        <span className="md:text-lg text-primary dark:text-secondary">
           Register as Meal Provider
         </span>
       </button>

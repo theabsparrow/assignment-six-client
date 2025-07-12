@@ -18,7 +18,6 @@ import {
   TCustomerRegistrationData,
   TGender,
 } from "@/types/customerRegistration";
-import { useRouter } from "next/navigation";
 import { imageUpload } from "@/utills/imageUploader";
 import {
   reCaptchaTokenVerification,
@@ -28,6 +27,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { config } from "@/config";
 import { useUser } from "@/context/UserContext";
 import OtpVerification from "../OtpComponent/OtpVerification";
+import Link from "next/link";
 
 type FormValues = {
   email: string;
@@ -47,7 +47,6 @@ const RegisterCustomer = ({
 }: {
   setRegisteredRole: Dispatch<SetStateAction<string | null>>;
 }) => {
-  const router = useRouter();
   const { setIsLoading } = useUser();
   const [imageFile, setImageFile] = useState<File | "">("");
   const [imagePreview, setImagePreview] = useState<string>("");
@@ -151,14 +150,8 @@ const RegisterCustomer = ({
     }
   };
 
-  const handleClearState = () => {
-    router.push("/login");
-    localStorage.removeItem("customerForm");
-    localStorage.removeItem("mealProviderForm");
-  };
-
   return (
-    <section className="w-[85vw] md:w-[30vw] rounded-2xl text-gray-800 dark:text-white font-inter bg-gray-200 py-2 px-4">
+    <section className="w-[85vw] md:w-[30vw] rounded-2xl text-gray-800 dark:text-white font-inter bg-gray-200 dark:bg-transparent py-2 px-4">
       {otpPage ? (
         <OtpVerification setOtpPage={setOtpPage} />
       ) : (
@@ -266,20 +259,24 @@ const RegisterCustomer = ({
             <button
               disabled={recaptchaStatus ? false : true}
               type="submit"
-              className="w-full bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition disabled:bg-gray-400"
+              className="w-full bg-secondary hover:bg-white dark:bg-primary dark:border dark:border-secondary dark:text-secondary dark:hover:bg-green-700 duration-500 text-primary border border-primary font-semibold py-3 px-4 rounded-lg shadow-md transition cursor-pointer"
             >
               {isSubmitting ? "Registering" : "Register"}
             </button>
           </form>
           <div className="flex gap-2 items-center mt-2">
             <h1>Already have an Account? Please</h1>
-            <button
-              onClick={handleClearState}
-              className="text-blue-700 cursor-pointer"
+            <Link
+              href="/login"
+              onClick={() => {
+                localStorage.removeItem("customerForm");
+                localStorage.removeItem("mealProviderForm");
+              }}
+              className="text-primary dark:text-green-500 hover:underline cursor-pointer text-lg"
             >
               {" "}
               Login
-            </button>
+            </Link>
           </div>
         </div>
       )}

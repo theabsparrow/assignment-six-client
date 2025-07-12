@@ -18,15 +18,15 @@ const Login = () => {
         </h2>
         <LoginForm />
       </div>
-      <div className="absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white top-[2%] md:top-[5%] left-[3%] md:left-[10%] bg-[url('/login-banner.PNG')] bg-cover bg-center bg-no-repeat p-3 md:p-10">
+      <div className="absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white dark:bg-gray-800 top-[2%] md:top-[5%] left-[3%] md:left-[10%] bg-[url('/login-banner.PNG')] bg-cover bg-center bg-no-repeat p-3 md:p-10">
         <div>
           <Link
             href="/"
-            className="cursor-pointer flex items-center gap-1 text-primary font-Inter md:text-lg font-medium hover:underline duration-500"
+            className="cursor-pointer flex items-center gap-1 text-primary dark:text-green-600 font-Inter md:text-lg font-medium hover:underline duration-500"
           >
             <FaHome /> Back to home
           </Link>
-          <h2 className="text-2xl md:text-5xl font-bold my-2 text-primary font-playfair">
+          <h2 className="text-2xl md:text-5xl font-bold my-2 text-primary dark:text-green-600 font-playfair">
             Welcome to Daily Dish
           </h2>
           <LoginForm />

@@ -16,22 +16,22 @@ const AcceptTermsInput: React.FC<TermsCheckboxProps> = ({
   required = false,
 }) => {
   return (
-    <div className="mt-4">
+    <div className="mt-4 font-inter">
       <label className="flex items-start space-x-2 cursor-pointer">
         <input
           type="checkbox"
           {...register(name, {
             ...(required && { required: `${name} is required` }),
           })}
-          className="accent-blue-600 mt-1 w-4 h-4"
+          className="accent-secondary mt-1 w-4 h-4"
         />
-        <span className="text-sm text-gray-700 dark:text-gray-200">
+        <span className=" text-gray-700 dark:text-gray-200">
           I agree to the{" "}
           <Link
             href="/terms"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:underline dark:text-blue-400"
+            className="text-primary hover:underline dark:text-green-600"
           >
             Terms & Conditions
           </Link>
