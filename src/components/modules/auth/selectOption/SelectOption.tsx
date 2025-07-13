@@ -14,6 +14,10 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import { Autoplay, EffectFade } from "swiper/modules";
+import {
+  customerImages,
+  mealProviderImages,
+} from "@/constant/selectOption.const";
 
 const SelectOption = () => {
   const [registeredRole, setRegisteredRole] = useState<string | null>(null);
@@ -23,18 +27,6 @@ const SelectOption = () => {
   const [providerActiveBg, setProviderActiveBg] = useState(
     "/mealProvider-banner-1.PNG"
   );
-
-  const customerImages = [
-    "/customer-banner-1.PNG",
-    "/customer-banner-2.PNG",
-    "/customer-banner-3.PNG",
-  ];
-
-  const mealProviderImages = [
-    "/mealProvider-banner-1.PNG",
-    "/mealProvider-banner-2.PNG",
-    "/mealProvider-banner-3.PNG",
-  ];
 
   useEffect(() => {
     const customer = localStorage.getItem("customerForm");
@@ -240,7 +232,7 @@ const SelectOption = () => {
         )}
         {!registeredRole && (
           <div
-            style={{ backgroundImage: `url('/selection-banner.PNG')` }}
+            style={{ backgroundImage: `url('/selection-banner.WEBP')` }}
             className="relative h-screen  bg-center bg-cover bg-no-repeat  px-5 md:px-20 py-5 md:py-10 overflow-hidden flex"
           >
             <div className="absolute inset-0 bg-black/60  z-10 " />
@@ -264,7 +256,7 @@ const SelectOption = () => {
               </h2>
               <SelectOptionComponent setRegisteredRole={setRegisteredRole} />
 
-              <div className="absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white dark:bg-gray-800 top-[4%] md:top-[5%] left-[3%] md:left-[10%] bg-[url('/selection-banner.PNG')] bg-cover bg-center bg-no-repeat p-6 md:p-10 flex justify-end">
+              <div className="absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white dark:bg-gray-800 top-[4%] md:top-[5%] left-[3%] md:left-[10%] bg-[url('/selection-banner.WEBP')] bg-cover bg-center bg-no-repeat p-6 md:p-10 flex justify-end">
                 <div className="space-y-2 md:space-y-10">
                   <div className="flex items-center justify-between">
                     <Link
