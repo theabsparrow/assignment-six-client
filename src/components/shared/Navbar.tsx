@@ -41,7 +41,7 @@ const Navbar = ({
 
   return (
     <>
-      <section className="hidden bg-[#111111] px-16 py-3 font-inter md:flex items-center justify-between text-white">
+      <section className="hidden bg-[#111111] px-16 py-2 font-inter md:flex items-center justify-between text-white">
         <div className="flex items-center gap-20">
           <p>Call Us : +8801845477161</p>
           <p className="flex items-center gap-2">
@@ -58,7 +58,7 @@ const Navbar = ({
             ))}
           </div>
           {!name && (
-            <div className="flex items-center gap-4 text-lg ">
+            <div className="flex items-center gap-4  ">
               <Link className="border-x border-gray-600 px-4" href="/login">
                 sign in
               </Link>

@@ -98,6 +98,7 @@ const MealFiltering = ({
           <select
             name="foodCategory"
             onChange={handleChange}
+            value={searchParams.get("foodCategory") || ""}
             className="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
           >
             <option value="">All</option>
@@ -114,6 +115,7 @@ const MealFiltering = ({
           <select
             name="cuisineType"
             onChange={handleChange}
+            value={searchParams.get("cuisineType") || ""}
             className="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
           >
             <option value="">All</option>
