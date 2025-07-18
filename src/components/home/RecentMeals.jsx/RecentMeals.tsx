@@ -5,7 +5,7 @@ import { TMealFormData } from "@/types/mealType";
 const RecentMeals = async () => {
   const { data } = await getAllMeals(undefined);
 
-  const mealItems = data.result.slice(0.6);
+  const mealItems = data.result.slice(0, 6);
   return (
     <div className="w-full md:px-16 px-5 py-10 ">
       <div className="max-w-7xl mx-auto text-center space-y-8">

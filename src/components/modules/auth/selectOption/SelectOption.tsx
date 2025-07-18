@@ -9,7 +9,6 @@ import { IoIosLogIn } from "react-icons/io";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa6";
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
@@ -22,10 +21,10 @@ import {
 const SelectOption = () => {
   const [registeredRole, setRegisteredRole] = useState<string | null>(null);
   const [customerActiveBg, setCustomerActiveBg] = useState(
-    "/customer-banner-1.PNG"
+    "/customer-banner-1.webp"
   );
   const [providerActiveBg, setProviderActiveBg] = useState(
-    "/mealProvider-banner-1.PNG"
+    "/mealProvider-banner-1.webp"
   );
 
   useEffect(() => {
@@ -232,7 +231,7 @@ const SelectOption = () => {
         )}
         {!registeredRole && (
           <div
-            style={{ backgroundImage: `url('/selection-banner.WEBP')` }}
+            style={{ backgroundImage: `url('/selection-banner.webp')` }}
             className="relative h-screen  bg-center bg-cover bg-no-repeat  px-5 md:px-20 py-5 md:py-10 overflow-hidden flex"
           >
             <div className="absolute inset-0 bg-black/60  z-10 " />
@@ -256,7 +255,7 @@ const SelectOption = () => {
               </h2>
               <SelectOptionComponent setRegisteredRole={setRegisteredRole} />
 
-              <div className="absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white dark:bg-gray-800 top-[4%] md:top-[5%] left-[3%] md:left-[10%] bg-[url('/selection-banner.WEBP')] bg-cover bg-center bg-no-repeat p-6 md:p-10 flex justify-end">
+              <div className="absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white dark:bg-gray-800 top-[4%] md:top-[5%] left-[3%] md:left-[10%] bg-[url('/selection-banner.webp')] bg-cover bg-center bg-no-repeat p-6 md:p-10 flex justify-end">
                 <div className="space-y-2 md:space-y-10">
                   <div className="flex items-center justify-between">
                     <Link

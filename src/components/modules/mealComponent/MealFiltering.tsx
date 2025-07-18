@@ -134,6 +134,7 @@ const MealFiltering = ({
           <select
             name="foodPreference"
             onChange={handleChange}
+            value={searchParams.get("foodPreference") || ""}
             className="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
           >
             <option value="">All</option>

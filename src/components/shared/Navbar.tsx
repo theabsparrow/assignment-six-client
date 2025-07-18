@@ -41,7 +41,7 @@ const Navbar = ({
 
   return (
     <>
-      <section className="hidden bg-[#111111] px-16 py-2 font-inter md:flex items-center justify-between text-white">
+      <section className="hidden bg-[#111111] px-16 py-2 font-inter md:flex items-center justify-between text-white ">
         <div className="flex items-center gap-20">
           <p>Call Us : +8801845477161</p>
           <p className="flex items-center gap-2">
@@ -67,13 +67,13 @@ const Navbar = ({
           )}
         </div>
       </section>
-      <nav className="bg-gray-200 dark:bg-gray-900 shadow-xl sticky top-0 w-full z-50 transition duration-300 md:px-16 px-5 font-inter">
-        <div className="flex justify-between py-6 md:py-3 items-center ">
+      <nav className="bg-gray-200 dark:bg-gray-900 shadow-xl sticky top-0 w-full z-50 transition duration-300 md:px-16 px-5 py-2 font-inter h-[10vh] ">
+        <div className="flex justify-between items-center h-[8vh] ">
           {/* Logo */}
           <Link href="/">
             <Image
               className="w-[35vw] md:w-[10vw]"
-              src="/logo.PNG"
+              src="/logo.png"
               alt="logo"
               width={70}
               height={70}

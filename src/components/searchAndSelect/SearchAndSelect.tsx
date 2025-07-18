@@ -18,8 +18,8 @@ const SearchAndSelect = <T extends string>({
   const [value, setValue] = useState("");
   const dropDownRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const filterOptions = options
     .sort((a, b) => a.localeCompare(b))

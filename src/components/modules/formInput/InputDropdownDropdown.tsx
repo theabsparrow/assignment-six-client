@@ -6,9 +6,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 type TInputDropdownProps<T> = {
   options: T[];
   filterBy: string;
+  clases: string;
 };
 
-const InputDropdown = <T,>({ options, filterBy }: TInputDropdownProps<T>) => {
+const InputDropdown = <T,>({
+  options,
+  filterBy,
+  clases,
+}: TInputDropdownProps<T>) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -46,7 +51,9 @@ const InputDropdown = <T,>({ options, filterBy }: TInputDropdownProps<T>) => {
         />
       </button>
       {open && (
-        <div className="absolute left-44 md:left-48 -top-16 w-[30vw] md:w-full bg-gray-800 rounded-lg border border-secondary shadow-lg z-30 animate-fade-in">
+        <div
+          className={`absolute ${clases} w-[30vw] md:w-full bg-gray-800 rounded-lg border border-secondary shadow-lg z-30 animate-fade-in`}
+        >
           <ul className=" flex flex-col gap-1 text-sm text-gray-800">
             {options.map((option, index) => (
               <li key={index}>

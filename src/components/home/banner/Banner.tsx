@@ -1,6 +1,5 @@
 "use client";
 
-import FoodDiateryBanner from "./FoodDiateryBanner";
 import FoodCuisineBanner from "./FoodCuisineBanner";
 import FoodCategoryBanner from "./FoodCategoryBanner";
 import FoodPreferanceBanner from "./FoodPreferanceBanner";
@@ -13,10 +12,10 @@ import { Autoplay } from "swiper/modules";
 const Banner = () => {
   return (
     <section>
-      {/* <Swiper
+      <Swiper
         spaceBetween={0}
         autoplay={{
-          delay: 3000,
+          delay: 5000,
           disableOnInteraction: false,
         }}
         loop={true}
@@ -31,10 +30,8 @@ const Banner = () => {
         </SwiperSlide>
         <SwiperSlide>
           <FoodPreferanceBanner />
-        </SwiperSlide>  
-      </Swiper> */}
-      {/* <FoodCategoryBanner /> */}
-      <FoodCuisineBanner />
+        </SwiperSlide>
+      </Swiper>
     </section>
   );
 };

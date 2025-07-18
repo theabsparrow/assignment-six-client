@@ -54,7 +54,7 @@ const ProfileDropdown = ({
           />
         ) : (
           <Image
-            src="/profile-icon.PNG"
+            src="/profile-icon.png"
             alt="Profile"
             width={40}
             height={40}

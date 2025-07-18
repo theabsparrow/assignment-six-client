@@ -7,11 +7,11 @@ import Link from "next/link";
 const FoodCuisineBanner = () => {
   return (
     <section
-      style={{ backgroundImage: `url('/cuisine-type.WEBP')` }}
+      style={{ backgroundImage: `url('/cuisine-type.webp')` }}
       className="relative min-h-[50vh] md:min-h-[85vh]  bg-center bg-cover bg-no-repeat  px-5 md:px-20 py-5 md:py-10 overflow-hidden flex"
     >
       <div className="absolute inset-0 bg-black/70  z-10 " />
-      <div className="absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-[#1c1c1c] top-[4%] md:top-[5%] left-[3%] md:left-[10%] bg-[url('/cuisine.WEBP')] bg-cover bg-center bg-no-repeat p-4 md:px-10 md:py-4 flex md:justify-end rounded-lg">
+      <div className="absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-[#1c1c1c] top-[4%] md:top-[5%] left-[3%] md:left-[10%] bg-[url('/cuisine.webp')] bg-cover bg-center bg-no-repeat p-4 md:px-10 md:py-4 flex md:justify-end rounded-lg">
         <div className="space-y-2 md:space-y-8 md:w-[40vw] flex flex-col items-end">
           <h2 className="text-2xl text-white md:text-6xl font-bold text-right leading-tight font-playfair bg-gray-800/70 md:bg-transparent p-1 md:p-0 rounded-lg">
             Discover Delicious Cuisines From Around the World

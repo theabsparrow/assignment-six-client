@@ -4,7 +4,7 @@ import { FaHome } from "react-icons/fa";
 
 const Login = () => {
   return (
-    <section className=" h-screen bg-[url('/login-banner.WEBP')] bg-cover bg-center bg-no-repeat bg-gray-200 dark:bg-gray-900 px-5 md:px-20 py-5 md:py-10 relative">
+    <section className=" h-screen bg-[url('/login-banner.webp')] bg-cover bg-center bg-no-repeat bg-gray-200 dark:bg-gray-900 px-5 md:px-20 py-5 md:py-10 relative">
       <div className="absolute inset-0 bg-black/80  z-10 " />
       <div>
         <Link
@@ -18,7 +18,7 @@ const Login = () => {
         </h2>
         <LoginForm />
       </div>
-      <div className="absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white dark:bg-gray-800 top-[2%] md:top-[5%] left-[3%] md:left-[10%] bg-[url('/login-banner.WEBP')] bg-cover bg-center bg-no-repeat p-3 md:p-10">
+      <div className="absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white dark:bg-gray-800 top-[2%] md:top-[5%] left-[3%] md:left-[10%] bg-[url('/login-banner.webp')] bg-cover bg-center bg-no-repeat p-3 md:p-10">
         <div>
           <Link
             href="/"

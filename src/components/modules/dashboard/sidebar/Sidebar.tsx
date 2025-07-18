@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
-import logo from "../../../../app/assets/logo.svg";
 import { useUser } from "@/context/UserContext";
 import {
   customerItems,
@@ -43,7 +42,7 @@ const Sidebar = ({
           <div className="flex items-center justify-between px-6 py-2 border-b-2 border-dashed border-gray-400">
             <div className="text-2xl font-bold text-gray-800 dark:text-white ">
               <Link href="/">
-                <Image src={logo} alt="logo" width={200} height={200} />
+                <Image src="logo.PNG" alt="logo" width={200} height={200} />
               </Link>
             </div>
           </div>
@@ -139,7 +138,7 @@ const Sidebar = ({
           <div className="md:hidden bg-gray-200 dark:bg-gray-900 pt-16 pb-4 space-y-2 absolute top-0 right-1 px-6 shadow-2xl h-screen flex flex-col justify-between">
             <div className="text-2xl font-bold text-gray-800 dark:text-white flex justify-center">
               <Link href="/">
-                <Image src={logo} alt="logo" width={100} height={100} />
+                <Image src="logo.PNG" alt="logo" width={100} height={100} />
               </Link>
             </div>
 
