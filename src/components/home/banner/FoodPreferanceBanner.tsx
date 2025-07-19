@@ -31,6 +31,7 @@ const FoodPreferanceBanner = () => {
             <InputDropdown
               options={foodPreferance as FoodPreferenceOption[]}
               filterBy={"foodPreference"}
+              name="Select Preference"
               clases="left-44 md:left-48 -top-10"
             />
             <Link

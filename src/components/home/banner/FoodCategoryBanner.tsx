@@ -29,6 +29,7 @@ const FoodCategoryBanner = () => {
             <InputDropdown
               options={foodCategory as TFoodCategory[]}
               filterBy={"foodCategory"}
+              name="Select Category"
               clases="left-44 md:left-48 -top-16"
             />
             <Link

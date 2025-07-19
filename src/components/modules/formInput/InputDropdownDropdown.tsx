@@ -6,12 +6,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 type TInputDropdownProps<T> = {
   options: T[];
   filterBy: string;
+  name: string;
   clases: string;
 };
 
 const InputDropdown = <T,>({
   options,
   filterBy,
+  name,
   clases,
 }: TInputDropdownProps<T>) => {
   const [open, setOpen] = useState(false);
@@ -45,7 +47,7 @@ const InputDropdown = <T,>({
         onClick={() => setOpen(!open)}
         className="bg-secondary border border-primary text-primary p-2 flex items-center gap-4 rounded-lg cursor-pointer hover:bg-white duration-500"
       >
-        select category
+        {name}
         <RiArrowDropDownLine
           className={`text-2xl ${open && "rotate-180 duration-500"}`}
         />
