@@ -56,7 +56,7 @@ const SearchAndSelect = <T extends string>({
         }}
         className="bg-secondary border border-primary text-primary p-2 flex items-center gap-4 rounded-lg cursor-pointer hover:bg-white duration-500"
       >
-        {value || "Select Cuisine Type"}
+        {value || "Select Cuisine "}
         <RiArrowDropDownLine
           className={`text-2xl ${open && "rotate-180 duration-500"}`}
         />

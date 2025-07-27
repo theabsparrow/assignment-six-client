@@ -61,3 +61,13 @@ export type TMealFormData = {
   rating?: number;
   isAvailable?: boolean;
 };
+
+export type TSixMealData = {
+  _id?: string;
+  title: string;
+  imageUrl: string;
+  price: number;
+  cuisineType: TcuisineType;
+  foodPreference: FoodPreferenceOption;
+  foodCategory: TFoodCategory;
+};

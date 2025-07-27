@@ -1,10 +1,10 @@
 "use client";
 
-import RecendMealCard from "@/components/home/RecentMeals.jsx/RecendMealCard";
 import Pagination from "@/components/pagination/Pagination";
 import { TMetaDataProps } from "@/types";
 import { TMealFormData } from "@/types/mealType";
 import MealFiltering from "./MealFiltering";
+import MealCard from "@/components/mealCard/MealCard";
 
 const MealComponent = ({
   MealInfo,
@@ -22,7 +22,7 @@ const MealComponent = ({
       <div className="py-32 md:py-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {MealInfo.map((item: TMealFormData) => (
-            <RecendMealCard key={item?._id} meal={item} />
+            <MealCard key={item?._id} meal={item} />
           ))}
         </div>
         {MealInfo?.length > 0 && <Pagination totalPage={meta?.totalPage} />}

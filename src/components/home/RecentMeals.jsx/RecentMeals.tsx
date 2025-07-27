@@ -1,29 +1,47 @@
-import { getAllMeals } from "@/services/mealService";
-import RecendMealCard from "./RecendMealCard";
-import { TMealFormData } from "@/types/mealType";
+import { getSixMeals } from "@/services/mealService";
+import { TSixMealData } from "@/types/mealType";
+import MealCard from "@/components/mealCard/MealCard";
+import Link from "next/link";
+import { IoArrowForward } from "react-icons/io5";
 
 const RecentMeals = async () => {
-  const { data } = await getAllMeals(undefined);
+  const { data } = await getSixMeals();
 
-  const mealItems = data.result.slice(0, 6);
   return (
-    <div className="w-full md:px-16 px-5 py-10 ">
-      <div className="max-w-7xl mx-auto text-center space-y-8">
-        <div className="space-y-3">
-          <h2 className="text-4xl font-bold ">Recent Meals</h2>
-          <p className="text-lg  font-medium max-w-2xl mx-auto">
-            Discover our freshly made meals crafted with care and passion by
-            local chefs.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {mealItems.map((item: TMealFormData) => (
-            <RecendMealCard key={item?._id} meal={item} />
-          ))}
-        </div>
+    <section className="w-full md:px-16 px-5 py-10  space-y-10">
+      <div className="max-w-4xl mx-auto text-center space-y-4  border-b-2 border-dashed border-primary pb-4 px-6">
+        <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-800 dark:text-white">
+          Explore Our Latest Culinary Creations
+        </h2>
+        <p className="text-lg md:text-xl font-medium text-gray-600 dark:text-gray-300 leading-relaxed">
+          Discover freshly prepared meals, thoughtfully crafted by passionate
+          local chefs using the finest ingredients.
+        </p>
       </div>
-    </div>
+
+      <div
+        className="h-[20vw] md:h-[25vh] w-full  bg-cover bg-center shadow-md"
+        style={{
+          backgroundImage: `url('https://i.ibb.co/Z6p0SvDf/recent-meal.webp')`,
+        }}
+      />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {data.map((item: TSixMealData) => (
+          <MealCard key={item?._id} meal={item} />
+        ))}
+      </div>
+
+      <div className="flex justify-center items-center">
+        <Link
+          href="/meals"
+          className="bg-secondary text-primary border border-primary px-4 py-2 rounded-xl font-medium hover:bg-primary hover:border-secondary hover:text-secondary transition-all duration-500 flex items-center gap-1"
+        >
+          See All
+          <IoArrowForward />
+        </Link>
+      </div>
+    </section>
   );
 };
 

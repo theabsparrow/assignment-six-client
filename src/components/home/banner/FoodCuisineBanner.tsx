@@ -26,7 +26,7 @@ const FoodCuisineBanner = () => {
             spicy Indian curry, authentic Italian pasta, or fresh Japanese
             sushi—we’ve got it all.
           </p>
-          <div className="flex gap-8 md:gap-16 items-start sm:items-center mt-2 md:mt-0">
+          <div className="flex gap-8 md:gap-16 md:items-start items-center mt-2 md:mt-0">
             <SearchAndSelect options={cuisineType} filterBy={"cuisineType"} />
             <Link
               href="/meals"

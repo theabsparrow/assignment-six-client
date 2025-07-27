@@ -4,7 +4,7 @@ import { Suspense } from "react";
 
 const HomePage = () => {
   return (
-    <div className="space-y-10">
+    <div className="space-y-16">
       <Suspense fallback={<div>Loading banner...</div>}>
         <Banner />
       </Suspense>

@@ -101,3 +101,19 @@ export const getMyMeals = async () => {
     return Error(error);
   }
 };
+
+export const getSixMeals = async () => {
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/meal/recent-meals`,
+      {
+        next: { revalidate: 60 },
+        method: "GET",
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
