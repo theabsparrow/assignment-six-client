@@ -117,3 +117,18 @@ export const getSixMeals = async () => {
     return Error(error);
   }
 };
+export const getFoodCategory = async () => {
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/meal/meal-category`,
+      {
+        next: { revalidate: 30 },
+        method: "GET",
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};

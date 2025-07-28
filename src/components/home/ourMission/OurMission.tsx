@@ -3,14 +3,14 @@ import MissionContent from "./MissionContent";
 
 const OurMission = () => {
   return (
-    <section className="md:px-24 px-5 mb-10 flex justify-between">
+    <section className="md:px-24 px-5 mb-20 flex flex-col md:flex-row justify-between gap-4 md:gap-0">
       <div className="relative">
         <Image
           src="https://i.ibb.co/CKzRPSVm/nuddles-photo.webp"
           height={1000}
           width={1000}
           alt="mission-image"
-          className="w-[32vw] h-[88vh]"
+          className="md:w-[32vw] md:h-[88vh]"
         />
         <Image
           src="https://i.ibb.co/TqhXFhkV/customer-2.webp"
