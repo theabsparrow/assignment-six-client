@@ -14,9 +14,17 @@ const HomePage = () => {
       </Suspense>
       <RecentMeals />
       <OurMission />
-      <FoodCategorySection />
-      <PreferenceSection />
-      <CuisineSection />
+      <Suspense fallback={<div>Loading categories...</div>}>
+        <FoodCategorySection />
+      </Suspense>
+
+      <Suspense fallback={<div>Loading preferences...</div>}>
+        <PreferenceSection />
+      </Suspense>
+
+      <Suspense fallback={<div>Loading cuisines...</div>}>
+        <CuisineSection />
+      </Suspense>
     </section>
   );
 };
