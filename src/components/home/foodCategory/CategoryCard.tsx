@@ -16,19 +16,23 @@ const CategoryCard = ({ category }: { category: TFoodCategory }) => {
   };
 
   return (
-    <div className="p-4 rounded-lg border border-primary space-y-4">
+    <div className="p-6 rounded-2xl border border-primary shadow-sm bg-white dark:bg-gray-900 space-y-4 transition-all hover:shadow-md">
       <Image
         src={foodcategory[category]}
-        height={1000}
-        width={1000}
-        alt="customer-image"
-        className="w-[20vw] h-[40vh]  rounded-xl"
+        alt={`${category} image`}
+        width={800}
+        height={800}
+        className="w-full h-[250px] object-cover rounded-xl"
       />
-      <h1 className="text-2xl font-semibold">Meals for {category}</h1>
-      <div className="flex items-center justify-end">
+
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-white text-center">
+        Meals for {category}
+      </h2>
+
+      <div className="flex justify-end">
         <button
           onClick={handleCategory}
-          className="bg-secondary border border-primary rounded-xl px-2 py-1 cursor-pointer hover:bg-white duration-500"
+          className="px-4 py-2 text-sm font-medium border border-primary text-primary bg-secondary hover:bg-white dark:hover:bg-gray-800 rounded-lg transition-colors duration-300 cursor-pointer"
         >
           See all
         </button>
