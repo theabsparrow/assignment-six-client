@@ -8,7 +8,7 @@ import { GiForkKnifeSpoon } from "react-icons/gi";
 
 const MealCard = ({ meal }: { meal: TSixMealData }) => {
   return (
-    <section className="p-6 md:p-8 rounded-2xl bg-gray-200 dark:bg-gray-800 shadow-md space-y-5">
+    <section className="p-6 md:p-8 rounded-2xl bg-gray-200 dark:bg-gray-800 shadow-md flex flex-col gap-4">
       <div className="flex justify-center group">
         <Image
           src={meal?.imageUrl || "/default.jpg"}
@@ -38,7 +38,7 @@ const MealCard = ({ meal }: { meal: TSixMealData }) => {
 
       <hr className="border border-primary" />
 
-      <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-white flex-grow">
         {meal?.title}
       </h2>
 

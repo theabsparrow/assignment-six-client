@@ -24,8 +24,14 @@ export const createBlog = async (blogInfo: TBlogPost) => {
   }
 };
 
+// interface BlogQuery {
+//   searchTerm?: string;
+//   status?: string;
+//   limit?: string | number;
+// }
+
 export const getAllBlogs = async (query?: {
-  [key: string]: string | string[] | undefined;
+  [key: string]: string | string[] | number | undefined;
 }) => {
   try {
     const params = new URLSearchParams();
@@ -35,9 +41,13 @@ export const getAllBlogs = async (query?: {
     if (query?.status) {
       params.append("status", query?.status.toString());
     }
-
+    if (query?.limit) {
+      params.append("limit", query?.limit.toString());
+    } else {
+      params.append("limit", "20");
+    }
     const res = await fetch(
-      `${config.next_public_base_api}/blog/blogs?limit=20&${params}`,
+      `${config.next_public_base_api}/blog/blogs?${params}`,
       {
         method: "GET",
         next: {

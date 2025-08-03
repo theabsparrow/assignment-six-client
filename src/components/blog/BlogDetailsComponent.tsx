@@ -27,7 +27,7 @@ const BlogDetailsComponent = ({ blog }: { blog: TBlog }) => {
           {blog.tags.map((tag, idx) => (
             <span
               key={idx}
-              className="px-3 py-1 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 text-xs rounded-full font-medium"
+              className="px-3 py-1 bg-secondary text-primary  text-xs rounded-full font-medium"
             >
               #{tag}
             </span>
