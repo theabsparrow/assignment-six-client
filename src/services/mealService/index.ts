@@ -165,3 +165,19 @@ export const getCuisineType = async () => {
     return Error(error);
   }
 };
+
+export const getMostSearchedmeals = async () => {
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/meal/most-SearchedMeals`,
+      {
+        next: { revalidate: 30 },
+        method: "GET",
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};

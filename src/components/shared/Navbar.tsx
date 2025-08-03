@@ -8,7 +8,7 @@ import ProfileDropdown from "./ProfileDropDown";
 import Image from "next/image";
 import { useUser } from "@/context/UserContext";
 import { logout } from "@/services/authService";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import {
@@ -30,6 +30,8 @@ const Navbar = ({
   const { setIsLoading, setUser } = useUser();
   const router = useRouter();
   const pathname = usePathname();
+  const [searchTerm, setSearchTerm] = useState("");
+  const searchParams = useSearchParams();
 
   const handleLogout = async () => {
     await logout();
@@ -37,6 +39,12 @@ const Navbar = ({
     setIsOpen(false);
     setIsLoading(true);
     router.push("/login");
+  };
+
+  const handleSearch = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("searchTerm", searchTerm.toString());
+    router.push(`/meals?${params.toString()}`, { scroll: false });
   };
 
   return (
@@ -49,6 +57,7 @@ const Navbar = ({
             <Flag code="BD" style={{ width: "24px", marginLeft: "8px" }} />
           </p>
         </div>
+
         <div className="flex items-center gap-16">
           <div className="flex items-center gap-4 text-lg ">
             {icons.map((icon, i) => (
@@ -112,7 +121,22 @@ const Navbar = ({
               </Link>
             )}
           </div>
-
+          <div className="hidden md:flex items-center">
+            <input
+              type="text"
+              placeholder="search for meals"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="outline-none border rounded-l-lg px-4 py-1"
+            />
+            <button
+              onClick={handleSearch}
+              disabled={searchTerm === ""}
+              className=" bg-secondary text-primary border border-primary rounded-r-lg px-2 py-1 font-bold cursor-pointer disabled:bg-green-200 disabled:cursor-not-allowed"
+            >
+              Search
+            </button>
+          </div>
           {/* dropdown */}
           <div className="hidden md:flex items-center gap-6">
             <ProfileDropdown name={name} profileImage={profileImage} />

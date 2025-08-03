@@ -7,41 +7,50 @@ import {
   Phone,
   MapPin,
 } from "lucide-react";
+import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-300 dark:bg-gray-950 text-gray-800 dark:text-gray-200 border-t border-gray-200 dark:border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+    <footer className="bg-gray-800 text-white/70 border-t border-gray-200 dark:border-gray-800 md:px-24 px-5 py-10">
+      <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 mb-6">
         {/* Brand */}
         <div>
-          <h2 className="text-2xl font-bold text-orange-500">Daily Dish</h2>
-          <p className="mt-4 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+          <h2 className="text-2xl font-bold text-orange-500">
+            <Image
+              className="w-[35vw] md:w-[10vw]"
+              src="/logo.png"
+              alt="logo"
+              width={70}
+              height={70}
+            />
+          </h2>
+          <p className="mt-4 text-sm leading-relaxed text-white/70">
             Fresh meals delivered to your door. Handcrafted with love and
             quality.
           </p>
         </div>
 
         {/* Navigation */}
-        <div>
+        <div className="text-white/70">
           <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
           <ul className="space-y-3 text-sm">
             <li>
-              <Link href="/" className="hover:text-orange-500">
+              <Link href="/" className="hover:text-secondary">
                 Home
               </Link>
             </li>
             <li>
-              <Link href="/meals" className="hover:text-orange-500">
+              <Link href="/meals" className="hover:text-secondary">
                 Meals
               </Link>
             </li>
             <li>
-              <Link href="/about" className="hover:text-orange-500">
+              <Link href="/about" className="hover:text-secondary">
                 About Us
               </Link>
             </li>
             <li>
-              <Link href="/contact" className="hover:text-orange-500">
+              <Link href="/contact" className="hover:text-secondary">
                 Contact
               </Link>
             </li>
@@ -94,7 +103,7 @@ const Footer = () => {
       </div>
 
       {/* Footer bottom */}
-      <div className="text-center text-xs py-6 border-t border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400">
+      <div className="text-center text-xs pt-6 border-t border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400">
         © {new Date().getFullYear()} MealBox. All rights reserved.
       </div>
     </footer>
