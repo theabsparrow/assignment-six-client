@@ -9,8 +9,8 @@ const RecentMeals = async () => {
 
   return (
     <section className="w-full md:px-24 px-5 py-10  space-y-10">
-      <div className="max-w-4xl mx-auto text-center space-y-4  border-b-2 border-dashed border-primary pb-4 px-6">
-        <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-800 dark:text-white">
+      <div className=" md:max-w-4xl mx-auto text-center space-y-4   pb-4 px-2 md:px-6">
+        <h2 className="text-2xl md:text-5xl font-extrabold tracking-tight text-gray-800 dark:text-white">
           Explore Our Latest Culinary Creations
         </h2>
         <p className="text-lg md:text-xl font-medium text-gray-600 dark:text-gray-300 leading-relaxed">

@@ -23,22 +23,24 @@ const NewsLetter = () => {
 
         <form
           onSubmit={handleSubscribe}
-          className="flex flex-col sm:flex-row items-center justify-center"
+          className="flex flex-col items-center justify-center"
         >
-          <input
-            type="email"
-            placeholder="Enter your email"
-            className="w-full sm:w-80 px-4 py-2 rounded-l-xl border border-primary bg-gray outline-none"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <button
-            type="submit"
-            disabled={email === ""}
-            className="w-full sm:w-auto px-6 py-2 rounded-r-xl bg-green-600 dark:bg-secondary dark:text-primary hover:bg-green-700 text-white font-semibold shadow cursor-pointer border border-primary disabled:bg-gray-400 disabled:cursor-not-allowed"
-          >
-            Subscribe
-          </button>
+          <div className="flex items-center">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="w-full px-4 py-2 rounded-l-xl border border-primary bg-gray outline-none"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <button
+              type="submit"
+              disabled={email === ""}
+              className="md:w-full px-1 md:px-6 py-2 rounded-r-xl bg-green-600 dark:bg-secondary dark:text-primary hover:bg-green-700 text-white font-semibold shadow cursor-pointer border border-primary disabled:bg-gray-400 disabled:cursor-not-allowed"
+            >
+              Subscribe
+            </button>
+          </div>
         </form>
 
         <p className="text-xs text-gray-400 mt-3">

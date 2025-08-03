@@ -7,15 +7,14 @@ const GetMostSearchedMeals = async () => {
 
   return (
     <section className="md:px-24 px-5 mb-20 space-y-8">
-      <div className="max-w-4xl mx-auto text-center space-y-4 px-6">
-        <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-800 dark:text-white">
+      <div className="max-w-4xl mx-auto text-center space-y-4 px-2 md:px-6">
+        <h2 className="text-2xl md:text-5xl font-extrabold tracking-tight text-gray-800 dark:text-white">
           Most Searched Meals
         </h2>
         <p className="text-lg md:text-xl font-medium text-gray-600 dark:text-gray-300 leading-relaxed">
           Explore the dishes that are trending among our food lovers. These
           meals have captured the attention and taste buds of users across our
-          platform—perfect for when you want to try something popular and
-          delicious.
+          platform
         </p>
       </div>
 
