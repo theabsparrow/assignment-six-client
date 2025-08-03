@@ -51,3 +51,15 @@ export const getAllBlogs = async (query?: {
     return Error(error);
   }
 };
+
+export const getASingleBlog = async (id: string) => {
+  try {
+    const res = await fetch(`${config.next_public_base_api}/blog/blog/${id}`, {
+      method: "GET",
+    });
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};

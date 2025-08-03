@@ -1,10 +1,7 @@
-"use client";
-
 import { TBlog } from "@/types/blogTypes";
 import Image from "next/image";
-import Link from "next/link";
 
-const BlogCard = ({ blog }: { blog: TBlog }) => {
+const BlogDetailsComponent = ({ blog }: { blog: TBlog }) => {
   const formattedDate = new Intl.DateTimeFormat("en-GB", {
     day: "numeric",
     month: "long",
@@ -25,21 +22,6 @@ const BlogCard = ({ blog }: { blog: TBlog }) => {
         <p>📅 {formattedDate}</p>
         <p className="text-xl font-semibold">✍️ {blog?.name}</p>
       </div>
-
-      <div className="space-y-2">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-          {blog?.title}
-        </h2>
-        <p className="text-gray-700 dark:text-gray-200">
-          {blog?.excerpts}...
-          <Link
-            href={`/blogs/${blog?._id}`}
-            className="text-blue-600 dark:text-blue-400 font-medium hover:underline cursor-pointer ml-1"
-          >
-            Read more
-          </Link>
-        </p>
-      </div>
       {blog?.tags && blog.tags.length > 0 && (
         <div className="flex flex-wrap gap-2 pt-2">
           {blog.tags.map((tag, idx) => (
@@ -52,8 +34,16 @@ const BlogCard = ({ blog }: { blog: TBlog }) => {
           ))}
         </div>
       )}
+      <div className="space-y-2">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+          {blog?.title}
+        </h2>
+        <p className="text-gray-700 dark:text-gray-200 text-lg">
+          {blog?.content}
+        </p>
+      </div>
     </div>
   );
 };
 
-export default BlogCard;
+export default BlogDetailsComponent;
