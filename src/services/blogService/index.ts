@@ -24,12 +24,6 @@ export const createBlog = async (blogInfo: TBlogPost) => {
   }
 };
 
-// interface BlogQuery {
-//   searchTerm?: string;
-//   status?: string;
-//   limit?: string | number;
-// }
-
 export const getAllBlogs = async (query?: {
   [key: string]: string | string[] | number | undefined;
 }) => {

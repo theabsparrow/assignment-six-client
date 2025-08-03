@@ -4,6 +4,7 @@ import FaqSection from "@/components/home/FaqSection/FaqSection";
 import FoodCategorySection from "@/components/home/foodCategory/FoodCategorySection";
 import PreferenceSection from "@/components/home/foodPreference/PreferenceSection";
 import HowItWorks from "@/components/home/howItWorks/HowItWorks";
+import KitchenSection from "@/components/home/kitchenSection/KitchenSection";
 import LatestArticle from "@/components/home/latestArticle/LatestArticle";
 import GetMostSearchedMeals from "@/components/home/mostSearchedMeals/GetMostSearchedMeals";
 import NewsLetter from "@/components/home/newsLetter/NewsLetter";
@@ -31,6 +32,7 @@ const HomePage = () => {
         <CuisineSection />
       </Suspense>
       <GetMostSearchedMeals />
+      <KitchenSection />
       <LatestArticle />
       <HowItWorks />
       <FaqSection />
