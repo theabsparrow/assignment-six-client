@@ -51,7 +51,7 @@ const LoginForm = () => {
           setIsLoading(false);
           reset();
         } else {
-          router.push("/");
+          router.push("/profile");
           reset();
         }
       } else {
@@ -88,7 +88,7 @@ const LoginForm = () => {
           setUser(currentUser);
           setIsLoading(false);
         } else {
-          router.push("/");
+          router.push("/profile");
         }
       } else {
         toast.error(res?.message, { duration: 3000 });

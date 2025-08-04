@@ -348,7 +348,8 @@ const ProfileCompnent = ({
               )}
             </>
           )}
-          {user?.role === USER_ROLE.customer && (
+          {(user?.role === USER_ROLE.customer ||
+            user?.role === USER_ROLE.admin) && (
             <>
               {user?.verifiedWithEmail ? (
                 <Link
@@ -392,7 +393,8 @@ const ProfileCompnent = ({
           </>
         )}
 
-        {user?.role === USER_ROLE.customer && (
+        {(user?.role === USER_ROLE.customer ||
+          user?.role === USER_ROLE.admin) && (
           <EditArray
             value={userdata?.allergies as TAlergies[]}
             valueOptions={allergyOptions}

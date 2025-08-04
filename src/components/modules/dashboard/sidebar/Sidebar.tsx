@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { useUser } from "@/context/UserContext";
 import {
+  adminItems,
   customerItems,
   mealProviderItems,
   navItems,
@@ -14,15 +15,7 @@ import {
 import { LogOut } from "lucide-react";
 import { logout } from "@/services/authService";
 
-const Sidebar = ({
-  name,
-  profileImage,
-  role,
-}: {
-  name: string;
-  profileImage: string;
-  role: string;
-}) => {
+const Sidebar = ({ role }: { role: string }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -38,90 +31,98 @@ const Sidebar = ({
   return (
     <>
       <div className="hidden md:flex ">
-        <aside className="sticky top-0 z-10 w-64 bg-gray-300 text-white transform border-2 h-screen flex flex-col justify-between pb-6">
-          <div className="flex items-center justify-between px-6 py-2 border-b-2 border-dashed border-gray-400">
-            <div className="text-2xl font-bold text-gray-800 dark:text-white ">
-              <Link href="/">
-                <Image src="logo.PNG" alt="logo" width={200} height={200} />
-              </Link>
-            </div>
+        <aside className="sticky top-0 z-10 w-64 bg-gray-300 text-white transform h-screen flex flex-col justify-between pb-6">
+          <div className="px-8 py-4 ">
+            <Link href="/">
+              <Image
+                src="/logo.png"
+                alt="logo"
+                width={200}
+                height={200}
+                className="w-[10vw]"
+              />
+            </Link>
           </div>
 
-          <nav className="mt-6 flex flex-col gap-2 px-4">
-            {role === USER_ROLE.mealProvider &&
-              mealProviderItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                    pathname === item.href
-                      ? "bg-gradient-to-r from-green-700 to-emerald-600 text-white shadow-md"
-                      : "text-gray-800 hover:bg-gradient-to-r hover:from-green-800 hover:to-emerald-700 hover:text-white hover:shadow"
-                  }`}
-                >
-                  <span className="text-xl">{item.icon}</span>
-                  <span>{item.name}</span>
-                </Link>
-              ))}
-            {role === USER_ROLE.customer &&
-              customerItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                    pathname === item.href
-                      ? "bg-gradient-to-r from-green-700 to-emerald-600 text-white shadow-md"
-                      : "text-gray-800 hover:bg-gradient-to-r hover:from-green-800 hover:to-emerald-700 hover:text-white hover:shadow"
-                  }`}
-                >
-                  <span className="text-xl">{item.icon}</span>
-                  <span>{item.name}</span>
-                </Link>
-              ))}
-
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                  pathname === item.href
-                    ? "bg-gradient-to-r from-green-700 to-emerald-600 text-white shadow-md"
-                    : "text-gray-800 hover:bg-gradient-to-r hover:from-green-800 hover:to-emerald-700 hover:text-white hover:shadow"
-                }`}
-              >
-                <span className="text-xl">{item.icon}</span>
-                <span>{item.name}</span>
-              </Link>
-            ))}
+          <nav className=" px-4">
+            <h1 className="px-4 text-primary font-bold">MENU</h1>
+            <div className="flex flex-col gap-2">
+              {role === USER_ROLE.mealProvider &&
+                mealProviderItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                      pathname === item.href
+                        ? "bg-primary text-white shadow-md"
+                        : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                    }`}
+                  >
+                    <span className="text-xl">{item.icon}</span>
+                    <span>{item.name}</span>
+                  </Link>
+                ))}
+              {role === USER_ROLE.customer &&
+                customerItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                      pathname === item.href
+                        ? "bg-primary text-white shadow-md"
+                        : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                    }`}
+                  >
+                    <span className="text-xl">{item.icon}</span>
+                    <span>{item.name}</span>
+                  </Link>
+                ))}
+              {(role === USER_ROLE.admin || role === USER_ROLE.superAdmin) &&
+                adminItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                      pathname === item.href
+                        ? "bg-primary text-white shadow-md"
+                        : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                    }`}
+                  >
+                    <span className="text-xl">{item.icon}</span>
+                    <span>{item.name}</span>
+                  </Link>
+                ))}
+            </div>
           </nav>
 
-          <div className="px-4 w-full space-y-2">
-            <div className="flex items-center gap-3 bg-gradient-to-r from-green-800 to-emerald-700 text-white px-4 py-3 rounded-lg shadow-md">
-              <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white">
-                {profileImage && (
-                  <Image
-                    src={profileImage}
-                    alt="Profile"
-                    width={40}
-                    height={40}
-                    className="object-cover w-full h-full"
-                  />
-                )}
-              </div>
-              <div>
-                <p className="text-sm font-semibold">{name}</p>
-              </div>
+          <nav className=" px-4 ">
+            <h1 className="px-4 text-primary font-bold">GENERAL</h1>
+            <div className="flex flex-col gap-2">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                    pathname === item.href
+                      ? "bg-primary text-white shadow-md"
+                      : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                  }`}
+                >
+                  <span className="text-xl">{item.icon}</span>
+                  <span>{item.name}</span>
+                </Link>
+              ))}
+              <button
+                onClick={handleLogout}
+                className=" w-full flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition-all duration-200 text-gray-800 hover:bg-primary hover:text-white hover:shadow cursor-pointer"
+              >
+                <span className="text-xl">
+                  <LogOut />
+                </span>
+                <span>Logout</span>
+              </button>
             </div>
-            <button
-              onClick={handleLogout}
-              className=" w-full flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition-all duration-200 text-gray-800 hover:bg-gradient-to-r hover:from-green-800 hover:to-emerald-700 hover:text-white hover:shadow cursor-pointer"
-            >
-              <span className="text-xl">
-                <LogOut />
-              </span>
-              <span>Logout</span>
-            </button>
-          </div>
+          </nav>
         </aside>
       </div>
 
@@ -164,6 +165,24 @@ const Sidebar = ({
 
               {role === USER_ROLE.customer &&
                 customerItems.map((link) => (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-md transition
+                    ${
+                      pathname === link.href
+                        ? "bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-400"
+                        : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                    }
+                  `}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <span>{link.icon}</span>
+                    <span>{link.name}</span>
+                  </Link>
+                ))}
+              {(role === USER_ROLE.admin || role === USER_ROLE.superAdmin) &&
+                adminItems.map((link) => (
                   <Link
                     key={link.name}
                     href={link.href}

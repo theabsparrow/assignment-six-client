@@ -84,8 +84,8 @@ const Navbar = ({
               className="w-[35vw] md:w-[10vw]"
               src="/logo.png"
               alt="logo"
-              width={70}
-              height={70}
+              width={500}
+              height={500}
             />
           </Link>
 

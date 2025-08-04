@@ -20,6 +20,7 @@ export const USER_ROLE = {
 export const navItems = [
   { name: "Profile", href: "/profile", icon: "👤" },
   { name: "Settings", href: "/settings", icon: "⚙️" },
+  { name: "Home", href: "/", icon: "🏠" },
 ];
 export const mealProviderItems = [
   { name: "My Kitchen", href: "/mealProvider/myKitchen", icon: "👩‍🍳" },
@@ -42,5 +43,38 @@ export const customerItems = [
     name: "My Orders",
     href: "/user/myOrders",
     icon: "🛒",
+  },
+];
+
+export const adminItems = [
+  {
+    name: "Dashboard",
+    href: "/admin/dashboard",
+    icon: "📊",
+  },
+  {
+    name: "Manage User",
+    href: "/admin/manageUsers",
+    icon: "👥",
+  },
+  {
+    name: "Subscribers",
+    href: "/admin/subscribers",
+    icon: "📬",
+  },
+  {
+    name: "Manage Kitchen",
+    href: "/admin/manageKitchen",
+    icon: "👨‍🍳",
+  },
+  {
+    name: "Manage Meal",
+    href: "/admin/manageMeal",
+    icon: "🍽️",
+  },
+  {
+    name: "Manage Blog",
+    href: "/admin/manageBlog",
+    icon: "✍️",
   },
 ];

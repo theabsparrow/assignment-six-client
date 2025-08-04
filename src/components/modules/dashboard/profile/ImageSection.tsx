@@ -20,19 +20,21 @@ const ImageSection = ({ image, role }: { image: string; role: string }) => {
       toast.error("faild to upload image", { duration: 3000 });
       return;
     }
+    const loadingId = toast.loading("image uploading...");
     try {
       const imageUrl = await imageUpload(file);
       if (!imageUrl) {
-        toast.error("faild to upload image", { duration: 3000 });
+        toast.error("faild to upload image", { id: loadingId, duration: 3000 });
         return;
       }
+
       if (role === USER_ROLE.mealProvider) {
         const updatedData = { profileImage: imageUrl };
         const result = await updateMealProviderProfile(updatedData);
         if (result?.success) {
-          toast.success(result?.message, { duration: 3000 });
+          toast.success(result?.message, { id: loadingId, duration: 3000 });
         } else {
-          toast.error(result?.message, { duration: 3000 });
+          toast.error(result?.message, { id: loadingId, duration: 3000 });
         }
         return;
       }
@@ -40,9 +42,9 @@ const ImageSection = ({ image, role }: { image: string; role: string }) => {
         const updatedData = { profileImage: imageUrl };
         const result = await updateCustomerProfile(updatedData);
         if (result?.success) {
-          toast.success(result?.message, { duration: 3000 });
+          toast.success(result?.message, { id: loadingId, duration: 3000 });
         } else {
-          toast.error(result?.message, { duration: 3000 });
+          toast.error(result?.message, { id: loadingId, duration: 3000 });
         }
         return;
       }
