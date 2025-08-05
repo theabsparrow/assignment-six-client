@@ -9,7 +9,6 @@ const KitchenCard = ({
 }: {
   kitchenData: KitchenProfileCardProps;
 }) => {
-  console.log(kitchenData);
   return (
     <div className="bg-white dark:bg-gray-800 shadow-md rounded-2xl overflow-hidden max-w-sm w-full transition hover:shadow-lg">
       <div className="relative h-48 w-full">

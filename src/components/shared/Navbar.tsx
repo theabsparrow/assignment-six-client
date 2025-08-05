@@ -156,7 +156,7 @@ const Navbar = ({
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden bg-gray-200 dark:bg-gray-900 px-4 py-2 absolute top-20 right-5 shadow-2xl  border-t-2 border-t-primary w-[90vw] rounded-b-md">
+          <div className="md:hidden bg-gray-200 dark:bg-gray-900 px-4 py-2 absolute top-16 right-0 shadow-2xl  border-t-2 border-t-primary w-[50vw] rounded-b-md z-20">
             {name && (
               <p className="flex items-center justify-between text-gray-700 dark:text-gray-200 pb-2 border-b border-b-gray-400  transition  ">
                 <span className="text-xl font-semibold text-primary dark:text-secondary">

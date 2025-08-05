@@ -1,14 +1,14 @@
-export const protectedRoute = [
-  "/profile",
-  "/settings",
-  "/kitchen",
-  "/admin",
-  "/admin/:page",
-  "/user",
-  "/user/:page",
-  "/mealProvider",
-  "/mealProvider/:page",
-];
+// export const protectedRoute = [
+//   "/profile",
+//   "/settings",
+//   "/kitchen",
+//   "/admin",
+//   "/admin/:page",
+//   "/user",
+//   "/user/:page",
+//   "/mealProvider",
+//   "/mealProvider/:page",
+// ];
 
 export const USER_ROLE = {
   admin: "admin",
@@ -76,5 +76,10 @@ export const adminItems = [
     name: "Manage Blog",
     href: "/admin/manageBlog",
     icon: "✍️",
+  },
+  {
+    name: "Create Plan",
+    href: "/admin/createPlan",
+    icon: "📝",
   },
 ];

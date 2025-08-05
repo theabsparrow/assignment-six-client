@@ -12,7 +12,7 @@ import {
   navItems,
   USER_ROLE,
 } from "@/constant";
-import { LogOut } from "lucide-react";
+import { LogOut, Menu, X } from "lucide-react";
 import { logout } from "@/services/authService";
 
 const Sidebar = ({ role }: { role: string }) => {
@@ -45,14 +45,14 @@ const Sidebar = ({ role }: { role: string }) => {
           </div>
 
           <nav className=" px-4">
-            <h1 className="px-4 text-primary font-bold">MENU</h1>
-            <div className="flex flex-col gap-2">
+            <h1 className="px-4 text-sm text-primary font-bold">MENU</h1>
+            <div className="flex flex-col gap-1">
               {role === USER_ROLE.mealProvider &&
                 mealProviderItems.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                    className={`flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 ${
                       pathname === item.href
                         ? "bg-primary text-white shadow-md"
                         : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
@@ -62,12 +62,13 @@ const Sidebar = ({ role }: { role: string }) => {
                     <span>{item.name}</span>
                   </Link>
                 ))}
+
               {role === USER_ROLE.customer &&
                 customerItems.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                    className={`flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 ${
                       pathname === item.href
                         ? "bg-primary text-white shadow-md"
                         : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
@@ -77,12 +78,13 @@ const Sidebar = ({ role }: { role: string }) => {
                     <span>{item.name}</span>
                   </Link>
                 ))}
+
               {(role === USER_ROLE.admin || role === USER_ROLE.superAdmin) &&
                 adminItems.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                    className={`flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 ${
                       pathname === item.href
                         ? "bg-primary text-white shadow-md"
                         : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
@@ -96,13 +98,13 @@ const Sidebar = ({ role }: { role: string }) => {
           </nav>
 
           <nav className=" px-4 ">
-            <h1 className="px-4 text-primary font-bold">GENERAL</h1>
-            <div className="flex flex-col gap-2">
+            <h1 className="px-4 text-sm text-primary font-bold">GENERAL</h1>
+            <div className="flex flex-col gap-1">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                  className={`flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 ${
                     pathname === item.href
                       ? "bg-primary text-white shadow-md"
                       : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
@@ -114,7 +116,7 @@ const Sidebar = ({ role }: { role: string }) => {
               ))}
               <button
                 onClick={handleLogout}
-                className=" w-full flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition-all duration-200 text-gray-800 hover:bg-primary hover:text-white hover:shadow cursor-pointer"
+                className=" w-full flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 text-gray-800 hover:bg-primary hover:text-white hover:shadow cursor-pointer"
               >
                 <span className="text-xl">
                   <LogOut />
@@ -126,109 +128,118 @@ const Sidebar = ({ role }: { role: string }) => {
         </aside>
       </div>
 
-      <div className="sticky top-0 md:hidden bg-green-500">
-        <div className="absolte top-1 ">
+      <div className="flex justify-between items-center sticky top-0 z-20 md:hidden bg-gray-200 dark:bg-gray-900 shadow lg px-4">
+        <Link href="/">
+          <Image
+            src="/logo.png"
+            alt="logo"
+            width={100}
+            height={100}
+            className="w-[40vw]"
+          />
+        </Link>
+        <div className="absolte top-1 right-0">
           <button
-            className="   text-gray-700 p-4 z-20"
-            onClick={() => setIsOpen(!isOpen)}
+            className="text-2xl  text-gray-700 p-4 z-20"
+            onClick={() => setIsOpen(true)}
           >
-            ☰
+            <Menu size={25} />
           </button>
         </div>
         {isOpen && (
-          <div className="md:hidden bg-gray-200 dark:bg-gray-900 pt-16 pb-4 space-y-2 absolute top-0 right-1 px-6 shadow-2xl h-screen flex flex-col justify-between">
-            <div className="text-2xl font-bold text-gray-800 dark:text-white flex justify-center">
-              <Link href="/">
-                <Image src="logo.PNG" alt="logo" width={100} height={100} />
-              </Link>
-            </div>
-
-            <div className="space-y-4">
-              {role === USER_ROLE.mealProvider &&
-                mealProviderItems.map((link) => (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-md transition
-          ${
-            pathname === link.href
-              ? "bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-400"
-              : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-          }
-        `}
-                  >
-                    <span>{link.icon}</span>
-                    <span>{link.name}</span>
-                  </Link>
-                ))}
-
-              {role === USER_ROLE.customer &&
-                customerItems.map((link) => (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-md transition
-                    ${
-                      pathname === link.href
-                        ? "bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-400"
-                        : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-                    }
-                  `}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <span>{link.icon}</span>
-                    <span>{link.name}</span>
-                  </Link>
-                ))}
-              {(role === USER_ROLE.admin || role === USER_ROLE.superAdmin) &&
-                adminItems.map((link) => (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-md transition
-                    ${
-                      pathname === link.href
-                        ? "bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-400"
-                        : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-                    }
-                  `}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <span>{link.icon}</span>
-                    <span>{link.name}</span>
-                  </Link>
-                ))}
-            </div>
-
-            <div className="space-y-4">
-              {navItems.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-md transition
-                  ${
-                    pathname === link.href
-                      ? "bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-400"
-                      : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-                  }
-                `}
-                  onClick={() => setIsOpen(false)}
-                >
-                  <span>{link.icon}</span>
-                  <span>{link.name}</span>
-                </Link>
-              ))}
-
+          <div className="md:hidden bg-gray-200 dark:bg-gray-900 space-y-2 absolute top-0 right-1 px-3 shadow-2xl h-screen flex flex-col  z-30 py-4">
+            <div className="absolte -top-20">
               <button
-                className=" flex items-center gap-2 px-4 py-2 text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition"
-                onClick={handleLogout}
+                className="text-2xl  text-gray-700 z-20"
+                onClick={() => setIsOpen(false)}
               >
-                <span className="text-xl">
-                  <LogOut />
-                </span>
-                <span>Logout</span>
+                <X size={25} />
               </button>
+            </div>
+
+            <div className="space-y-10">
+              <div className="space-y-2">
+                <h1 className="px-4 text-sm text-primary font-bold">MENU</h1>
+                {role === USER_ROLE.mealProvider &&
+                  mealProviderItems.map((link) => (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className={`flex items-center gap-3 px-3 py-1 rounded-lg font-medium transition-all duration-200 ${
+                        pathname === link.href
+                          ? "bg-primary text-white shadow-md"
+                          : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                      }`}
+                    >
+                      <span>{link.icon}</span>
+                      <span>{link.name}</span>
+                    </Link>
+                  ))}
+
+                {role === USER_ROLE.customer &&
+                  customerItems.map((link) => (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      className={`flex items-center gap-3 px-3 py-1 rounded-lg font-medium transition-all duration-200 ${
+                        pathname === link.href
+                          ? "bg-primary text-white shadow-md"
+                          : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                      }`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <span>{link.icon}</span>
+                      <span>{link.name}</span>
+                    </Link>
+                  ))}
+
+                {(role === USER_ROLE.admin || role === USER_ROLE.superAdmin) &&
+                  adminItems.map((link) => (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      className={`flex items-center gap-3 px-3 py-1 rounded-lg font-medium transition-all duration-200 ${
+                        pathname === link.href
+                          ? "bg-primary text-white shadow-md"
+                          : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                      }`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <span>{link.icon}</span>
+                      <span>{link.name}</span>
+                    </Link>
+                  ))}
+              </div>
+
+              <div className="space-y-2">
+                <h1 className="px-4 text-sm text-primary font-bold">GENERAL</h1>
+                {navItems.map((link) => (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className={`flex items-center gap-3 px-3 py-1 rounded-lg font-medium transition-all duration-200 ${
+                      pathname === link.href
+                        ? "bg-primary text-white shadow-md"
+                        : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                    }`}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <span>{link.icon}</span>
+                    <span>{link.name}</span>
+                  </Link>
+                ))}
+
+                <button
+                  className=" w-full flex items-center gap-3 px-3 py-1 rounded-lg font-medium transition-all duration-200 text-gray-800 hover:bg-primary hover:text-white hover:shadow cursor-pointer"
+                  onClick={handleLogout}
+                >
+                  <span className="text-xl">
+                    <LogOut />
+                  </span>
+                  <span>Logout</span>
+                </button>
+              </div>
             </div>
           </div>
         )}

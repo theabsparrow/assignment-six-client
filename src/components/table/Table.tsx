@@ -17,44 +17,43 @@ const Table = <T,>({ data, columns }: TableProps<T>) => {
     getCoreRowModel: getCoreRowModel(),
   });
   return (
-    <div>
-      <div className="overflow-x-auto  md:w-[60vw]">
-        <table className=" border-collapse  w-full bg-gray-300">
-          {/* ✅ Table Head */}
-          <thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id} className="border-b">
-                {headerGroup.headers.map((header) => (
-                  <th
-                    key={header.id}
-                    onClick={header.column.getToggleSortingHandler()}
-                    className="p-2 border text-left cursor-pointer"
-                  >
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-                    {/* Sort Indicator */}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-
-          {/* ✅ Table Body */}
-          <tbody className="text-gray-700">
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="p-2 border">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className="overflow-x-auto w-full">
+      <table className="min-w-full divide-y divide-blue-200 bg-white shadow-md rounded-xl overflow-hidden ">
+        <thead className="bg-primary">
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th
+                  key={header.id}
+                  className="px-6 py-3 text-left text-sm font-semibold text-white tracking-wide uppercase"
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody className="divide-y divide-gray-200 text-gray-800">
+          {table.getRowModel().rows.map((row) => (
+            <tr
+              key={row.id}
+              className="hover:bg-blue-50 transition-colors duration-200"
+            >
+              {row.getVisibleCells().map((cell) => (
+                <td
+                  key={cell.id}
+                  className="px-6 py-4 text-sm whitespace-nowrap"
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

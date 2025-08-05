@@ -32,7 +32,7 @@ const Pagination = ({ totalPage }: { totalPage: number }) => {
           ${
             currentPage === 1
               ? "bg-gray-300 cursor-not-allowed"
-              : "bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
+              : "bg-secondary text-primary hover:bg-primary cursor-pointer"
           }
         `}
       >
@@ -51,7 +51,7 @@ const Pagination = ({ totalPage }: { totalPage: number }) => {
             className={`px-2 md:px-4 py-1 md:py-2 rounded-lg font-semibold border cursor-pointer
               ${
                 currentPage === pageNumber
-                  ? "bg-blue-600 text-white"
+                  ? "bg-secondary text-primary"
                   : "bg-gray-200 hover:bg-gray-300"
               }
             `}
@@ -69,7 +69,7 @@ const Pagination = ({ totalPage }: { totalPage: number }) => {
           ${
             currentPage === totalPage
               ? "bg-gray-300 cursor-not-allowed"
-              : "bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
+              : "bg-secondary text-primary hover:bg-primary cursor-pointer"
           }
         `}
       >
