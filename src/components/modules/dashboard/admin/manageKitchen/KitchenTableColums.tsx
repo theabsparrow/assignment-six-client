@@ -1,3 +1,4 @@
+"use client";
 import ConfirmDelation from "@/components/confirmDeletion/ConfirmDeletion";
 import TableDropDown from "@/components/tableDropdown/TableDropDown";
 import { deleteKitchen, updateStatus } from "@/services/kitchenService";
@@ -15,7 +16,7 @@ export const kitchenTableColumn = (): ColumnDef<TAllKitchenType>[] => [
     header: "Owner Name",
     cell: ({ row }) => {
       const name = row.original?.owner?.name;
-      const id = row.original?._id;
+      const id = row.original?.owner?._id;
       return (
         <Link
           href={`/admin/providers/${id}`}
@@ -83,8 +84,16 @@ export const kitchenTableColumn = (): ColumnDef<TAllKitchenType>[] => [
   },
   { accessorKey: "kitchenType", header: " Type" },
   {
+    accessorKey: "hygieneCertified",
+    header: " Hygiene",
+    cell: ({ row }) => {
+      const hygieneCertified = row.original?.hygieneCertified ? "Yes" : "No";
+      return <span>{hygieneCertified}</span>;
+    },
+  },
+  {
     accessorKey: "createdAt",
-    header: "Creation Date",
+    header: "Create Date",
     cell: ({ row }) => {
       const date = new Date(row.original?.createdAt);
       return date.toLocaleDateString("en-GB", {
@@ -96,7 +105,7 @@ export const kitchenTableColumn = (): ColumnDef<TAllKitchenType>[] => [
   },
   {
     accessorKey: "updatedAt",
-    header: "Subscribed Time",
+    header: "Create Time",
     cell: ({ row }) => {
       const time = new Date(row.original?.createdAt);
       return time.toLocaleTimeString("en-US", {
@@ -106,7 +115,6 @@ export const kitchenTableColumn = (): ColumnDef<TAllKitchenType>[] => [
       });
     },
   },
-
   {
     id: "actions",
     header: "Actions",
@@ -120,11 +128,11 @@ export const kitchenTableColumn = (): ColumnDef<TAllKitchenType>[] => [
       ) => {
         setLoading(true);
         if (!id) {
-          toast.error("falid to remove subscriber", { duration: 3000 });
+          toast.error("falid to remove kitchen", { duration: 3000 });
           setLoading(false);
           return;
         }
-        const toastId = toast.loading("Removing subscriber...");
+        const toastId = toast.loading("Removing kitchen...");
         try {
           const result = await deleteKitchen(id);
           if (result?.success) {
@@ -151,7 +159,7 @@ export const kitchenTableColumn = (): ColumnDef<TAllKitchenType>[] => [
       const id = row?.original?._id;
       return (
         <Link
-          href={`/admin/kitchen/${id}`}
+          href={`/kitchen/${id}`}
           className="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
         >
           Details

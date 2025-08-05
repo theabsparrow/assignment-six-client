@@ -71,3 +71,16 @@ export type TSixMealData = {
   foodPreference: FoodPreferenceOption;
   foodCategory: TFoodCategory;
 };
+
+export type TMealListing = {
+  _id?: string;
+  kitchen: { _id: string; kitchenName: string };
+  title: string;
+  foodCategory: TFoodCategory;
+  cuisineType: TcuisineType;
+  foodPreference: FoodPreferenceOption;
+  portionSize: TPortionSize;
+  price: number;
+  isAvailable?: boolean;
+  createdAt: string;
+};
