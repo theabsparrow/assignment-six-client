@@ -54,15 +54,30 @@ export const getMyKitchen = async () => {
   }
 };
 
-export const getAllKitchen = async () => {
+export const getAllKitchen = async (query?: {
+  [key: string]: string | string[] | undefined;
+}) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refreshToken")!.value;
   try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("refreshToken")?.value;
-    if (!token) {
-      throw new Error("you are not authorized");
+    const params = new URLSearchParams();
+    if (query?.searchTerm) {
+      params.append("searchTerm", query?.searchTerm.toString());
+    }
+    if (query?.kitchenType) {
+      params.append("kitchenType", query?.kitchenType.toString());
+    }
+    if (query?.hygieneCertified) {
+      params.append("hygieneCertified", query?.hygieneCertified.toString());
+    }
+    if (query?.isActive) {
+      params.append("isActive", query?.isActive.toString());
+    }
+    if (query?.page) {
+      params.append("page", query?.page.toString());
     }
     const res = await fetch(
-      `${config.next_public_base_api}/kitchen/all-kitchen`,
+      `${config.next_public_base_api}/kitchen/all-kitchen?limit=20&${params}`,
       {
         method: "GET",
         headers: {
@@ -109,6 +124,50 @@ export const deleteMyKitchen = async (data: { password: string }) => {
       `${config.next_public_base_api}/kitchen/delete-myKitchen`,
       {
         method: "DELETE",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const result = await res.json();
+    revalidateTag("kitchen");
+    revalidateTag("Profile");
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const deleteKitchen = async (id: string) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/kitchen/delete-kitchen/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    const result = await res.json();
+    revalidateTag("kitchen");
+    revalidateTag("Profile");
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const updateStatus = async (id: string, data: { isActive: boolean }) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/kitchen/update-status/${id}`,
+      {
+        method: "PATCH",
         headers: {
           Authorization: token,
           "Content-Type": "application/json",

@@ -25,7 +25,7 @@ const Table = <T,>({ data, columns }: TableProps<T>) => {
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className="px-6 py-3 text-left text-sm font-semibold text-white tracking-wide uppercase"
+                  className="px-3 py-3 text-left text-sm font-semibold text-white tracking-wide uppercase"
                 >
                   {flexRender(
                     header.column.columnDef.header,
@@ -45,7 +45,7 @@ const Table = <T,>({ data, columns }: TableProps<T>) => {
               {row.getVisibleCells().map((cell) => (
                 <td
                   key={cell.id}
-                  className="px-6 py-4 text-sm whitespace-nowrap"
+                  className="px-3 py-3 text-sm whitespace-nowrap"
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>

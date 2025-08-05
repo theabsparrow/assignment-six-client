@@ -1,25 +1,38 @@
-"use client";
-
-import { TStatus, TSubscriber } from "@/types/subscriber.types";
-import { ColumnDef } from "@tanstack/react-table";
-import { toast } from "sonner";
-import { changeStatus, deleteSubscriber } from "@/services/newsLetterService";
-import { Dispatch, SetStateAction } from "react";
-import TableDropDown from "@/components/tableDropdown/TableDropDown";
 import ConfirmDelation from "@/components/confirmDeletion/ConfirmDeletion";
+import TableDropDown from "@/components/tableDropdown/TableDropDown";
+import { deleteKitchen, updateStatus } from "@/services/kitchenService";
+import { TAllKitchenType } from "@/types/kitchenType";
+import { TStatus } from "@/types/subscriber.types";
+import { ColumnDef } from "@tanstack/react-table";
+import Link from "next/link";
+import { Dispatch, SetStateAction } from "react";
+import { toast } from "sonner";
 
-export const subscriberTableColumn = (): ColumnDef<TSubscriber>[] => [
+export const kitchenTableColumn = (): ColumnDef<TAllKitchenType>[] => [
+  { accessorKey: "kitchenName", header: "Kitchen Name" },
   {
-    header: "Serial No",
-    cell: ({ row }) => row.index + 1,
+    id: "ownerName",
+    header: "Owner Name",
+    cell: ({ row }) => {
+      const name = row.original?.owner?.name;
+      const id = row.original?._id;
+      return (
+        <Link
+          href={`/admin/providers/${id}`}
+          className="text-primary hover:underline"
+        >
+          {name}
+        </Link>
+      );
+    },
   },
-  { accessorKey: "email", header: "Subscribers Email" },
+  { accessorKey: "location", header: "Location" },
   {
-    accessorKey: "status",
+    accessorKey: "isActive",
     header: "Status",
     cell: ({ row }) => {
-      const status = row.original?.status as TStatus;
       const id = row.original?._id;
+      const status = row.original?.isActive ? "active" : "blocked";
       const statusStyles: Record<TStatus, string> = {
         active: "text-green-700 hover:bg-green-50  ",
         blocked: "text-red-700 hover:bg-red-50 ",
@@ -37,12 +50,13 @@ export const subscriberTableColumn = (): ColumnDef<TSubscriber>[] => [
           toast.error(`status is already ${status}`, { duration: 3000 });
           return;
         }
+        const value = option === "active";
         const data = {
-          status: option,
+          isActive: value,
         };
         const toastId = toast.loading("updating status...");
         try {
-          const result = await changeStatus(data, id);
+          const result = await updateStatus(id, data);
           if (result?.success) {
             toast.success(result?.message, { id: toastId, duration: 3000 });
             setDropdownOpen(false);
@@ -62,14 +76,15 @@ export const subscriberTableColumn = (): ColumnDef<TSubscriber>[] => [
             option.charAt(0).toUpperCase() + option.slice(1)
           }
           getStyle={(option) => statusStyles[option]}
-          position="-right-36 md:-right-24 -top-4 z-10"
+          position="-right-36 md:-right-32 -top-4 z-10"
         />
       );
     },
   },
+  { accessorKey: "kitchenType", header: " Type" },
   {
     accessorKey: "createdAt",
-    header: "Subscribed Date",
+    header: "Creation Date",
     cell: ({ row }) => {
       const date = new Date(row.original?.createdAt);
       return date.toLocaleDateString("en-GB", {
@@ -91,12 +106,13 @@ export const subscriberTableColumn = (): ColumnDef<TSubscriber>[] => [
       });
     },
   },
+
   {
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
       const id = row?.original?._id;
-      const email = row?.original?.email;
+      const name = row.original?.kitchenName;
 
       const handleDelete = async (
         setLoading: Dispatch<SetStateAction<boolean>>,
@@ -110,7 +126,7 @@ export const subscriberTableColumn = (): ColumnDef<TSubscriber>[] => [
         }
         const toastId = toast.loading("Removing subscriber...");
         try {
-          const result = await deleteSubscriber(id);
+          const result = await deleteKitchen(id);
           if (result?.success) {
             toast.success(result?.message, { id: toastId, duration: 3000 });
             setOpen(false);
@@ -124,7 +140,23 @@ export const subscriberTableColumn = (): ColumnDef<TSubscriber>[] => [
         }
         setLoading(true);
       };
-      return <ConfirmDelation value={email} handleDelete={handleDelete} />;
+
+      return <ConfirmDelation value={name} handleDelete={handleDelete} />;
+    },
+  },
+  {
+    id: "details",
+    header: "View",
+    cell: ({ row }) => {
+      const id = row?.original?._id;
+      return (
+        <Link
+          href={`/admin/kitchen/${id}`}
+          className="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
+        >
+          Details
+        </Link>
+      );
     },
   },
 ];

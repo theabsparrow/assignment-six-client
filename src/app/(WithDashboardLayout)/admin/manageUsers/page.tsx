@@ -1,5 +1,5 @@
-const page = () => {
+const ManageUser = () => {
   return <div>this is manage user</div>;
 };
 
-export default page;
+export default ManageUser;

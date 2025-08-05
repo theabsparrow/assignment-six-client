@@ -37,7 +37,7 @@ export interface TExtendedKitchen extends TKitchen {
 
 export interface KitchenProfileCardProps {
   kitchenName: string;
-  kitchenType: "Home-based" | "Commercial";
+  kitchenType: TKitchenType;
   owner: string;
   location: string;
   kitchenPhoto: string;
@@ -63,4 +63,28 @@ export type TArrayEditProps<T> = {
   label: string;
   styleClass?: string;
   style?: string;
+};
+
+type TOwner = {
+  name: string;
+  _id: string;
+};
+
+export type TAllKitchenType = {
+  kitchenName: string;
+  kitchenType: TKitchenType;
+  owner: TOwner;
+  location: string;
+  kitchenPhoto: string;
+  hygieneCertified: boolean;
+  hygieneCertificate?: string;
+  licenseOrCertificate?: string;
+  foodPreference: string[];
+  mealTimePerDay: string[];
+  cookingDays: string[];
+  specialEquipments?: string[];
+  _id: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
 };

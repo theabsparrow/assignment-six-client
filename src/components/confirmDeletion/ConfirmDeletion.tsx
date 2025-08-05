@@ -1,36 +1,18 @@
 "use client";
-import { deleteSubscriber } from "@/services/newsLetterService";
-import { useState } from "react";
-import { toast } from "sonner";
+import { Dispatch, SetStateAction, useState } from "react";
 
-const ConfirmDelation = ({ id, email }: { id: string; email: string }) => {
+type TConfirmProps = {
+  value: string;
+  handleDelete: (
+    setLoading: Dispatch<SetStateAction<boolean>>,
+    setOpen: Dispatch<SetStateAction<boolean>>
+  ) => Promise<void>;
+};
+
+const ConfirmDelation = ({ value, handleDelete }: TConfirmProps) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleDelete = async () => {
-    setLoading(true);
-    if (!id) {
-      toast.error("falid to remove subscriber", { duration: 3000 });
-      setLoading(false);
-      return;
-    }
-    const toastId = toast.loading("Removing subscriber...");
-    try {
-      const result = await deleteSubscriber(id);
-      if (result?.success) {
-        toast.success(result?.message, { id: toastId, duration: 3000 });
-        setOpen(false);
-        setLoading(false);
-      } else {
-        toast.error(result?.message, { id: toastId, duration: 3000 });
-        setLoading(false);
-      }
-    } catch (error: any) {
-      console.log(error);
-    }
-    setLoading(true);
-    console.log(id);
-  };
   return (
     <div>
       <button
@@ -46,7 +28,7 @@ const ConfirmDelation = ({ id, email }: { id: string; email: string }) => {
               Confirm Deletion
             </h2>
             <p className="text-sm text-gray-600 mb-6">
-              Are you sure you want to remove <strong>{email}</strong> <br />{" "}
+              Are you sure you want to remove <strong>{value}</strong> <br />{" "}
               from your subscriber list? This action cannot be undone.
             </p>
 
@@ -59,7 +41,7 @@ const ConfirmDelation = ({ id, email }: { id: string; email: string }) => {
                 Cancel
               </button>
               <button
-                onClick={handleDelete}
+                onClick={() => handleDelete(setLoading, setOpen)}
                 className="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 transition cursor-pointer disabled:cursor-not-allowed"
                 disabled={loading}
               >
