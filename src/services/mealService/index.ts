@@ -70,7 +70,6 @@ export const getAllMeals = async (query?: {
 export const getAllMealList = async (query?: {
   [key: string]: string | string[] | undefined;
 }) => {
-  console.log(query);
   const cookieStore = await cookies();
   const token = cookieStore.get("refreshToken")!.value;
   try {
