@@ -85,7 +85,7 @@ const GetAllUsers = ({
           )}
 
           {/* for large device */}
-          <div className="hidden md:flex items-center gap-4 md:gap-10">
+          <div className="hidden md:flex items-center gap-10">
             <div className=" space-y-2">
               <input
                 id="search"
@@ -96,7 +96,7 @@ const GetAllUsers = ({
                   setSearch(e.target.value);
                 }}
                 value={search}
-                placeholder="Search meal"
+                placeholder="Search user"
                 className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
               />
             </div>
@@ -239,7 +239,7 @@ const GetAllUsers = ({
                     setSearch(e.target.value);
                   }}
                   value={search}
-                  placeholder="Search meal"
+                  placeholder="Search user"
                   className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                 />
               </div>

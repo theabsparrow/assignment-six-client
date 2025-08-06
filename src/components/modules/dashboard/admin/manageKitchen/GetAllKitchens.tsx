@@ -83,7 +83,7 @@ const GetAllKitchens = ({
           )}
 
           {/* for large device */}
-          <div className="hidden md:flex items-center gap-4 md:gap-10">
+          <div className="hidden md:flex items-center gap-10">
             <div className=" space-y-2">
               <input
                 id="search"

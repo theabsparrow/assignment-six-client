@@ -20,3 +20,16 @@ export type TBlog = {
   createdAt: string;
   updatedAt: string;
 };
+
+type TAuthor = {
+  _id: string;
+};
+
+export type TAllBlogListing = {
+  _id: string;
+  authorId: TAuthor;
+  name: string;
+  title: string;
+  status: BlogStatus;
+  createdAt: string;
+};
