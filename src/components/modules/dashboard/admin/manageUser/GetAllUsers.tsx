@@ -2,28 +2,30 @@
 
 import Pagination from "@/components/pagination/Pagination";
 import Table from "@/components/table/Table";
-import { TMetaDataProps } from "@/types";
-import { TAllKitchenType, TKitchenType } from "@/types/kitchenType";
-import { kitchenTableColumn } from "./KitchenTableColums";
+import { TMetaDataProps, TUserListingType, TUSerRole } from "@/types";
+import { usersTableColumn } from "./UsersTableColumn";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { TGender } from "@/types/customerRegistration";
 import { TStatus } from "@/types/subscriber.types";
 import { IoIosArrowDown } from "react-icons/io";
 
-const GetAllKitchens = ({
+const GetAllUsers = ({
   meta,
   result,
 }: {
   meta: TMetaDataProps;
-  result: TAllKitchenType[];
+  result: TUserListingType[];
 }) => {
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
   const [search, setSearch] = useState<string>("");
+  const [role, setRole] = useState<TUSerRole | string>("");
+  const [gender, setGender] = useState<TGender | string>("");
   const [status, setStatus] = useState<TStatus | string>("");
-  const [kitchenType, setKitchenType] = useState<TKitchenType | string>("");
-  const [certified, setCertified] = useState<"Yes" | "No" | string>("");
+  const [verified, setVerified] = useState<"Yes" | "No" | string>("");
+  const [kitchen, setKitchen] = useState<"Yes" | "No" | string>("");
   const [open, setOpen] = useState(false);
 
   const handleChange = (
@@ -31,15 +33,15 @@ const GetAllKitchens = ({
   ) => {
     const { name, value } = e.target;
     const params = new URLSearchParams(searchParams.toString());
-    if (name === "isActive") {
-      if (value === "active") {
+    if (name === "verifiedWithEmail") {
+      if (value === "Yes") {
         params.set(name, "true");
-      } else if (value === "blocked") {
+      } else if (value === "No") {
         params.set(name, "false");
       } else {
         params.delete(name);
       }
-    } else if (name === "hygieneCertified") {
+    } else if (name === "hasKitchen") {
       if (value === "Yes") {
         params.set(name, "true");
       } else if (value === "No") {
@@ -53,20 +55,20 @@ const GetAllKitchens = ({
     router.push(`${pathName}?${params.toString()}`, { scroll: false });
   };
 
-  const columns = kitchenTableColumn();
+  const columns = usersTableColumn();
   return (
     <>
-      {!(result as TAllKitchenType[])?.length && (
+      {!(result as TUserListingType[])?.length && (
         <div className="flex flex-col items-center justify-center py-10 px-4 bg-gradient-to-r from-pink-100 to-blue-100 rounded-xl shadow-md">
           <h1 className="text-2xl font-semibold text-gray-800 text-center">
-            No Kitchens Available Right Now
+            No users Available Right Now
           </h1>
         </div>
       )}
       <section className="container mx-auto md:px-4 font-inter space-y-10 md:space-y-6">
         <div className="flex flex-col rounded-xl bg-white shadow-md dark:bg-gray-900 dark:border-gray-700 py-2 px-4 md:px-4 md:py-4 space-y-2 md:space-y-4 sticky top-10 md:top-0 z-10">
           <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 font-medium mt-1">
-            Total Kitchens:{" "}
+            Total Users:{" "}
             <span className="text-primary font-semibold">
               {result?.length ?? 0}
             </span>
@@ -94,44 +96,30 @@ const GetAllKitchens = ({
                   setSearch(e.target.value);
                 }}
                 value={search}
-                placeholder="Search kitchen"
+                placeholder="Search meal"
                 className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
               />
             </div>
             <div className="space-y-2 ">
               <select
-                id="kitchenType"
-                name="kitchenType"
-                value={kitchenType}
+                id="role"
+                name="role"
+                value={role}
                 onChange={(e) => {
                   handleChange(e);
-                  setKitchenType(e.target.value);
+                  setRole(e.target.value);
                 }}
                 className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
               >
-                <option value="">Type</option>
-                {(["Home-based", "Commercial"] as TKitchenType[]).map(
-                  (item) => (
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  )
-                )}
-              </select>
-            </div>
-            <div className="space-y-2 ">
-              <select
-                id="status"
-                name="isActive"
-                value={status}
-                onChange={(e) => {
-                  handleChange(e);
-                  setStatus(e.target.value);
-                }}
-                className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
-              >
-                <option value="">Status</option>
-                {(["active", "blocked"] as TStatus[]).map((item) => (
+                <option value="">Role</option>
+                {(
+                  [
+                    "admin",
+                    "customer",
+                    "superAdmin",
+                    "mealProvider",
+                  ] as TUSerRole[]
+                ).map((item) => (
                   <option key={item} value={item}>
                     {item}
                   </option>
@@ -140,16 +128,73 @@ const GetAllKitchens = ({
             </div>
             <div className="space-y-2 ">
               <select
-                id="hygieneCertified"
-                name="hygieneCertified"
-                value={certified}
+                id="gender"
+                name="gender"
+                value={gender}
                 onChange={(e) => {
                   handleChange(e);
-                  setCertified(e.target.value);
+                  setGender(e.target.value);
                 }}
                 className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
               >
-                <option value="">Certified</option>
+                <option value="">Gender</option>
+                {(["Male", "Female", "Other"] as TGender[]).map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="space-y-2 ">
+              <select
+                id="status"
+                name="status"
+                value={status}
+                onChange={(e) => {
+                  handleChange(e);
+                  setStatus(e.target.value);
+                }}
+                className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+              >
+                <option value="">Status</option>
+                {["active", "blocked"].map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="space-y-2 ">
+              <select
+                id="verifiedWithEmail"
+                name="verifiedWithEmail"
+                value={verified}
+                onChange={(e) => {
+                  handleChange(e);
+                  setVerified(e.target.value);
+                }}
+                className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+              >
+                <option value="">Verified</option>
+                {["Yes", "No"].map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="space-y-2 ">
+              <select
+                id="hasKitchen"
+                name="hasKitchen"
+                value={kitchen}
+                onChange={(e) => {
+                  handleChange(e);
+                  setKitchen(e.target.value);
+                }}
+                className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+              >
+                <option value="">Has Kitchen</option>
                 {["Yes", "No"].map((item) => (
                   <option key={item} value={item}>
                     {item}
@@ -161,9 +206,11 @@ const GetAllKitchens = ({
               onClick={() => {
                 router.push(`${pathName}`);
                 setSearch("");
+                setRole("");
+                setGender("");
                 setStatus("");
-                setKitchenType("");
-                setCertified("");
+                setVerified("");
+                setKitchen("");
               }}
               className="bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition cursor-pointer"
             >
@@ -192,44 +239,30 @@ const GetAllKitchens = ({
                     setSearch(e.target.value);
                   }}
                   value={search}
-                  placeholder="Search kitchen"
+                  placeholder="Search meal"
                   className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                 />
               </div>
               <div className="space-y-2 ">
                 <select
-                  id="kitchenType"
-                  name="kitchenType"
-                  value={kitchenType}
+                  id="role"
+                  name="role"
+                  value={role}
                   onChange={(e) => {
                     handleChange(e);
-                    setKitchenType(e.target.value);
+                    setRole(e.target.value);
                   }}
                   className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                 >
-                  <option value="">Type</option>
-                  {(["Home-based", "Commercial"] as TKitchenType[]).map(
-                    (item) => (
-                      <option key={item} value={item}>
-                        {item}
-                      </option>
-                    )
-                  )}
-                </select>
-              </div>
-              <div className="space-y-2 ">
-                <select
-                  id="status"
-                  name="isActive"
-                  value={status}
-                  onChange={(e) => {
-                    handleChange(e);
-                    setStatus(e.target.value);
-                  }}
-                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
-                >
-                  <option value="">Status</option>
-                  {(["active", "blocked"] as TStatus[]).map((item) => (
+                  <option value="">Role</option>
+                  {(
+                    [
+                      "admin",
+                      "customer",
+                      "superAdmin",
+                      "mealProvider",
+                    ] as TUSerRole[]
+                  ).map((item) => (
                     <option key={item} value={item}>
                       {item}
                     </option>
@@ -238,16 +271,73 @@ const GetAllKitchens = ({
               </div>
               <div className="space-y-2 ">
                 <select
-                  id="hygieneCertified"
-                  name="hygieneCertified"
-                  value={certified}
+                  id="gender"
+                  name="gender"
+                  value={gender}
                   onChange={(e) => {
                     handleChange(e);
-                    setCertified(e.target.value);
+                    setGender(e.target.value);
                   }}
                   className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                 >
-                  <option value="">Certified</option>
+                  <option value="">Gender</option>
+                  {(["Male", "Female", "Other"] as TGender[]).map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2 ">
+                <select
+                  id="status"
+                  name="status"
+                  value={status}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setStatus(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                >
+                  <option value="">Status</option>
+                  {["active", "blocked"].map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2 ">
+                <select
+                  id="verifiedWithEmail"
+                  name="verifiedWithEmail"
+                  value={verified}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setVerified(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                >
+                  <option value="">Verified</option>
+                  {["Yes", "No"].map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2 ">
+                <select
+                  id="hasKitchen"
+                  name="hasKitchen"
+                  value={kitchen}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setKitchen(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                >
+                  <option value="">Has Kitchen</option>
                   {["Yes", "No"].map((item) => (
                     <option key={item} value={item}>
                       {item}
@@ -259,9 +349,11 @@ const GetAllKitchens = ({
                 onClick={() => {
                   router.push(`${pathName}`);
                   setSearch("");
+                  setRole("");
+                  setGender("");
                   setStatus("");
-                  setKitchenType("");
-                  setCertified("");
+                  setVerified("");
+                  setKitchen("");
                 }}
                 className="bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition cursor-pointer"
               >
@@ -277,4 +369,4 @@ const GetAllKitchens = ({
   );
 };
 
-export default GetAllKitchens;
+export default GetAllUsers;

@@ -77,14 +77,7 @@ export type TAllKitchenType = {
   location: string;
   kitchenPhoto: string;
   hygieneCertified: boolean;
-  hygieneCertificate?: string;
-  licenseOrCertificate?: string;
-  foodPreference: string[];
-  mealTimePerDay: string[];
-  cookingDays: string[];
-  specialEquipments?: string[];
   _id: string;
   isActive: boolean;
   createdAt: string;
-  updatedAt: string;
 };

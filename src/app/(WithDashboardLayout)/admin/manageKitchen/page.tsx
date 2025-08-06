@@ -11,7 +11,7 @@ const ManageKitchenPage = async ({
   const query = await searchParams;
   const { data } = await getAllKitchen(query);
   const meta = data?.meta;
-  const result = data?.result;
+  const result = data?.result || [];
   return (
     <section className=" w-full">
       <GetAllKitchens meta={meta} result={result} />

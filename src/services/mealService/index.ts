@@ -101,6 +101,9 @@ export const getAllMealList = async (query?: {
     if (query?.isAvailable) {
       params.append("isAvailable", query?.isAvailable.toString());
     }
+    if (query?.sort) {
+      params.append("sort", query?.sort.toString());
+    }
     const res = await fetch(
       `${config.next_public_base_api}/meal/all-mealList?limit=20&${params}`,
       {

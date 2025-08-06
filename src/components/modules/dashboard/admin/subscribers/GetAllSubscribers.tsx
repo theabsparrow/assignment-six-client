@@ -40,7 +40,7 @@ const GetAllSubscribers = ({
         </div>
       )}
       <div className="container mx-auto md:px-4 font-inter space-y-2 md:space-y-6">
-        <div className="hidden md:flex flex-col md:flex-row items-center md:gap-10 rounded-xl bg-white shadow-md dark:bg-gray-900 dark:border-gray-700 p-4 space-y-2 md:space-y-4 sticky top-10 md:top-0 z-10">
+        <div className=" flex flex-col rounded-xl bg-white shadow-md dark:bg-gray-900 dark:border-gray-700 py-2 px-4 md:px-4 md:py-4 space-y-2 md:space-y-4 sticky top-10 md:top-0 z-10">
           <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 font-medium mt-1">
             Total Subscribers:{" "}
             <span className="text-primary font-semibold">
@@ -60,7 +60,7 @@ const GetAllSubscribers = ({
                 }}
                 value={search}
                 placeholder="Search with email..."
-                className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                className="w-full border border-gray-300 dark:border-gray-600 px-1 md:px-3 py-1 md:py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
               />
             </div>
 
@@ -73,7 +73,7 @@ const GetAllSubscribers = ({
                   handleChange(e);
                   setStatus(e.target.value);
                 }}
-                className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                className="w-full border border-gray-300 dark:border-gray-600 px-1 md:px-3 py-1 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
               >
                 <option value="">Status</option>
                 {(["active", "blocked"] as TStatus[]).map((item) => (
@@ -89,7 +89,7 @@ const GetAllSubscribers = ({
                 setSearch("");
                 setStatus("");
               }}
-              className="bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition cursor-pointer"
+              className="bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-1 md:py-2 px-2 md:px-4 rounded-lg shadow-md transition cursor-pointer"
             >
               Reset
             </button>

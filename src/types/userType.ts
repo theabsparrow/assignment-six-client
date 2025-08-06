@@ -1,4 +1,5 @@
 import { TAlergies, TGender } from "./customerRegistration";
+import { TStatus } from "./subscriber.types";
 
 export type TUSerRole = "admin" | "customer" | "superAdmin" | "mealProvider";
 
@@ -47,4 +48,23 @@ export type TSettingsInfo = {
   phone: string;
   verifiedWithEmail: boolean;
   password: string;
+};
+
+export type TCommonProfile = {
+  _id: string;
+  dateOfBirth: string;
+  gender: TGender;
+  name: string;
+  address: string;
+  hasKitchen?: boolean;
+};
+
+export type TUserListingType = {
+  _id: string;
+  email: string;
+  phone: string;
+  role: TUSerRole;
+  status: TStatus;
+  verifiedWithEmail: boolean;
+  profile: TCommonProfile;
 };

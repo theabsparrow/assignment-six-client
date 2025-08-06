@@ -11,7 +11,8 @@ const ManageMealPage = async ({
   const query = await searchParams;
   const { data } = await getAllMealList(query);
   const meta = data?.meta;
-  const result = data?.result;
+  const result = data?.result || [];
+
   return (
     <section className=" w-full">
       <GetAllMeals meta={meta} result={result} />
