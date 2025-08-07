@@ -77,9 +77,4 @@ export const adminItems = [
     href: "/admin/manageBlog",
     icon: "✍️",
   },
-  {
-    name: "Create Plan",
-    href: "/admin/createPlan",
-    icon: "📝",
-  },
 ];

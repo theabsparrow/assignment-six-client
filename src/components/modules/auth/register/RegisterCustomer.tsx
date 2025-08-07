@@ -50,7 +50,7 @@ const RegisterCustomer = ({
   const { setIsLoading } = useUser();
   const [imageFile, setImageFile] = useState<File | "">("");
   const [imagePreview, setImagePreview] = useState<string>("");
-  const [recaptchaStatus, setRecaptchaStatus] = useState(false);
+  // const [recaptchaStatus, setRecaptchaStatus] = useState(false);
   const [otpPage, setOtpPage] = useState(false);
 
   const {
@@ -87,10 +87,10 @@ const RegisterCustomer = ({
 
   const handleRecaptcha = async (value: string | null) => {
     try {
-      const res = await reCaptchaTokenVerification(value as string);
-      if (res?.success) {
-        setRecaptchaStatus(true);
-      }
+      await reCaptchaTokenVerification(value as string);
+      // if (res?.success) {
+      //   setRecaptchaStatus(true);
+      // }
     } catch (error: any) {
       console.error(error);
     }
@@ -227,6 +227,7 @@ const RegisterCustomer = ({
                   />
                 </div>
               )}
+
               <InputSelect
                 register={register}
                 name="gender"
@@ -257,9 +258,9 @@ const RegisterCustomer = ({
               onChange={handleRecaptcha}
             />
             <button
-              disabled={recaptchaStatus ? false : true}
+              // disabled={recaptchaStatus ? false : true}
               type="submit"
-              className="w-full bg-secondary hover:bg-white dark:bg-primary dark:border dark:border-secondary dark:text-secondary dark:hover:bg-green-700 duration-500 text-primary border border-primary font-semibold py-3 px-4 rounded-lg shadow-md transition cursor-pointer"
+              className="w-full bg-secondary hover:bg-white dark:bg-primary dark:border dark:border-secondary dark:text-secondary dark:hover:bg-green-700 duration-500 text-primary border border-primary font-semibold py-3 px-4 rounded-lg shadow-md transition cursor-pointer disabled:bg-gray-400 disabled:cursor-default"
             >
               {isSubmitting ? "Registering" : "Register"}
             </button>

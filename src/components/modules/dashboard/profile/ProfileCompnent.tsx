@@ -348,17 +348,12 @@ const ProfileCompnent = ({
               )}
             </>
           )}
-          {(user?.role === USER_ROLE.customer ||
-            user?.role === USER_ROLE.admin) && (
+          {user?.role === USER_ROLE.customer && (
             <>
               {user?.verifiedWithEmail ? (
                 <Link
                   className="bg-purple-500 px-2 py-1 rounded-xl text-white hover:bg-indigo-800 dark:bg-gray-500 duration-500"
-                  href={`${
-                    user?.role === USER_ROLE.customer
-                      ? "/user/createPlan"
-                      : "admin/createPlan"
-                  } `}
+                  href={`/user/createPlan `}
                 >
                   Create Plan
                 </Link>

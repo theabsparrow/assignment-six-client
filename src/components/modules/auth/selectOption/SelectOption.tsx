@@ -74,6 +74,7 @@ const SelectOption = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
+
             <div className="absolute inset-0 bg-black/60  z-10 " />
             {registeredRole === "customer" && (
               <div className="space-y-4 ">

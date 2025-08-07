@@ -20,13 +20,13 @@ const ImageUploader = ({ setImageFile, setImagePreview }: TImageUploader) => {
     <div className="font-Inter">
       <input
         type="file"
-        id="image-upload"
+        id="uploadImage"
         accept="image/*"
         onChange={(e) => handleImageChange(e)}
         className="hidden"
       />
       <label
-        htmlFor="image-upload"
+        htmlFor="uploadImage"
         className="md:w-[13vw] w-[40vw] h-[15vh] flex items-center justify-center border-2 border-dashed rounded-lg cursor-pointer bg-white dark:bg-gray-800 border-secondary dark:border-gray-600 hover:border-primary transition"
       >
         {" "}
