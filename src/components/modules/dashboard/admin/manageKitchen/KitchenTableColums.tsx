@@ -10,7 +10,19 @@ import { Dispatch, SetStateAction } from "react";
 import { toast } from "sonner";
 
 export const kitchenTableColumn = (): ColumnDef<TAllKitchenType>[] => [
-  { accessorKey: "kitchenName", header: "Kitchen Name" },
+  {
+    id: "kitchenName",
+    header: "Kitchen Name",
+    cell: ({ row }) => {
+      const id = row.original?._id;
+      const name = row.original?.kitchenName;
+      return (
+        <Link href={`/kitchen/${id}`} className="text-primary hover:underline">
+          {name}
+        </Link>
+      );
+    },
+  },
   {
     id: "ownerName",
     header: "Owner Name",
@@ -91,28 +103,28 @@ export const kitchenTableColumn = (): ColumnDef<TAllKitchenType>[] => [
       return <span>{hygieneCertified}</span>;
     },
   },
+  { accessorKey: "subscriber", header: " Subscribers" },
   {
-    accessorKey: "createdAt",
-    header: "Create Date",
+    id: "createdAt",
+    header: "Creation",
     cell: ({ row }) => {
       const date = new Date(row.original?.createdAt);
-      return date.toLocaleDateString("en-GB", {
+      const time = new Date(row.original?.createdAt);
+      const creatDate = date.toLocaleDateString("en-GB", {
         day: "numeric",
         month: "long",
         year: "numeric",
       });
-    },
-  },
-  {
-    accessorKey: "updatedAt",
-    header: "Create Time",
-    cell: ({ row }) => {
-      const time = new Date(row.original?.createdAt);
-      return time.toLocaleTimeString("en-US", {
+      const createTime = time.toLocaleTimeString("en-US", {
         hour: "2-digit",
         minute: "2-digit",
         hour12: true,
       });
+      return (
+        <p>
+          {creatDate}, {createTime}
+        </p>
+      );
     },
   },
   {
@@ -150,21 +162,6 @@ export const kitchenTableColumn = (): ColumnDef<TAllKitchenType>[] => [
       };
 
       return <ConfirmDelation value={name} handleDelete={handleDelete} />;
-    },
-  },
-  {
-    id: "details",
-    header: "View",
-    cell: ({ row }) => {
-      const id = row?.original?._id;
-      return (
-        <Link
-          href={`/kitchen/${id}`}
-          className="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
-        >
-          Details
-        </Link>
-      );
     },
   },
 ];

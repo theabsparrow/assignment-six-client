@@ -5,7 +5,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const { data } = await getMyProfle();
 
   return (
-    <div className="md:flex bg-gray-200">
+    <div className="md:flex md:bg-gray-200">
       <Sidebar role={data?.user?.role} />
       {children}
     </div>

@@ -50,6 +50,7 @@ export interface KitchenProfileCardProps {
   specialEquipments?: string[];
   _id?: string;
   isActive?: boolean;
+  subscriber: number;
 }
 
 export type TArrayEditProps<T> = {
@@ -80,4 +81,5 @@ export type TAllKitchenType = {
   _id: string;
   isActive: boolean;
   createdAt: string;
+  subscriber: number;
 };

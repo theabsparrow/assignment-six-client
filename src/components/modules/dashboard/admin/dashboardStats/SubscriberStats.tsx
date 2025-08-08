@@ -26,10 +26,13 @@ const SubscriberStats = ({ data }: { data: TSubscribe }) => {
   }));
   return (
     <div className="flex flex-col md:flex-row items-center md:justify-between">
-      <div>
-        <h3 className="font-semibold mb-2">New Subscriber (Last 4 Weeks)</h3>
-        <ResponsiveContainer width={400} height={300}>
-          <BarChart data={weeklyUsers}>
+      <div className="flex flex-col items-center md:items-start">
+        <h3 className="font-semibold md:mb-2">New Subscriber (Last 4 Weeks)</h3>
+        <ResponsiveContainer width={350} height={300}>
+          <BarChart
+            data={weeklyUsers}
+            margin={{ top: 20, right: 20, left: -20, bottom: 20 }}
+          >
             <XAxis dataKey="week" />
             <YAxis />
             <Tooltip />

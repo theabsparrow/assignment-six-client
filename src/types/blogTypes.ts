@@ -16,6 +16,7 @@ export type TBlog = {
   coverImage: string;
   tags?: string[];
   status: BlogStatus;
+  view: number;
   isDeleted: boolean;
   createdAt: string;
   updatedAt: string;
@@ -31,5 +32,6 @@ export type TAllBlogListing = {
   name: string;
   title: string;
   status: BlogStatus;
+  view: number;
   createdAt: string;
 };

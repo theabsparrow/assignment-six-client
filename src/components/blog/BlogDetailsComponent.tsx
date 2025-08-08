@@ -18,9 +18,14 @@ const BlogDetailsComponent = ({ blog }: { blog: TBlog }) => {
         />
       </div>
 
-      <div className="flex flex-col  text-sm text-gray-600 dark:text-gray-300">
-        <p>📅 {formattedDate}</p>
-        <p className="text-xl font-semibold">✍️ {blog?.name}</p>
+      <div className="flex flex-col md:flex-row justify-between ">
+        <div className="flex flex-col  text-sm text-gray-600 dark:text-gray-300">
+          <p>📅 {formattedDate}</p>
+          <p className="text-xl font-semibold">✍️ {blog?.name}</p>
+        </div>
+        <p className="text-lg flex items-center gap-1 bg-secondary text-primary px-2 py-1 rounded-xl">
+          views: <span className="text-xl font-semibold">{blog?.view}</span>
+        </p>
       </div>
       {blog?.tags && blog.tags.length > 0 && (
         <div className="flex flex-wrap gap-2 pt-2">

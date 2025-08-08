@@ -1,7 +1,9 @@
 "use client";
 
 import {
+  TBlogsStats,
   TKitchen,
+  TMealStats,
   TShowCharts,
   TSubscribe,
   TUserStats,
@@ -12,14 +14,25 @@ import { statsButtonValues } from "@/constant/stats.const";
 import SubscriberStats from "./SubscriberStats";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import KitchenStats from "./KitchenStats";
+import MealStats from "./MealStats";
+import BlogStats from "./BlogStats";
+import MobileResponsive from "./MobileResponsive";
 
-type TDashboardProps = {
+export type TDashboardProps = {
   data: TUserStats;
   subscriber: TSubscribe;
   kitchen: TKitchen;
+  meal: TMealStats;
+  blog: TBlogsStats;
 };
 
-const DashboardStats = ({ data, subscriber, kitchen }: TDashboardProps) => {
+const DashboardStats = ({
+  data,
+  subscriber,
+  kitchen,
+  meal,
+  blog,
+}: TDashboardProps) => {
   const [showCharts, setShowCharts] = useState<TShowCharts>("user");
 
   return (
@@ -86,9 +99,7 @@ const DashboardStats = ({ data, subscriber, kitchen }: TDashboardProps) => {
                     <MdOutlineArrowOutward />
                   </span>
                 </p>
-                <span className="text-4xl font-bold">
-                  {data?.totals?.totalUsers}
-                </span>
+                <span className="text-4xl font-bold">{meal?.total}</span>
               </div>
             )}
             {value.name === "order" && (
@@ -114,17 +125,28 @@ const DashboardStats = ({ data, subscriber, kitchen }: TDashboardProps) => {
                     <MdOutlineArrowOutward />
                   </span>
                 </p>
-                <span className="text-4xl font-bold">
-                  {data?.totals?.totalUsers}
-                </span>
+                <span className="text-4xl font-bold">{blog?.total}</span>
               </div>
             )}
           </div>
         ))}
       </div>
-      {showCharts === "user" && <UserStats data={data} />}
-      {showCharts === "subscriber" && <SubscriberStats data={subscriber} />}
-      {showCharts === "kitchen" && <KitchenStats data={kitchen} />}
+      <div className="hidden md:flex flex-col">
+        {showCharts === "user" && <UserStats data={data} />}
+        {showCharts === "subscriber" && <SubscriberStats data={subscriber} />}
+        {showCharts === "kitchen" && <KitchenStats data={kitchen} />}
+        {showCharts === "meal" && <MealStats data={meal} />}
+        {showCharts === "blog" && <BlogStats data={blog} />}
+      </div>
+      <MobileResponsive
+        data={data}
+        subscriber={subscriber}
+        kitchen={kitchen}
+        meal={meal}
+        blog={blog}
+        showCharts={showCharts}
+        setShowCharts={setShowCharts}
+      />
     </section>
   );
 };

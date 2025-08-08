@@ -1,4 +1,11 @@
 export type TNewUserLastWeek = { _id: number; count: number };
+export type TShowCharts =
+  | "user"
+  | "meal"
+  | "kitchen"
+  | "blog"
+  | "subscriber"
+  | "order";
 
 export type TUserStats = {
   totals: {
@@ -47,10 +54,67 @@ export type TKitchen = {
   };
 };
 
-export type TShowCharts =
-  | "user"
-  | "meal"
-  | "kitchen"
-  | "blog"
-  | "subscriber"
-  | "order";
+export type priceStats = {
+  title: string;
+  price: number;
+};
+
+export type TMealStats = {
+  total: number;
+  cuisine: {
+    Bengali: number;
+    IndianMeal: number;
+    ChineseMeal: number;
+    ContinentalMeal: number;
+    ItalianMeal: number;
+    ThaiMeal: number;
+    AmericanMeal: number;
+    MediterraneanMeal: number;
+    MexicanMeal: number;
+    TurkishMeal: number;
+    PersianMeal: number;
+    SpanishMeal: number;
+    FrenchMeal: number;
+    JapaneseMeal: number;
+    KoreanMeal: number;
+  };
+  category: {
+    breakFastMeal: number;
+    lunchMeal: number;
+    dinnerMeal: number;
+    snackMeal: number;
+  };
+  preference: {
+    mixedFood: number;
+    vegFood: number;
+    nonVegFood: number;
+  };
+  size: {
+    smallSize: number;
+    mediumSize: number;
+    largeSize: number;
+  };
+  status: {
+    available: number;
+    notAvailable: number;
+  };
+  price: {
+    highestPriceMeal: priceStats;
+    lowestPriceMeal: priceStats;
+  };
+  newMealsByWeek: TNewUserLastWeek[];
+};
+
+export type TTopBlog = {
+  title: string;
+  view: number;
+};
+export type TBlogsStats = {
+  total: number;
+  topBlogs: TTopBlog[];
+  status: {
+    publishedBlog: number;
+    archivedBlog: number;
+  };
+  newBlogsByWeek: TNewUserLastWeek[];
+};

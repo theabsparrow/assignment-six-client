@@ -45,11 +45,14 @@ const UserStats = ({ data }: { data: TUserStats }) => {
   }));
   return (
     <div className="space-y-10">
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-center gap-10 md:gap-20">
-        <div>
-          <h3 className="font-semibold mb-2">User Role Breakdown</h3>
-          <ResponsiveContainer width={400} height={500}>
-            <BarChart data={totalUserBreakdown}>
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-center gap-5 md:gap-20">
+        <div className="flex flex-col items-center md:items-start">
+          <h3 className="font-semibold md:mb-2">User Role Breakdown</h3>
+          <ResponsiveContainer width={350} height={500}>
+            <BarChart
+              data={totalUserBreakdown}
+              margin={{ top: 20, right: 20, left: -20, bottom: 20 }}
+            >
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
@@ -59,10 +62,13 @@ const UserStats = ({ data }: { data: TUserStats }) => {
           </ResponsiveContainer>
         </div>
 
-        <div>
-          <h3 className="font-semibold mb-2">New Users (Last 4 Weeks)</h3>
-          <ResponsiveContainer width={400} height={300}>
-            <BarChart data={weeklyUsers}>
+        <div className="flex flex-col items-center md:items-start">
+          <h3 className="font-semibold md:mb-2">New Users (Last 4 Weeks)</h3>
+          <ResponsiveContainer width={350} height={300}>
+            <BarChart
+              data={weeklyUsers}
+              margin={{ top: 20, right: 20, left: -10, bottom: 20 }}
+            >
               <XAxis dataKey="week" />
               <YAxis />
               <Tooltip />
