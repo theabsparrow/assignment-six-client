@@ -54,6 +54,29 @@ export const getAllUsers = async (query?: {
   }
 };
 
+export const getUserProfile = async (id: string) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refreshToken")!.value;
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/user/user-profile/${id}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+        next: {
+          tags: ["Users"],
+        },
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
 export const updateStatus = async (id: string, data: { status: TStatus }) => {
   const token = await getValidToken();
   try {
@@ -66,6 +89,25 @@ export const updateStatus = async (id: string, data: { status: TStatus }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
+      }
+    );
+    const result = await res.json();
+    revalidateTag("Users");
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+export const deleteUser = async (id: string) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/user/delete/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: token,
+        },
       }
     );
     const result = await res.json();

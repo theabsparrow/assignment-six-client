@@ -29,7 +29,7 @@ const ConfirmDelation = ({ value, handleDelete }: TConfirmProps) => {
             </h2>
             <p className="text-sm text-gray-600 mb-6">
               Are you sure you want to remove <strong>{value}</strong> <br />{" "}
-              from your subscriber list? This action cannot be undone.
+              from your Users list? This action cannot be undone.
             </p>
 
             <div className="flex justify-end gap-3">

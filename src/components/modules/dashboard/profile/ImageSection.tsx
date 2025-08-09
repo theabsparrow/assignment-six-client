@@ -59,8 +59,8 @@ const ImageSection = ({ image, role }: { image: string; role: string }) => {
         <Image
           src={image}
           alt="Profile"
-          width={400}
-          height={400}
+          width={800}
+          height={800}
           className="rounded-full object-cover border-4 border-white shadow-md w-72 h-72"
         />
       ) : (

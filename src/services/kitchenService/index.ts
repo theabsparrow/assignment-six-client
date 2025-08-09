@@ -28,6 +28,29 @@ export const createKitchen = async (kitchenInfo: TKitchen) => {
   }
 };
 
+export const getKitchenProfile = async (id: string) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refreshToken")!.value;
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/kitchen/kitchen-profile/${id}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+        next: {
+          tags: ["kitchen"],
+        },
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
 export const getMyKitchen = async () => {
   try {
     const cookieStore = await cookies();

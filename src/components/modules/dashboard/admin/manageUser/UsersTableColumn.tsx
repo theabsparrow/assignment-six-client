@@ -1,8 +1,7 @@
 "use client";
 import ConfirmDelation from "@/components/confirmDeletion/ConfirmDeletion";
 import TableDropDown from "@/components/tableDropdown/TableDropDown";
-import { deleteMeal } from "@/services/mealService";
-import { updateStatus } from "@/services/userService";
+import { deleteUser, updateStatus } from "@/services/userService";
 import { TUserListingType } from "@/types";
 import { TStatus } from "@/types/subscriber.types";
 import { ColumnDef } from "@tanstack/react-table";
@@ -16,10 +15,10 @@ export const usersTableColumn = (): ColumnDef<TUserListingType>[] => [
     header: "Name",
     cell: ({ row }) => {
       const name = row.original?.profile?.name;
-      const id = row.original?.profile?._id;
+      const id = row.original?._id;
       return (
         <Link
-          href={`admin/user/${id}`}
+          href={`/admin/manageUsers/${id}`}
           className="text-primary hover:underline duration-500"
         >
           {name}
@@ -134,7 +133,7 @@ export const usersTableColumn = (): ColumnDef<TUserListingType>[] => [
         }
         const toastId = toast.loading("Removing user...");
         try {
-          const result = await deleteMeal(id);
+          const result = await deleteUser(id);
           if (result?.success) {
             toast.success(result?.message, { id: toastId, duration: 3000 });
             setOpen(false);

@@ -44,9 +44,9 @@ export interface KitchenProfileCardProps {
   hygieneCertified: boolean;
   hygieneCertificate?: string;
   licenseOrCertificate?: string;
-  foodPreference: string[];
-  mealTimePerDay: string[];
-  cookingDays: string[];
+  foodPreference: FoodPreferenceOption[];
+  mealTimePerDay: TMealTime[];
+  cookingDays: TCookingDay[];
   specialEquipments?: string[];
   _id?: string;
   isActive?: boolean;
@@ -81,5 +81,28 @@ export type TAllKitchenType = {
   _id: string;
   isActive: boolean;
   createdAt: string;
+  subscriber: number;
+};
+
+export type TKitchenProfile = {
+  _id: string;
+  owner: {
+    name: string;
+    _id: string;
+  };
+  cookingDays: TCookingDay[];
+  createdAt: string;
+  foodHandlerExperience: string;
+  foodPreference: FoodPreferenceOption[];
+  hygieneCertificate: string;
+  hygieneCertified: boolean;
+  isActive: boolean;
+  kitchenName: string;
+  kitchenPhoto: string;
+  kitchenType: TKitchenType;
+  licenseOrCertificate: string;
+  location: string;
+  mealTimePerDay: TMealTime[];
+  specialEquipments: string[];
   subscriber: number;
 };

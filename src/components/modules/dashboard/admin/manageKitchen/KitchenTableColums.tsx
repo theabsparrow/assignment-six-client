@@ -17,7 +17,10 @@ export const kitchenTableColumn = (): ColumnDef<TAllKitchenType>[] => [
       const id = row.original?._id;
       const name = row.original?.kitchenName;
       return (
-        <Link href={`/kitchen/${id}`} className="text-primary hover:underline">
+        <Link
+          href={`/admin/manageKitchen/${id}`}
+          className="text-primary hover:underline"
+        >
           {name}
         </Link>
       );

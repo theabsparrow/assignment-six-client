@@ -68,3 +68,27 @@ export type TUserListingType = {
   verifiedWithEmail: boolean;
   profile: TCommonProfile;
 };
+
+export type TUserProfileData = {
+  _id: string;
+  createdAt: string;
+  email: string;
+  phone: string;
+  role: TUSerRole;
+  status: TStatus;
+  verifiedWithEmail: boolean;
+};
+
+export type TuserProfile = {
+  _id: string;
+  address: string;
+  allergies?: TAlergies[];
+  bio?: string;
+  hasKitchen?: boolean;
+  experienceYears?: number;
+  dateOfBirth: string;
+  gender: TGender;
+  name: string;
+  profileImage: string;
+  user: TUserProfileData;
+};
