@@ -93,7 +93,7 @@ const OtpVerification = ({
         localStorage.removeItem("mealProviderForm");
         localStorage.removeItem("customerForm");
         setIsExpired(true);
-        router.push("/");
+        router.push("/profile");
       } else {
         toast.error(res?.message, { duration: 3000 });
       }
@@ -104,7 +104,7 @@ const OtpVerification = ({
 
   const handleSkip = async () => {
     await skipVerification();
-    router.push("/");
+    router.push("/profile");
     localStorage.removeItem("otpExpiry");
     localStorage.removeItem("verifyOtpForm");
     localStorage.removeItem("mealProviderForm");

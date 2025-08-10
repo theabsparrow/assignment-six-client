@@ -8,7 +8,7 @@ const EditArray = <T,>({
   valueOptions,
   handleSubmit,
   label,
-  styleClass = "bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm flex items-center gap-2 ",
+  styleClass = "bg-secondary text-primary px-3 py-1 rounded-full text-sm flex items-center gap-2 ",
   style,
 }: TArrayEditProps<T>) => {
   const [editing, setEditing] = useState(false);
@@ -67,14 +67,14 @@ const EditArray = <T,>({
         <div className="flex items-center gap-3">
           <button
             onClick={handleEditToggle}
-            className="text-sm px-3 py-1 rounded-md bg-indigo-100 hover:bg-indigo-200 text-indigo-700 transition"
+            className="text-sm px-3 py-1 rounded-md bg-indigo-100 hover:bg-indigo-200 text-indigo-700 transition cursor-pointer"
           >
             {editing ? "Done" : "Edit"}
           </button>
           {editing && (
             <button
               onClick={handleCancel}
-              className="text-sm px-3 py-1 rounded-md bg-indigo-100 hover:bg-indigo-200 text-indigo-700 transition"
+              className="text-sm px-3 py-1 rounded-md bg-indigo-100 hover:bg-indigo-200 text-indigo-700 transition cursor-pointer"
             >
               Cancel
             </button>
@@ -90,7 +90,7 @@ const EditArray = <T,>({
               {editing && (
                 <button
                   onClick={() => handleRemove(item)}
-                  className="text-red-500 hover:text-red-700 text-xs ml-1"
+                  className="text-red-500 hover:text-red-700 ml-1 cursor-pointer"
                 >
                   ✕
                 </button>

@@ -153,9 +153,9 @@ const ProfileCompnent = ({
   };
 
   return (
-    <section className="max-w-4xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-6 ">
-      {/* personal info starts here*/}
-      <div className="col-span-2 flex flex-col md:flex-row items-center gap-6 p-6 bg-gradient-to-r from-indigo-100 to-blue-100 dark:from-indigo-900 dark:to-blue-900 shadow-lg rounded-2xl">
+    <section className="  space-y-4 w-full">
+      {/* personal info*/}
+      <div className="flex flex-col md:flex-row items-center gap-6 p-6 bg-gradient-to-r from-indigo-100 to-blue-100 dark:from-indigo-900 dark:to-blue-900 shadow-lg rounded-2xl w-full">
         <ImageSection
           image={userdata?.profileImage as string}
           role={user?.role}
@@ -222,7 +222,7 @@ const ProfileCompnent = ({
               />
             </div>
           )}
-          <div className="mt-4 flex flex-wrap gap-3 justify-center md:justify-start">
+          <div className="mt-4 flex flex-wrap gap-3 justify-between md:justify-start">
             <span className="inline-block px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition rounded-full">
               {user?.role}
             </span>
@@ -276,16 +276,12 @@ const ProfileCompnent = ({
           </div>
         </div>
       </div>
-      {/* personal info ends here */}
 
-      {/* contact info starts here */}
-      <div className="p-6 bg-gradient-to-r from-blue-100 to-indigo-200 shadow-lg rounded-xl">
-        <div className="space-y-4">
-          <div className="flex justify-between items-center gap-4">
-            <h3 className="text-2xl font-semibold text-indigo-800">
-              {" "}
-              Contact Information
-            </h3>
+      <div className="flex flex-col md:flex-row md:justify-between space-y-4 md:space-y-0 md:gap-10">
+        {/* contact info */}
+        <div className="w-full p-6 bg-gradient-to-r from-blue-100 to-indigo-200 shadow-lg rounded-xl space-y-4">
+          <div className="flex justify-between items-center ">
+            <h3 className="text-2xl font-semibold text-indigo-800"> Contact</h3>
             <Link
               className="bg-purple-500 px-2 py-1 rounded-xl text-white hover:bg-indigo-800 dark:bg-gray-500 duration-500"
               href="/settings"
@@ -303,7 +299,7 @@ const ProfileCompnent = ({
             <span>{user?.phone}</span>
           </p>
 
-          <div className=" bg-white px-4 py-3 rounded-lg shadow-md hover:bg-yellow-50 transition duration-300 ease-in-out">
+          <div className=" bg-white px-4 py-3 flex items-center justify-between rounded-lg shadow-md hover:bg-yellow-50 transition duration-300 ease-in-out">
             {isAddressEditing ? (
               <input
                 type="text"
@@ -327,83 +323,82 @@ const ProfileCompnent = ({
             />
           </div>
         </div>
-      </div>
-      {/* contact info ends here */}
 
-      {/* detailed information starts here */}
-      <div className="p-6 bg-gradient-to-r from-teal-100 to-cyan-200 shadow-lg rounded-xl space-y-6">
-        <div className="flex justify-between items-center">
-          <h3 className="text-2xl font-semibold text-indigo-800">Details</h3>
+        {/* detailed information*/}
+        <div className="w-full p-6 bg-gradient-to-r from-teal-100 to-cyan-200 shadow-lg rounded-xl space-y-4">
+          <div className="flex justify-between items-center">
+            <h3 className="text-2xl font-semibold text-indigo-800">Details</h3>
+            {user?.role === USER_ROLE.mealProvider && (
+              <div>
+                {!user?.verifiedWithEmail && !userdata?.hasKitchen ? (
+                  <Modal label="create Kitchen" />
+                ) : (
+                  <Link
+                    className="bg-purple-500 px-2 py-1 rounded-xl text-white hover:bg-indigo-800 dark:bg-gray-500 duration-500"
+                    href="/mealProvider/myKitchen"
+                  >
+                    {userdata?.hasKitchen ? "View Kitchen" : "Create Kitchen"}
+                  </Link>
+                )}
+              </div>
+            )}
+            {user?.role === USER_ROLE.customer && (
+              <div>
+                {user?.verifiedWithEmail ? (
+                  <Link
+                    className="bg-purple-500 px-2 py-1 rounded-xl text-white hover:bg-indigo-800 dark:bg-gray-500 duration-500"
+                    href={`/user/createPlan `}
+                  >
+                    Create Plan
+                  </Link>
+                ) : (
+                  <Modal label="create meal" />
+                )}
+              </div>
+            )}
+          </div>
+
           {user?.role === USER_ROLE.mealProvider && (
-            <>
-              {!user?.verifiedWithEmail && !userdata?.hasKitchen ? (
-                <Modal label="create Kitchen" />
-              ) : (
-                <Link
-                  className="bg-purple-500 px-2 py-1 rounded-xl text-white hover:bg-indigo-800 dark:bg-gray-500 duration-500"
-                  href="/mealProvider/myKitchen"
-                >
-                  {userdata?.hasKitchen ? "View Kitchen" : "Create Kitchen"}
-                </Link>
-              )}
-            </>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 text-lg font-medium text-gray-800 bg-white px-4 py-3 rounded-lg shadow-md hover:bg-green-50 transition duration-300 ease-in-out">
+                <GiCookingGlove className="text-green-600" />
+                <span>Kitchen : {userdata?.hasKitchen ? "Yes" : "No"}</span>
+              </div>
+              <div className="flex items-center gap-3 text-lg font-medium text-gray-800 bg-white px-4 py-3 rounded-lg shadow-md hover:bg-teal-50 transition duration-300 ease-in-out">
+                {isEditingExperience ? (
+                  <input
+                    type="number"
+                    value={experience}
+                    onChange={(e) => setExperience(Number(e.target.value))}
+                    className="w-20 px-2 py-1 border rounded-md outline-none"
+                  />
+                ) : (
+                  <span>Experience: {userdata?.experienceYears} years</span>
+                )}
+                <EditComponent
+                  setValue={setExperience}
+                  isEditing={isEditingExperience}
+                  setIsEditing={setIsEditingExperience}
+                  value={userdata?.experienceYears as number}
+                  handleSubmit={handleSubmit}
+                  field="experience"
+                />
+              </div>
+            </div>
           )}
-          {user?.role === USER_ROLE.customer && (
-            <>
-              {user?.verifiedWithEmail ? (
-                <Link
-                  className="bg-purple-500 px-2 py-1 rounded-xl text-white hover:bg-indigo-800 dark:bg-gray-500 duration-500"
-                  href={`/user/createPlan `}
-                >
-                  Create Plan
-                </Link>
-              ) : (
-                <Modal label="create meal" />
-              )}
-            </>
+
+          {(user?.role === USER_ROLE.customer ||
+            user?.role === USER_ROLE.admin) && (
+            <EditArray
+              value={userdata?.allergies as TAlergies[]}
+              valueOptions={allergyOptions}
+              handleSubmit={handleSubmit}
+              label="Allergies"
+              style="flex justify-between items-center"
+            />
           )}
         </div>
-        {user?.role === USER_ROLE.mealProvider && (
-          <>
-            <div className="flex items-center gap-3 text-lg font-medium text-gray-800 bg-white px-4 py-3 rounded-lg shadow-md hover:bg-green-50 transition duration-300 ease-in-out">
-              <GiCookingGlove className="text-green-600" />
-              <span>Kitchen : {userdata?.hasKitchen ? "Yes" : "No"}</span>
-            </div>
-            <div className="flex items-center gap-3 text-lg font-medium text-gray-800 bg-white px-4 py-3 rounded-lg shadow-md hover:bg-teal-50 transition duration-300 ease-in-out">
-              {isEditingExperience ? (
-                <input
-                  type="number"
-                  value={experience}
-                  onChange={(e) => setExperience(Number(e.target.value))}
-                  className="w-20 px-2 py-1 border rounded-md outline-none"
-                />
-              ) : (
-                <span>Experience: {userdata?.experienceYears} years</span>
-              )}
-              <EditComponent
-                setValue={setExperience}
-                isEditing={isEditingExperience}
-                setIsEditing={setIsEditingExperience}
-                value={userdata?.experienceYears as number}
-                handleSubmit={handleSubmit}
-                field="experience"
-              />
-            </div>
-          </>
-        )}
-
-        {(user?.role === USER_ROLE.customer ||
-          user?.role === USER_ROLE.admin) && (
-          <EditArray
-            value={userdata?.allergies as TAlergies[]}
-            valueOptions={allergyOptions}
-            handleSubmit={handleSubmit}
-            label="Allergies"
-            style="flex justify-between items-center"
-          />
-        )}
       </div>
-      {/* detailed information ends here */}
     </section>
   );
 };

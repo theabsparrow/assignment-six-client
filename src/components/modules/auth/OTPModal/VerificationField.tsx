@@ -93,13 +93,13 @@ const VerificationField = () => {
         <h2 className="text-3xl sm:text-4xl font-extrabold text-center text-gray-900 dark:text-white ">
           Verify With OTP
         </h2>
-        <p className="mt-2 text-center text-sm sm:text-base text-gray-600 dark:text-gray-300">
+        <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-300">
           Enter the 6-digit code sent to your email address.
         </p>
 
         {/* OTP Form */}
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-          <div className="flex justify-center gap-3 sm:gap-4">
+          <div className="flex justify-center gap-4 md:gap-3">
             {otpNum.map((digit, index) => (
               <input
                 key={index}
@@ -112,7 +112,7 @@ const VerificationField = () => {
                 onChange={(e) => handleChange(index, e.target.value)}
                 onKeyDown={(e) => handleBackspace(index, e)}
                 onPaste={handlePaste}
-                className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg text-xl sm:text-2xl font-bold text-center border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-secondary transition"
+                className="w-8 h-8 md:w-12 md:h-12 rounded-lg text-xl sm:text-2xl font-bold text-center border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-secondary transition"
               />
             ))}
           </div>

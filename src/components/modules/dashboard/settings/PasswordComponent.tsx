@@ -41,18 +41,20 @@ const PasswordComponent = () => {
 
   return (
     <div className="border border-gray-400 px-10 py-5">
-      <h3 className="text-2xl font-bold text-gray-700 text-center">
-        Password settings
-      </h3>
-      {!open && (
-        <button
-          onClick={() => setOpen(true)}
-          className="text-purple-800 font-semibold cursor-pointer hover:underline"
-        >
-          {" "}
-          change password
-        </button>
-      )}
+      <div className="flex flex-col">
+        <h3 className="text-2xl font-bold text-gray-700 text-center">
+          Password settings
+        </h3>
+        {!open && (
+          <button
+            onClick={() => setOpen(true)}
+            className="text-primary font-semibold cursor-pointer hover:underline"
+          >
+            {" "}
+            change password
+          </button>
+        )}
+      </div>
       {open && (
         <div className="md:w-xs">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
