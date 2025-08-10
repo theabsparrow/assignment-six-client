@@ -27,7 +27,7 @@ export const blogTableColumn = (): ColumnDef<TAllBlogListing>[] => [
       const id = row.original?.authorId?._id;
       return (
         <Link
-          href={`/admin/users/${id}`}
+          href={`/admin/manageUsers/${id}`}
           className="text-primary hover:underline"
         >
           {name}
@@ -112,6 +112,7 @@ export const blogTableColumn = (): ColumnDef<TAllBlogListing>[] => [
       });
     },
   },
+  { accessorKey: "view", header: "Views" },
   {
     id: "actions",
     header: "Actions",
@@ -151,6 +152,7 @@ export const blogTableColumn = (): ColumnDef<TAllBlogListing>[] => [
       );
     },
   },
+
   {
     id: "details",
     header: "View",
@@ -158,7 +160,7 @@ export const blogTableColumn = (): ColumnDef<TAllBlogListing>[] => [
       const id = row?.original?._id;
       return (
         <Link
-          href={`/blog/${id}`}
+          href={`/admin/manageBlog/${id}`}
           className="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
         >
           Details

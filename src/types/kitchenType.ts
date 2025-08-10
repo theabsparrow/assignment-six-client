@@ -94,15 +94,15 @@ export type TKitchenProfile = {
   createdAt: string;
   foodHandlerExperience: string;
   foodPreference: FoodPreferenceOption[];
-  hygieneCertificate: string;
+  hygieneCertificate?: string;
   hygieneCertified: boolean;
   isActive: boolean;
   kitchenName: string;
   kitchenPhoto: string;
   kitchenType: TKitchenType;
-  licenseOrCertificate: string;
+  licenseOrCertificate?: string;
   location: string;
   mealTimePerDay: TMealTime[];
-  specialEquipments: string[];
+  specialEquipments?: string[];
   subscriber: number;
 };

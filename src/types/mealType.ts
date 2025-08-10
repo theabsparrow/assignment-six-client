@@ -84,3 +84,32 @@ export type TMealListing = {
   isAvailable?: boolean;
   createdAt: string;
 };
+
+export type TMealProfile = {
+  _id: string;
+  kitchen: {
+    kitchenName: string;
+    _id: string;
+  };
+  owner: {
+    name: string;
+    _id: string;
+  };
+  allergies: TAlergies[];
+  availableDays: TCookingDay[];
+  availableTime: TMealTime[];
+  avarageRating: number;
+  createdAt: string;
+  cuisineType: TcuisineType;
+  description: string;
+  dietaryPreferences: TDietaryPreference[];
+  foodCategory: TFoodCategory;
+  foodPreference: FoodPreferenceOption;
+  imageUrl: string;
+  ingredients: string[];
+  isAvailable: boolean;
+  portionSize: TPortionSize;
+  price: number;
+  ratingCount: number;
+  title: string;
+};

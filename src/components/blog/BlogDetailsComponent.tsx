@@ -1,5 +1,6 @@
 import { TBlog } from "@/types/blogTypes";
 import Image from "next/image";
+import { FiEye } from "react-icons/fi";
 
 const BlogDetailsComponent = ({ blog }: { blog: TBlog }) => {
   const formattedDate = new Intl.DateTimeFormat("en-GB", {
@@ -23,8 +24,8 @@ const BlogDetailsComponent = ({ blog }: { blog: TBlog }) => {
           <p>📅 {formattedDate}</p>
           <p className="text-xl font-semibold">✍️ {blog?.name}</p>
         </div>
-        <p className="text-lg flex items-center gap-1 bg-secondary text-primary px-2 py-1 rounded-xl">
-          views: <span className="text-xl font-semibold">{blog?.view}</span>
+        <p className="text-lg flex items-center gap-6 bg-secondary text-primary px-2 py-1 rounded-xl">
+          <FiEye /> <span className="text-xl font-semibold">{blog?.view}</span>
         </p>
       </div>
       {blog?.tags && blog.tags.length > 0 && (

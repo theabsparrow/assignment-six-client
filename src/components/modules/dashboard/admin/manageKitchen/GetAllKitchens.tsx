@@ -25,6 +25,7 @@ const GetAllKitchens = ({
   const [kitchenType, setKitchenType] = useState<TKitchenType | string>("");
   const [certified, setCertified] = useState<"Yes" | "No" | string>("");
   const [open, setOpen] = useState(false);
+  const [sort, setSort] = useState<"asc" | "desc" | string>("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -44,6 +45,14 @@ const GetAllKitchens = ({
         params.set(name, "true");
       } else if (value === "No") {
         params.set(name, "false");
+      } else {
+        params.delete(name);
+      }
+    } else if (name === "sort") {
+      if (value === "asc") {
+        params.set(name, "subscriber");
+      } else if (value === "desc") {
+        params.set(name, "-subscriber");
       } else {
         params.delete(name);
       }
@@ -157,6 +166,25 @@ const GetAllKitchens = ({
                 ))}
               </select>
             </div>
+            <div className="space-y-2 ">
+              <select
+                id="sort"
+                name="sort"
+                value={sort}
+                onChange={(e) => {
+                  handleChange(e);
+                  setSort(e.target.value);
+                }}
+                className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+              >
+                <option value="">Sort By</option>
+                {["asc", "desc"].map((item) => (
+                  <option key={item} value={item}>
+                    {`Subscribers (${item})`}
+                  </option>
+                ))}
+              </select>
+            </div>
             <button
               onClick={() => {
                 router.push(`${pathName}`);
@@ -251,6 +279,25 @@ const GetAllKitchens = ({
                   {["Yes", "No"].map((item) => (
                     <option key={item} value={item}>
                       {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2 ">
+                <select
+                  id="sort"
+                  name="sort"
+                  value={sort}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setSort(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                >
+                  <option value="">Sort By</option>
+                  {["asc", "desc"].map((item) => (
+                    <option key={item} value={item}>
+                      {`Subscribers (${item})`}
                     </option>
                   ))}
                 </select>

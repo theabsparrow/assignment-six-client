@@ -10,6 +10,7 @@ import { CheckCircle, CircleX, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
+import { CgProfile } from "react-icons/cg";
 import { toast } from "sonner";
 
 type TKitchenProfileProps = {
@@ -178,9 +179,9 @@ const KitchenProfile = ({ data }: { data: TKitchenProfileProps }) => {
 
               <Link
                 href={`/admin/manageUsers/${isKitchenExists?.owner?._id}`}
-                className="bg-secondary text-primary px-2 py-1 rounded-xl hover:bg-primary hover:text-white cursor-pointer border border-primary duration-500"
+                className="bg-secondary text-primary px-2 py-1 rounded-xl hover:bg-primary hover:text-white cursor-pointer border border-primary duration-500  flex items-center gap-1"
               >
-                Owner Profile
+                <CgProfile /> Owner Profile
               </Link>
             </div>
 

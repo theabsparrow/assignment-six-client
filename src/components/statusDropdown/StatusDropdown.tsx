@@ -1,5 +1,6 @@
 "use client";
 
+import { statusColors } from "@/constant/dropdown.const";
 import { ChevronDown } from "lucide-react";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
@@ -48,10 +49,10 @@ const StatusDropdown = <T extends string>({
       <button
         onClick={() => setDropdownOpen(!dropdownOpen)}
         className={`flex items-center gap-1 px-3 py-1 font-semibold rounded-full border transition duration-200 ease-in-out focus:outline-none cursor-pointer ${
-          status === "active"
-            ? "text-green-700 hover:bg-green-50"
-            : "text-red-700 hover:bg-red-50"
-        }`}
+          status === "active" && "text-green-700 hover:bg-green-400"
+        } ${status === "blocked" && "text-red-700 hover:bg-red-400"} ${
+          status === "published" && "text-green-700 hover:bg-green-400"
+        } ${status === "archived" && "text-blue-700 hover:bg-blue-400"}`}
       >
         {status}
         <ChevronDown
@@ -70,15 +71,11 @@ const StatusDropdown = <T extends string>({
                 key={option}
                 onClick={() => handleChange(option, setDropdownOpen)}
                 className={`w-full px-3 py-2 text-sm text-left font-medium rounded-md transition-all duration-150 cursor-pointer 
-          ${
-            option === "active"
-              ? isActive
-                ? "bg-green-500 text-white"
-                : "hover:bg-green-100 text-green-700"
-              : isActive
-              ? "bg-red-500 text-white"
-              : "hover:bg-red-100 text-red-700"
-          }`}
+    ${
+      isActive
+        ? statusColors[option]?.active
+        : `${statusColors[option]?.hover} ${statusColors[option]?.text}`
+    }`}
               >
                 {option.charAt(0).toUpperCase() + option.slice(1)}
               </button>

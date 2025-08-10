@@ -1,3 +1,5 @@
+import { TUSerRole } from "./userType";
+
 export type TBlogPost = {
   title: string;
   content: string;
@@ -34,4 +36,20 @@ export type TAllBlogListing = {
   status: BlogStatus;
   view: number;
   createdAt: string;
+};
+
+export type TBlogProfile = {
+  _id: string;
+  authorId: {
+    _id: string;
+    role: TUSerRole;
+  };
+  content: string;
+  coverImage: string;
+  createdAt: string;
+  name: string;
+  status: BlogStatus;
+  tags?: string[];
+  title: string;
+  view: number;
 };

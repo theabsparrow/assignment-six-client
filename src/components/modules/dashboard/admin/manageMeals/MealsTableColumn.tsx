@@ -8,7 +8,22 @@ import { Dispatch, SetStateAction } from "react";
 import { toast } from "sonner";
 
 export const mealsTableColumn = (): ColumnDef<TMealListing>[] => [
-  { accessorKey: "title", header: "Name" },
+  {
+    id: "title",
+    header: "Name",
+    cell: ({ row }) => {
+      const title = row.original?.title;
+      const id = row.original?._id;
+      return (
+        <Link
+          href={`/admin/manageMeal/${id}`}
+          className="text-primary hover:underline"
+        >
+          {title}
+        </Link>
+      );
+    },
+  },
   {
     id: "kitchen",
     header: "Kitchen",
@@ -17,7 +32,7 @@ export const mealsTableColumn = (): ColumnDef<TMealListing>[] => [
       const id = row.original?.kitchen?._id;
       return (
         <Link
-          href={`/admin/providers/${id}`}
+          href={`/admin/manageKitchen/${id}`}
           className="text-primary hover:underline"
         >
           {name}
@@ -95,21 +110,6 @@ export const mealsTableColumn = (): ColumnDef<TMealListing>[] => [
       };
 
       return <ConfirmDelation value={name} handleDelete={handleDelete} />;
-    },
-  },
-  {
-    id: "details",
-    header: "View",
-    cell: ({ row }) => {
-      const id = row?.original?._id;
-      return (
-        <Link
-          href={`/meals/${id}`}
-          className="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
-        >
-          Details
-        </Link>
-      );
     },
   },
 ];

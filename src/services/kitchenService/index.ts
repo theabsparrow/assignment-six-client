@@ -96,6 +96,9 @@ export const getAllKitchen = async (query?: {
     if (query?.isActive) {
       params.append("isActive", query?.isActive.toString());
     }
+    if (query?.sort) {
+      params.append("sort", query?.sort.toString());
+    }
     if (query?.page) {
       params.append("page", query?.page.toString());
     }

@@ -73,6 +73,9 @@ export const getAllBlogsList = async (query?: {
     if (query?.page) {
       params.append("page", query?.page.toString());
     }
+    if (query?.sort) {
+      params.append("sort", query?.sort.toString());
+    }
     const res = await fetch(
       `${config.next_public_base_api}/blog/all-blogs?limit=20&${params}`,
       {
@@ -97,6 +100,26 @@ export const getASingleBlog = async (id: string) => {
     const res = await fetch(`${config.next_public_base_api}/blog/blog/${id}`, {
       method: "GET",
     });
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const getBlogProfile = async (id: string) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refreshToken")!.value;
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/blog/blogProfile/${id}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
     const result = await res.json();
     return result;
   } catch (error: any) {
