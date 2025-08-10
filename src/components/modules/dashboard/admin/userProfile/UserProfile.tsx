@@ -100,23 +100,25 @@ const UserProfile = ({ data }: { data: TuserProfile }) => {
       ) : (
         <section className="max-w-4xl mx-auto p-6 space-y-6">
           <div className="col-span-2 flex flex-col md:flex-row items-center gap-6 p-6 bg-gradient-to-r from-indigo-100 to-blue-100 dark:from-indigo-900 dark:to-blue-900 shadow-lg rounded-2xl">
-            {image ? (
-              <Image
-                src={image}
-                alt="Profile"
-                width={800}
-                height={800}
-                className="rounded-full object-cover border-4 border-white shadow-md md:w-96 w-72 md:h-96 h-72"
-              />
-            ) : (
-              <Image
-                src="/profile-icon.png"
-                alt="Profile"
-                width={800}
-                height={800}
-                className="rounded-full object-cover border-4 border-white shadow-md  w-96 h-96"
-              />
-            )}
+            <div className="w-full">
+              {image ? (
+                <Image
+                  src={image}
+                  alt="Profile"
+                  width={1000}
+                  height={1000}
+                  className=" object-cover border-4 rounded-full border-white shadow-md w-72 h-72 md:w-96 md:h-96"
+                />
+              ) : (
+                <Image
+                  src="/profile-icon.png"
+                  alt="Profile"
+                  width={800}
+                  height={800}
+                  className="rounded-full object-cover border-4 border-white shadow-md md:w-96 w-72 md:h-96 h-72"
+                />
+              )}
+            </div>
             <div className=" md:text-left space-y-4 w-full">
               <div>
                 <h2 className="text-3xl font-semibold">

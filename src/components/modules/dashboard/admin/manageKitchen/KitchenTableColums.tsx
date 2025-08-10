@@ -34,7 +34,7 @@ export const kitchenTableColumn = (): ColumnDef<TAllKitchenType>[] => [
       const id = row.original?.owner?._id;
       return (
         <Link
-          href={`/admin/providers/${id}`}
+          href={`/admin/manageUsers/${id}`}
           className="text-primary hover:underline"
         >
           {name}

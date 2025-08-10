@@ -48,52 +48,61 @@ const Sidebar = ({ role }: { role: string }) => {
             <h1 className="px-4 text-sm text-primary font-bold">MENU</h1>
             <div className="flex flex-col gap-1">
               {role === USER_ROLE.mealProvider &&
-                mealProviderItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 ${
-                      pathname === item.href
-                        ? "bg-primary text-white shadow-md"
-                        : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
-                    }`}
-                  >
-                    <span className="text-xl">{item.icon}</span>
-                    <span>{item.name}</span>
-                  </Link>
-                ))}
+                mealProviderItems.map((item) => {
+                  const active = pathname.startsWith(item.href);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 ${
+                        active
+                          ? "bg-primary text-white shadow-md"
+                          : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                      }`}
+                    >
+                      <span className="text-xl">{item.icon}</span>
+                      <span>{item.name}</span>
+                    </Link>
+                  );
+                })}
 
               {role === USER_ROLE.customer &&
-                customerItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 ${
-                      pathname === item.href
-                        ? "bg-primary text-white shadow-md"
-                        : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
-                    }`}
-                  >
-                    <span className="text-xl">{item.icon}</span>
-                    <span>{item.name}</span>
-                  </Link>
-                ))}
+                customerItems.map((item) => {
+                  const active = pathname.startsWith(item.href);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 ${
+                        active
+                          ? "bg-primary text-white shadow-md"
+                          : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                      }`}
+                    >
+                      <span className="text-xl">{item.icon}</span>
+                      <span>{item.name}</span>
+                    </Link>
+                  );
+                })}
 
               {(role === USER_ROLE.admin || role === USER_ROLE.superAdmin) &&
-                adminItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 ${
-                      pathname === item.href
-                        ? "bg-primary text-white shadow-md"
-                        : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
-                    }`}
-                  >
-                    <span className="text-xl">{item.icon}</span>
-                    <span>{item.name}</span>
-                  </Link>
-                ))}
+                adminItems.map((item) => {
+                  const active = pathname.startsWith(item.href);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 ${
+                        active
+                          ? "bg-primary text-white shadow-md"
+                          : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                      }`}
+                    >
+                      <span className="text-xl">{item.icon}</span>
+                      <span>{item.name}</span>
+                    </Link>
+                  );
+                })}
             </div>
           </nav>
 
@@ -161,55 +170,64 @@ const Sidebar = ({ role }: { role: string }) => {
               <div className="space-y-2">
                 <h1 className="px-4 text-sm text-primary font-bold">MENU</h1>
                 {role === USER_ROLE.mealProvider &&
-                  mealProviderItems.map((link) => (
-                    <Link
-                      key={link.name}
-                      href={link.href}
-                      onClick={() => setIsOpen(false)}
-                      className={`flex items-center gap-3 px-3 py-1 rounded-lg font-medium transition-all duration-200 ${
-                        pathname === link.href
-                          ? "bg-primary text-white shadow-md"
-                          : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
-                      }`}
-                    >
-                      <span>{link.icon}</span>
-                      <span>{link.name}</span>
-                    </Link>
-                  ))}
+                  mealProviderItems.map((link) => {
+                    const active = pathname.startsWith(link.href);
+                    return (
+                      <Link
+                        key={link.name}
+                        href={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className={`flex items-center gap-3 px-3 py-1 rounded-lg font-medium transition-all duration-200 ${
+                          active
+                            ? "bg-primary text-white shadow-md"
+                            : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                        }`}
+                      >
+                        <span>{link.icon}</span>
+                        <span>{link.name}</span>
+                      </Link>
+                    );
+                  })}
 
                 {role === USER_ROLE.customer &&
-                  customerItems.map((link) => (
-                    <Link
-                      key={link.name}
-                      href={link.href}
-                      className={`flex items-center gap-3 px-3 py-1 rounded-lg font-medium transition-all duration-200 ${
-                        pathname === link.href
-                          ? "bg-primary text-white shadow-md"
-                          : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
-                      }`}
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <span>{link.icon}</span>
-                      <span>{link.name}</span>
-                    </Link>
-                  ))}
+                  customerItems.map((link) => {
+                    const active = pathname.startsWith(link.href);
+                    return (
+                      <Link
+                        key={link.name}
+                        href={link.href}
+                        className={`flex items-center gap-3 px-3 py-1 rounded-lg font-medium transition-all duration-200 ${
+                          active
+                            ? "bg-primary text-white shadow-md"
+                            : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                        }`}
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <span>{link.icon}</span>
+                        <span>{link.name}</span>
+                      </Link>
+                    );
+                  })}
 
                 {(role === USER_ROLE.admin || role === USER_ROLE.superAdmin) &&
-                  adminItems.map((link) => (
-                    <Link
-                      key={link.name}
-                      href={link.href}
-                      className={`flex items-center gap-3 px-3 py-1 rounded-lg font-medium transition-all duration-200 ${
-                        pathname === link.href
-                          ? "bg-primary text-white shadow-md"
-                          : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
-                      }`}
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <span>{link.icon}</span>
-                      <span>{link.name}</span>
-                    </Link>
-                  ))}
+                  adminItems.map((link) => {
+                    const isActive = pathname.startsWith(link.href);
+                    return (
+                      <Link
+                        key={link.name}
+                        href={link.href}
+                        className={`flex items-center gap-3 px-3 py-1 rounded-lg font-medium transition-all duration-200 ${
+                          isActive
+                            ? "bg-primary text-white shadow-md"
+                            : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                        }`}
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <span>{link.icon}</span>
+                        <span>{link.name}</span>
+                      </Link>
+                    );
+                  })}
               </div>
 
               <div className="space-y-2">
