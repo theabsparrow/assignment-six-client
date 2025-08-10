@@ -106,3 +106,18 @@ export type TKitchenProfile = {
   specialEquipments?: string[];
   subscriber: number;
 };
+
+export type TKitchenDetails = {
+  _id: string;
+  cookingDays: TCookingDay[];
+  foodHandlerExperience: string;
+  foodPreference: FoodPreferenceOption[];
+  hygieneCertified: boolean;
+  kitchenName: string;
+  kitchenPhoto: string;
+  kitchenType: TKitchenType;
+  location: string;
+  mealTimePerDay: TMealTime[];
+  specialEquipments?: string[];
+  subscriber: number;
+};

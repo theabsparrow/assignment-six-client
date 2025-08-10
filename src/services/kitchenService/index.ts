@@ -51,6 +51,29 @@ export const getKitchenProfile = async (id: string) => {
   }
 };
 
+export const getASingleKitchen = async (id: string) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refreshToken")!.value;
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/kitchen/single-kitchen/${id}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+        next: {
+          tags: ["kitchen"],
+        },
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
 export const getMyKitchen = async () => {
   try {
     const cookieStore = await cookies();

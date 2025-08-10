@@ -20,14 +20,16 @@ const BlogCard = ({ blog }: { blog: TBlog }) => {
           className="object-cover hover:scale-105 transition-transform duration-300"
         />
       </div>
-      <div className="flex flex-col md:flex-row justify-between ">
+      <div className="flex flex-col md:flex-row md:justify-between space-y-2 md:space-y-0">
         <div className="flex flex-col  text-sm text-gray-600 dark:text-gray-300">
           <p>📅 {formattedDate}</p>
           <p className="text-xl font-semibold">✍️ {blog?.name}</p>
         </div>
-        <p className="text-lg flex items-center gap-1 bg-secondary text-primary px-2 py-1 rounded-xl">
-          views: <span className="text-xl font-semibold">{blog?.view}</span>
-        </p>
+        <div className="flex items-center">
+          <span className="font-semibold text-lg border border-primary px-2 py-1 rounded-xl">
+            {blog?.view} {blog?.view > 1 ? "Views" : "View"}
+          </span>
+        </div>
       </div>
 
       {blog?.tags && blog.tags.length > 0 && (
@@ -35,7 +37,7 @@ const BlogCard = ({ blog }: { blog: TBlog }) => {
           {blog.tags.map((tag, idx) => (
             <span
               key={idx}
-              className="px-3 py-1 bg-secondary text-primary  text-xs rounded-full font-medium"
+              className="px-3 py-1 bg-secondary text-primary rounded-full font-medium"
             >
               #{tag}
             </span>

@@ -1,60 +1,66 @@
 "use client";
 
-import { KitchenProfileCardProps } from "@/types/kitchenType";
-import { BadgeCheck, XCircle } from "lucide-react";
+import { TAllKitchenType } from "@/types/kitchenType";
+import { CheckCircle, CircleX, MapPin } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
-const KitchenCard = ({
-  kitchenData,
-}: {
-  kitchenData: KitchenProfileCardProps;
-}) => {
+const KitchenCard = ({ kitchenData }: { kitchenData: TAllKitchenType }) => {
   return (
-    <div className="bg-white dark:bg-gray-800 shadow-md rounded-2xl overflow-hidden max-w-sm w-full transition hover:shadow-lg">
-      <div className="relative h-48 w-full">
-        {kitchenData?.kitchenPhoto ? (
-          <Image
-            src={kitchenData.kitchenPhoto}
-            alt={kitchenData?.kitchenName || "Kitchen Image"}
-            fill
-            className="object-cover"
-          />
-        ) : (
-          <div className="bg-gray-200 flex items-center justify-center h-full text-gray-500 text-sm">
-            No Image Available
-          </div>
-        )}
+    <section className="bg-white dark:bg-gray-800 shadow-md rounded-2xl overflow-hidden transition hover:shadow-lg p-4">
+      <div>
+        <Image
+          src={kitchenData?.kitchenPhoto}
+          alt={kitchenData?.kitchenName}
+          height={700}
+          width={700}
+          className="object-cover h-[30vh] w-full] rounded-xl"
+        />
       </div>
 
       <div className="p-4 space-y-2">
         <div className="flex justify-between items-center">
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+          <h1 className="text-xl font-bold text-primary flex items-center gap-4">
             {kitchenData?.kitchenName}
-          </h2>
-          <span
-            className={`flex items-center gap-1 text-sm px-2 py-1 rounded-full font-medium ${
-              kitchenData?.isActive
-                ? "bg-green-100 text-green-600"
-                : "bg-red-100 text-red-600"
-            }`}
-          >
-            {kitchenData?.isActive ? (
-              <>
-                <BadgeCheck size={14} /> Active
-              </>
-            ) : (
-              <>
-                <XCircle size={14} /> Inactive
-              </>
-            )}
-          </span>
+            <span className="text-lg font-medium">
+              ({kitchenData?.kitchenType})
+            </span>
+          </h1>
         </div>
 
-        <p className="text-gray-600 dark:text-gray-300 text-sm">
-          {kitchenData?.location}
-        </p>
+        <h1 className="flex items-center text-base text-gray-700">
+          <MapPin className="w-5 h-5 mr-2 mt-0.5 text-green-700" />
+          <span>{kitchenData?.location || "No location provided"}</span>
+        </h1>
+        <div
+          className={`flex items-center font-medium ${
+            kitchenData?.hygieneCertified ? "text-green-600" : "text-red-500"
+          }`}
+        >
+          {kitchenData?.hygieneCertified ? (
+            <CheckCircle className="w-5 h-5 mr-2" />
+          ) : (
+            <CircleX className="w-5 h-5 mr-2" />
+          )}
+          <h1>
+            Hygiene{" "}
+            {kitchenData?.hygieneCertified ? "Certified" : "Not Certified"}
+          </h1>
+        </div>
+        <div className="flex items-center justify-between">
+          <h1 className="font-medium text-lg border border-primary py-1 px-2 rounded-xl">
+            {kitchenData?.subscriber}{" "}
+            {kitchenData?.subscriber > 1 ? "Subscribers" : "Subscriber"}
+          </h1>
+          <Link
+            href={`/kitchen/${kitchenData?._id}`}
+            className="bg-secondary py-1 px-2 rounded-lg text-primary hover:bg-primary hover:text-white border border-primary duration-500"
+          >
+            View Kitchen
+          </Link>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

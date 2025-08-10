@@ -102,7 +102,7 @@ const KitchenProfile = ({ data }: { data: TKitchenProfileProps }) => {
               alt="Profile"
               width={900}
               height={900}
-              className=" border-4 border-white w-full h-[70vh] shadow-xl rounded-xl"
+              className=" border-4 border-white w-full md:h-[70vh] shadow-xl rounded-xl"
             />
           </div>
           <div className="space-y-4">

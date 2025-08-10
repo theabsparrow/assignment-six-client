@@ -1,12 +1,16 @@
 import KitchenComponent from "@/components/modules/kitchen/KitchenComponent";
 import { getAllKitchen } from "@/services/kitchenService";
 
-const Kitchens = async () => {
-  const { data } = await getAllKitchen();
-  const kitchenInfo = data?.result;
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+
+const Kitchens = async ({ searchParams }: { searchParams: SearchParams }) => {
+  const query = await searchParams;
+  query.isActive = "true";
+  const { data } = await getAllKitchen(query);
+  const kitchenInfo = data?.result || [];
   const meta = data?.meta;
   return (
-    <div className="md:px-16 px-5">
+    <div className="md:px-24 px-5 ">
       <KitchenComponent kitchenInfo={kitchenInfo} meta={meta} />
     </div>
   );

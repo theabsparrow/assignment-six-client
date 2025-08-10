@@ -9,7 +9,7 @@ const MealInfo = async ({
   const mealId = await params;
   const { data } = await getASingleMeal(mealId?.mealId);
   return (
-    <div className="md:px-16 px-5">
+    <div className=" w-full py-10 md:px-24 px-5">
       <MealDetails mealInfo={data} />
     </div>
   );

@@ -1,96 +1,189 @@
-import { TMealFormData } from "@/types/mealType";
+import { TMealProfile } from "@/types/mealType";
 import Image from "next/image";
 import Link from "next/link";
-import InFlow from "./InFlow";
-import ListRow from "./ListRow";
+import { MdOutlineSoupKitchen } from "react-icons/md";
 
-const MealDetails = ({ mealInfo }: { mealInfo: TMealFormData }) => {
+const MealDetails = ({ mealInfo }: { mealInfo: TMealProfile }) => {
   return (
-    <div className="max-w-5xl mx-auto bg-gradient-to-br from-white to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-3xl shadow-2xl p-6 md:p-10 flex flex-col md:flex-row gap-8">
-      {/* Image Section */}
-      <div className="relative w-full md:w-1/2 h-72 md:h-[500px] rounded-2xl overflow-hidden bg-gray-100 flex items-center justify-center">
+    <section className="bg-gradient-to-br from-green-50 to-yellow-50 shadow-lg rounded-2xl dark:bg-gray-600 overflow-hidden max-w-4xl mx-auto px-4 py-4 space-y-4 md:space-y-10">
+      <div>
         <Image
           src={mealInfo?.imageUrl}
-          alt={mealInfo?.title}
-          width={800}
-          height={600}
-          className="w-full h-full object-contain rounded-2xl"
+          alt="meal-photo"
+          width={900}
+          height={900}
+          className=" border-4 border-white w-full md:h-[70vh] shadow-xl rounded-xl"
         />
       </div>
 
       {/* Content Section */}
-      <div className="w-full md:w-1/2 flex flex-col justify-between">
-        <div className="space-y-6">
-          {/* Title & Description */}
-          <div>
-            <h2 className="text-3xl font-extrabold text-gray-800 dark:text-white leading-tight mb-3">
-              {mealInfo?.title}
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
-              {mealInfo?.description}
-            </p>
+      <div className=" space-y-4">
+        <div className="space-y-2">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary">
+            {mealInfo?.title}{" "}
+            <span className="text-xl">({mealInfo?.foodPreference})</span>
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
+            {mealInfo?.description}
+          </p>
+        </div>
+
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+          <div className="space-y-1">
+            <h1 className="text-lg font-semibold"> Category</h1>
+            <span className="bg-primary border border-seconday px-2 py-1 rounded-full text-secondary">
+              {mealInfo?.foodCategory}
+            </span>
           </div>
-
-          {/* Information Section */}
-          <div className="space-y-4">
-            {/* Food Details */}
-            <div className="space-y-2">
-              <InFlow label="Food Category" value={mealInfo?.foodCategory} />
-              <InFlow label="Cuisine Type" value={mealInfo?.cuisineType} />
-              <InFlow
-                label="Food Preference"
-                value={mealInfo?.foodPreference}
-              />
-              <InFlow label="Portion Size" value={mealInfo?.portionSize} />
-            </div>
-
-            {/* List Details */}
-            <ListRow
-              label="Dietary Preferences"
-              items={mealInfo?.dietaryPreferences}
-            />
-            <ListRow
-              label="Ingredients"
-              items={mealInfo?.ingredients as string[]}
-            />
-            <ListRow label="Allergies" items={mealInfo?.allergies} />
-            <ListRow label="Available Days" items={mealInfo?.availableDays} />
-            <ListRow label="Available Time" items={mealInfo?.availableTime} />
+          <div className="space-y-1">
+            <h1 className="text-lg font-semibold"> Cuisine</h1>
+            <span className="bg-primary border border-seconday px-2 py-1 rounded-full text-secondary">
+              {mealInfo?.cuisineType}
+            </span>
+          </div>
+          <div className="space-y-1">
+            <h1 className="text-lg font-semibold"> Portion Size</h1>
+            <span className="bg-primary border border-seconday px-2 py-1 rounded-full text-secondary">
+              {mealInfo?.portionSize}
+            </span>
+          </div>
+          <div className="space-y-1">
+            <h1 className="text-lg font-semibold"> Kitchen</h1>
+            <span className="bg-primary border border-seconday px-2 py-1 rounded-full text-secondary">
+              {mealInfo?.kitchen?.kitchenName}
+            </span>
+          </div>
+          <div className="space-y-1">
+            <h1 className="text-lg font-semibold"> Availablity</h1>
+            <span
+              className={`${
+                mealInfo?.isAvailable
+                  ? "bg-primary border border-seconday text-secondary"
+                  : "bg-red-300 border border-red-500 text-red-600"
+              }  px-2 py-1 rounded-full `}
+            >
+              {mealInfo?.isAvailable ? "Available" : "Not available"}
+            </span>
           </div>
         </div>
 
-        {/* Footer Section */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-8 border-t border-gray-300 dark:border-gray-700 pt-6">
+        <div className="flex items-center gap-0 md:gap-10 justify-between md:justify-start">
+          <Link
+            href={`/kitchen/${mealInfo?.kitchen?._id}`}
+            className="bg-secondary text-primary px-2 py-1 rounded-xl hover:bg-primary hover:text-white cursor-pointer border border-primary duration-500 flex items-center gap-1"
+          >
+            <MdOutlineSoupKitchen /> Kitchen Profile
+          </Link>
+        </div>
+
+        <div className="space-y-4">
+          {mealInfo?.dietaryPreferences && (
+            <div className="space-y-2">
+              <h1 className="font-semibold text-xl">Dietary Preference:</h1>
+              <ul className="flex flex-wrap gap-2 ">
+                {(mealInfo?.dietaryPreferences).map((diatery, i) => (
+                  <li
+                    key={i}
+                    className="bg-primary text-secondary px-2 py-1 rounded-xl"
+                  >
+                    {diatery}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {mealInfo?.ingredients && (
+            <div className="space-y-2">
+              <h1 className="font-semibold text-xl">Ingredients:</h1>
+              <ul className="flex flex-wrap gap-2 ">
+                {(mealInfo?.ingredients).map((ingredient, i) => (
+                  <li
+                    key={i}
+                    className="bg-primary text-secondary px-2 py-1 rounded-xl"
+                  >
+                    {ingredient}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {mealInfo?.allergies && (
+            <div className="space-y-2">
+              <h1 className="font-semibold text-xl">Allergies:</h1>
+              <ul className="flex flex-wrap gap-2 ">
+                {(mealInfo?.allergies).map((allergy, i) => (
+                  <li
+                    key={i}
+                    className="bg-primary text-secondary px-2 py-1 rounded-xl"
+                  >
+                    {allergy}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {mealInfo?.availableDays && (
+            <div className="space-y-2">
+              <h1 className="font-semibold text-xl">Available Day:</h1>
+              <ul className="flex flex-wrap gap-2 ">
+                {(mealInfo?.availableDays).map((availableday, i) => (
+                  <li
+                    key={i}
+                    className="bg-primary text-secondary px-2 py-1 rounded-xl"
+                  >
+                    {availableday}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {mealInfo?.availableTime && (
+            <div className="space-y-2">
+              <h1 className="font-semibold text-xl">Available Time:</h1>
+              <ul className="flex flex-wrap gap-2 ">
+                {(mealInfo?.availableTime).map((time, i) => (
+                  <li
+                    key={i}
+                    className="bg-primary text-secondary px-2 py-1 rounded-xl"
+                  >
+                    {time}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        <div className="flex items-start justify-between border-t border-gray-300 dark:border-gray-700 py-4">
           <div className="space-y-2">
             <p className="text-lg font-bold text-gray-800 dark:text-gray-200">
               Price:{" "}
-              <span className="bg-indigo-100 text-indigo-800 dark:bg-indigo-700 dark:text-indigo-100 px-3 py-1 rounded-full">
-                ${mealInfo?.price?.toFixed(2)}
+              <span className="bg-indigo-100 text-primary dark:bg-indigo-700 dark:text-secondary  px-3 py-1 rounded-full">
+                ৳{mealInfo?.price ? mealInfo.price.toFixed(2) : "0.00"}
               </span>
             </p>
+
             <p className="text-lg font-bold text-gray-800 dark:text-gray-200">
               Rating:{" "}
-              <span className="bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-100 px-3 py-1 rounded-full">
-                {mealInfo?.rating} ★
-              </span>
+              {mealInfo?.ratingCount && mealInfo.ratingCount > 0 ? (
+                <span className="bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-100 px-3 py-1 rounded-full">
+                  {mealInfo?.avarageRating?.toFixed(1)} ★ (
+                  {mealInfo?.ratingCount} ratings)
+                </span>
+              ) : (
+                <span className="italic text-gray-500">No ratings yet</span>
+              )}
             </p>
           </div>
-
-          {mealInfo?.isAvailable ? (
-            <Link
-              href={`/meals/checkout/${mealInfo?._id}`}
-              className="inline-block bg-green-600 hover:bg-green-700 text-white text-base font-semibold px-6 py-3 rounded-2xl transition-all"
-            >
-              Checkout
-            </Link>
-          ) : (
-            <span className="text-sm text-red-500 font-semibold">
-              Not Available
-            </span>
-          )}
+          <Link
+            href={`/meals/checkout/${mealInfo?._id}`}
+            className="bg-secondary text-primary border border-primary hover:bg-primary hover:text-white px-2 py-1 rounded-lg duration-500"
+          >
+            Checkout
+          </Link>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

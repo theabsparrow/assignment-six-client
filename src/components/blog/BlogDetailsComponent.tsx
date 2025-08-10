@@ -1,6 +1,5 @@
 import { TBlog } from "@/types/blogTypes";
 import Image from "next/image";
-import { FiEye } from "react-icons/fi";
 
 const BlogDetailsComponent = ({ blog }: { blog: TBlog }) => {
   const formattedDate = new Intl.DateTimeFormat("en-GB", {
@@ -19,21 +18,23 @@ const BlogDetailsComponent = ({ blog }: { blog: TBlog }) => {
         />
       </div>
 
-      <div className="flex flex-col md:flex-row justify-between ">
-        <div className="flex flex-col  text-sm text-gray-600 dark:text-gray-300">
+      <div className="flex flex-col md:flex-row justify-between md:items-center space-y-2 md:space-y-0">
+        <div className="flex flex-col text-gray-600 dark:text-gray-300">
           <p>📅 {formattedDate}</p>
           <p className="text-xl font-semibold">✍️ {blog?.name}</p>
         </div>
-        <p className="text-lg flex items-center gap-6 bg-secondary text-primary px-2 py-1 rounded-xl">
-          <FiEye /> <span className="text-xl font-semibold">{blog?.view}</span>
-        </p>
+        <div className="flex items-center">
+          <span className="font-semibold text-lg border border-primary px-2 md:py-1 rounded-xl">
+            {blog?.view} {blog?.view > 1 ? "Views" : "View"}
+          </span>
+        </div>
       </div>
       {blog?.tags && blog.tags.length > 0 && (
         <div className="flex flex-wrap gap-2 pt-2">
           {blog.tags.map((tag, idx) => (
             <span
               key={idx}
-              className="px-3 py-1 bg-secondary text-primary  text-xs rounded-full font-medium"
+              className="px-3 py-1 bg-secondary text-primary rounded-full font-medium"
             >
               #{tag}
             </span>
