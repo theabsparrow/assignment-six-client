@@ -1,14 +1,16 @@
 import MyPlanComponent from "@/components/modules/dashboard/myPlans/MyPlanComponent";
 import { getMyPlans } from "@/services/mealPlannerService.ts";
 
-const MyPlans = async () => {
-  const { data } = await getMyPlans();
-  const myPlanner = data?.result;
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+const MyPlans = async ({ searchParams }: { searchParams: SearchParams }) => {
+  const query = await searchParams;
+  const { data } = await getMyPlans(query);
+  const myPlans = data?.result;
   const meta = data?.meta;
   return (
-    <div className="min-h-screen mx-auto">
-      <MyPlanComponent myPlanner={myPlanner} meta={meta} />
-    </div>
+    <section className=" w-full">
+      <MyPlanComponent myPlans={myPlans} meta={meta} />
+    </section>
   );
 };
 

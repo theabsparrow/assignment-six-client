@@ -9,24 +9,28 @@ const rolebasedPrivateUser = {
     /^\/kitchen(\/.*)?$/,
     /^\/profile$/,
     /^\/settings$/,
+    /^\/subscription$/,
   ],
   mealProvider: [
     /^\/mealProvider(\/.*)?$/,
     /^\/kitchen(\/.*)?$/,
     /^\/profile$/,
     /^\/settings$/,
+    /^\/subscription$/,
   ],
   admin: [
     /^\/admin(\/.*)?$/,
     /^\/kitchen(\/.*)?$/,
     /^\/profile$/,
     /^\/settings$/,
+    /^\/subscription$/,
   ],
   superAdmin: [
     /^\/admin(\/.*)?$/,
     /^\/kitchen(\/.*)?$/,
     /^\/profile$/,
     /^\/settings$/,
+    /^\/subscription$/,
   ],
 };
 
@@ -66,6 +70,8 @@ export const config = {
     "/profile",
     "/settings",
     "/kitchen",
+    "/subscription",
+    "/kitchen/(.*)",
     "/admin/(.*)",
     "/user/(.*)",
     "/mealProvider/(.*)",

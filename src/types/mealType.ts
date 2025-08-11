@@ -41,7 +41,16 @@ export type TDietaryPreference =
   | "Regular"
   | "Halal"
   | "Low-Carb"
-  | "Diabetic-Friendly";
+  | "Diabetic-Friendly"
+  | "Low-Fat"
+  | "High-Protein"
+  | "Dairy-Free"
+  | "Nut-Free"
+  | "High Fiber"
+  | "Low-Sodium"
+  | "Raw Food"
+  | "Organic"
+  | "Plant-Based";
 
 export type TMealFormData = {
   title: string;

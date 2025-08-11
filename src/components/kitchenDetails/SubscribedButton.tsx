@@ -5,6 +5,7 @@ import {
   isKitchenSubscribed,
   removeSubscription,
 } from "@/services/kitchenSubscriber";
+import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -64,27 +65,24 @@ const SubscribedButton = ({ kitchenId }: { kitchenId: string }) => {
   };
 
   return (
-    <div>
-      {loading ? (
-        <button className="bg-secondary text-primary border border-primary py-1 px-2 rounded-lg hover:bg-primary hover:text-white duration-500 font-medium cursor-pointer">
-          loading...
-        </button>
-      ) : isSubscribed ? (
-        <button
-          onClick={handleUnsibscribe}
-          className="bg-primary text-white border border-secondary py-1 px-2 rounded-lg font-medium cursor-pointer"
-        >
-          Unsubscribe
-        </button>
-      ) : (
-        <button
-          onClick={handleSubscribe}
-          className="bg-secondary text-primary border border-primary py-1 px-2 rounded-lg hover:bg-primary hover:text-white duration-500 font-medium cursor-pointer"
-        >
-          Subscribe
-        </button>
-      )}
-    </div>
+    <button
+      onClick={
+        loading ? undefined : isSubscribed ? handleUnsibscribe : handleSubscribe
+      }
+      disabled={loading}
+      className={`
+        flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all cursor-pointer
+        ${
+          isSubscribed
+            ? "bg-primary text-white hover:bg-primary/90"
+            : "bg-secondary text-primary border border-primary hover:bg-primary hover:text-white"
+        }
+        ${loading ? "opacity-70 cursor-not-allowed" : ""}
+      `}
+    >
+      {loading && <Loader2 className="h-4 w-4 animate-spin" />}
+      {loading ? "Please wait..." : isSubscribed ? "Unsubscribe" : "Subscribe"}
+    </button>
   );
 };
 

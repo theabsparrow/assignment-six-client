@@ -15,12 +15,23 @@ export type TMealPlanner = {
 };
 
 export type TMyMealPlanner = {
-  title: string;
-  preferredMealTime: TMealTime[];
-  preferredMealDay: TCookingDay[];
+  _id: string;
+  createdAt: string;
   foodPreference: FoodPreferenceOption;
-  dietaryPreferences: TDietaryPreference[];
+  isActive: boolean;
+  preferredMealTime: TMealTime[];
+  title: string;
+};
+
+export type TPlanUpdate = {
+  title: string;
+  foodPreference: FoodPreferenceOption;
   notes: string;
-  _id?: string;
-  isActive?: boolean;
+  isActive: boolean;
+  addPreferredMealTime: FoodPreferenceOption[];
+  removePreferredMealTime: FoodPreferenceOption[];
+  addPreferredMealDay: TCookingDay[];
+  removePreferredMealDay: TCookingDay[];
+  addDietaryPreferences: TDietaryPreference[];
+  removeDietaryPreferences: TDietaryPreference[];
 };

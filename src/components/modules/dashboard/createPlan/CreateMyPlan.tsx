@@ -10,8 +10,10 @@ import { diateryPreference } from "../meal/createMeal/createMeal.const";
 import InputSelect from "../../formInput/InputSelect";
 import { createMealPlan } from "@/services/mealPlannerService.ts";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const CreateMyPlan = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -23,6 +25,7 @@ const CreateMyPlan = () => {
       const result = await createMealPlan(data);
       if (result?.success) {
         toast.success(result?.message, { duration: 3000 });
+        router.push("/user/myPlans");
         reset();
       } else {
         toast.error(result?.message, { duration: 3000 });
