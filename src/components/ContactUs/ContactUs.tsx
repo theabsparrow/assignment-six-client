@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { FaEnvelope, FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
+import { toast } from "sonner";
+import emailjs from "@emailjs/browser";
+import { config } from "@/config";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -18,16 +21,54 @@ const ContactUs = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
+    if (!formData.name || !formData.email || !formData.message) {
+      toast.error("please provide the proper value", { duration: 3000 });
+      return;
+    }
+    const templateParams = {
+      user_name: formData.name,
+      user_email: formData.email,
+      message: formData.message,
+    };
+    const toastId = "email";
+    toast.loading("message sending", { id: toastId, duration: 2000 });
+    if (!templateParams) {
+      return toast.error("faild to send message");
+    }
+    try {
+      const res = await emailjs.send(
+        config.service_id as string,
+        config.template_id as string,
+        templateParams,
+        config.public_key as string
+      );
+      if (res.status === 200) {
+        toast.success("Message sent successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+        setFormData({
+          name: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        toast.error("faild to send the message", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
+    } catch (error: any) {
+      toast.error(error, { id: toastId, duration: 2000 });
+    }
   };
+
   return (
-    <div className="bg-gradient-to-r from-blue-500 to-purple-500 py-12 sm:py-16 lg:py-24">
-      <div className="container mx-auto px-6 lg:px-20">
-        <h2 className="text-center text-4xl font-extrabold text-white mb-8">
-          Contact Us
-        </h2>
+    <div className="bg-gradient-to-r from-gray-300 to-secondary py-6">
+      <div className="container mx-auto md:px-24 px-5 space-y-4">
+        <h2 className="text-center text-4xl font-extrabold">Contact Us</h2>
 
         <div className="grid md:grid-cols-2 gap-12">
           <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -80,7 +121,7 @@ const ContactUs = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 transition duration-300"
+                  className="w-full bg-secondary text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-white transition duration-500 cursor-pointer text-lg font-semibold"
                 >
                   Submit Message
                 </button>

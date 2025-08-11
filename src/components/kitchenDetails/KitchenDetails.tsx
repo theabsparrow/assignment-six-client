@@ -1,7 +1,9 @@
+"use client";
 import { TKitchenDetails } from "@/types/kitchenType";
 import Image from "next/image";
 import KitchenProfileSceleton from "../sceleton/KitchenProfileSceleton";
 import { CheckCircle, CircleX, MapPin } from "lucide-react";
+import SubscribedButton from "./SubscribedButton";
 
 type TKitchenProfileProps = {
   result: TKitchenDetails;
@@ -61,9 +63,7 @@ const KitchenDetails = ({ data }: { data: TKitchenProfileProps }) => {
               <h1 className="bg-primary border border-secondary px-2 py-1 rounded-full text-white">
                 Total Meals: {totalMeal}
               </h1>
-              <button className="bg-secondary text-primary border border-primary py-1 px-2 rounded-lg hover:bg-primary hover:text-white duration-500 font-medium cursor-pointer">
-                Subscribe
-              </button>
+              <SubscribedButton kitchenId={result?._id} />
             </div>
           </div>
           <div className="space-y-4">

@@ -11,6 +11,7 @@
   "dependencies": {
     "@edgestore/react": "^0.5.2",
     "@edgestore/server": "^0.5.2",
+    "@emailjs/browser": "^4.4.1",
     "@hookform/resolvers": "^5.0.1",
     "@tanstack/react-table": "^8.21.3",
     "@types/react-world-flags": "^1.6.0",

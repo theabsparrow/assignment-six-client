@@ -21,7 +21,7 @@ export const createKitchen = async (kitchenInfo: TKitchen) => {
       }
     );
     const result = await res.json();
-    revalidateTag("Profile");
+    revalidateTag("kitchen");
     return result;
   } catch (error: any) {
     return Error(error);

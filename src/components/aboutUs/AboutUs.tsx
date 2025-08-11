@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import coverImage from "../../app/assets/about us.png";
+import Link from "next/link";
 
 const AboutUs = () => {
   return (
@@ -30,7 +31,7 @@ const AboutUs = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl font-semibold text-indigo-600 dark:text-indigo-400"
+          className="text-2xl md:text-4xl font-bold text-primary dark:text-secondary"
         >
           Our Mission
         </motion.h2>
@@ -38,7 +39,7 @@ const AboutUs = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed"
+          className="text-primary dark:text-secondary text-lg leading-relaxed"
         >
           To revolutionize how people experience food by connecting them with
           diverse, quality kitchens and unforgettable culinary moments — all in
@@ -82,16 +83,19 @@ const AboutUs = () => {
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-center">
+      <section className="py-20 bg-gradient-to-r from-secondary to-gray-400 text-center">
         <div className="max-w-2xl mx-auto space-y-6 px-4">
           <h2 className="text-3xl md:text-4xl font-bold">Join Our Journey</h2>
           <p className="text-lg">
             Whether you`re a kitchen owner, food lover, or just exploring —
             there`s a place for you in our community.
           </p>
-          <button className="bg-white text-indigo-600 hover:bg-gray-100 transition font-medium px-6 py-3 rounded-full shadow-lg">
+          <Link
+            href="/meals"
+            className="bg-secondary border border-primary text-primary hover:bg-primary hover:text-white transition font-medium px-3 py-2 rounded-full shadow-lg duration-500"
+          >
             Get Started
-          </button>
+          </Link>
         </div>
       </section>
     </div>
