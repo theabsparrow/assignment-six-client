@@ -1,16 +1,20 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import InputType from "../../formInput/InputType";
+import InputType from "../../../formInput/InputType";
 import { TMealPlanner } from "@/types/MealPlanType";
-import InputTextArea from "../../formInput/InputTextArea";
-import InputCheckboxArray from "../../formInput/InputCheckboxArray";
-import { foodPreferance, mealTime, weekDays } from "../kitchen/kitchen.const";
-import { diateryPreference } from "../meal/createMeal/createMeal.const";
-import InputSelect from "../../formInput/InputSelect";
+import InputTextArea from "../../../formInput/InputTextArea";
+import InputCheckboxArray from "../../../formInput/InputCheckboxArray";
+import {
+  foodPreferance,
+  mealTime,
+  weekDays,
+} from "../../mealProvider/kitchenProfile/kitchen.const";
+import InputSelect from "../../../formInput/InputSelect";
 import { createMealPlan } from "@/services/mealPlannerService.ts";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { diateryPreference } from "../../mealProvider/createMeal/createMeal.const";
 
 const CreateMyPlan = () => {
   const router = useRouter();

@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaExclamationTriangle, FaTimes, FaTrashAlt } from "react-icons/fa";
 import { toast } from "sonner";
-import LoginFormInput from "../../formInput/LoginFormInput";
 import { useForm } from "react-hook-form";
-import { TPassword } from "../settings/DeleteAccount";
 import { deleteMyKitchen } from "@/services/kitchenService";
+import { TPassword } from "../../settings/DeleteAccount";
+import LoginFormInput from "@/components/modules/formInput/LoginFormInput";
 
 const DeleteKitchen = ({ verifiedEmail }: { verifiedEmail: boolean }) => {
   const [open, setOpen] = useState(false);

@@ -1,4 +1,4 @@
-import CreateMyPlan from "@/components/modules/dashboard/createPlan/CreateMyPlan";
+import CreateMyPlan from "@/components/modules/dashboard/customer/createPlan/CreateMyPlan";
 
 const CreatePlan = () => {
   return (

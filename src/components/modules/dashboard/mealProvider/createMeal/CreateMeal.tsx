@@ -17,7 +17,7 @@ import {
   foodPreferance,
   mealTime,
   weekDays,
-} from "../../kitchen/kitchen.const";
+} from "../../mealProvider/kitchenProfile/kitchen.const";
 import { allergyOptions } from "@/components/modules/auth/register/register.const";
 import ImagePreviewer from "@/components/modules/imageUploader/ImagePreviewer";
 import ImageUploader from "@/components/modules/imageUploader/ImageUploader";

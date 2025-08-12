@@ -1,4 +1,4 @@
-import CreateMeal from "@/components/modules/dashboard/meal/createMeal/CreateMeal";
+import CreateMeal from "@/components/modules/dashboard/mealProvider/createMeal/CreateMeal";
 import { getMyProfle } from "@/services/profileService";
 
 const AddMeal = async () => {
@@ -7,7 +7,7 @@ const AddMeal = async () => {
   const hasKitchen = userdata?.hasKitchen;
   return (
     <div className="min-h-screen mx-auto">
-      <CreateMeal hasKitchen={hasKitchen}></CreateMeal>
+      <CreateMeal hasKitchen={hasKitchen} />
     </div>
   );
 };

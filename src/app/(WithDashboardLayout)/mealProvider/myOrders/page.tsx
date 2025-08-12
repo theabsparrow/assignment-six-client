@@ -1,4 +1,4 @@
-import MealProviderOrder from "@/components/modules/dashboard/MealProviderOrder/MealProviderOrder";
+import MealProviderOrder from "@/components/modules/dashboard/mealProvider/MealProviderOrder/MealProviderOrder";
 import { getMealProviderOrder } from "@/services/orderService";
 
 const MyOrders = async () => {

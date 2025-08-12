@@ -1,4 +1,4 @@
-import MyMealsComponent from "@/components/modules/dashboard/myMeals/MyMealsComponent";
+import MyMealsComponent from "@/components/modules/dashboard/mealProvider/myMeals/MyMealsComponent";
 import { getMyMeals } from "@/services/mealService";
 
 const MyMeals = async () => {

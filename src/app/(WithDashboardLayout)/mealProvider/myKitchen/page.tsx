@@ -1,5 +1,5 @@
-import CreateKitchen from "@/components/modules/dashboard/kitchen/createKtchen/CreateKitchen";
-import KitchenProfile from "@/components/modules/dashboard/kitchen/KitchenProfile";
+import CreateKitchen from "@/components/modules/dashboard/mealProvider/createKtchen/CreateKitchen";
+import KitchenProfile from "@/components/modules/dashboard/mealProvider/kitchenProfile/KitchenProfile";
 import { getMyKitchen } from "@/services/kitchenService";
 import { getMyProfle } from "@/services/profileService";
 

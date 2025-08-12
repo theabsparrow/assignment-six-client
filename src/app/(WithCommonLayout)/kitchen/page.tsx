@@ -1,4 +1,4 @@
-import KitchenComponent from "@/components/modules/kitchen/KitchenComponent";
+import KitchenComponent from "@/components/kitchen/KitchenComponent";
 import { getAllKitchen } from "@/services/kitchenService";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;

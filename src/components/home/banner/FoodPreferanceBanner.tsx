@@ -1,5 +1,5 @@
 "use client";
-import { foodPreferance } from "@/components/modules/dashboard/kitchen/kitchen.const";
+import { foodPreferance } from "@/components/modules/dashboard/mealProvider/kitchenProfile/kitchen.const";
 import InputDropdown from "@/components/modules/formInput/InputDropdownDropdown";
 import { FoodPreferenceOption } from "@/types/mealType";
 import Link from "next/link";

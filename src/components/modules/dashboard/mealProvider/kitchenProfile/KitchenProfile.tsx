@@ -12,20 +12,20 @@ import { CheckCircle, CircleX, MapPin } from "lucide-react";
 import ImageUploadKitchen from "./ImageUploadKitchen";
 import Link from "next/link";
 import { useState } from "react";
-import EditComponent from "../editComponent/EditComponent";
+import EditComponent from "../../../editComponent/EditComponent";
 import {
   foodPreferance,
   kitchenType,
   mealTime,
   weekDays,
 } from "./kitchen.const";
-import PdfUploader from "../../pdfUploader/PdfUploader";
+import PdfUploader from "../../../pdfUploader/PdfUploader";
 import { toast } from "sonner";
 import pdfUpload from "@/utills/pdfUpload";
 import { useEdgeStore } from "@/lib/edgestore";
 import { updateKitchen } from "@/services/kitchenService";
-import EditArray from "../editArrayComponent/EditArray";
-import EditInputArray from "../editArrayComponent/EditInputArray";
+import EditArray from "../../../editArrayComponent/EditArray";
+import EditInputArray from "../../../editArrayComponent/EditInputArray";
 import DeleteKitchen from "./DeleteKitchen";
 
 const KitchenProfile = ({

@@ -1,4 +1,4 @@
-import MyPlanComponent from "@/components/modules/dashboard/myPlans/MyPlanComponent";
+import MyPlanComponent from "@/components/modules/dashboard/customer/myPlans/MyPlanComponent";
 import { getMyPlans } from "@/services/mealPlannerService.ts";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;

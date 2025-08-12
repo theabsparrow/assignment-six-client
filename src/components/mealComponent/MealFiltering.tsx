@@ -1,15 +1,15 @@
 "use client";
 import RangeSlider from "react-range-slider-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import {
-  cuisineType,
-  foodCategory,
-} from "../dashboard/meal/createMeal/createMeal.const";
-import { foodPreferance } from "../dashboard/kitchen/kitchen.const";
+import { foodPreferance } from "../modules/dashboard/mealProvider/kitchenProfile/kitchen.const";
 import { useEffect, useState } from "react";
 import "react-range-slider-input/dist/style.css";
 import { TbCurrencyTaka } from "react-icons/tb";
 import { IoIosArrowDown } from "react-icons/io";
+import {
+  cuisineType,
+  foodCategory,
+} from "../modules/dashboard/mealProvider/createMeal/createMeal.const";
 
 export type TQuery = {
   searchTerm?: string;
@@ -35,6 +35,7 @@ const MealFiltering = ({
   useEffect(() => {
     setMounted(true);
   }, []);
+
   useEffect(() => {
     if (!highestPrice) return;
     const currentMax = highestPrice + 10;

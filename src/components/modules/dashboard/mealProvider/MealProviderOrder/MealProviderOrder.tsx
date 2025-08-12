@@ -7,10 +7,10 @@ import { TOrder, TOrderStatus } from "@/types/orderTypes";
 import { ColumnDef } from "@tanstack/react-table";
 import { useState } from "react";
 import { toast } from "sonner";
-import { orderStatus } from "../myOrders.tsx/myOrder.const";
 import Link from "next/link";
 import Table from "@/components/table/Table";
 import Pagination from "@/components/pagination/Pagination";
+import { orderStatus } from "../../customer/myOrders/myOrder.const";
 
 const MealProviderOrder = ({
   meta,

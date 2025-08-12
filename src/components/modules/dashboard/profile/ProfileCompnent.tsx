@@ -22,10 +22,10 @@ import {
 import { toast } from "sonner";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import EditComponent from "../editComponent/EditComponent";
+import EditComponent from "../../editComponent/EditComponent";
 import ImageSection from "./ImageSection";
-import EditArray from "../editArrayComponent/EditArray";
-import Modal from "../warningModal/Modal";
+import EditArray from "../../editArrayComponent/EditArray";
+import Modal from "../../warningModal/Modal";
 
 const ProfileCompnent = ({
   user,

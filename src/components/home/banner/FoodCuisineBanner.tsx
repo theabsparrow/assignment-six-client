@@ -1,6 +1,6 @@
 "use client";
 
-import { cuisineType } from "@/components/modules/dashboard/meal/createMeal/createMeal.const";
+import { cuisineType } from "@/components/modules/dashboard/mealProvider/createMeal/createMeal.const";
 import SearchAndSelect from "@/components/searchAndSelect/SearchAndSelect";
 import Link from "next/link";
 

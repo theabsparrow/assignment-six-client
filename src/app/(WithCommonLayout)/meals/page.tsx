@@ -1,4 +1,4 @@
-import MealComponent from "@/components/modules/mealComponent/MealComponent";
+import MealComponent from "@/components/mealComponent/MealComponent";
 import { getAllMeals } from "@/services/mealService";
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 const Meal = async ({ searchParams }: { searchParams: SearchParams }) => {

@@ -13,15 +13,15 @@ import {
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { mealsTableColumn } from "./MealsTableColumn";
-import {
-  cuisineType,
-  foodCategory,
-} from "../../meal/createMeal/createMeal.const";
-import { foodPreferance } from "../../kitchen/kitchen.const";
+import { foodPreferance } from "../../mealProvider/kitchenProfile/kitchen.const";
 import { TbCurrencyTaka } from "react-icons/tb";
 import ReactRangeSliderInput from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
 import { IoIosArrowDown } from "react-icons/io";
+import {
+  cuisineType,
+  foodCategory,
+} from "../../mealProvider/createMeal/createMeal.const";
 
 const GetAllMeals = ({
   meta,

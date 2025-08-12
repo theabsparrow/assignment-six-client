@@ -1,13 +1,6 @@
 "use client";
 
 import { TKitchen } from "@/types/kitchenType";
-import {
-  dhakaAreas,
-  foodPreferance,
-  kitchenType,
-  mealTime,
-  weekDays,
-} from "../kitchen.const";
 import { useForm } from "react-hook-form";
 import InputType from "@/components/modules/formInput/InputType";
 import InputSelect from "@/components/modules/formInput/InputSelect";
@@ -21,6 +14,13 @@ import { createKitchen } from "@/services/kitchenService";
 import { useEdgeStore } from "@/lib/edgestore";
 import PdfUploader from "@/components/modules/pdfUploader/PdfUploader";
 import pdfUpload from "@/utills/pdfUpload";
+import {
+  dhakaAreas,
+  foodPreferance,
+  kitchenType,
+  mealTime,
+  weekDays,
+} from "../kitchenProfile/kitchen.const";
 
 const CreateKitchen = ({ verifiedEmail }: { verifiedEmail: boolean }) => {
   const {

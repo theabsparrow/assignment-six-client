@@ -1,4 +1,4 @@
-import MyOrderCOmponent from "@/components/modules/dashboard/myOrders.tsx/MyOrderCOmponent";
+import MyOrderCOmponent from "@/components/modules/dashboard/customer/myOrders/MyOrderCOmponent";
 import { getCustomerOrder } from "@/services/orderService";
 
 const MyOrders = async () => {

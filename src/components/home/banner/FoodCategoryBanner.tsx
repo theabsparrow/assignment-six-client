@@ -1,5 +1,6 @@
 "use client";
-import { foodCategory } from "@/components/modules/dashboard/meal/createMeal/createMeal.const";
+
+import { foodCategory } from "@/components/modules/dashboard/mealProvider/createMeal/createMeal.const";
 import InputDropdown from "@/components/modules/formInput/InputDropdownDropdown";
 import { TFoodCategory } from "@/types/mealType";
 import Link from "next/link";
