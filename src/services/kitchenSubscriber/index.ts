@@ -5,12 +5,27 @@ import { getValidToken } from "../authService/validToken";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
-export const getMyAllSubscription = async () => {
+export const getMyAllSubscription = async (query?: {
+  [key: string]: string | string[] | undefined;
+}) => {
   const cookieStore = await cookies();
   const token = cookieStore.get("refreshToken")!.value;
   try {
+    const params = new URLSearchParams();
+    if (query?.searchTerm) {
+      params.append("searchTerm", query?.searchTerm.toString());
+    }
+    if (query?.kitchenType) {
+      params.append("kitchenType", query?.kitchenType.toString());
+    }
+    if (query?.isActive) {
+      params.append("isActive", query?.isActive.toString());
+    }
+    if (query?.page) {
+      params.append("page", query?.page.toString());
+    }
     const res = await fetch(
-      `${config.next_public_base_api}/kitchenSubscribe/my-subscription`,
+      `${config.next_public_base_api}/kitchenSubscribe/my-subscription?limit=20&${params}`,
       {
         method: "GET",
         headers: {
