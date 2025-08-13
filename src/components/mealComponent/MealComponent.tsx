@@ -13,6 +13,7 @@ const MealComponent = ({
   MealInfo: TMealFormData[];
   meta: TMetaDataProps;
 }) => {
+  console.log(meta);
   const highestPrice = Math.max(...MealInfo.map((meal) => meal?.price));
   return (
     <div className="flex flex-col md:flex-row gap-10">

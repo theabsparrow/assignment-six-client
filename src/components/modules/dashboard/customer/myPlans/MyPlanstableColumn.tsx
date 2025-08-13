@@ -18,13 +18,12 @@ export const myPlanTableColumn = (): ColumnDef<TMyMealPlanner>[] => [
     header: "Creation",
     cell: ({ row }) => {
       const date = new Date(row.original?.createdAt);
-      const time = new Date(row.original?.createdAt);
       const creatDate = date.toLocaleDateString("en-GB", {
         day: "numeric",
         month: "long",
         year: "numeric",
       });
-      const createTime = time.toLocaleTimeString("en-US", {
+      const createTime = date.toLocaleTimeString("en-US", {
         hour: "2-digit",
         minute: "2-digit",
         hour12: true,

@@ -9,7 +9,7 @@ const MyKitchn = async () => {
   const user = data?.user;
   const { data: kitchenInfo } = await getMyKitchen();
   return (
-    <div className="mx-auto">
+    <section className=" min-h-screen mx-auto">
       {userdata?.hasKitchen ? (
         <KitchenProfile
           kitchenInfo={kitchenInfo}
@@ -18,7 +18,7 @@ const MyKitchn = async () => {
       ) : (
         <CreateKitchen verifiedEmail={user?.verifiedWithEmail} />
       )}
-    </div>
+    </section>
   );
 };
 

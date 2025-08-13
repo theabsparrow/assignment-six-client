@@ -37,16 +37,16 @@ const ImageUploadKitchen = ({ image }: { image: string }) => {
   };
 
   return (
-    <div className="relative ">
+    <div className="relative w-72 h-72 ">
       <Image
         src={image}
         alt="Profile"
         width={900}
         height={900}
-        className=" border-4 border-white w-full h-[50vh] shadow-xl rounded-xl"
+        className=" rounded-full object-cover border-4 border-white shadow-md w-72 h-72"
       />
 
-      <label className="absolute bottom-0 right-0 z-10 cursor-pointer">
+      <label className="absolute bottom-0 right-14 z-10 cursor-pointer">
         <div className="bg-white p-2 rounded-full">
           <FaCamera className="text-black group-hover:text-white text-2xl transition duration-300" />
         </div>

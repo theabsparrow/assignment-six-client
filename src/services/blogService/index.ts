@@ -39,7 +39,7 @@ export const getAllBlogs = async (query?: {
     if (query?.limit) {
       params.append("limit", query?.limit.toString());
     } else {
-      params.append("limit", "20");
+      params.append("limit", "10");
     }
     const res = await fetch(
       `${config.next_public_base_api}/blog/blogs?${params}`,

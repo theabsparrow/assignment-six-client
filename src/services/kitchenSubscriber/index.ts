@@ -25,7 +25,7 @@ export const getMyAllSubscription = async (query?: {
       params.append("page", query?.page.toString());
     }
     const res = await fetch(
-      `${config.next_public_base_api}/kitchenSubscribe/my-subscription?limit=20&${params}`,
+      `${config.next_public_base_api}/kitchenSubscribe/my-subscription?limit=10&${params}`,
       {
         method: "GET",
         headers: {

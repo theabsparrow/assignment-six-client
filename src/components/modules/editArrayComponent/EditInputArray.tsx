@@ -85,20 +85,20 @@ const EditInputArray = <T,>({
   };
 
   return (
-    <div className="mt-4">
+    <div className="space-y-2">
       <div className="flex flex-col justify-start items-start">
-        <h4 className="text-lg font-semibold text-indigo-700">{label}:</h4>
+        <h4 className="text-lg font-semibold text-primary">{label}:</h4>
         <div className="flex items-center gap-3">
           <button
             onClick={handleEditToggle}
-            className="text-sm px-3 py-1 rounded-md bg-indigo-100 hover:bg-indigo-200 text-indigo-700 transition"
+            className="text-sm px-3 py-1 rounded-md bg-indigo-100 hover:bg-indigo-200 text-blue-600 transition cursor-pointer"
           >
             {editing ? "Done" : "Edit"}
           </button>
           {editing && (
             <button
               onClick={handleCancel}
-              className="text-sm px-3 py-1 rounded-md bg-indigo-100 hover:bg-indigo-200 text-indigo-700 transition"
+              className="text-sm px-3 py-1 rounded-md bg-indigo-100 hover:bg-indigo-200 text-blue-600 transition cursor-pointer"
             >
               Cancel
             </button>
@@ -107,17 +107,17 @@ const EditInputArray = <T,>({
       </div>
 
       {selectedOptions.length > 0 ? (
-        <ul className="flex flex-wrap gap-2 mt-2">
+        <ul className="flex flex-wrap gap-2">
           {selectedOptions.map((item, i) => (
             <li
               key={i}
-              className="bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm"
+              className="bg-secondary text-primary px-3 py-1 rounded-full text-sm"
             >
               {item as ReactNode}
               {editing && (
                 <button
                   onClick={() => handleRemove(item)}
-                  className="text-red-500 hover:text-red-700 text-xs ml-1"
+                  className="text-red-500 hover:text-red-700 text-xs ml-1 cursor-pointer"
                 >
                   ✕
                 </button>
@@ -126,11 +126,11 @@ const EditInputArray = <T,>({
           ))}
         </ul>
       ) : (
-        <p className="text-gray-500 mt-2">None specified</p>
+        <p className="text-gray-500">None specified</p>
       )}
 
       {editing && (
-        <form onSubmit={handleSubmitElement} className="mt-4">
+        <form onSubmit={handleSubmitElement}>
           <div className="flex items-center  gap-2">
             <input
               type="text"

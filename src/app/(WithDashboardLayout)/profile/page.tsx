@@ -7,9 +7,9 @@ const Profile = async () => {
   const userdata = data?.userdata;
 
   return (
-    <div className="min-h-screen mx-auto">
+    <section className="min-h-screen mx-auto">
       <ProfileCompnent user={user} userdata={userdata} />
-    </div>
+    </section>
   );
 };
 

@@ -1,23 +1,15 @@
 "use client";
-import { TMetaDataProps } from "@/types";
-import { TMyMealPlanner } from "@/types/MealPlanType";
 
+import { TMyMealPlanner } from "@/types/MealPlanType";
 import { myPlanTableColumn } from "./MyPlanstableColumn";
 import Table from "@/components/table/Table";
-import Pagination from "@/components/pagination/Pagination";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { TStatus } from "@/types/subscriber.types";
 import { IoIosArrowDown } from "react-icons/io";
 import { FoodPreferenceOption } from "@/types/mealType";
 
-const MyPlanComponent = ({
-  myPlans,
-  meta,
-}: {
-  myPlans: TMyMealPlanner[];
-  meta: TMetaDataProps;
-}) => {
+const MyPlanComponent = ({ myPlans }: { myPlans: TMyMealPlanner[] }) => {
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
@@ -225,7 +217,6 @@ const MyPlanComponent = ({
           )}
         </div>
         <Table data={myPlans} columns={columns} />
-        <Pagination totalPage={meta?.totalPage} />
       </section>
     </>
   );

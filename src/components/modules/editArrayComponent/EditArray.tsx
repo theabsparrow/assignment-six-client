@@ -61,20 +61,20 @@ const EditArray = <T,>({
     setEditing(false);
   };
   return (
-    <div className="mt-4">
+    <div>
       <div className={style}>
-        <h4 className="text-lg font-semibold text-indigo-700">{label}:</h4>
+        <h4 className="text-lg font-semibold text-primary">{label}:</h4>
         <div className="flex items-center gap-3">
           <button
             onClick={handleEditToggle}
-            className="text-sm px-3 py-1 rounded-md bg-indigo-100 hover:bg-indigo-200 text-indigo-700 transition cursor-pointer"
+            className="text-sm px-3 py-1 rounded-md bg-indigo-100 hover:bg-indigo-200 text-blue-600 transition cursor-pointer"
           >
             {editing ? "Done" : "Edit"}
           </button>
           {editing && (
             <button
               onClick={handleCancel}
-              className="text-sm px-3 py-1 rounded-md bg-indigo-100 hover:bg-indigo-200 text-indigo-700 transition cursor-pointer"
+              className="text-sm px-3 py-1 rounded-md bg-indigo-100 hover:bg-indigo-200 text-blue-600 transition cursor-pointer"
             >
               Cancel
             </button>

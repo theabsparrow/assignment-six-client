@@ -44,7 +44,7 @@ const GetMySubscription = ({
     }
     router.push(`${pathName}?${params.toString()}`, { scroll: false });
   };
-
+  console.log(meta);
   const columns = mySubscriptionTableColumn();
   return (
     <>
@@ -221,7 +221,7 @@ const GetMySubscription = ({
           )}
         </div>
         <Table data={result} columns={columns} />
-        <Pagination totalPage={meta?.totalPage} />
+        {result?.length > 0 && <Pagination totalPage={meta?.totalPage} />}
       </section>
     </>
   );

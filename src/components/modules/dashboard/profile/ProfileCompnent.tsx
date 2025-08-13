@@ -153,7 +153,7 @@ const ProfileCompnent = ({
   };
 
   return (
-    <section className="  space-y-4 w-full">
+    <section className="space-y-4 w-full">
       {/* personal info*/}
       <div className="flex flex-col md:flex-row items-center gap-6 p-6 bg-gradient-to-r from-indigo-100 to-blue-100 dark:from-indigo-900 dark:to-blue-900 shadow-lg rounded-2xl w-full">
         <ImageSection
@@ -173,7 +173,7 @@ const ProfileCompnent = ({
                 className="px-2 py-1 border rounded-md w-44 dark:bg-gray-800 dark:text-white dark:border-gray-600"
               />
             ) : (
-              <h2 className="text-3xl font-semibold text-indigo-900 dark:text-indigo-300">
+              <h2 className="text-3xl font-semibold ">
                 {userdata?.name || "Unknown User"}
               </h2>
             )}
@@ -281,9 +281,9 @@ const ProfileCompnent = ({
         {/* contact info */}
         <div className="w-full p-6 bg-gradient-to-r from-blue-100 to-indigo-200 shadow-lg rounded-xl space-y-4">
           <div className="flex justify-between items-center ">
-            <h3 className="text-2xl font-semibold text-indigo-800"> Contact</h3>
+            <h3 className="text-2xl font-semibold "> Contact</h3>
             <Link
-              className="bg-purple-500 px-2 py-1 rounded-xl text-white hover:bg-indigo-800 dark:bg-gray-500 duration-500"
+              className="bg-secondary  px-2 py-1 rounded-xl text-primary hover:bg-primary hover:text-white border border-primary dark:bg-gray-500 duration-500"
               href="/settings"
             >
               {" "}
@@ -327,14 +327,14 @@ const ProfileCompnent = ({
         {/* detailed information*/}
         <div className="w-full p-6 bg-gradient-to-r from-teal-100 to-cyan-200 shadow-lg rounded-xl space-y-4">
           <div className="flex justify-between items-center">
-            <h3 className="text-2xl font-semibold text-indigo-800">Details</h3>
+            <h3 className="text-2xl font-semibold ">Details</h3>
             {user?.role === USER_ROLE.mealProvider && (
               <div>
                 {!user?.verifiedWithEmail && !userdata?.hasKitchen ? (
                   <Modal label="create Kitchen" />
                 ) : (
                   <Link
-                    className="bg-purple-500 px-2 py-1 rounded-xl text-white hover:bg-indigo-800 dark:bg-gray-500 duration-500"
+                    className="bg-secondary  px-2 py-1 rounded-xl text-primary hover:bg-primary hover:text-white border border-primary not-visited:dark:bg-gray-500 duration-500"
                     href="/mealProvider/myKitchen"
                   >
                     {userdata?.hasKitchen ? "View Kitchen" : "Create Kitchen"}
@@ -346,7 +346,7 @@ const ProfileCompnent = ({
               <div>
                 {user?.verifiedWithEmail ? (
                   <Link
-                    className="bg-purple-500 px-2 py-1 rounded-xl text-white hover:bg-indigo-800 dark:bg-gray-500 duration-500"
+                    className="bg-secondary  px-2 py-1 rounded-xl text-primary hover:bg-primary hover:text-white border border-primary dark:bg-gray-500 duration-500"
                     href={`/user/createPlan `}
                   >
                     Create Plan

@@ -23,13 +23,25 @@ export type TMyMealPlanner = {
   title: string;
 };
 
+export type TmealPlannerDetails = {
+  _id: string;
+  title: string;
+  preferredMealTime: TMealTime[];
+  preferredMealDay: TCookingDay[];
+  foodPreference: FoodPreferenceOption;
+  dietaryPreferences: TDietaryPreference[];
+  notes: string;
+  isActive: boolean;
+  createdAt: string;
+};
+
 export type TPlanUpdate = {
   title: string;
   foodPreference: FoodPreferenceOption;
   notes: string;
   isActive: boolean;
-  addPreferredMealTime: FoodPreferenceOption[];
-  removePreferredMealTime: FoodPreferenceOption[];
+  addPreferredMealTime: TMealTime[];
+  removePreferredMealTime: TMealTime[];
   addPreferredMealDay: TCookingDay[];
   removePreferredMealDay: TCookingDay[];
   addDietaryPreferences: TDietaryPreference[];

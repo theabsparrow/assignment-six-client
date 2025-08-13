@@ -1,7 +1,7 @@
 "use server";
 
 import { config } from "@/config";
-import { TMealFormData } from "@/types/mealType";
+import { TMealFormData, TUpdatemealData } from "@/types/mealType";
 import { revalidateTag } from "next/cache";
 import { getValidToken } from "../authService/validToken";
 import { cookies } from "next/headers";
@@ -52,7 +52,7 @@ export const getAllMeals = async (query?: {
       params.append("maxPrice", query?.maxPrice.toString());
     }
     const res = await fetch(
-      `${config.next_public_base_api}/meal/get-allMeals?limit=20&${params}`,
+      `${config.next_public_base_api}/meal/get-allMeals?limit=15&${params}`,
       {
         method: "GET",
         next: {
@@ -160,19 +160,79 @@ export const getAMealProfile = async (id: string) => {
     return Error(error);
   }
 };
-export const getMyMeals = async () => {
+
+export const getMyMeals = async (query?: {
+  [key: string]: string | string[] | undefined;
+}) => {
   const cookieStore = await cookies();
   const token = cookieStore.get("refreshToken")!.value;
   try {
-    const res = await fetch(`${config.next_public_base_api}/meal/get-myMeals`, {
-      method: "GET",
-      headers: {
-        Authorization: token,
-      },
-      next: {
-        tags: ["Meals"],
-      },
-    });
+    const params = new URLSearchParams();
+    if (query?.searchTerm) {
+      params.append("searchTerm", query?.searchTerm.toString());
+    }
+    if (query?.foodCategory) {
+      params.append("foodCategory", query?.foodCategory.toString());
+    }
+    if (query?.cuisineType) {
+      params.append("cuisineType", query?.cuisineType.toString());
+    }
+    if (query?.foodPreference) {
+      params.append("foodPreference", query?.foodPreference.toString());
+    }
+    if (query?.page) {
+      params.append("page", query?.page.toString());
+    }
+    if (query?.minPrice) {
+      params.append("minPrice", query?.minPrice.toString());
+    }
+    if (query?.maxPrice) {
+      params.append("maxPrice", query?.maxPrice.toString());
+    }
+    if (query?.portionSize) {
+      params.append("portionSize", query?.portionSize.toString());
+    }
+    if (query?.isAvailable) {
+      params.append("isAvailable", query?.isAvailable.toString());
+    }
+    if (query?.sort) {
+      params.append("sort", query?.sort.toString());
+    }
+    const res = await fetch(
+      `${config.next_public_base_api}/meal/get-myMeals?limit=20&${params}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+        next: {
+          tags: ["Meals"],
+        },
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const getMyMealDetails = async (id: string) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refreshToken")!.value;
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/meal/my-mealDetails/${id}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+        next: {
+          tags: ["Meals"],
+        },
+      }
+    );
     const result = await res.json();
     return result;
   } catch (error: any) {
@@ -270,6 +330,31 @@ export const deleteMeal = async (id: string) => {
         headers: {
           Authorization: token,
         },
+      }
+    );
+    const result = await res.json();
+    revalidateTag("Meals");
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const updateMeal = async (
+  data: Partial<TUpdatemealData>,
+  id: string
+) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/meal/update-meal/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       }
     );
     const result = await res.json();

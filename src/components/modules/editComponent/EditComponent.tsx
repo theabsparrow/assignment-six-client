@@ -31,7 +31,7 @@ const EditComponent = <T,>({
   return (
     <div>
       {isEditing ? (
-        <div className="mt-2">
+        <div>
           <button
             onClick={() => {
               handleSubmit(field, [], []);

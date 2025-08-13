@@ -67,6 +67,29 @@ export const getMyPlans = async (query?: {
   }
 };
 
+export const getPlanDetails = async (id: string) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refreshToken")!.value;
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/mealPlanner/get-myPlan/${id}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+        next: {
+          tags: ["MealPlan"],
+        },
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
 export const updatePlan = async (data: Partial<TPlanUpdate>, id: string) => {
   const token = await getValidToken();
   try {

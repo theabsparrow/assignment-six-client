@@ -145,7 +145,6 @@ const KitchenProfile = ({
       toast.error("you have to provide a proper value");
       return;
     }
-    console.log(updatedData);
     try {
       // upload lisence
       if (licensePdfFile) {
@@ -182,13 +181,10 @@ const KitchenProfile = ({
   };
 
   return (
-    <section className="bg-gradient-to-br from-green-50 to-yellow-50 shadow-lg rounded-2xl dark:bg-gray-600 overflow-hidden max-w-4xl mx-auto px-10 py-4">
-      <div className="flex items-center gap-10">
-        <div>
-          <ImageUploadKitchen image={kitchenInfo?.kitchenPhoto} />
-        </div>
-
-        <div className="space-y-4">
+    <section className="space-y-4 w-full bg-gradient-to-r from-indigo-100 to-blue-100 dark:from-indigo-900 dark:to-blue-900 px-10 py-6 shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center gap-10 md:gap-36 rounded-xl w-full">
+        <ImageUploadKitchen image={kitchenInfo?.kitchenPhoto} />
+        <div className="text-left space-y-4">
           <div>
             {isKitchenNameEditing ? (
               <input
@@ -214,7 +210,6 @@ const KitchenProfile = ({
               field="kitchenName"
             />
           </div>
-
           <div className="space-y-3">
             <div>
               {isTypeEditing ? (
@@ -269,7 +264,6 @@ const KitchenProfile = ({
               />
             </div>
           </div>
-
           <div>
             {isLocationEditing ? (
               <input
@@ -296,8 +290,7 @@ const KitchenProfile = ({
               field="location"
             />
           </div>
-
-          <div className="space-y-3">
+          <div>
             {isHygineEditing ? (
               <>
                 <label
@@ -327,7 +320,7 @@ const KitchenProfile = ({
                 )}
               </>
             ) : (
-              <>
+              <div>
                 <div
                   className={`flex items-center font-medium ${
                     kitchenInfo?.hygieneCertified
@@ -359,7 +352,7 @@ const KitchenProfile = ({
                     </Link>
                   </div>
                 )}
-              </>
+              </div>
             )}
             <EditComponent
               setValue={setHygiene}
@@ -373,14 +366,14 @@ const KitchenProfile = ({
         </div>
       </div>
 
-      <div className=" grid grid-cols-1 md:grid-cols-4 mt-4 space-y-4">
+      <div className="space-y-4">
         {kitchenInfo?.foodPreference.length && (
           <EditArray
             value={kitchenInfo?.foodPreference as FoodPreferenceOption[]}
             valueOptions={foodPreferance}
             handleSubmit={handleSubmit}
             label="Food Preferences"
-            styleClass="bg-orange-200 text-orange-800 px-3 py-1 rounded-full text-sm "
+            styleClass="bg-secondary text-primary px-3 py-1 rounded-full "
             style="flex flex-col justify-start items-start"
           />
         )}
@@ -390,7 +383,7 @@ const KitchenProfile = ({
             valueOptions={mealTime}
             handleSubmit={handleSubmit}
             label="Meal Times"
-            styleClass="bg-green-200 text-green-800 px-3 py-1 rounded-full text-sm"
+            styleClass="bg-secondary text-primary px-3 py-1 rounded-full "
             style="flex flex-col justify-start items-start"
           />
         )}
@@ -400,7 +393,7 @@ const KitchenProfile = ({
             valueOptions={weekDays}
             handleSubmit={handleSubmit}
             label="Cooking Days"
-            styleClass="bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm"
+            styleClass="bg-secondary text-primary px-3 py-1 rounded-full "
             style="flex flex-col justify-start items-start"
           />
         )}

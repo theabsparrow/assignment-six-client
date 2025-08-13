@@ -126,7 +126,7 @@ export const getAllKitchen = async (query?: {
       params.append("page", query?.page.toString());
     }
     const res = await fetch(
-      `${config.next_public_base_api}/kitchen/all-kitchen?limit=20&${params}`,
+      `${config.next_public_base_api}/kitchen/all-kitchen?limit=15&${params}`,
       {
         method: "GET",
         headers: {

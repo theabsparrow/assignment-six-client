@@ -10,12 +10,16 @@ type tDelationModalProps = {
     setLoading: Dispatch<SetStateAction<boolean>>,
     setOpen: Dispatch<SetStateAction<boolean>>
   ) => Promise<void>;
+  title?: string;
+  buttonName?: string;
 };
 
 const DeletionModal = ({
   name,
   collection,
   handleDelete,
+  title = "Account Deletion",
+  buttonName = "Delete Account",
 }: tDelationModalProps) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -24,13 +28,13 @@ const DeletionModal = ({
       <div className="flex flex-col md:flex-row items-center md:justify-between space-y-2">
         <h3 className="text-xl md:text-2xl font-bold text-red-700 flex items-center gap-2">
           <FaTrashAlt className="text-red-600" />
-          Account Deletion
+          {title}
         </h3>
         <button
           onClick={() => setOpen(true)}
           className="text-sm md:text-base text-red-600 hover:text-red-800 underline cursor-pointer"
         >
-          Delete Account
+          {buttonName}
         </button>
       </div>
 

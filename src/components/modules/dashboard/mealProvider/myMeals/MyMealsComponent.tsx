@@ -3,203 +3,491 @@
 import Pagination from "@/components/pagination/Pagination";
 import Table from "@/components/table/Table";
 import { TMetaDataProps } from "@/types";
-import { TMealFormData } from "@/types/mealType";
-import { ColumnDef } from "@tanstack/react-table";
-import Link from "next/link";
-import { useState } from "react";
+import {
+  FoodPreferenceOption,
+  TcuisineType,
+  TFoodCategory,
+  TMyMealsList,
+  TPortionSize,
+} from "@/types/mealType";
+import { useEffect, useState } from "react";
+import { MyMealsTableColums } from "./MyMealsTableColumn";
+import { IoIosArrowDown } from "react-icons/io";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { cuisineType, foodCategory } from "../createMeal/createMeal.const";
+import { foodPreferance } from "../kitchenProfile/kitchen.const";
+import { TbCurrencyTaka } from "react-icons/tb";
+import ReactRangeSliderInput from "react-range-slider-input";
+import "react-range-slider-input/dist/style.css";
 
 const MyMealsComponent = ({
   meta,
   result,
 }: {
   meta: TMetaDataProps;
-  result: TMealFormData[];
+  result: TMyMealsList[];
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const closeModal = () => {
-    setIsModalOpen(false);
-    // setDeleteCarId(null);
+  const prices = result
+    .map((meal: TMyMealsList) => meal?.price)
+    .filter(Boolean);
+
+  const highestPrice = prices.length ? Math.max(...prices) : 1;
+  const router = useRouter();
+  const pathName = usePathname();
+  const searchParams = useSearchParams();
+  const [search, setSearch] = useState<string>("");
+  const [category, setCategory] = useState<TFoodCategory | string>("");
+  const [cuisine, setCuisine] = useState<TcuisineType | string>("");
+  const [preference, setPreference] = useState<FoodPreferenceOption | string>(
+    ""
+  );
+  const [portionSize, setPortionSize] = useState<TPortionSize | string>("");
+  const [available, setAvailable] = useState<"Yes" | "No" | string>("");
+  const [priceRange, setPriceRange] = useState<[number, number]>([1, 1]);
+  const [stableMax, setStableMax] = useState<number>(0);
+  const [sort, setSort] = useState<"asc" | "desc" | string>("");
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!highestPrice) return;
+    const currentMax = highestPrice + 10;
+    setStableMax((prevMax) => {
+      return currentMax > prevMax ? currentMax : prevMax;
+    });
+  }, [highestPrice]);
+
+  useEffect(() => {
+    if (stableMax) {
+      setPriceRange([1, stableMax]);
+    }
+  }, [stableMax]);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    const params = new URLSearchParams(searchParams.toString());
+    if (name === "isAvailable") {
+      if (value === "Yes") {
+        params.set(name, "true");
+      } else if (value === "No") {
+        params.set(name, "false");
+      } else {
+        params.delete(name);
+      }
+    } else if (name === "sort") {
+      if (value === "asc") {
+        params.set(name, "price");
+      } else if (value === "desc") {
+        params.set(name, "-price");
+      } else {
+        params.delete(name);
+      }
+    } else {
+      params.set(name, value.toString());
+    }
+    router.push(`${pathName}?${params.toString()}`, { scroll: false });
   };
 
-  const columns: ColumnDef<TMealFormData>[] = [
-    { accessorKey: "title", header: "Mean Name" },
-    { accessorKey: "cuisineType", header: "Cuisine type" },
-    { accessorKey: "foodPreference", header: "Food preference" },
-    { accessorKey: "price", header: "Price" },
-    {
-      accessorKey: "isAvailable",
-      header: "Availablity",
-      cell: ({ row }) => {
-        return (
-          <span
-            className={`${
-              row?.original?.isAvailable
-                ? "text-green-700 bg-green-300 rounded-xl p-1"
-                : "text-red-700 bg-red-300 rounded-xl p-1"
-            }`}
-          >
-            {row?.original?.isAvailable ? "Yes" : "No"}
-          </span>
-        );
-      },
-    },
-    // {
-    //   accessorKey: "isActive",
-    //   header: "Active",
-    //   cell: ({ row }) => {
-    //     return (
-    //       <span
-    //         className={`${
-    //           row.original.isActive
-    //             ? "text-green-700 bg-green-300 rounded-xl p-1"
-    //             : "text-red-700 bg-red-300 rounded-xl p-1"
-    //         }`}
-    //       >
-    //         {row.original.isActive ? "Yes" : "No"}
-    //       </span>
-    //     );
-    //   },
-    // },
-    // {
-    //   accessorKey: "status",
-    //   header: "Status",
-    //   cell: ({ row, getValue }) => {
-    //     const currentStatus = getValue();
-    //     return (
-    //       <select
-    //         value={currentStatus as string}
-    //         onChange={(e) =>
-    //           handleStatusChange(
-    //             e.target.value as TOrderStatus,
-    //             row?.original?._id as string
-    //           )
-    //         }
-    //         className={`
-    //             px-3 py-1 rounded-xl text-sm font-medium
-    //             ${
-    //               currentStatus === "Cancelled" ? "bg-red-100 text-red-700" : ""
-    //             }
-    //             ${
-    //               currentStatus === "Delivered"
-    //                 ? "bg-blue-100 text-blue-700"
-    //                 : ""
-    //             }
-    //             ${
-    //               currentStatus === "Confirmed"
-    //                 ? "bg-green-100 text-green-700"
-    //                 : ""
-    //             }
-    //             ${
-    //               currentStatus === "Pending"
-    //                 ? "bg-yellow-100 text-yellow-700"
-    //                 : ""
-    //             }
-    //             focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-indigo-500
-    //           `}
-    //       >
-    //         {orderStatus.map((status) => (
-    //           <option key={status} value={status}>
-    //             {status}
-    //           </option>
-    //         ))}
-    //       </select>
-    //     );
-    //   },
-    // },
-    // {
-    //   header: "Delete",
-    //   cell: ({ row }) => (
-    //     <div>
-    //       <button
-    //         // onClick={() => handleDelete(row?.original?._id as string)}
-    //         className="px-2 py-1 bg-red-500 text-white rounded font-inter cursor-pointer"
-    //       >
-    //         Delete
-    //       </button>
-    //     </div>
-    //   ),
-    // },
-    {
-      header: "Details",
-      cell: ({ row }) => (
-        <div>
-          <Link
-            href={`/meals/${row?.original?._id}`}
-            className="px-2 py-1 bg-blue-500 text-white rounded font-inter"
-          >
-            Details
-          </Link>
-        </div>
-      ),
-    },
-  ];
+  const handleRangeChange = (name: string, value: [number, number]) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(`min${name}`, value[0].toString());
+    params.set(`max${name}`, value[1].toString());
+    router.push(`${pathName}?${params.toString()}`, { scroll: false });
+  };
+
+  const columns = MyMealsTableColums();
   return (
     <>
-      {!(result as TMealFormData[])?.length && (
+      {!(result as TMyMealsList[])?.length && (
         <div className="flex flex-col items-center justify-center py-10 px-4 bg-gradient-to-r from-pink-100 to-blue-100 rounded-xl shadow-md">
-          <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
+          <h1 className="text-2xl font-semibold text-gray-800 text-center">
             No Meals Available Right Now
           </h1>
-          <Link
-            href="/mealProvider/addMeal"
-            className="mt-2 inline-block bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-full transition-all duration-300"
-          >
-            Add Meal
-          </Link>
         </div>
       )}
-      <div className="mt-10 container mx-auto p-4 font-inter">
-        {isModalOpen && (
-          <div
-            onClick={closeModal}
-            className="fixed inset-0 flex items-center justify-center "
-          >
-            <div
-              onClick={(e) => e.stopPropagation()}
-              className="bg-white p-6 rounded-lg shadow-lg"
-            >
-              <h3 className="text-lg font-semibold mb-4">
-                Are you sure you want to delete this car?
-              </h3>
-              {/* {errorMessage && (
-            <h1 className="text-red-600 text-sm text-center mb-4">
-              {errorMessage}
-            </h1>
-          )} */}
-              <div className="flex justify-end gap-4">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsModalOpen(false);
+      <section className="container mx-auto md:px-4 font-inter space-y-10 md:space-y-6">
+        <div className="flex flex-col rounded-xl bg-white shadow-md dark:bg-gray-900 dark:border-gray-700 py-2 px-4 md:px-4 md:py-4 space-y-2 md:space-y-4 sticky top-10 md:top-0 z-10">
+          <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 font-medium md:mt-1">
+            Total Meals:{" "}
+            <span className="text-primary font-semibold">
+              {result?.length ?? 0}
+            </span>
+          </p>
+          {!open && (
+            <div className="absolute left-44 top-11 flex md:hidden">
+              <button
+                onClick={() => setOpen(true)}
+                className="cursor-pointer text-primary text-2xl"
+              >
+                <IoIosArrowDown />
+              </button>
+            </div>
+          )}
+
+          {/* for large device */}
+          <div className="hidden md:flex flex-col space-y-4">
+            <div className="flex items-center justify-between">
+              <div className=" space-y-2">
+                <input
+                  id="search"
+                  type="text"
+                  name="searchTerm"
+                  onChange={(e) => {
+                    handleChange(e);
+                    setSearch(e.target.value);
                   }}
-                  className="px-4 py-2 bg-gray-400 text-white rounded"
+                  value={search}
+                  placeholder="Search meal"
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                />
+              </div>
+              <div className="space-y-2 ">
+                <select
+                  id="category"
+                  name="foodCategory"
+                  value={category}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setCategory(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                 >
-                  Cancel
-                </button>
-                <button
-                  //   onClick={confirmDelete}
-                  className="px-4 py-2 bg-red-600 text-white rounded"
+                  <option value="">Category</option>
+                  {(foodCategory as TFoodCategory[]).map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2 ">
+                <select
+                  id="cuisine"
+                  name="cuisineType"
+                  value={cuisine}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setCuisine(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                 >
-                  Confirm
-                </button>
+                  <option value="">Cuisine</option>
+                  {(cuisineType as TcuisineType[]).map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2 ">
+                <select
+                  id="preference"
+                  name="foodPreference"
+                  value={preference}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setPreference(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                >
+                  <option value="">Preference</option>
+                  {foodPreferance.map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2 ">
+                <select
+                  id="portionSize"
+                  name="portionSize"
+                  value={portionSize}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setPortionSize(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                >
+                  <option value="">Size</option>
+                  {["Small", "Medium", "Large"].map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2 ">
+                <select
+                  id="available"
+                  name="isAvailable"
+                  value={available}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setAvailable(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                >
+                  <option value="">Available</option>
+                  {["Yes", "No"].map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button
+                onClick={() => {
+                  router.push(`${pathName}`);
+                  setSearch("");
+                  setCategory("");
+                  setCuisine("");
+                  setPreference("");
+                  setPortionSize("");
+                  setAvailable("");
+                  setSort("");
+                  setPriceRange([1, stableMax]);
+                }}
+                className="bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition cursor-pointer"
+              >
+                Reset
+              </button>
+            </div>
+            <div className="flex gap-4">
+              <div className="w-[20vw] space-y-2">
+                <label className="block font-medium ">Price range</label>
+                <div className="flex items-center md:gap-2">
+                  <p className="font-bold text-black flex items-center">
+                    <TbCurrencyTaka className="text-xl" />{" "}
+                    {priceRange[0].toLocaleString()}
+                  </p>{" "}
+                  <p>TO</p>{" "}
+                  <p className="font-bold text-black flex items-center">
+                    <TbCurrencyTaka className="text-xl" />{" "}
+                    {priceRange[1].toLocaleString()}
+                  </p>
+                </div>
+                <ReactRangeSliderInput
+                  min={1}
+                  max={stableMax}
+                  step={1}
+                  value={priceRange}
+                  onInput={(value) => {
+                    setPriceRange(value);
+                    handleRangeChange("Price", value);
+                  }}
+                />
+              </div>
+              <div>
+                <div className="space-y-2 ">
+                  <select
+                    id="sort"
+                    name="sort"
+                    value={sort}
+                    onChange={(e) => {
+                      handleChange(e);
+                      setSort(e.target.value);
+                    }}
+                    className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                  >
+                    <option value="">Sort By</option>
+                    {["asc", "desc"].map((item) => (
+                      <option key={item} value={item}>
+                        {`price (${item})`}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
           </div>
-        )}
-        <div className="mb-6 px-4 py-6 bg-white rounded-xl shadow-md border border-gray-200 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-blue-600 mb-2 tracking-tight">
-            My Meals
-          </h2>
-          <p className="text-lg sm:text-xl text-gray-700 font-medium">
-            Total Meals:{" "}
-            <span className="text-blue-500 font-semibold">
-              {result?.length}
-            </span>
-          </p>
+
+          {/* for small device */}
+          {open && (
+            <div className="flex flex-col gap-4 md:hidden relative">
+              <div className="absolute left-44 -bottom-6 flex md:hidden">
+                <button
+                  onClick={() => setOpen(false)}
+                  className="cursor-pointer text-primary text-2xl"
+                >
+                  <IoIosArrowDown />
+                </button>
+              </div>
+              <div className=" space-y-2">
+                <input
+                  id="search"
+                  type="text"
+                  name="searchTerm"
+                  onChange={(e) => {
+                    handleChange(e);
+                    setSearch(e.target.value);
+                  }}
+                  value={search}
+                  placeholder="Search meal"
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                />
+              </div>
+              <div className="space-y-2 ">
+                <select
+                  id="category"
+                  name="foodCategory"
+                  value={category}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setCategory(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                >
+                  <option value="">Category</option>
+                  {(foodCategory as TFoodCategory[]).map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2 ">
+                <select
+                  id="cuisine"
+                  name="cuisineType"
+                  value={cuisine}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setCuisine(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                >
+                  <option value="">Cuisine</option>
+                  {(cuisineType as TcuisineType[]).map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2 ">
+                <select
+                  id="preference"
+                  name="foodPreference"
+                  value={preference}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setPreference(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                >
+                  <option value="">Preference</option>
+                  {foodPreferance.map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2 ">
+                <select
+                  id="portionSize"
+                  name="portionSize"
+                  value={portionSize}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setPortionSize(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                >
+                  <option value="">Size</option>
+                  {["Small", "Medium", "Large"].map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2 ">
+                <select
+                  id="available"
+                  name="isAvailable"
+                  value={available}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setAvailable(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                >
+                  <option value="">Available</option>
+                  {["Yes", "No"].map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2 ">
+                <select
+                  id="sort"
+                  name="sort"
+                  value={sort}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setSort(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                >
+                  <option value="">Sort By</option>
+                  {["asc", "desc"].map((item) => (
+                    <option key={item} value={item}>
+                      {`price (${item})`}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className=" space-y-2">
+                <label className="block font-medium ">Price range</label>
+                <div className="flex items-center md:gap-2">
+                  <p className="font-bold text-black flex items-center">
+                    <TbCurrencyTaka className="text-xl" />{" "}
+                    {priceRange[0].toLocaleString()}
+                  </p>{" "}
+                  <p>TO</p>{" "}
+                  <p className="font-bold text-black flex items-center">
+                    <TbCurrencyTaka className="text-xl" />{" "}
+                    {priceRange[1].toLocaleString()}
+                  </p>
+                </div>
+                <ReactRangeSliderInput
+                  min={1}
+                  max={stableMax}
+                  step={1}
+                  value={priceRange}
+                  onInput={(value) => {
+                    setPriceRange(value);
+                    handleRangeChange("Price", value);
+                  }}
+                />
+              </div>
+              <button
+                onClick={() => {
+                  router.push(`${pathName}`);
+                  setSearch("");
+                  setCategory("");
+                  setCuisine("");
+                  setPreference("");
+                  setPortionSize("");
+                  setAvailable("");
+                  setSort("");
+                  setPriceRange([1, stableMax]);
+                }}
+                className="bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition cursor-pointer"
+              >
+                Reset
+              </button>
+            </div>
+          )}
         </div>
         <Table data={result} columns={columns} />
         <Pagination totalPage={meta?.totalPage} />
-      </div>
+      </section>
     </>
   );
 };

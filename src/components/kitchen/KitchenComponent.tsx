@@ -269,7 +269,7 @@ const KitchenComponent = ({
             <KitchenCard key={kitchen?._id} kitchenData={kitchen} />
           ))}
         </div>
-        <Pagination totalPage={meta?.totalPage} />
+        {kitchenInfo?.length > 0 && <Pagination totalPage={meta?.totalPage} />}
       </section>
     </>
   );

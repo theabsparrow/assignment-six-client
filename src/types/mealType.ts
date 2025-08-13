@@ -71,6 +71,19 @@ export type TMealFormData = {
   isAvailable?: boolean;
 };
 
+export type TMyMealsList = {
+  _id: string;
+  avarageRating: number;
+  createdAt: string;
+  cuisineType: TcuisineType;
+  foodCategory: TFoodCategory;
+  foodPreference: FoodPreferenceOption;
+  isAvailable: boolean;
+  portionSize: TPortionSize;
+  price: number;
+  title: string;
+};
+
 export type TSixMealData = {
   _id?: string;
   title: string;
@@ -121,4 +134,26 @@ export type TMealProfile = {
   price: number;
   ratingCount: number;
   title: string;
+};
+
+export type TUpdatemealData = {
+  title: string;
+  description: string;
+  foodCategory: TFoodCategory;
+  cuisineType: TcuisineType;
+  foodPreference: FoodPreferenceOption;
+  portionSize: TPortionSize;
+  price: number;
+  imageUrl: string;
+  isAvailable: boolean;
+  addDietaryPreferences: TDietaryPreference[];
+  removeDietaryPreferences: TDietaryPreference[];
+  addIngredients: string[];
+  removeIngredients: string[];
+  addAllergies: TAlergies[];
+  removeAllergies: TAlergies[];
+  addAvailableDays: TCookingDay[];
+  removeAvailableDays: TCookingDay[];
+  addAvailableTime: TMealTime[];
+  removeAvailableTime: TMealTime[];
 };
