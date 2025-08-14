@@ -20,7 +20,7 @@ export const MyMealsTableColums = (): ColumnDef<TMyMealsList>[] => [
       const id = row.original?._id;
       return (
         <Link
-          href={`/admin/manageMeal/${id}`}
+          href={`/mealProvider/myMeals/${id}`}
           className="text-primary hover:underline"
         >
           {trimmedTitle}

@@ -181,7 +181,7 @@ const KitchenProfile = ({
   };
 
   return (
-    <section className="space-y-4 w-full bg-gradient-to-r from-indigo-100 to-blue-100 dark:from-indigo-900 dark:to-blue-900 px-10 py-6 shadow-xl">
+    <section className="space-y-4 w-full bg-gradient-to-r from-indigo-100 to-blue-100 dark:from-indigo-900 dark:to-blue-900 px-4 md:px-10 py-6 shadow-xl">
       <div className="flex flex-col md:flex-row md:items-center gap-10 md:gap-36 rounded-xl w-full">
         <ImageUploadKitchen image={kitchenInfo?.kitchenPhoto} />
         <div className="text-left space-y-4">

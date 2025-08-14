@@ -157,3 +157,24 @@ export type TUpdatemealData = {
   addAvailableTime: TMealTime[];
   removeAvailableTime: TMealTime[];
 };
+
+export type TMyMealDetails = {
+  _id: string;
+  title: string;
+  description: string;
+  foodCategory: TFoodCategory;
+  foodPreference: FoodPreferenceOption;
+  cuisineType: TcuisineType;
+  portionSize: TPortionSize;
+  imageUrl: string;
+  avarageRating: number;
+  ratingCount: number;
+  price: number;
+  allergies: TAlergies[];
+  availableDays: TCookingDay[];
+  availableTime: TMealTime[];
+  ingredients: string[];
+  dietaryPreferences: TDietaryPreference[];
+  createdAt: string;
+  isAvailable: boolean;
+};

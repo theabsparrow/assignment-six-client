@@ -8,10 +8,10 @@ const MyMealsDetails = async ({
 }) => {
   const { myMealId } = await params;
   const { data } = await getMyMealDetails(myMealId);
-  console.log(data);
+
   return (
-    <section className="w-full min-h-screen">
-      <MyMealDetails />
+    <section className=" min-h-screen mx-auto md:w-[70vw]">
+      <MyMealDetails data={data} />
     </section>
   );
 };
