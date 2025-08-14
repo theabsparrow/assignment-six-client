@@ -32,6 +32,7 @@ const MealFiltering = ({
   const [priceRange, setPriceRange] = useState<[number, number]>([1, 1]);
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -67,16 +68,31 @@ const MealFiltering = ({
     router.push(`${pathName}?${params.toString()}`, { scroll: false });
   };
 
+  const handleStatus = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    const value = "false";
+    params.set("isAvailable", value.toString());
+    router.push(`${pathName}?${params.toString()}`, { scroll: false });
+  };
+
   return (
     <>
       <section className="hidden md:flex flex-col  bg-gray-50 rounded-md shadow-md w-2xs px-5 py-5 space-y-5 h-[calc(100vh-64px)] sticky top-[64px] z-10">
+        <div className="flex gap-3">
+          <button
+            onClick={handleStatus}
+            className={`flex items-center gap-2 px-4 py-1 rounded-md transition font-medium shadow-sm border cursor-pointer bg-secondary text-primary border-primary`}
+          >
+            See Unavailable Meals
+          </button>
+        </div>
         <div className="flex items-center justify-between">
-          <h1 className="text-xl text-blue-700 font-semibold">
+          <h1 className="text-xl text-primary font-bold">
             Total meals: {length ? length : 0}
           </h1>
           <button
             onClick={() => router.push(`${pathName}`)}
-            className="bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition cursor-pointer"
+            className="bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-1 px-4 rounded-lg shadow-md transition cursor-pointer"
           >
             Reset
           </button>
@@ -173,14 +189,20 @@ const MealFiltering = ({
         </div>
       </section>
 
-      <section className="md:hidden bg-gray-50 rounded-md shadow-md w-full px-5 py-5 space-y-5 max-h-[calc(100vh-64px)] fixed top-[64px] right-0 z-10 mb-10">
+      <section className="md:hidden bg-gray-50 rounded-md shadow-md w-full px-5 py-5 space-y-2 max-h-[calc(100vh-64px)] fixed top-[64px] right-0 z-10 mb-10">
+        <button
+          onClick={handleStatus}
+          className={`flex items-center gap-2 px-4 py-1 rounded-md transition font-medium shadow-sm border cursor-pointer bg-secondary text-primary border-primary`}
+        >
+          See Unavailable Meals
+        </button>
         <div className="flex items-center justify-between">
-          <h1 className="text-xl text-blue-700 font-semibold">
+          <h1 className="text-xl text-primary font-bold">
             Total meals: {length ? length : 0}
           </h1>
           <button
             onClick={() => router.push(`${pathName}`)}
-            className="bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition cursor-pointer"
+            className="bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-1 px-4 rounded-lg shadow-md transition cursor-pointer"
           >
             Reset
           </button>

@@ -1,6 +1,6 @@
 import MealCard from "@/components/mealCard/MealCard";
 import { getMostSearchedmeals } from "@/services/mealService";
-import { TSixMealData } from "@/types/mealType";
+import { TMealFormData } from "@/types/mealType";
 
 const GetMostSearchedMeals = async () => {
   const { data } = await getMostSearchedmeals();
@@ -20,7 +20,7 @@ const GetMostSearchedMeals = async () => {
 
       {data ? (
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {data.map((item: TSixMealData) => (
+          {data.map((item: TMealFormData) => (
             <MealCard key={item?._id} meal={item} />
           ))}
         </div>

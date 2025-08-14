@@ -26,7 +26,7 @@ export const createMeal = async (MealInfo: TMealFormData) => {
 };
 
 export const getAllMeals = async (query?: {
-  [key: string]: string | string[] | undefined;
+  [key: string]: string | string[] | number | undefined;
 }) => {
   try {
     const params = new URLSearchParams();
@@ -42,17 +42,25 @@ export const getAllMeals = async (query?: {
     if (query?.foodPreference) {
       params.append("foodPreference", query?.foodPreference.toString());
     }
-    if (query?.page) {
-      params.append("page", query?.page.toString());
-    }
     if (query?.minPrice) {
       params.append("minPrice", query?.minPrice.toString());
     }
     if (query?.maxPrice) {
       params.append("maxPrice", query?.maxPrice.toString());
     }
+    if (query?.isAvailable) {
+      params.append("isAvailable", query?.isAvailable.toString());
+    }
+    if (query?.page) {
+      params.append("page", query?.page.toString());
+    }
+    if (query?.limit) {
+      params.append("limit", query?.limit.toString());
+    } else {
+      params.append("limit", "20");
+    }
     const res = await fetch(
-      `${config.next_public_base_api}/meal/get-allMeals?limit=15&${params}`,
+      `${config.next_public_base_api}/meal/get-allMeals?${params}`,
       {
         method: "GET",
         next: {
@@ -180,9 +188,6 @@ export const getMyMeals = async (query?: {
     if (query?.foodPreference) {
       params.append("foodPreference", query?.foodPreference.toString());
     }
-    if (query?.page) {
-      params.append("page", query?.page.toString());
-    }
     if (query?.minPrice) {
       params.append("minPrice", query?.minPrice.toString());
     }
@@ -231,22 +236,6 @@ export const getMyMealDetails = async (id: string) => {
         next: {
           tags: ["Meals"],
         },
-      }
-    );
-    const result = await res.json();
-    return result;
-  } catch (error: any) {
-    return Error(error);
-  }
-};
-
-export const getSixMeals = async () => {
-  try {
-    const res = await fetch(
-      `${config.next_public_base_api}/meal/recent-meals`,
-      {
-        next: { revalidate: 60 },
-        method: "GET",
       }
     );
     const result = await res.json();

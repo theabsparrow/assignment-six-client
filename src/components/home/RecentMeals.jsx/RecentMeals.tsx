@@ -1,11 +1,15 @@
-import { getSixMeals } from "@/services/mealService";
-import { TSixMealData } from "@/types/mealType";
+import { getAllMeals } from "@/services/mealService";
+import { TMealFormData } from "@/types/mealType";
 import MealCard from "@/components/mealCard/MealCard";
 import Link from "next/link";
 import { IoArrowForward } from "react-icons/io5";
 
 const RecentMeals = async () => {
-  const { data } = await getSixMeals();
+  const query: Record<string, string | string[] | number | undefined> = {};
+  query.limit = 6;
+  query.isAvailable = "true";
+  const { data } = await getAllMeals(query);
+  const mealInfo = data?.result || [];
 
   return (
     <section className="w-full md:px-24 px-5 py-10  space-y-10">
@@ -27,7 +31,7 @@ const RecentMeals = async () => {
       />
 
       <div className="grid grid-cols-1  md:grid-cols-3 gap-8">
-        {data.map((item: TSixMealData) => (
+        {mealInfo.map((item: TMealFormData) => (
           <MealCard key={item?._id} meal={item} />
         ))}
       </div>

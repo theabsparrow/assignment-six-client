@@ -12,7 +12,7 @@ const ArticleCard = ({ blog }: { blog: TBlog }) => {
   }).format(new Date(blog?.createdAt));
   return (
     <div className=" flex flex-col bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-shadow duration-300 rounded-xl overflow-hidden mx-auto p-4 space-y-4">
-      <div className="relative md:w-[25vw] overflow-hidden rounded-lg border">
+      <div className="relative md:w-[25vw] md:h-[33vh] overflow-hidden rounded-lg border">
         <Image
           src={blog?.coverImage}
           alt="Cover Image"
