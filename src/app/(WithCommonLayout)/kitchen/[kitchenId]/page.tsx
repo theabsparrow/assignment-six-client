@@ -8,6 +8,7 @@ const KitchenDetailsPage = async ({
 }) => {
   const { kitchenId } = await params;
   const { data } = await getASingleKitchen(kitchenId);
+
   return (
     <section className=" w-full py-10 md:px-24 px-5">
       <KitchenDetails data={data} />

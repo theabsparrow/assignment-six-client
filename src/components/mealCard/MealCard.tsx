@@ -8,7 +8,7 @@ import { GiForkKnifeSpoon } from "react-icons/gi";
 
 const MealCard = ({ meal }: { meal: TMealFormData }) => {
   return (
-    <section className="p-6 md:p-8 rounded-2xl bg-gray-200 dark:bg-gray-800 shadow-md flex flex-col gap-4">
+    <section className="p-4 rounded-2xl bg-gray-200 dark:bg-gray-800 shadow-md flex flex-col gap-4">
       <div className="flex justify-center group">
         <Image
           src={meal?.imageUrl || "/default.jpg"}
@@ -34,24 +34,34 @@ const MealCard = ({ meal }: { meal: TMealFormData }) => {
           <FaLeaf className="text-base" />
           <span className="font-medium capitalize">{meal?.foodPreference}</span>
         </div>
-        <div
-          className={`flex items-center gap-2 px-3 py-1 rounded-full shadow-sm ${
-            meal?.isAvailable
-              ? "bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-100"
-              : "bg-red-100 dark:bg-red-800 text-red-800 dark:text-red-100"
-          }`}
-        >
-          {meal?.isAvailable ? (
-            <FaCheckCircle className="text-base" />
-          ) : (
-            <FaTimesCircle className="text-base" />
-          )}
-          <span className="font-medium capitalize">
-            {meal?.isAvailable ? "Available" : "Unavailable"}
-          </span>
-        </div>
+        {meal?.isAvailable && (
+          <div
+            className={`flex items-center gap-2 px-3 py-1 rounded-full shadow-sm ${
+              meal?.isAvailable
+                ? "bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-100"
+                : "bg-red-100 dark:bg-red-800 text-red-800 dark:text-red-100"
+            }`}
+          >
+            {meal?.isAvailable ? (
+              <FaCheckCircle className="text-base" />
+            ) : (
+              <FaTimesCircle className="text-base" />
+            )}
+            <span className="font-medium capitalize">
+              {meal?.isAvailable ? "Available" : "Unavailable"}
+            </span>
+          </div>
+        )}
       </div>
-
+      {meal?.avarageRating !== undefined && meal?.ratingCount !== undefined && (
+        <p className="text-lg font-bold text-gray-800 dark:text-gray-200 ">
+          Rating:{" "}
+          <span className="bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-100 px-3 py-1 rounded-full">
+            {meal?.avarageRating?.toFixed(1)} ★ ({meal.ratingCount}{" "}
+            {meal.ratingCount === 1 ? "person has rated" : "people have rated"})
+          </span>
+        </p>
+      )}
       <hr className="border border-primary" />
 
       <h2 className="text-2xl font-bold text-gray-800 dark:text-white flex-grow">

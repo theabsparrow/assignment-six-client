@@ -44,7 +44,6 @@ const GetMySubscription = ({
     }
     router.push(`${pathName}?${params.toString()}`, { scroll: false });
   };
-  console.log(meta);
   const columns = mySubscriptionTableColumn();
   return (
     <>

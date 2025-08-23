@@ -1,7 +1,7 @@
 "use client";
 
 import { TAllKitchenType } from "@/types/kitchenType";
-import { CheckCircle, CircleX, MapPin } from "lucide-react";
+import { CheckCircle, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -34,17 +34,19 @@ const KitchenCard = ({ kitchenData }: { kitchenData: TAllKitchenType }) => {
         </h1>
         <div
           className={`flex items-center font-medium ${
-            kitchenData?.hygieneCertified ? "text-green-600" : "text-red-500"
+            kitchenData?.hygieneCertified
+              ? "text-green-600"
+              : "text-gray-600 dark:text-gray-300"
           }`}
         >
-          {kitchenData?.hygieneCertified ? (
+          {kitchenData?.hygieneCertified && (
             <CheckCircle className="w-5 h-5 mr-2" />
-          ) : (
-            <CircleX className="w-5 h-5 mr-2" />
           )}
           <h1>
             Hygiene{" "}
-            {kitchenData?.hygieneCertified ? "Certified" : "Not Certified"}
+            {kitchenData?.hygieneCertified
+              ? "Certified"
+              : "Certification Pending"}
           </h1>
         </div>
         <div className="flex items-center justify-between">

@@ -66,7 +66,7 @@ export const mySubscriptionTableColumn =
       header: "Action",
       cell: ({ row }) => {
         const id = row?.original?.kitchen?._id;
-        return <SubscribedButton kitchenId={id} />;
+        return <SubscribedButton kitchenId={id} subscribed={true} />;
       },
     },
     {

@@ -20,7 +20,7 @@ const MealComponent = ({
         <MealFiltering length={MealInfo?.length} highestPrice={highestPrice} />
       </div>
       <div className="py-32 md:py-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {MealInfo.map((item: TMealFormData) => (
             <MealCard key={item?._id} meal={item} />
           ))}

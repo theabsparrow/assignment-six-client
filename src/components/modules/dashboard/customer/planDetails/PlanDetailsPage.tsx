@@ -104,8 +104,9 @@ const PlanDetails = ({ data }: { data: TmealPlannerDetails }) => {
       }
     }
     const toastId = toast.loading("updating pnal data...");
+
     try {
-      const result = await updatePlan(data, id);
+      const result = await updatePlan(updatedData, id);
       if (result?.success) {
         toast.success(result?.message, { id: toastId, duration: 3000 });
       } else {

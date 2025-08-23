@@ -1,209 +1,371 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import { updateOrderStatus } from "@/services/orderService";
 import { TMetaDataProps } from "@/types";
-import { TOrder, TOrderStatus } from "@/types/orderTypes";
-import { ColumnDef } from "@tanstack/react-table";
+import {
+  TDeliveryMode,
+  TOrder,
+  TOrderStatus,
+  TOrderType,
+  TPaymentOption,
+} from "@/types/orderTypes";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { toast } from "sonner";
-import Link from "next/link";
+import { MealProviderTableColumn } from "./MealProviderOrderColumn";
 import Table from "@/components/table/Table";
 import Pagination from "@/components/pagination/Pagination";
 import { orderStatus } from "../../customer/myOrders/myOrder.const";
+import { IoIosArrowDown } from "react-icons/io";
 
 const MealProviderOrder = ({
+  myOrders,
   meta,
-  result,
 }: {
+  myOrders: TOrder[];
   meta: TMetaDataProps;
-  result: TOrder[];
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const closeModal = () => {
-    setIsModalOpen(false);
-    // setDeleteCarId(null);
-  };
+  const router = useRouter();
+  const pathName = usePathname();
+  const searchParams = useSearchParams();
+  const [search, setSearch] = useState<string>("");
+  const [deliveryMode, setDeliveryMode] = useState<TDeliveryMode | string>("");
+  const [orderType, setOrderType] = useState<TOrderType | string>("");
+  const [status, setStatus] = useState<TOrderStatus | string>("");
+  const [payment, setPayment] = useState<TPaymentOption | string>("");
+  const [isActive, setIsActive] = useState<"Yes" | "No" | string>("");
+  const [open, setOpen] = useState(false);
 
-  const handleStatusChange = async (value: TOrderStatus, id: string) => {
-    const status = {
-      status: value,
-    };
-    try {
-      const result = await updateOrderStatus(status, id);
-      if (result?.success) {
-        toast.success(result?.message, { duration: 3000 });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    const params = new URLSearchParams(searchParams.toString());
+    if (name === "isActive") {
+      if (value === "Yes") {
+        params.set(name, "true");
+      } else if (value === "No") {
+        params.set(name, "false");
       } else {
-        toast.error(result?.message, { duration: 3000 });
+        params.delete(name);
       }
-    } catch (error: any) {
-      console.log(error);
+    } else {
+      params.set(name, value.toString());
     }
+    router.push(`${pathName}?${params.toString()}`, { scroll: false });
   };
 
-  const columns: ColumnDef<TOrder>[] = [
-    { accessorKey: "_id", header: "OrderId" },
-    { accessorKey: "startDate", header: "Start date" },
-    { accessorKey: "orderType", header: "Order Type" },
-    {
-      accessorKey: "isActive",
-      header: "Active",
-      cell: ({ row }) => {
-        return (
-          <span
-            className={`${
-              row.original.isActive
-                ? "text-green-700 bg-green-300 rounded-xl p-1"
-                : "text-red-700 bg-red-300 rounded-xl p-1"
-            }`}
-          >
-            {row.original.isActive ? "Yes" : "No"}
-          </span>
-        );
-      },
-    },
-    {
-      accessorKey: "status",
-      header: "Status",
-      cell: ({ row, getValue }) => {
-        const currentStatus = getValue();
-        return (
-          <select
-            value={currentStatus as string}
-            onChange={(e) =>
-              handleStatusChange(
-                e.target.value as TOrderStatus,
-                row?.original?._id as string
-              )
-            }
-            className={`
-                    px-3 py-1 rounded-xl text-sm font-medium
-                    ${
-                      currentStatus === "Cancelled"
-                        ? "bg-red-100 text-red-700"
-                        : ""
-                    }
-                    ${
-                      currentStatus === "Delivered"
-                        ? "bg-blue-100 text-blue-700"
-                        : ""
-                    }
-                    ${
-                      currentStatus === "Confirmed"
-                        ? "bg-green-100 text-green-700"
-                        : ""
-                    }
-                    ${
-                      currentStatus === "Pending"
-                        ? "bg-yellow-100 text-yellow-700"
-                        : ""
-                    }
-                    focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-indigo-500
-                  `}
-          >
-            {orderStatus.map((status) => (
-              <option key={status} value={status}>
-                {status}
-              </option>
-            ))}
-          </select>
-        );
-      },
-    },
-    {
-      header: "Delete",
-      cell: ({ row }) => (
-        <div>
-          <button
-            // onClick={() => handleDelete(row?.original?._id as string)}
-            className="px-2 py-1 bg-red-500 text-white rounded font-inter cursor-pointer"
-          >
-            Delete
-          </button>
-        </div>
-      ),
-    },
-    {
-      header: "Details",
-      cell: ({ row }) => (
-        <div>
-          <Link
-            href={`/details/${row.original?._id}`}
-            className="px-2 py-1 bg-blue-500 text-white rounded font-inter"
-          >
-            Details
-          </Link>
-        </div>
-      ),
-    },
-  ];
+  const columns = MealProviderTableColumn();
   return (
     <>
-      {!result?.length && (
+      {!(myOrders as TOrder[])?.length && (
         <div className="flex flex-col items-center justify-center py-10 px-4 bg-gradient-to-r from-pink-100 to-blue-100 rounded-xl shadow-md">
-          <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
-            No Orders Available Right Now
+          <h1 className="text-2xl font-semibold text-gray-800 text-center">
+            No orders Available Right Now
           </h1>
-          <Link
-            href="/mealProvider/addMeal"
-            className="mt-2 inline-block bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-full transition-all duration-300"
-          >
-            Add Meal
-          </Link>
         </div>
       )}
-      <div className="mt-10 container mx-auto p-4 font-inter">
-        {isModalOpen && (
-          <div
-            onClick={closeModal}
-            className="fixed inset-0 flex items-center justify-center "
-          >
-            <div
-              onClick={(e) => e.stopPropagation()}
-              className="bg-white p-6 rounded-lg shadow-lg"
-            >
-              <h3 className="text-lg font-semibold mb-4">
-                Are you sure you want to delete this car?
-              </h3>
-              {/* {errorMessage && (
-            <h1 className="text-red-600 text-sm text-center mb-4">
-              {errorMessage}
-            </h1>
-          )} */}
-              <div className="flex justify-end gap-4">
+      <section className="container mx-auto md:px-4 font-inter space-y-10 md:space-y-6 flex flex-col justify-between h-full pb-4">
+        <div className=" flex flex-col justify-between">
+          <div className="flex flex-col rounded-xl bg-white shadow-md dark:bg-gray-900 dark:border-gray-700 py-2 px-4 md:px-4 md:py-4 space-y-2 md:space-y-4 sticky top-10 md:top-0 z-10">
+            <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 font-medium mt-1">
+              Total Plans:{" "}
+              <span className="text-primary font-semibold">
+                {myOrders?.length ?? 0}
+              </span>
+            </p>
+            {!open && (
+              <div className="absolute left-44 top-11 flex md:hidden">
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsModalOpen(false);
-                  }}
-                  className="px-4 py-2 bg-gray-400 text-white rounded"
+                  onClick={() => setOpen(true)}
+                  className="cursor-pointer text-primary text-2xl"
                 >
-                  Cancel
-                </button>
-                <button
-                  //   onClick={confirmDelete}
-                  className="px-4 py-2 bg-red-600 text-white rounded"
-                >
-                  Confirm
+                  <IoIosArrowDown />
                 </button>
               </div>
+            )}
+
+            {/* for large device */}
+            <div className="hidden md:flex items-center gap-10">
+              <div className=" space-y-2">
+                <input
+                  id="search"
+                  type="text"
+                  name="searchTerm"
+                  onChange={(e) => {
+                    handleChange(e);
+                    setSearch(e.target.value);
+                  }}
+                  value={search}
+                  placeholder="Search by address"
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                />
+              </div>
+
+              <div className="space-y-2 ">
+                <select
+                  id="deliveryMode"
+                  name="deliveryMode"
+                  value={deliveryMode}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setDeliveryMode(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                >
+                  <option value="">Delivery Mode</option>
+                  {(["mealPlanner", "manual"] as TDeliveryMode[]).map(
+                    (item) => (
+                      <option key={item} value={item}>
+                        {item}
+                      </option>
+                    )
+                  )}
+                </select>
+              </div>
+
+              <div className="space-y-2 ">
+                <select
+                  id="orderType"
+                  name="orderType"
+                  value={orderType}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setOrderType(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                >
+                  <option value="">Order Type</option>
+                  {(["once", "regular"] as TOrderType[]).map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-2 ">
+                <select
+                  id="payment"
+                  name="payment"
+                  value={payment}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setPayment(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                >
+                  <option value="">Payment</option>
+                  {(["online", "cash on delivery"] as TPaymentOption[]).map(
+                    (item) => (
+                      <option key={item} value={item}>
+                        {item}
+                      </option>
+                    )
+                  )}
+                </select>
+              </div>
+
+              <div className="space-y-2 ">
+                <select
+                  id="status"
+                  name="status"
+                  value={status}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setStatus(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                >
+                  <option value="">Status</option>
+                  {(orderStatus as TOrderStatus[]).map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-2 ">
+                <select
+                  id="isActive"
+                  name="isActive"
+                  value={isActive}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setIsActive(e.target.value);
+                  }}
+                  className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                >
+                  <option value="">Active</option>
+                  {["Yes", "No"].map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <button
+                onClick={() => {
+                  router.push(`${pathName}`);
+                  setSearch("");
+                  setStatus("");
+                  setOrderType("");
+                  setDeliveryMode("");
+                }}
+                className="bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition cursor-pointer"
+              >
+                Reset
+              </button>
             </div>
+
+            {/* for small device */}
+            {open && (
+              <div className="flex flex-col gap-4 md:hidden relative">
+                <div className="absolute left-44 -bottom-6 flex md:hidden">
+                  <button
+                    onClick={() => setOpen(false)}
+                    className="cursor-pointer text-primary text-2xl"
+                  >
+                    <IoIosArrowDown />
+                  </button>
+                </div>
+                <div className=" space-y-2">
+                  <input
+                    id="search"
+                    type="text"
+                    name="searchTerm"
+                    onChange={(e) => {
+                      handleChange(e);
+                      setSearch(e.target.value);
+                    }}
+                    value={search}
+                    placeholder="Search by address"
+                    className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                  />
+                </div>
+
+                <div className="space-y-2 ">
+                  <select
+                    id="deliveryMode"
+                    name="deliveryMode"
+                    value={deliveryMode}
+                    onChange={(e) => {
+                      handleChange(e);
+                      setDeliveryMode(e.target.value);
+                    }}
+                    className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                  >
+                    <option value="">Delivery Mode</option>
+                    {(["mealPlanner", "manual"] as TDeliveryMode[]).map(
+                      (item) => (
+                        <option key={item} value={item}>
+                          {item}
+                        </option>
+                      )
+                    )}
+                  </select>
+                </div>
+
+                <div className="space-y-2 ">
+                  <select
+                    id="orderType"
+                    name="orderType"
+                    value={orderType}
+                    onChange={(e) => {
+                      handleChange(e);
+                      setOrderType(e.target.value);
+                    }}
+                    className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                  >
+                    <option value="">Order Type</option>
+                    {(["once", "regular"] as TOrderType[]).map((item) => (
+                      <option key={item} value={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="space-y-2 ">
+                  <select
+                    id="payment"
+                    name="payment"
+                    value={payment}
+                    onChange={(e) => {
+                      handleChange(e);
+                      setPayment(e.target.value);
+                    }}
+                    className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                  >
+                    <option value="">Payment</option>
+                    {(["online", "cash on delivery"] as TPaymentOption[]).map(
+                      (item) => (
+                        <option key={item} value={item}>
+                          {item}
+                        </option>
+                      )
+                    )}
+                  </select>
+                </div>
+
+                <div className="space-y-2 ">
+                  <select
+                    id="status"
+                    name="status"
+                    value={status}
+                    onChange={(e) => {
+                      handleChange(e);
+                      setStatus(e.target.value);
+                    }}
+                    className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                  >
+                    <option value="">Status</option>
+                    {(orderStatus as TOrderStatus[]).map((item) => (
+                      <option key={item} value={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="space-y-2 ">
+                  <select
+                    id="isActive"
+                    name="isActive"
+                    value={isActive}
+                    onChange={(e) => {
+                      handleChange(e);
+                      setIsActive(e.target.value);
+                    }}
+                    className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                  >
+                    <option value="">Active</option>
+                    {["Yes", "No"].map((item) => (
+                      <option key={item} value={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <button
+                  onClick={() => {
+                    router.push(`${pathName}`);
+                    setSearch("");
+                    setStatus("");
+                    setOrderType("");
+                    setDeliveryMode("");
+                  }}
+                  className="bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition cursor-pointer"
+                >
+                  Reset
+                </button>
+              </div>
+            )}
           </div>
-        )}
-        <div className="mb-6 px-4 py-6 bg-white rounded-xl shadow-md border border-gray-200 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-blue-600 mb-2 tracking-tight">
-            My Orders
-          </h2>
-          <p className="text-lg sm:text-xl text-gray-700 font-medium">
-            Total Orders:{" "}
-            <span className="text-blue-500 font-semibold">
-              {result?.length}
-            </span>
-          </p>
+          <Table data={myOrders} columns={columns} />
         </div>
-        <Table data={result} columns={columns} />
-        <Pagination totalPage={meta?.totalPage} />
-      </div>
+        {myOrders?.length > 0 && <Pagination totalPage={meta?.totalPage} />}
+      </section>
     </>
   );
 };

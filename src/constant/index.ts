@@ -27,6 +27,7 @@ export const mealProviderItems = [
   { name: "Add Meal", href: "/mealProvider/addMeal", icon: "➕" },
   { name: "My Meals", href: "/mealProvider/myMeals", icon: "🍛" },
   { name: "My Orders", href: "/mealProvider/myOrders", icon: "📦" },
+  { name: "My Blogs", href: "/mealProvider/myBlogs", icon: "✍️" },
   {
     name: "My Subscriptions",
     href: "/subscription",
@@ -88,6 +89,11 @@ export const adminItems = [
     icon: "🍽️",
   },
   {
+    name: "All Orders",
+    href: "/admin/allOrders",
+    icon: "🛒",
+  },
+  {
     name: "Manage Blog",
     href: "/admin/manageBlog",
     icon: "✍️",
@@ -96,5 +102,10 @@ export const adminItems = [
     name: "My Subscriptions",
     href: "/subscription",
     icon: "🔄",
+  },
+  {
+    name: "My Blogs",
+    href: "/admin/myBlogs",
+    icon: "✍️",
   },
 ];

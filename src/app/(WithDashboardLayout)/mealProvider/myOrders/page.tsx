@@ -1,13 +1,16 @@
 import MealProviderOrder from "@/components/modules/dashboard/mealProvider/MealProviderOrder/MealProviderOrder";
-import { getMealProviderOrder } from "@/services/orderService";
+import { getMyOrders } from "@/services/orderService";
 
-const MyOrders = async () => {
-  const { data } = await getMealProviderOrder();
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+
+const MyOrders = async ({ searchParams }: { searchParams: SearchParams }) => {
+  const query = await searchParams;
+  const { data } = await getMyOrders(query);
   const { meta, result } = data;
+
   return (
-    <div className="min-h-screen mx-auto">
-      {" "}
-      <MealProviderOrder meta={meta} result={result} />{" "}
+    <div className=" w-full min-h-screen">
+      <MealProviderOrder meta={meta} myOrders={result} />
     </div>
   );
 };

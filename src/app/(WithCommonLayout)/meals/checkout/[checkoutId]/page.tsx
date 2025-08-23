@@ -1,15 +1,15 @@
 import CHeckoutMeal from "@/components/checkout/CHeckoutMeal";
-import { getASingleMeal } from "@/services/mealService";
+import { getCheckoutMeal } from "@/services/mealService";
 
 const CheckoutPage = async ({
   params,
 }: {
   params: Promise<{ checkoutId: string }>;
 }) => {
-  const checkoutId = await params;
-  const { data } = await getASingleMeal(checkoutId?.checkoutId);
+  const { checkoutId } = await params;
+  const { data } = await getCheckoutMeal(checkoutId);
   return (
-    <div className="md:px-16 px-5">
+    <div className=" w-full py-10 md:px-24 px-5">
       <CHeckoutMeal checkoutInfo={data} />
     </div>
   );

@@ -1,247 +1,282 @@
 "use client";
 
-import { createOrder } from "@/services/orderService";
-import { TMealFormData } from "@/types/mealType";
-import { TOrder } from "@/types/orderTypes";
+import {
+  TCheckoutPlan,
+  Tcheckoutprops,
+  TCookingDay,
+  TMealTime,
+} from "@/types/mealType";
+import { checkPlanMatch } from "@/utills/calculatePercentage";
+import PercentageComponent from "./PercentageComponent";
+import OrderInfoComponent from "./OrderInfoComponent";
+import SearchAndSelectArea from "../searchAndSelect/SearchAndSelectArea";
+import { dhakaAreas } from "../modules/dashboard/mealProvider/kitchenProfile/kitchen.const";
+import { GrPowerReset } from "react-icons/gr";
+import SelectDayTime from "./SelectDayTime";
+import { TDeliveryMode, TOrderType, TPercentage } from "@/types/orderTypes";
+import PaymentMethodSelection from "./PaymentMethodSelection";
+import ConfirmationModal from "./ConfirmationModal";
 import { useState } from "react";
-import { toast } from "sonner";
 
-const paymentMethod = ["online", "cash on delivery"];
-export const orderType = ["once", "regular"];
+const CHeckoutMeal = ({ checkoutInfo }: { checkoutInfo: Tcheckoutprops }) => {
+  const { isMealExists: meal, personalInfo, result: plans } = checkoutInfo;
+  const [quantity, setQuantity] = useState<number>(0);
+  const [orderType, setOrderType] = useState<TOrderType | string>("");
+  const [deliveryMode, setDeliveryMode] = useState<TDeliveryMode | "">("");
+  const [selectedDays, setSelectedDays] = useState<TCookingDay[]>([]);
+  const [selectedTimes, setSelectedTimes] = useState<TMealTime[]>([]);
+  const [selectedPlan, setSelectedPlan] = useState<TCheckoutPlan | null>(null);
+  const [matchResult, setMatchResult] = useState<TPercentage | null>(null);
+  const [area, setArea] = useState<string>("");
+  const [location, setLocation] = useState<string>("");
+  const [grandTotal, setGrandTotal] = useState<number>(0);
+  const [notes, setNotes] = useState<string>("");
+  const [payment, setPayment] = useState<
+    "online" | "cash on delivery" | string
+  >("");
 
-const CHeckoutMeal = ({ checkoutInfo }: { checkoutInfo: TMealFormData }) => {
-  const [quantity, setQuantity] = useState(1);
-  const [selectedDays, setSelectedDays] = useState<string[]>([]);
-  const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
-  const [selectedOrderType, setSelectedOrderType] = useState(orderType[0]);
-  const [selectedPayment, setSelectedPayment] = useState(paymentMethod[1]);
-  const [note, setNote] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [address, setAddress] = useState("");
-
-  const toggleSelection = (
-    item: string,
-    list: string[],
-    setList: (v: string[]) => void
-  ) => {
-    if (list.includes(item)) {
-      setList(list.filter((i) => i !== item));
-    } else {
-      setList([...list, item]);
+  const handleSelectPlan = (planId: string) => {
+    const plan: TCheckoutPlan | null =
+      plans.find((p) => p._id === planId) || null;
+    setSelectedPlan(plan);
+    if (plan === null) {
+      setSelectedPlan(null);
+      return;
+    }
+    const result = checkPlanMatch(plan, meal);
+    setMatchResult(result);
+    if (result.isValid) {
+      setSelectedDays(plan?.preferredMealDay);
+      setSelectedTimes(plan?.preferredMealTime);
     }
   };
 
-  const handleOrderSubmit = async () => {
-    const totalPrice = Number(quantity) * Number(checkoutInfo?.price);
-    if (!selectedDays.length) {
-      toast.error("please select days", { duration: 3000 });
-      return;
-    }
-    if (!selectedTimes.length) {
-      toast.error("please select meal time", { duration: 3000 });
-      return;
-    }
-    if (selectedPayment === paymentMethod[0]) {
-      toast.error("please select cash on delivery", { duration: 3000 });
-      return;
-    }
-    if (!address) {
-      toast.error("please give your full delivery address", {
-        duration: 3000,
-      });
-      return;
-    }
-
-    const orderData = {
-      quantity,
-      price: totalPrice,
-      deliveryTime: selectedTimes,
-      deliveryDays: selectedDays,
-      orderType: selectedOrderType,
-      startDate,
-      note,
-      deliveryAddress: address,
-      payment: selectedPayment,
-    };
-    const id = checkoutInfo?._id;
-    try {
-      const result = await createOrder(orderData as TOrder, id as string);
-      if (result?.success) {
-        toast.success(result?.message, { duration: 3000 });
-      } else {
-        toast.error(result?.message, { duration: 3000 });
-      }
-    } catch (error: any) {
-      console.log(error);
-    }
-  };
   return (
-    <div className="max-w-5xl mx-auto bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 shadow-2xl rounded-3xl p-10 mt-10">
-      <h1 className="text-3xl md:text-4xl font-extrabold text-center mb-10 text-indigo-700">
-        Complete Your Order
-      </h1>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Quantity */}
-        <div>
-          <label className="block text-lg font-semibold text-gray-700 mb-2">
-            Quantity
-          </label>
-          <input
-            type="number"
-            min="1"
-            value={isNaN(quantity) ? "" : quantity}
-            onChange={(e) => {
-              const value = e.target.value;
-              setQuantity(value === "" ? 0 : parseInt(value));
-            }}
-            className="w-full border border-indigo-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-400 focus:outline-none"
-            placeholder="Enter quantity"
-          />
-        </div>
-
-        {/* Delivery Days */}
-        <div>
-          <label className="block text-lg font-semibold text-gray-700 mb-2">
-            Select Delivery Days
-          </label>
-          <div className="flex flex-wrap gap-3">
-            {(checkoutInfo?.availableDays || []).map((day: string) => (
-              <button
-                key={day}
-                type="button"
-                onClick={() =>
-                  toggleSelection(day, selectedDays, setSelectedDays)
-                }
-                className={`px-4 py-2 rounded-full border transition-all ${
-                  selectedDays.includes(day)
-                    ? "bg-yellow-400 text-white border-yellow-500 shadow-md"
-                    : "bg-yellow-100 text-yellow-800 hover:bg-yellow-200"
-                }`}
-              >
-                {day}
-              </button>
-            ))}
+    <section className="bg-gradient-to-br from-green-50 to-yellow-50 shadow-lg rounded-2xl dark:bg-gray-600 overflow-hidden mx-auto px-4 py-4 space-y-4 md:space-y-10 flex justify-between items-start md:gap-30">
+      <div className="w-full rounded-xl py-4 px-10  border border-primary space-y-6">
+        <div className="flex items-center justify-between">
+          <div className="flex flex-col items-center gap-2">
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
+              🛒 Checkout Form
+            </h2>
+            <p className="text-sm text-gray-500 dark:text-gray-300">
+              Please review your details and complete your order.
+            </p>
+          </div>
+          <div>
+            <button
+              className="bg-secondary border border-primary text-primary px-2 py-1 rounded-xl font-semibold flex items-center gap-1 cursor-pointer hover:bg-primary hover:text-white duration-500"
+              onClick={() => {
+                setPayment("");
+                setNotes("");
+                setGrandTotal(0);
+                setLocation("");
+                setArea("");
+                setSelectedDays([]);
+                setSelectedTimes([]);
+                setSelectedPlan(null);
+                setMatchResult(null);
+                setQuantity(0);
+                setOrderType("");
+                setDeliveryMode("");
+              }}
+            >
+              <GrPowerReset /> Reset Checkout Form
+            </button>
           </div>
         </div>
 
-        {/* Delivery Time */}
-        <div>
-          <label className="block text-lg font-semibold text-gray-700 mb-2">
-            Select Delivery Times
-          </label>
-          <div className="flex flex-wrap gap-3">
-            {(checkoutInfo?.availableTime || []).map((time: string) => (
-              <button
-                key={time}
-                type="button"
-                onClick={() =>
-                  toggleSelection(time, selectedTimes, setSelectedTimes)
-                }
-                className={`px-4 py-2 rounded-full border transition-all ${
-                  selectedTimes.includes(time)
-                    ? "bg-pink-500 text-white border-pink-600 shadow-md"
-                    : "bg-pink-100 text-pink-800 hover:bg-pink-200"
-                }`}
-              >
-                {time}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Order Type */}
-        <div>
-          <label className="block text-lg font-semibold text-gray-700 mb-2">
-            Order Type
-          </label>
-          <select
-            value={selectedOrderType}
-            onChange={(e) => setSelectedOrderType(e.target.value)}
-            className="w-full border border-purple-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-purple-400 focus:outline-none"
-          >
-            {orderType.map((type) => (
-              <option key={type}>{type}</option>
-            ))}
-          </select>
-        </div>
-
-        {/* Start Date */}
-        <div>
-          <label className="block text-lg font-semibold text-gray-700 mb-2">
-            Start Date
-          </label>
-          <input
-            type="date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            className="w-full border border-green-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-400 focus:outline-none"
-          />
-        </div>
-
-        {/* Delivery Address */}
-        <div className="md:col-span-2">
-          <label className="block text-lg font-semibold text-gray-700 mb-2">
-            Delivery Address
-          </label>
-          <textarea
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            rows={4}
-            placeholder="Enter your full delivery address"
-            className="w-full border border-blue-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-400 focus:outline-none"
-          />
-        </div>
-
-        {/* Note */}
-        <div className="md:col-span-2">
-          <label className="block text-lg font-semibold text-gray-700 mb-2">
-            Note (optional)
-          </label>
-          <textarea
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-            rows={3}
-            placeholder="Any additional instructions?"
-            className="w-full border border-pink-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-pink-400 focus:outline-none"
-          />
-        </div>
-
-        {/* Payment Method */}
-        <div className="md:col-span-2">
-          <label className="block text-lg font-semibold text-gray-700 mb-2">
-            Payment Method
-          </label>
-          <div className="flex flex-wrap gap-6">
-            {paymentMethod.map((method) => (
-              <label
-                key={method}
-                className="flex items-center gap-3 text-gray-700"
-              >
-                <input
-                  type="radio"
-                  value={method}
-                  checked={selectedPayment === method}
-                  onChange={(e) => setSelectedPayment(e.target.value)}
-                  className="accent-green-500"
-                />
-                <span className="text-md">{method}</span>
+        <div className="space-y-6 flex items-start justify-between">
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-600 dark:text-gray-300">
+                Order Type
               </label>
-            ))}
+              <select
+                value={orderType}
+                onChange={(e) => {
+                  type TValue = "once" | "regular";
+                  const item = e.target.value as TValue;
+                  setOrderType(item);
+                }}
+                className="w-full rounded-lg border dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-secondary"
+              >
+                <option value="">Select a Order Type</option>
+                {["once", "regular"].map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-600 dark:text-gray-300">
+                Delivery Mode
+              </label>
+              <select
+                value={deliveryMode}
+                onChange={(e) => {
+                  const item = e.target.value as TDeliveryMode;
+                  setDeliveryMode(item);
+                  if (item === "manual") {
+                    setSelectedPlan(null);
+                    setMatchResult(null);
+                  }
+                }}
+                className="w-full rounded-lg border dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-secondary"
+              >
+                <option value="">Select a delivery mode</option>
+                {["manual", "mealPlanner"].map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {deliveryMode === "mealPlanner" && (
+              <div>
+                <label className="block text-sm font-medium text-gray-600 dark:text-gray-300">
+                  Select your Plan
+                </label>
+                <select
+                  className="w-full rounded-lg border dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-secondary"
+                  onChange={(e) => handleSelectPlan(e.target.value)}
+                >
+                  <option value="">Select a Plan</option>
+                  {plans.map((plan) => (
+                    <option key={plan?._id} value={plan?._id}>
+                      {plan.title}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+            <SearchAndSelectArea
+              options={dhakaAreas}
+              value={area}
+              setValue={setArea}
+            />
+            {area && (
+              <div>
+                <label className="block text-sm font-medium text-gray-600 dark:text-gray-300">
+                  Location
+                </label>
+                <input
+                  type="text"
+                  value={location}
+                  placeholder="road no. house no."
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setLocation(value);
+                  }}
+                  name="location"
+                  id="location"
+                  minLength={2}
+                  maxLength={70}
+                  className="w-full rounded-lg border dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-secondary"
+                />
+              </div>
+            )}
+            <div>
+              <label className="block text-sm font-medium text-gray-600 dark:text-gray-300">
+                Quantity
+              </label>
+              <input
+                type="number"
+                value={quantity}
+                onChange={(e) => {
+                  const value = Number(e.target.value);
+                  const total = meal?.price * value;
+                  setQuantity(value);
+                  setGrandTotal(total);
+                }}
+                name="quantity"
+                id="quantity"
+                className="w-full rounded-lg border dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-secondary"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-600 dark:text-gray-300">
+                Notes (Optional)
+              </label>
+              <textarea
+                id="notes"
+                name="notes"
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="Add any special instructions or notes for delivery..."
+                minLength={10}
+                maxLength={200}
+                className={`w-full rounded-lg border p-2 mt-1 focus:outline-none focus:ring-2
+      ${
+        notes.length > 0 && notes.length < 10
+          ? "border-red-500 focus:ring-red-500"
+          : "dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:ring-secondary"
+      }`}
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Minimum 10 characters, maximum 200 characters.
+              </p>
+
+              {notes.length > 0 && notes.length < 10 && (
+                <p className="text-xs text-red-500 mt-1">
+                  ❌ Please enter at least 10 characters.
+                </p>
+              )}
+            </div>
+
+            <PaymentMethodSelection payment={payment} setPayment={setPayment} />
+          </div>
+
+          <div className="space-y-4">
+            {matchResult && selectedPlan && (
+              <PercentageComponent
+                matchResult={matchResult}
+                meal={meal}
+                selectedPlan={selectedPlan}
+              />
+            )}
+            {deliveryMode === "manual" && (
+              <SelectDayTime
+                meal={meal}
+                selectedDays={selectedDays}
+                selectedTimes={selectedTimes}
+                setSelectedDays={setSelectedDays}
+                setSelectedTimes={setSelectedTimes}
+              />
+            )}
           </div>
         </div>
+
+        <ConfirmationModal
+          orderType={orderType as TOrderType}
+          selectedDays={selectedDays}
+          selectedTimes={selectedTimes}
+          deliveryMode={deliveryMode as TDeliveryMode}
+          area={area}
+          location={location}
+          quantity={quantity}
+          payment={payment as "online" | "cash on delivery"}
+          notes={notes}
+          verify={personalInfo?.verified}
+          id={meal?._id}
+        />
       </div>
 
-      {/* Submit Button */}
-      <div className="mt-10 text-center">
-        <button
-          onClick={handleOrderSubmit}
-          className="bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white px-10 py-4 rounded-full font-bold text-lg transition-all"
-        >
-          Confirm Order
-        </button>
-      </div>
-    </div>
+      <OrderInfoComponent
+        orderType={orderType as TOrderType}
+        selectedDays={selectedDays}
+        selectedTimes={selectedTimes}
+        deliveryMode={deliveryMode as TDeliveryMode}
+        meal={meal}
+        personalInfo={personalInfo}
+        area={area}
+        location={location}
+        quantity={quantity}
+        grandTotal={grandTotal}
+        payment={payment as "online" | "cash on delivery"}
+      />
+    </section>
   );
 };
 

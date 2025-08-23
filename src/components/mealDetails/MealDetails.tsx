@@ -168,19 +168,25 @@ const MealDetails = ({ mealInfo }: { mealInfo: TMealProfile }) => {
               {mealInfo?.ratingCount && mealInfo.ratingCount > 0 ? (
                 <span className="bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-100 px-3 py-1 rounded-full">
                   {mealInfo?.avarageRating?.toFixed(1)} ★ (
-                  {mealInfo?.ratingCount} ratings)
+                  {mealInfo.ratingCount}{" "}
+                  {mealInfo.ratingCount === 1
+                    ? "person has rated"
+                    : "people have rated"}
+                  )
                 </span>
               ) : (
                 <span className="italic text-gray-500">No ratings yet</span>
               )}
             </p>
           </div>
-          <Link
-            href={`/meals/checkout/${mealInfo?._id}`}
-            className="bg-secondary text-primary border border-primary hover:bg-primary hover:text-white px-2 py-1 rounded-lg duration-500"
-          >
-            Checkout
-          </Link>
+          {mealInfo?.isAvailable && (
+            <Link
+              href={`/meals/checkout/${mealInfo?._id}`}
+              className="bg-secondary text-primary border border-primary hover:bg-primary hover:text-white px-2 py-1 rounded-lg duration-500"
+            >
+              Checkout
+            </Link>
+          )}
         </div>
       </div>
     </section>

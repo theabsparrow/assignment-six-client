@@ -1,12 +1,12 @@
 import Sidebar from "@/components/modules/dashboard/sidebar/Sidebar";
-import { getMyProfle } from "@/services/profileService";
+import { getCurrentUser } from "@/services/authService";
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
-  const { data } = await getMyProfle();
+  const { userRole } = await getCurrentUser();
 
   return (
     <div className="md:flex md:bg-gray-200">
-      <Sidebar role={data?.user?.role} />
+      <Sidebar role={userRole} />
       {children}
     </div>
   );

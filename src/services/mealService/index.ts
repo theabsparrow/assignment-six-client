@@ -146,6 +146,29 @@ export const getASingleMeal = async (id: string) => {
   }
 };
 
+export const getCheckoutMeal = async (id: string) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refreshToken")!.value;
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/meal/get-checkoutMeal/${id}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+        next: {
+          tags: ["Meals"],
+        },
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
 export const getAMealProfile = async (id: string) => {
   const cookieStore = await cookies();
   const token = cookieStore.get("refreshToken")!.value;

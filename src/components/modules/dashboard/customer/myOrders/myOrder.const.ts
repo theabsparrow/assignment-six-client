@@ -5,4 +5,7 @@ export const orderStatus: TOrderStatus[] = [
   "Confirmed",
   "Delivered",
   "Cancelled",
+  "Cooking",
+  "ReadyForPickup",
+  "OutForDelivery",
 ];

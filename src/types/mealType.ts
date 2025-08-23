@@ -67,7 +67,8 @@ export type TMealFormData = {
   availableDays: TCookingDay[];
   availableTime: TMealTime[];
   _id?: string;
-  rating?: number;
+  avarageRating?: number;
+  ratingCount?: number;
   isAvailable?: boolean;
 };
 
@@ -177,4 +178,37 @@ export type TMyMealDetails = {
   dietaryPreferences: TDietaryPreference[];
   createdAt: string;
   isAvailable: boolean;
+};
+
+export type TcheckoutMeal = {
+  _id: string;
+  title: string;
+  kitchen: { _id: string; kitchenName: string };
+  availableDays: TCookingDay[];
+  availableTime: TMealTime[];
+  dietaryPreferences: TDietaryPreference[];
+  foodPreference: FoodPreferenceOption;
+  price: number;
+};
+
+export type TCheckoutPersonInfo = {
+  email: string;
+  name: string;
+  phone: string;
+  verified: boolean;
+};
+
+export type TCheckoutPlan = {
+  _id: string;
+  title: string;
+  dietaryPreferences: TDietaryPreference[];
+  foodPreference: FoodPreferenceOption;
+  preferredMealDay: TCookingDay[];
+  preferredMealTime: TMealTime[];
+};
+
+export type Tcheckoutprops = {
+  isMealExists: TcheckoutMeal;
+  personalInfo: TCheckoutPersonInfo;
+  result: TCheckoutPlan[];
 };

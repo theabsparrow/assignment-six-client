@@ -45,6 +45,9 @@ export const getMyPlans = async (query?: {
     if (query?.isActive) {
       params.append("isActive", query?.isActive.toString());
     }
+    if (query?.fields) {
+      params.append("fields", query?.fields.toString());
+    }
     if (query?.page) {
       params.append("page", query?.page.toString());
     }

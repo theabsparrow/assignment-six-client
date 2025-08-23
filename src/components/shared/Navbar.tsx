@@ -27,7 +27,7 @@ const Navbar = ({
   profileImage?: string;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { setIsLoading, setUser } = useUser();
+  const { setIsLoading } = useUser();
   const router = useRouter();
   const pathname = usePathname();
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,7 +35,6 @@ const Navbar = ({
 
   const handleLogout = async () => {
     await logout();
-    setUser(null);
     setIsOpen(false);
     setIsLoading(true);
     router.push("/login");

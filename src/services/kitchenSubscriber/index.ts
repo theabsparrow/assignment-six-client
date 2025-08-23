@@ -45,7 +45,6 @@ export const getMyAllSubscription = async (query?: {
 
 export const beASubscriber = async (id: string) => {
   const token = await getValidToken();
-  console.log(id);
   try {
     const res = await fetch(
       `${config.next_public_base_api}/kitchenSubscribe/addSubscriber/${id}`,

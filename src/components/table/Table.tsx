@@ -17,8 +17,8 @@ const Table = <T,>({ data, columns }: TableProps<T>) => {
     getCoreRowModel: getCoreRowModel(),
   });
   return (
-    <div className="overflow-x-auto w-full">
-      <table className="min-w-full divide-y divide-blue-200 bg-white shadow-md rounded-xl overflow-hidden ">
+    <div className="overflow-x-auto w-full pb-44">
+      <table className="min-w-full divide-y divide-blue-200 bg-white shadow-md rounded-xl ">
         <thead className="bg-primary">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>

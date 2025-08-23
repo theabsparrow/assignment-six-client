@@ -79,16 +79,14 @@ const LoginForm = () => {
     const loadingId = toast.loading("user logging in");
     try {
       const res = await loginUser(loginData as TLogin);
-      setIsLoading(true);
       if (res?.success) {
         toast.success(res?.message, { id: loadingId, duration: 3000 });
         if (redirect) {
           router.push(redirect);
-          const currentUser = await getCurrentUser();
-          setUser(currentUser);
-          setIsLoading(false);
+          setIsLoading(true);
         } else {
           router.push("/profile");
+          setIsLoading(true);
         }
       } else {
         toast.error(res?.message, { duration: 3000 });
