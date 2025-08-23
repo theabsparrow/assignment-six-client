@@ -2,7 +2,7 @@
 
 import { TCookingDay, TMealTime } from "@/types/mealType";
 import { TConfirmModal, TDeliveryMode } from "@/types/orderTypes";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "sonner";
 import { confirmModal } from "./checkout.const";
 import { createOrder } from "@/services/orderService";
@@ -19,6 +19,7 @@ type TConfirmModalProps = {
   notes?: string;
   verify: boolean;
   id: string;
+  setSuccessopen: Dispatch<SetStateAction<boolean>>;
 };
 
 const ConfirmationModal = ({
@@ -33,6 +34,7 @@ const ConfirmationModal = ({
   notes,
   verify,
   id,
+  setSuccessopen,
 }: TConfirmModalProps) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -101,6 +103,7 @@ const ConfirmationModal = ({
         toast.success(result?.message, { duration: 3000 });
         setOpen(false);
         setLoading(false);
+        setSuccessopen(true);
       } else {
         toast.error(result?.message, { duration: 3000 });
         setLoading(false);

@@ -12,6 +12,7 @@ const VerificationField = () => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [isExpired, setIsExpired] = useState(false);
   const timerRef = useRef<OtpTimerHandle>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const allFilled = otpNum.every((digit) => digit !== "");
@@ -49,21 +50,26 @@ const VerificationField = () => {
   };
 
   const resendOTP = async () => {
+    setLoading(true);
     try {
       const res = await resendOtp();
       if (res?.success) {
         toast.success(res?.message, { duration: 3000 });
         setIsExpired(false);
         timerRef.current?.reset();
+        setLoading(false);
       } else {
         toast.error(res?.message, { duration: 3000 });
+        setLoading(false);
       }
     } catch (error: any) {
       console.log(error);
+      setLoading(false);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     e.preventDefault();
     const data = {
       otp: otpNum.join(""),
@@ -72,14 +78,16 @@ const VerificationField = () => {
       const res = await verifyEmail(data);
       if (res?.success) {
         toast.success(res?.message, { duration: 3000 });
-
         localStorage.removeItem("customerForm");
         setIsExpired(true);
+        setLoading(false);
       } else {
         toast.error(res?.message, { duration: 3000 });
+        setLoading(false);
       }
     } catch (error: any) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -121,7 +129,7 @@ const VerificationField = () => {
           <div className="flex justify-between items-center mt-6">
             <button
               type="submit"
-              disabled={isDisabled}
+              disabled={isDisabled || loading}
               className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-semibold px-5 py-2 rounded-lg shadow-md transition disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed"
             >
               Verify OTP
@@ -136,7 +144,7 @@ const VerificationField = () => {
           </span>
           <button
             onClick={resendOTP}
-            disabled={!isExpired}
+            disabled={!isExpired || loading}
             className={`px-4 py-1.5 rounded-full text-sm sm:text-base font-semibold transition duration-300
       ${
         isExpired

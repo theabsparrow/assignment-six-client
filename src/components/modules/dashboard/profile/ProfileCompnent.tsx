@@ -326,7 +326,7 @@ const ProfileCompnent = ({
 
         {/* detailed information*/}
         <div className="w-full p-6 bg-gradient-to-r from-teal-100 to-cyan-200 shadow-lg rounded-xl space-y-4">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center md:gap-20">
             <h3 className="text-2xl font-semibold ">Details</h3>
             {user?.role === USER_ROLE.mealProvider && (
               <div>

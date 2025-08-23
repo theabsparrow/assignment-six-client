@@ -108,7 +108,6 @@ const SelectOption = () => {
                 <h2 className="text-2xl md:text-3xl font-bold text-primary font-playfair">
                   Be a Customer
                 </h2>
-                <RegisterCustomer setRegisteredRole={setRegisteredRole} />
                 <div
                   style={{ backgroundImage: `url(${customerActiveBg})` }}
                   className={`absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white dark:bg-gray-800 top-[5%] md:top-[5%] left-[2.5%] md:left-[10%] bg-cover bg-center bg-no-repeat p-3 md:px-10 md:py-4 flex justify-center md:justify-start overflow-hidden`}
@@ -183,7 +182,6 @@ const SelectOption = () => {
                 <h2 className="text-2xl md:text-3xl font-bold text-primary font-playfair">
                   Be a Meal Provider
                 </h2>
-                <RegisterMealProvider setRegisteredRole={setRegisteredRole} />
                 <div
                   style={{ backgroundImage: `url(${providerActiveBg})` }}
                   className={`absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white dark:bg-gray-800 top-[5%] md:top-[5%] right-[2.5%] md:left-[10%] bg-cover bg-center bg-no-repeat px-3 py-3 md:px-10 md:py-4 flex justify-end md:justify-end overflow-hidden`}

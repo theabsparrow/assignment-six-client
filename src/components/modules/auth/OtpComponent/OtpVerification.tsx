@@ -18,6 +18,7 @@ const OtpVerification = ({
   const [isExpired, setIsExpired] = useState(false);
   const timerRef = useRef<OtpTimerHandle>(null);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const allFilled = otpNum.every((digit) => digit !== "");
@@ -65,21 +66,26 @@ const OtpVerification = ({
   };
 
   const resendOTP = async () => {
+    setLoading(true);
     try {
       const res = await resendOtp();
       if (res?.success) {
         toast.success(res?.message, { duration: 3000 });
         setIsExpired(false);
         timerRef.current?.reset();
+        setLoading(false);
       } else {
         toast.error(res?.message, { duration: 3000 });
+        setLoading(false);
       }
     } catch (error: any) {
       console.log(error);
+      setLoading(false);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     e.preventDefault();
     const data = {
       otp: otpNum.join(""),
@@ -94,11 +100,14 @@ const OtpVerification = ({
         localStorage.removeItem("customerForm");
         setIsExpired(true);
         router.push("/profile");
+        setLoading(false);
       } else {
         toast.error(res?.message, { duration: 3000 });
+        setLoading(false);
       }
     } catch (error: any) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -113,8 +122,8 @@ const OtpVerification = ({
   };
 
   return (
-    <div className=" h-[80vh] flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4 ">
-      <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl  shadow-2xl p-6 sm:p-8 relative">
+    <div className=" md:h-[80vh] flex items-center justify-center bg-gray-100 dark:bg-gray-900 md:px-4 ">
+      <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl  shadow-2xl p-3 md:p-6 relative">
         {/* OTP Timer */}
         <div>
           <OtpTimer ref={timerRef} setIsExpired={setIsExpired} />
@@ -129,7 +138,7 @@ const OtpVerification = ({
 
         {/* OTP Form */}
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-          <div className="flex justify-center gap-3 sm:gap-4">
+          <div className="flex justify-center gap-2 md:gap-3">
             {otpNum.map((digit, index) => (
               <input
                 key={index}
@@ -142,7 +151,7 @@ const OtpVerification = ({
                 onChange={(e) => handleChange(index, e.target.value)}
                 onKeyDown={(e) => handleBackspace(index, e)}
                 onPaste={handlePaste}
-                className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg text-xl sm:text-2xl font-bold text-center border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-secondary transition"
+                className="w-10 h-10 rounded-lg md:text-xl font-bold text-center border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-secondary transition"
               />
             ))}
           </div>
@@ -150,6 +159,7 @@ const OtpVerification = ({
           {/* Button Group */}
           <div className="flex justify-between items-center mt-6">
             <button
+              disabled={loading}
               type="button"
               onClick={handleSkip}
               className="px-4 py-1.5 text-sm sm:text-base font-medium text-gray-600 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition duration-300 cursor-pointer"
@@ -159,7 +169,7 @@ const OtpVerification = ({
 
             <button
               type="submit"
-              disabled={isDisabled}
+              disabled={isDisabled || loading}
               className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-semibold px-5 py-2 rounded-lg shadow-md transition disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed"
             >
               Verify OTP
@@ -174,7 +184,7 @@ const OtpVerification = ({
           </span>
           <button
             onClick={resendOTP}
-            disabled={!isExpired}
+            disabled={!isExpired || loading}
             className={`px-4 py-1.5 rounded-full text-sm sm:text-base font-semibold transition duration-300
       ${
         isExpired

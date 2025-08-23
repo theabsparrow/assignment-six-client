@@ -13,7 +13,11 @@ import InputTextArea from "../../formInput/InputTextArea";
 import { calculateAge } from "@/utills/calculateAge";
 import { toast } from "sonner";
 import { TGender } from "@/types/customerRegistration";
-import { TMealproviderRegistrationData } from "@/types/mealProviderRegistration";
+import {
+  FormValuesMealProvider,
+  TMealproviderRegistrationData,
+  TMealProviderSubmission,
+} from "@/types/mealProviderRegistration";
 import { imageUpload } from "@/utills/imageUploader";
 import {
   reCaptchaTokenVerification,
@@ -25,20 +29,6 @@ import { useUser } from "@/context/UserContext";
 import OtpVerification from "../OtpComponent/OtpVerification";
 import Link from "next/link";
 
-type FormValues = {
-  email: string;
-  phone: string;
-  password: string;
-  name: string;
-  profileImage?: string;
-  address: string;
-  gender: string;
-  dateOfBirth: string;
-  confirmPass: string;
-  bio: string;
-  experienceYears?: number;
-};
-
 const RegisterMealProvider = ({
   setRegisteredRole,
 }: {
@@ -49,6 +39,7 @@ const RegisterMealProvider = ({
   const [imagePreview, setImagePreview] = useState<string>("");
   // const [recaptchaStatus, setRecaptchaStatus] = useState(false);
   const [otpPage, setOtpPage] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -56,7 +47,7 @@ const RegisterMealProvider = ({
     watch,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<FormValues>({
+  } = useForm<FormValuesMealProvider>({
     mode: "onChange",
   });
 
@@ -90,12 +81,14 @@ const RegisterMealProvider = ({
     }
   };
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: FormValuesMealProvider) => {
+    setLoading(true);
     const age = calculateAge(data?.dateOfBirth);
     if (age < 18) {
       toast.error("your age is under 18. you are not permitted to register", {
         duration: 3000,
       });
+      setLoading(false);
       return;
     }
     const user = {
@@ -103,16 +96,8 @@ const RegisterMealProvider = ({
       phone: data?.phone,
       password: data?.password,
     };
-    type TMealProvider = {
-      name: string;
-      profileImage?: string;
-      address: string;
-      gender: TGender;
-      dateOfBirth: string;
-      bio: string;
-      experienceYears?: number;
-    };
-    const mealProvider: TMealProvider = {
+
+    const mealProvider: TMealProviderSubmission = {
       name: data?.name,
       address: data?.address,
       dateOfBirth: data?.dateOfBirth,
@@ -121,10 +106,19 @@ const RegisterMealProvider = ({
       experienceYears: Number(data?.experienceYears),
     };
     try {
-      const profileImage = imageFile ? await imageUpload(imageFile) : undefined;
-      if (profileImage) {
-        mealProvider.profileImage = profileImage;
+      if (imageFile) {
+        const profileImage = await imageUpload(imageFile);
+        if (!profileImage) {
+          toast.error("image upload faild", {
+            duration: 3000,
+          });
+          setLoading(false);
+          return;
+        } else {
+          mealProvider.profileImage = profileImage;
+        }
       }
+
       const mealProviderRegisterInfo: TMealproviderRegistrationData = {
         user,
         mealProvider,
@@ -136,11 +130,14 @@ const RegisterMealProvider = ({
         setOtpPage(true);
         localStorage.setItem("verifyOtpForm", "otpForm");
         reset();
+        setLoading(false);
       } else {
         toast.error(res?.message, { duration: 3000 });
+        setLoading(false);
       }
     } catch (error: any) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -260,6 +257,7 @@ const RegisterMealProvider = ({
             />
             <button
               // disabled={recaptchaStatus ? false : true}
+              disabled={loading}
               type="submit"
               className="w-full bg-secondary hover:bg-white dark:bg-primary dark:border dark:border-secondary dark:text-secondary dark:hover:bg-green-700 duration-500 text-primary border border-primary font-semibold py-3 px-4 rounded-lg shadow-md transition cursor-pointer"
             >

@@ -94,7 +94,8 @@ export const updatePhoneEmail = async (info: Partial<TSettingsInfo>) => {
 };
 
 export const verifyEmail = async (data: { otp: string }) => {
-  const token = await getValidToken();
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refresh1Token")!.value;
   try {
     const res = await fetch(
       `${config.next_public_base_api}/user/verify-email`,

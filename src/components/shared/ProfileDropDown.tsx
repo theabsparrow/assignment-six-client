@@ -17,6 +17,7 @@ const ProfileDropdown = ({
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -29,6 +30,7 @@ const ProfileDropdown = ({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
   const handleLogout = async () => {
     await logout();
     setOpen(false);

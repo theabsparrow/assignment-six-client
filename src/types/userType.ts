@@ -92,3 +92,12 @@ export type TuserProfile = {
   profileImage: string;
   user: TUserProfileData;
 };
+
+export type TUserPayload = {
+  name: string;
+  profileImage?: string;
+  address: string;
+  allergies?: TAlergies[];
+  gender: TGender;
+  dateOfBirth: string;
+};

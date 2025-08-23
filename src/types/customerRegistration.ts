@@ -29,3 +29,16 @@ export type TCustomerRegistrationData = {
     dateOfBirth: string;
   };
 };
+
+export type FormValuesCustomer = {
+  email: string;
+  phone: string;
+  password: string;
+  name: string;
+  profileImage?: string;
+  address: string;
+  allergies?: string[];
+  gender: string;
+  dateOfBirth: string;
+  confirmPass: string;
+};

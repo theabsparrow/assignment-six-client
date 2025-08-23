@@ -10,7 +10,6 @@ const VerifyEmail = ({ isEditing }: { isEditing: boolean }) => {
   const [open, setOpen] = useState(false);
 
   const handleModalOpen = async () => {
-    console.log("clicked to open the modal");
     try {
       const res = await resendOtp();
       if (res?.success) {
@@ -62,7 +61,7 @@ const VerifyEmail = ({ isEditing }: { isEditing: boolean }) => {
                   localStorage.removeItem("verifyEmailModalOpen");
                   localStorage.removeItem("otpExpiry");
                 }}
-                className="absolute top-3 right-3 text-gray-600 dark:text-gray-300 hover:text-red-500"
+                className="absolute top-3 right-3 text-gray-600 dark:text-gray-300 hover:text-red-500 cursor-pointer"
               >
                 <FaTimes />
               </button>
@@ -74,7 +73,6 @@ const VerifyEmail = ({ isEditing }: { isEditing: boolean }) => {
                 check your inbox and follow the instructions to verify your
                 email.
               </p>
-
               <VerificationField />
             </div>
           </div>

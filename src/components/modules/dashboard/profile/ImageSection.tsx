@@ -64,7 +64,13 @@ const ImageSection = ({ image, role }: { image: string; role: string }) => {
           className="rounded-full object-cover border-4 border-white shadow-md w-72 h-72"
         />
       ) : (
-        <div className="rounded-full border-4 border-white shadow-md w-72 h-72 bg-green-500"></div>
+        <Image
+          src="/profile-icon.png"
+          alt="Profile"
+          width={800}
+          height={800}
+          className="rounded-full object-cover border-4 border-white shadow-md w-72 h-72"
+        />
       )}
 
       <label className="absolute bottom-1 right-18 z-10 cursor-pointer">

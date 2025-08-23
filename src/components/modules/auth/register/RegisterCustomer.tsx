@@ -14,6 +14,7 @@ import { allergyOptions, genderOptions } from "./register.const";
 import { calculateAge } from "@/utills/calculateAge";
 import { toast } from "sonner";
 import {
+  FormValuesCustomer,
   TAlergies,
   TCustomerRegistrationData,
   TGender,
@@ -28,19 +29,7 @@ import { config } from "@/config";
 import { useUser } from "@/context/UserContext";
 import OtpVerification from "../OtpComponent/OtpVerification";
 import Link from "next/link";
-
-type FormValues = {
-  email: string;
-  phone: string;
-  password: string;
-  name: string;
-  profileImage?: string;
-  address: string;
-  allergies?: string[];
-  gender: string;
-  dateOfBirth: string;
-  confirmPass: string;
-};
+import { TUserPayload } from "@/types";
 
 const RegisterCustomer = ({
   setRegisteredRole,
@@ -52,6 +41,7 @@ const RegisterCustomer = ({
   const [imagePreview, setImagePreview] = useState<string>("");
   // const [recaptchaStatus, setRecaptchaStatus] = useState(false);
   const [otpPage, setOtpPage] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -59,7 +49,7 @@ const RegisterCustomer = ({
     watch,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<FormValues>({
+  } = useForm<FormValuesCustomer>({
     defaultValues: {
       allergies: [],
     },
@@ -96,28 +86,24 @@ const RegisterCustomer = ({
     }
   };
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: FormValuesCustomer) => {
+    setLoading(true);
     const age = calculateAge(data?.dateOfBirth);
     if (age < 18) {
       toast.error("your age is under 18. you are not permitted to register", {
         duration: 3000,
       });
+      setLoading(false);
       return;
     }
+
     const user = {
       email: data?.email,
       phone: data?.phone,
       password: data?.password,
     };
-    type TCustomer = {
-      name: string;
-      profileImage?: string;
-      address: string;
-      allergies?: TAlergies[];
-      gender: TGender;
-      dateOfBirth: string;
-    };
-    const customer: TCustomer = {
+
+    const customer: TUserPayload = {
       name: data?.name,
       address: data?.address,
       dateOfBirth: data?.dateOfBirth,
@@ -127,9 +113,17 @@ const RegisterCustomer = ({
     setOtpPage(true);
     localStorage.setItem("verifyOtpForm", "otpForm");
     try {
-      const profileImage = imageFile ? await imageUpload(imageFile) : undefined;
-      if (profileImage) {
-        customer.profileImage = profileImage;
+      if (imageFile) {
+        const profileImage = await imageUpload(imageFile);
+        if (!profileImage) {
+          toast.error("image upload faild", {
+            duration: 3000,
+          });
+          setLoading(false);
+          return;
+        } else {
+          customer.profileImage = profileImage;
+        }
       }
       const customerRegisterInfo: TCustomerRegistrationData = {
         user,
@@ -142,11 +136,14 @@ const RegisterCustomer = ({
         setOtpPage(true);
         localStorage.setItem("verifyOtpForm", "otpForm");
         reset();
+        setLoading(false);
       } else {
         toast.error(res?.message, { duration: 3000 });
+        setLoading(false);
       }
     } catch (error: any) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -259,6 +256,7 @@ const RegisterCustomer = ({
             />
             <button
               // disabled={recaptchaStatus ? false : true}
+              disabled={loading}
               type="submit"
               className="w-full bg-secondary hover:bg-white dark:bg-primary dark:border dark:border-secondary dark:text-secondary dark:hover:bg-green-700 duration-500 text-primary border border-primary font-semibold py-3 px-4 rounded-lg shadow-md transition cursor-pointer disabled:bg-gray-400 disabled:cursor-default"
             >
