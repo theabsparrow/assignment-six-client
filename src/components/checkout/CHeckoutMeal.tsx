@@ -20,6 +20,7 @@ import { useState } from "react";
 
 const CHeckoutMeal = ({ checkoutInfo }: { checkoutInfo: Tcheckoutprops }) => {
   const { isMealExists: meal, personalInfo, result: plans } = checkoutInfo;
+
   const [quantity, setQuantity] = useState<number>(0);
   const [orderType, setOrderType] = useState<TOrderType | string>("");
   const [deliveryMode, setDeliveryMode] = useState<TDeliveryMode | "">("");
@@ -52,9 +53,9 @@ const CHeckoutMeal = ({ checkoutInfo }: { checkoutInfo: Tcheckoutprops }) => {
   };
 
   return (
-    <section className="bg-gradient-to-br from-green-50 to-yellow-50 shadow-lg rounded-2xl dark:bg-gray-600 overflow-hidden mx-auto px-4 py-4 space-y-4 md:space-y-10 flex justify-between items-start md:gap-30">
-      <div className="w-full rounded-xl py-4 px-10  border border-primary space-y-6">
-        <div className="flex items-center justify-between">
+    <section className="bg-gradient-to-br from-green-50 to-yellow-50 shadow-lg rounded-2xl dark:bg-gray-600 overflow-hidden mx-auto px-1 md:px-4 py-4 space-y-4 md:space-y-10 flex flex-col-reverse md:flex-row md:justify-between items-start gap-10 md:gap-30">
+      <div className="w-full rounded-xl py-2 md:py-4 px-2 md:px-10 md:border border-primary space-y-2 md:space-y-0">
+        <div className="flex flex-col md:flex-row items-center md:justify-between space-y-2 md:space-y-0">
           <div className="flex flex-col items-center gap-2">
             <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
               🛒 Checkout Form
@@ -86,8 +87,8 @@ const CHeckoutMeal = ({ checkoutInfo }: { checkoutInfo: Tcheckoutprops }) => {
           </div>
         </div>
 
-        <div className="space-y-6 flex items-start justify-between">
-          <div className="space-y-4">
+        <div className="space-y-4 flex flex-col md:flex-row md:items-start md:justify-between">
+          <div className="space-y-4 w-full md:w-auto">
             <div>
               <label className="block text-sm font-medium text-gray-600 dark:text-gray-300">
                 Order Type

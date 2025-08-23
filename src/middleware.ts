@@ -10,6 +10,7 @@ const rolebasedPrivateUser = {
     /^\/profile$/,
     /^\/settings$/,
     /^\/subscription$/,
+    /^\/meals\/checkout(\/.*)?$/,
   ],
   mealProvider: [
     /^\/mealProvider(\/.*)?$/,
@@ -75,5 +76,6 @@ export const config = {
     "/admin/(.*)",
     "/user/(.*)",
     "/mealProvider/(.*)",
+    "/meals/checkout/(.*)",
   ],
 };

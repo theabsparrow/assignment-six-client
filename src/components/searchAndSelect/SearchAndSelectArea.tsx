@@ -56,7 +56,7 @@ const SearchAndSelectArea = <T extends string>({
       </button>
 
       {open && (
-        <div className="absolute -top-16 left-56 md:left-[232px] w-[30vw] md:w-[10vw] rounded-lg border border-primary shadow-lg z-50 animate-fade-in overflow-y-auto bg-gray-200 dark:bg-gray-900">
+        <div className="absolute md:-top-16 md:left-[232px] w-[40vw] md:w-[10vw] rounded-lg border border-primary shadow-lg z-50 animate-fade-in overflow-y-auto bg-gray-200 dark:bg-gray-900">
           <input
             type="text"
             ref={inputRef}

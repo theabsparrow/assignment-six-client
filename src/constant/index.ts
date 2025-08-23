@@ -60,6 +60,21 @@ export const customerItems = [
     href: "/subscription",
     icon: "🔄",
   },
+  {
+    name: "All Meals",
+    href: "/meals",
+    icon: "🍽️",
+  },
+  {
+    name: "All Kitchens",
+    href: "/kitchen",
+    icon: "👨‍🍳",
+  },
+  {
+    name: "All Blogs",
+    href: "/blogs",
+    icon: "✍️",
+  },
 ];
 
 export const adminItems = [

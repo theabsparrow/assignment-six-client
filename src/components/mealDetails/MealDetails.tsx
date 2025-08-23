@@ -1,9 +1,13 @@
+import { USER_ROLE } from "@/constant";
+import { getCurrentUser } from "@/services/authService";
 import { TMealProfile } from "@/types/mealType";
 import Image from "next/image";
 import Link from "next/link";
 import { MdOutlineSoupKitchen } from "react-icons/md";
 
-const MealDetails = ({ mealInfo }: { mealInfo: TMealProfile }) => {
+const MealDetails = async ({ mealInfo }: { mealInfo: TMealProfile }) => {
+  const user = (await getCurrentUser()) || null;
+
   return (
     <section className="bg-gradient-to-br from-green-50 to-yellow-50 shadow-lg rounded-2xl dark:bg-gray-600 overflow-hidden max-w-4xl mx-auto px-4 py-4 space-y-4 md:space-y-10">
       <div>
@@ -179,14 +183,16 @@ const MealDetails = ({ mealInfo }: { mealInfo: TMealProfile }) => {
               )}
             </p>
           </div>
-          {mealInfo?.isAvailable && (
-            <Link
-              href={`/meals/checkout/${mealInfo?._id}`}
-              className="bg-secondary text-primary border border-primary hover:bg-primary hover:text-white px-2 py-1 rounded-lg duration-500"
-            >
-              Checkout
-            </Link>
-          )}
+          {user &&
+            user?.userRole === USER_ROLE.customer &&
+            mealInfo?.isAvailable && (
+              <Link
+                href={`/meals/checkout/${mealInfo?._id}`}
+                className="bg-secondary text-primary border border-primary hover:bg-primary hover:text-white px-2 py-1 rounded-lg duration-500"
+              >
+                Checkout
+              </Link>
+            )}
         </div>
       </div>
     </section>

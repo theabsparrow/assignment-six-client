@@ -11,11 +11,11 @@ const PaymentMethodSelection = ({
   setPayment: Dispatch<SetStateAction<string>>;
 }) => {
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
       <h3 className="text-base font-semibold text-gray-800 dark:text-gray-200">
         Select Payment Method
       </h3>
-      <div className="flex items-center gap-3">
+      <div className="flex flex-col md:flex-row md:items-center gap-3">
         {orderMethod.map((method) => (
           <button
             key={method.key}

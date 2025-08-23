@@ -1,6 +1,8 @@
 import { TcheckoutMeal, TCheckoutPlan } from "@/types/mealType";
 import { TPercentage } from "@/types/orderTypes";
 import { CheckCircle, XCircle } from "lucide-react";
+import Link from "next/link";
+import CreatePlanComponent from "./CreatePlanComponent";
 
 type TPercentageComponentProps = {
   matchResult: TPercentage;
@@ -14,7 +16,15 @@ const PercentageComponent = ({
   selectedPlan,
 }: TPercentageComponentProps) => {
   return (
-    <section className="space-y-6 ">
+    <section className="space-y-4 relative">
+      <div className="flex items-center justify-end">
+        <Link
+          href={`/user/myPlans/${selectedPlan?._id}`}
+          className="bg-primary px-2 py-1 rounded-lg text-secondary hover:bg-secondary hover:text-primary duration-500"
+        >
+          View this plan
+        </Link>
+      </div>
       <div>
         <p className="font-semibold mb-2">
           Match Percentage: {matchResult.percentage.toFixed(0)}%
@@ -201,6 +211,7 @@ const PercentageComponent = ({
             )}
           </div>
         </div>
+        {!matchResult.isValid && <CreatePlanComponent meal={meal} />}
       </div>
     </section>
   );

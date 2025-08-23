@@ -112,7 +112,7 @@ const ConfirmationModal = ({
 
   return (
     <div>
-      <div className="flex justify-end">
+      <div className="flex md:justify-end ">
         <button
           onClick={handleOpenModal}
           className="bg-secondary font-bold border border-primary text-primary px-2 py-1 rounded-lg cursor-pointer hover:bg-primary hover:text-secondary duration-500"

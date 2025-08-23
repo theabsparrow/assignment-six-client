@@ -35,7 +35,7 @@ const OrderInfoComponent = ({
   payment,
 }: TorderInfoProps) => {
   return (
-    <section className="space-y-4 border border-primary p-4 rounded-lg w-full md:w-[30vw]">
+    <section className="space-y-4 md:border border-primary p-2 md:p-4 rounded-lg w-full md:w-[30vw]">
       <div className="border-dashed border-b pb-4">
         <p className="text-sm uppercase tracking-wide font-medium text-gray-500 dark:text-gray-400">
           Customer Info
