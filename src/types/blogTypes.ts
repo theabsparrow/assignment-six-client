@@ -15,13 +15,23 @@ export type TBlog = {
   title: string;
   content: string;
   excerpts: string;
-  coverImage: string;
+  coverImage?: string;
   tags?: string[];
   status: BlogStatus;
   view: number;
   isDeleted: boolean;
   createdAt: string;
   updatedAt: string;
+};
+
+export type TUpdateBlog = {
+  title?: string;
+  content?: string;
+  coverImage?: string;
+  tags?: string[];
+  status?: BlogStatus;
+  addTags?: string[];
+  removeTags?: string[];
 };
 
 type TAuthor = {
@@ -45,7 +55,7 @@ export type TBlogProfile = {
     role: TUSerRole;
   };
   content: string;
-  coverImage: string;
+  coverImage?: string;
   createdAt: string;
   name: string;
   status: BlogStatus;

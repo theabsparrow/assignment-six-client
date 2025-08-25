@@ -13,13 +13,23 @@ const ArticleCard = ({ blog }: { blog: TBlog }) => {
   return (
     <div className=" flex flex-col bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-shadow duration-300 rounded-xl overflow-hidden mx-auto p-4 space-y-4">
       <div className="relative md:w-[25vw] md:h-[33vh] overflow-hidden rounded-lg border">
-        <Image
-          src={blog?.coverImage}
-          alt="Cover Image"
-          width={700}
-          height={700}
-          className="object-cover hover:scale-105 transition-transform duration-300"
-        />
+        {blog?.coverImage ? (
+          <Image
+            src={blog?.coverImage}
+            alt="Cover Image"
+            width={700}
+            height={700}
+            className="object-cover hover:scale-105 transition-transform duration-300"
+          />
+        ) : (
+          <Image
+            src="https://i.ibb.co.com/vvkRbwHf/no-photo-available.webp"
+            alt="Cover Image"
+            width={700}
+            height={700}
+            className="object-cover hover:scale-105 transition-transform duration-300"
+          />
+        )}
       </div>
 
       <div className="flex flex-row-reverse items-center justify-between  text-sm text-gray-600 dark:text-gray-300">

@@ -1,12 +1,13 @@
 "use client";
 import DeletionModal from "@/components/statusDropdown/DeletionModal";
-import StatusDropdown from "@/components/statusDropdown/StatusDropdown";
 import { deleteBlog, updateBlog } from "@/services/blogService";
-import { BlogStatus, TBlogProfile } from "@/types/blogTypes";
-import Image from "next/image";
-import { Dispatch, SetStateAction } from "react";
+import { BlogStatus, TBlogProfile, TUpdateBlog } from "@/types/blogTypes";
+import { Dispatch, SetStateAction, useState } from "react";
 import { FiEye } from "react-icons/fi";
 import { toast } from "sonner";
+import BlogImageupload from "./BlogImageupload";
+import EditComponent from "../../editComponent/EditComponent";
+import EditInputArray from "../../editArrayComponent/EditInputArray";
 
 const MyBlogDetails = ({ data }: { data: TBlogProfile }) => {
   const blogTitletrimmed =
@@ -22,6 +23,15 @@ const MyBlogDetails = ({ data }: { data: TBlogProfile }) => {
     minute: "2-digit",
     hour12: true,
   });
+
+  const [status, setStatus] = useState(data?.status ?? "");
+  const [isstatusEditing, setIsStatusEditing] = useState(false);
+
+  const [title, setTitle] = useState<string>(data?.title ?? "");
+  const [isTitleEditing, setIsTitleEditing] = useState(false);
+
+  const [content, setContent] = useState(data?.content ?? "");
+  const [isEditingContent, setIsEditingContent] = useState(false);
 
   const handleDelete = async (
     setLoading: Dispatch<SetStateAction<boolean>>,
@@ -50,27 +60,54 @@ const MyBlogDetails = ({ data }: { data: TBlogProfile }) => {
     setLoading(true);
   };
 
-  const handleChange = async (
-    option: BlogStatus,
-    setDropdownOpen: Dispatch<SetStateAction<boolean>>
+  const handleSubmit = async (
+    field: string,
+    addOptions: string[] | [],
+    removeOptions: string[]
   ) => {
-    if (!option) {
-      toast.error("falid to update status", { duration: 3000 });
-      return;
+    const updatedData: Partial<TUpdateBlog> = {};
+    if (field === "title") {
+      const trimedValue = title.trim();
+      if (trimedValue === data?.title) {
+        toast.error("nothing to update", { duration: 3000 });
+        return;
+      } else {
+        updatedData.title = trimedValue;
+      }
     }
-    if (status === option) {
-      toast.error(`status is already ${status}`, { duration: 3000 });
-      return;
+    if (field === "content") {
+      const trimedValue = content.trim();
+      if (trimedValue === data?.content) {
+        toast.error("nothing to update", { duration: 3000 });
+        return;
+      } else {
+        updatedData.content = trimedValue;
+      }
     }
-    const blogData = {
-      status: option,
-    };
-    const toastId = toast.loading("updating status...");
+    if (field === "status") {
+      if (status === data?.status) {
+        toast.error("nothing to update", { duration: 3000 });
+        return;
+      } else {
+        updatedData.status = status;
+      }
+    }
+    if (field === "tags") {
+      if (addOptions?.length > 0) {
+        updatedData.addTags = addOptions as string[];
+      }
+      if (removeOptions.length > 0) {
+        updatedData.removeTags = removeOptions as string[];
+      }
+    }
+    const toastId = toast.loading("blog info updating");
     try {
-      const result = await updateBlog(data?._id, blogData);
+      const result = await updateBlog(data?._id, updatedData);
       if (result?.success) {
         toast.success(result?.message, { id: toastId, duration: 3000 });
-        setDropdownOpen(false);
+        setIsTitleEditing(false);
+        setIsEditingContent(false);
+        setIsStatusEditing(false);
       } else {
         toast.error(result?.message, { id: toastId, duration: 3000 });
       }
@@ -78,18 +115,12 @@ const MyBlogDetails = ({ data }: { data: TBlogProfile }) => {
       console.log(error);
     }
   };
+
   return (
     <section className="bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-shadow duration-300 rounded-xl overflow-hidden w-full md:w-[90%] lg:w-[70%] mx-auto p-4 space-y-4">
-      <div className="relative w-full h-[200px] md:h-[500px] overflow-hidden rounded-lg bg-white/65">
-        {data?.coverImage && (
-          <Image
-            src={data?.coverImage}
-            alt="Cover Image"
-            fill
-            className="object-cover hover:scale-105 transition-transform duration-300"
-          />
-        )}
-      </div>
+      {data?.coverImage && (
+        <BlogImageupload image={data?.coverImage} id={data?._id} />
+      )}
 
       <div className="flex flex-col md:flex-row md:justify-between space-y-4 md:space-y-0">
         <div className="flex flex-col text-sm text-gray-600 dark:text-gray-300 gap-2">
@@ -97,20 +128,39 @@ const MyBlogDetails = ({ data }: { data: TBlogProfile }) => {
             📅 {creationDate}, {creationTime}
           </p>
         </div>
-        <div className="flex justify-between md:block">
-          <div className="md:hidden">
-            <StatusDropdown
-              status={data?.status as BlogStatus}
-              options={["published", "archived"]}
-              handleChange={handleChange}
-            />
-          </div>
-        </div>
-        <div className="hidden md:block">
-          <StatusDropdown
-            status={data?.status as BlogStatus}
-            options={["published", "archived"]}
-            handleChange={handleChange}
+        <div>
+          {isstatusEditing ? (
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value as BlogStatus)}
+              className=" px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-gray-700"
+            >
+              {["archived", "published"].map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <div className="flex">
+              <span
+                className={` border border-seconday px-2 py-1 rounded-full ${
+                  status === "published"
+                    ? "bg-secondary text-primary"
+                    : "bg-blue-700 text-white"
+                }`}
+              >
+                {data?.status}
+              </span>
+            </div>
+          )}
+          <EditComponent
+            setValue={setStatus}
+            isEditing={isstatusEditing}
+            setIsEditing={setIsStatusEditing}
+            value={data?.status as BlogStatus}
+            handleSubmit={handleSubmit}
+            field="status"
           />
         </div>
         <div className="flex md:block">
@@ -120,30 +170,89 @@ const MyBlogDetails = ({ data }: { data: TBlogProfile }) => {
           </p>
         </div>
       </div>
+
       {data?.tags && data.tags.length > 0 && (
         <div className="flex flex-wrap gap-2 pt-2">
-          {data.tags.map((tag, idx) => (
-            <span
-              key={idx}
-              className="px-3 py-1 bg-secondary text-primary  md:text-xs rounded-full font-medium"
-            >
-              #{tag}
-            </span>
-          ))}
+          {data?.tags.length && (
+            <EditInputArray
+              value={data?.tags as string[]}
+              handleSubmit={handleSubmit}
+              label="tags"
+            />
+          )}
         </div>
       )}
+
       <div className="space-y-2">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-          {data?.title}
-        </h2>
-        <p className="text-gray-700 dark:text-gray-200 text-lg">
-          {data?.content}
-        </p>
+        <div>
+          {isTitleEditing ? (
+            <input
+              type="text"
+              value={title}
+              max={50}
+              onChange={(e) => {
+                const value = e.target.value;
+                setTitle(value);
+              }}
+              className="px-2 py-1 border rounded-md dark:bg-gray-800 dark:text-white dark:border-gray-600"
+            />
+          ) : (
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+              {data?.title}
+            </h2>
+          )}
+          <EditComponent
+            setValue={setTitle}
+            isEditing={isTitleEditing}
+            setIsEditing={setIsTitleEditing}
+            value={data?.title as string}
+            handleSubmit={handleSubmit}
+            field="title"
+          />
+        </div>
+        <div>
+          {isEditingContent ? (
+            <div>
+              <textarea
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                minLength={30}
+                maxLength={5000}
+                rows={5}
+                cols={60}
+                className={`px-2 py-1 border rounded-md outline-none ${
+                  content.length < 30
+                    ? "border-red-500 focus:ring-red-500"
+                    : "dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:ring-secondary"
+                }`}
+              />
+              {content.length < 30 && (
+                <p className="text-xs text-red-500 mt-1">
+                  ❌ content should be at least 30 character.
+                </p>
+              )}
+            </div>
+          ) : (
+            <p className="text-gray-700 dark:text-gray-200 text-lg">
+              {data?.content}
+            </p>
+          )}
+          <EditComponent
+            setValue={setContent}
+            isEditing={isEditingContent}
+            setIsEditing={setIsEditingContent}
+            value={data?.content as string}
+            handleSubmit={handleSubmit}
+            field="content"
+          />
+        </div>
       </div>
       <DeletionModal
         name={blogTitletrimmed}
         collection="Blogs"
         handleDelete={handleDelete}
+        title="Blog Deletion"
+        buttonName="Delete Blog"
       />
     </section>
   );

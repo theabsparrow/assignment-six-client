@@ -2,7 +2,7 @@
 
 import DeletionModal from "@/components/statusDropdown/DeletionModal";
 import StatusDropdown from "@/components/statusDropdown/StatusDropdown";
-import { deleteBlog, updateBlog } from "@/services/blogService";
+import { deleteBlog, updateBlogStatus } from "@/services/blogService";
 import { BlogStatus, TBlogProfile } from "@/types/blogTypes";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,6 +13,7 @@ import { FiEye } from "react-icons/fi";
 const BlogProfile = ({ data }: { data: TBlogProfile }) => {
   const blogTitletrimmed =
     data?.title.length > 40 ? data?.title.slice(0, 40) + "..." : data?.title;
+  const status = data?.status;
   const date = new Date(data?.createdAt);
   const creationDate = date.toLocaleDateString("en-GB", {
     day: "numeric",
@@ -69,7 +70,7 @@ const BlogProfile = ({ data }: { data: TBlogProfile }) => {
     };
     const toastId = toast.loading("updating status...");
     try {
-      const result = await updateBlog(data?._id, blogData);
+      const result = await updateBlogStatus(data?._id, blogData);
       if (result?.success) {
         toast.success(result?.message, { id: toastId, duration: 3000 });
         setDropdownOpen(false);
@@ -83,16 +84,16 @@ const BlogProfile = ({ data }: { data: TBlogProfile }) => {
 
   return (
     <div className="bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-shadow duration-300 rounded-xl overflow-hidden w-full md:w-[90%] lg:w-[70%] mx-auto p-4 space-y-4">
-      <div className="relative w-full h-[200px] md:h-[500px] overflow-hidden rounded-lg bg-white/65">
-        {data?.coverImage && (
+      {data?.coverImage && (
+        <div className="relative w-full h-[200px] md:h-[500px] overflow-hidden rounded-lg bg-white/65">
           <Image
             src={data?.coverImage}
             alt="Cover Image"
             fill
             className="object-cover hover:scale-105 transition-transform duration-300"
           />
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="flex flex-col md:flex-row md:justify-between space-y-4 md:space-y-0">
         <div className="flex flex-col text-sm text-gray-600 dark:text-gray-300 gap-2">
@@ -156,6 +157,8 @@ const BlogProfile = ({ data }: { data: TBlogProfile }) => {
         name={blogTitletrimmed}
         collection="Blogs"
         handleDelete={handleDelete}
+        title="Blog Deletion"
+        buttonName="Delete Blog"
       />
     </div>
   );

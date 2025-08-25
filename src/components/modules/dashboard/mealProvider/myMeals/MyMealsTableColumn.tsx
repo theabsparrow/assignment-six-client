@@ -7,6 +7,7 @@ import { TStatus } from "@/types/subscriber.types";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
+import { TbCurrencyTaka } from "react-icons/tb";
 import { toast } from "sonner";
 
 export const MyMealsTableColums = (): ColumnDef<TMyMealsList>[] => [
@@ -32,7 +33,19 @@ export const MyMealsTableColums = (): ColumnDef<TMyMealsList>[] => [
   { accessorKey: "cuisineType", header: "Cuisine" },
   { accessorKey: "foodPreference", header: "Preference" },
   { accessorKey: "portionSize", header: "Size" },
-  { accessorKey: "price", header: "Price" },
+  {
+    id: "price",
+    header: "Price",
+    cell: ({ row }) => {
+      const price = row.original.price;
+      return (
+        <p className="flex items-center gap-1">
+          {" "}
+          <TbCurrencyTaka /> {price ? price.toFixed(2) : "0.00"}
+        </p>
+      );
+    },
+  },
   {
     id: "rating",
     header: "Rating",

@@ -115,10 +115,12 @@ const BlogComponent = ({
             Search
           </button>
         </form>
-        {(role === USER_ROLE.admin || role === USER_ROLE.mealProvider) && (
+        {(role === USER_ROLE.admin ||
+          role === USER_ROLE.mealProvider ||
+          role === USER_ROLE.customer) && (
           <button
             onClick={() => setOpen(true)}
-            className="bg-secondary hover:bg-white dark:bg-primary dark:text-secondary dark:hover:bg-green-700 border border-primary text-primary font-semibold px-4 py-2 rounded-md shadow-md transition"
+            className="bg-secondary hover:bg-white dark:bg-primary dark:text-secondary dark:hover:bg-green-700 border border-primary text-primary font-semibold px-4 py-2 rounded-md shadow-md transition cursor-pointer"
           >
             Create Blog
           </button>

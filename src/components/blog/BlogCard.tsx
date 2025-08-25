@@ -12,14 +12,16 @@ const BlogCard = ({ blog }: { blog: TBlog }) => {
   }).format(new Date(blog?.createdAt));
   return (
     <div className="bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-shadow duration-300 rounded-xl overflow-hidden w-full md:w-[90%] lg:w-[70%] mx-auto p-4 space-y-4">
-      <div className="relative w-full h-[200px] md:h-[500px] overflow-hidden rounded-lg">
-        <Image
-          src={blog?.coverImage}
-          alt="Cover Image"
-          fill
-          className="object-cover hover:scale-105 transition-transform duration-300"
-        />
-      </div>
+      {blog?.coverImage && (
+        <div className="relative w-full h-[200px] md:h-[500px] overflow-hidden rounded-lg">
+          <Image
+            src={blog?.coverImage}
+            alt="Cover Image"
+            fill
+            className="object-cover hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+      )}
       <div className="flex flex-col md:flex-row md:justify-between space-y-2 md:space-y-0">
         <div className="flex flex-col  text-sm text-gray-600 dark:text-gray-300">
           <p>📅 {formattedDate}</p>
@@ -39,7 +41,7 @@ const BlogCard = ({ blog }: { blog: TBlog }) => {
               key={idx}
               className="px-3 py-1 bg-secondary text-primary rounded-full font-medium"
             >
-              #{tag}
+              {tag}
             </span>
           ))}
         </div>

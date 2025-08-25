@@ -28,10 +28,6 @@ const BlogForm = ({
     criteriaMode: "all",
   });
   const onSubmit = async (data: TBlogPost) => {
-    if (!imageFile) {
-      toast.error("you need to upload an image also", { duration: 3000 });
-      return;
-    }
     if (data?.tags) {
       const tags = data?.tags as string;
       const tagsArray = tags
@@ -42,11 +38,14 @@ const BlogForm = ({
       data.tags = tagsArray;
     }
     try {
-      const mealImage = imageFile ? await imageUpload(imageFile) : undefined;
-      if (!mealImage) {
-        toast.error("faild to upload image", { duration: 3000 });
+      if (imageFile) {
+        const mealImage = await imageUpload(imageFile);
+        if (!mealImage) {
+          toast.error("faild to upload image", { duration: 3000 });
+        }
+        data.coverImage = mealImage as string;
       }
-      data.coverImage = mealImage as string;
+
       const result = await createBlog(data);
       if (result?.success) {
         toast.success(result?.message, { duration: 3000 });
@@ -106,9 +105,7 @@ const BlogForm = ({
             />
           ) : (
             <div>
-              <p>
-                Photo uploader <span className="text-red-500">*</span>
-              </p>
+              <p>Photo uploader (Optional)</p>
               <ImageUploader
                 setImageFile={setImageFile}
                 setImagePreview={setImagePreview}

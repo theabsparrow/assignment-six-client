@@ -34,6 +34,7 @@ import { TAlergies } from "@/types/customerRegistration";
 import { allergyOptions } from "@/components/modules/auth/register/register.const";
 import EditInputArray from "@/components/modules/editArrayComponent/EditInputArray";
 import DeletionModal from "@/components/statusDropdown/DeletionModal";
+import { TbCurrencyTaka } from "react-icons/tb";
 
 const MyMealDetails = ({ data }: { data: TMyMealDetails }) => {
   const date = new Date(data?.createdAt);
@@ -141,6 +142,7 @@ const MyMealDetails = ({ data }: { data: TMyMealDetails }) => {
         setIsSizeEditing(false);
       }
     }
+
     if (field === "Available Days") {
       if (addOptions?.length > 0) {
         updatedData.addAvailableDays = addOptions as TCookingDay[];
@@ -461,10 +463,11 @@ const MyMealDetails = ({ data }: { data: TMyMealDetails }) => {
                   className="px-2 py-1 border rounded-md w-44 dark:bg-gray-800 dark:text-white dark:border-gray-600"
                 />
               ) : (
-                <p className="text-lg font-bold text-gray-800 dark:text-gray-200">
-                  Price:{" "}
-                  <span className="bg-indigo-100 text-indigo-800 dark:bg-indigo-700 dark:text-indigo-100 px-3 py-1 rounded-full">
-                    ৳{data?.price ? data.price.toFixed(2) : "0.00"}
+                <p className="text-lg font-bold text-gray-800 dark:text-gray-200 flex items-center">
+                  <span>Price:</span>
+                  <span className="bg-indigo-100 text-indigo-800 dark:bg-indigo-700 dark:text-indigo-100 px-3 py-1 rounded-full flex items-center gap-1">
+                    <TbCurrencyTaka />{" "}
+                    {data?.price ? data.price.toFixed(2) : "0.00"}
                   </span>
                 </p>
               )}

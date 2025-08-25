@@ -1,7 +1,7 @@
 "use client";
 import ConfirmDelation from "@/components/confirmDeletion/ConfirmDeletion";
 import TableDropDown from "@/components/tableDropdown/TableDropDown";
-import { deleteBlog, updateBlog } from "@/services/blogService";
+import { deleteBlog, updateBlogStatus } from "@/services/blogService";
 import { BlogStatus, TAllBlogListing } from "@/types/blogTypes";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
@@ -60,9 +60,10 @@ export const blogTableColumn = (): ColumnDef<TAllBlogListing>[] => [
         const data = {
           status: option,
         };
+        console.log(data);
         const toastId = toast.loading("updating status...");
         try {
-          const result = await updateBlog(id, data);
+          const result = await updateBlogStatus(id, data);
           if (result?.success) {
             toast.success(result?.message, { id: toastId, duration: 3000 });
             setDropdownOpen(false);
