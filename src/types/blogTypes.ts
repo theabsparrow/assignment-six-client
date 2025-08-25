@@ -53,3 +53,12 @@ export type TBlogProfile = {
   title: string;
   view: number;
 };
+
+export type TMyBlogs = {
+  _id: string;
+  createdAt: string;
+  excerpts: string;
+  status: BlogStatus;
+  title: string;
+  view: number;
+};

@@ -95,6 +95,44 @@ export const getAllBlogsList = async (query?: {
   }
 };
 
+export const getMyBlogs = async (query?: {
+  [key: string]: string | string[] | number | undefined;
+}) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refreshToken")!.value;
+  try {
+    const params = new URLSearchParams();
+    if (query?.searchTerm) {
+      params.append("searchTerm", query?.searchTerm.toString());
+    }
+    if (query?.status) {
+      params.append("status", query?.status.toString());
+    }
+    if (query?.page) {
+      params.append("page", query?.page.toString());
+    }
+    if (query?.sort) {
+      params.append("sort", query?.sort.toString());
+    }
+    const res = await fetch(
+      `${config.next_public_base_api}/blog/my-blogs?limit=20&${params}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+        next: {
+          tags: ["Blogs"],
+        },
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
 export const getASingleBlog = async (id: string) => {
   try {
     const res = await fetch(`${config.next_public_base_api}/blog/blog/${id}`, {

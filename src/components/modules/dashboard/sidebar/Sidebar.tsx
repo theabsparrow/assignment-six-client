@@ -14,6 +14,7 @@ import {
 } from "@/constant";
 import { LogOut, Menu, X } from "lucide-react";
 import { logout } from "@/services/authService";
+import DarkModeToggle from "@/components/shared/DarkModeToggle";
 
 const Sidebar = ({ role }: { role: string }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -132,6 +133,7 @@ const Sidebar = ({ role }: { role: string }) => {
                 </span>
                 <span>Logout</span>
               </button>
+              <DarkModeToggle />
             </div>
           </nav>
         </aside>
@@ -156,7 +158,7 @@ const Sidebar = ({ role }: { role: string }) => {
           </button>
         </div>
         {isOpen && (
-          <div className="md:hidden bg-gray-200 dark:bg-gray-900 space-y-2 absolute top-0 right-1 px-3 shadow-2xl h-screen flex flex-col  z-30 py-4">
+          <div className="md:hidden bg-gray-200 dark:bg-gray-900 space-y-2 absolute top-0 right-1 px-3 shadow-2xl h-screen flex flex-col  z-30 py-2">
             <div className="absolte -top-20">
               <button
                 className="text-2xl  text-gray-700 z-20"
@@ -257,6 +259,7 @@ const Sidebar = ({ role }: { role: string }) => {
                   </span>
                   <span>Logout</span>
                 </button>
+                <DarkModeToggle />
               </div>
             </div>
           </div>

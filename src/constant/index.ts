@@ -27,11 +27,26 @@ export const mealProviderItems = [
   { name: "Add Meal", href: "/mealProvider/addMeal", icon: "➕" },
   { name: "My Meals", href: "/mealProvider/myMeals", icon: "🍛" },
   { name: "My Orders", href: "/mealProvider/myOrders", icon: "📦" },
-  { name: "My Blogs", href: "/mealProvider/myBlogs", icon: "✍️" },
+  { name: "My Blogs", href: "/myBlogs", icon: "✍️" },
   {
     name: "My Subscriptions",
     href: "/subscription",
     icon: "🔄",
+  },
+  {
+    name: "All Meals",
+    href: "/meals",
+    icon: "🍽️",
+  },
+  {
+    name: "All Kitchens",
+    href: "/kitchen",
+    icon: "👨‍🍳",
+  },
+  {
+    name: "All Blogs",
+    href: "/blogs",
+    icon: "✍️",
   },
 ];
 export const customerItems = [
@@ -60,6 +75,7 @@ export const customerItems = [
     href: "/subscription",
     icon: "🔄",
   },
+  { name: "My Blogs", href: "/myBlogs", icon: "✍️" },
   {
     name: "All Meals",
     href: "/meals",
@@ -118,9 +134,5 @@ export const adminItems = [
     href: "/subscription",
     icon: "🔄",
   },
-  {
-    name: "My Blogs",
-    href: "/admin/myBlogs",
-    icon: "✍️",
-  },
+  { name: "My Blogs", href: "/myBlogs", icon: "✍️" },
 ];

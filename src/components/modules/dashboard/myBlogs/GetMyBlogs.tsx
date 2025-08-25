@@ -1,20 +1,20 @@
 "use client";
 
 import { TMetaDataProps } from "@/types";
-import { BlogStatus, TAllBlogListing } from "@/types/blogTypes";
+import { BlogStatus, TMyBlogs } from "@/types/blogTypes";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { blogTableColumn } from "./BlogTableColumn";
+import { myBlogTableCOlumn } from "./MyBlogsTableColumn";
 import Table from "@/components/table/Table";
 import Pagination from "@/components/pagination/Pagination";
 import { IoIosArrowDown } from "react-icons/io";
 
-const GetAllBlogs = ({
+const GetMyBlogs = ({
+  myBlogs,
   meta,
-  result,
 }: {
+  myBlogs: TMyBlogs[];
   meta: TMetaDataProps;
-  result: TAllBlogListing[];
 }) => {
   const router = useRouter();
   const pathName = usePathname();
@@ -43,10 +43,10 @@ const GetAllBlogs = ({
     router.push(`${pathName}?${params.toString()}`, { scroll: false });
   };
 
-  const columns = blogTableColumn();
+  const columns = myBlogTableCOlumn();
   return (
     <>
-      {!(result as TAllBlogListing[])?.length && (
+      {!(myBlogs as TMyBlogs[])?.length && (
         <div className="flex flex-col items-center justify-center py-10 px-4 bg-gradient-to-r from-pink-100 to-blue-100 rounded-xl shadow-md">
           <h1 className="text-2xl font-semibold text-gray-800 text-center">
             No Blogs Available Right Now
@@ -58,7 +58,7 @@ const GetAllBlogs = ({
           <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 font-medium mt-1">
             Total Blogs:{" "}
             <span className="text-primary font-semibold">
-              {result?.length ?? 0}
+              {myBlogs?.length ?? 0}
             </span>
           </p>
 
@@ -215,11 +215,11 @@ const GetAllBlogs = ({
             </div>
           )}
         </div>
-        <Table data={result} columns={columns} />
+        <Table data={myBlogs} columns={columns} />
         <Pagination totalPage={meta?.totalPage} />
       </section>
     </>
   );
 };
 
-export default GetAllBlogs;
+export default GetMyBlogs;
