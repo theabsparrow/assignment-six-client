@@ -8,7 +8,7 @@ const EditArray = <T,>({
   valueOptions,
   handleSubmit,
   label,
-  styleClass = "bg-secondary text-primary px-3 py-1 rounded-full text-sm flex items-center gap-2 ",
+  styleClass = "bg-secondary text-primary dark:bg-gray-700 dark:text-white px-3 py-1 rounded-full text-sm flex items-center gap-2 ",
   style,
 }: TArrayEditProps<T>) => {
   const [editing, setEditing] = useState(false);
@@ -63,7 +63,9 @@ const EditArray = <T,>({
   return (
     <div>
       <div className={style}>
-        <h4 className="text-lg font-semibold text-primary">{label}:</h4>
+        <h4 className="text-lg font-semibold text-primary dark:text-white">
+          {label}:
+        </h4>
         <div className="flex items-center gap-3">
           <button
             onClick={handleEditToggle}

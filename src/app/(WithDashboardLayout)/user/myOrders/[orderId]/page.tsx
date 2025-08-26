@@ -1,11 +1,19 @@
+import OrderDetails from "@/components/modules/dashboard/orderDetails/OrderDetails";
+import { getASingleOrder } from "@/services/orderService";
+
 const CustomerOrderDetails = async ({
   params,
 }: {
   params: Promise<{ orderId: string }>;
 }) => {
   const { orderId } = await params;
-  console.log(orderId);
-  return <div>this is order id page</div>;
+  const { data } = await getASingleOrder(orderId);
+
+  return (
+    <section className="w-full">
+      <OrderDetails order={data} />
+    </section>
+  );
 };
 
 export default CustomerOrderDetails;

@@ -32,21 +32,23 @@ const Sidebar = ({ role }: { role: string }) => {
   return (
     <>
       <div className="hidden md:flex ">
-        <aside className="sticky top-0 z-10 w-64 bg-gray-300 text-white transform h-screen flex flex-col justify-between pb-6">
-          <div className="px-8 py-4 ">
+        <aside className="sticky top-0 z-10 w-64 bg-gray-300 dark:bg-gray-800 transform min-h-screen flex flex-col justify-between py-6">
+          <div className="relative w-60 h-12 px-8 ">
             <Link href="/">
               <Image
                 src="/logo.png"
                 alt="logo"
-                width={200}
-                height={200}
-                className="w-[10vw]"
+                fill
+                className="object-contain"
+                priority
               />
             </Link>
           </div>
 
           <nav className=" px-4">
-            <h1 className="px-4 text-sm text-primary font-bold">MENU</h1>
+            <h1 className="px-4 text-sm text-primary dark:text-secondary font-bold">
+              MENU
+            </h1>
             <div className="flex flex-col gap-1">
               {role === USER_ROLE.mealProvider &&
                 mealProviderItems.map((item) => {
@@ -58,7 +60,7 @@ const Sidebar = ({ role }: { role: string }) => {
                       className={`flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 ${
                         active
                           ? "bg-primary text-white shadow-md"
-                          : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                          : "text-gray-800 hover:bg-primary hover:text-white hover:shadow dark:text-gray-200"
                       }`}
                     >
                       <span className="text-xl">{item.icon}</span>
@@ -77,7 +79,7 @@ const Sidebar = ({ role }: { role: string }) => {
                       className={`flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 ${
                         active
                           ? "bg-primary text-white shadow-md"
-                          : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                          : "text-gray-800 hover:bg-primary hover:text-white hover:shadow dark:text-gray-200"
                       }`}
                     >
                       <span className="text-xl">{item.icon}</span>
@@ -96,7 +98,7 @@ const Sidebar = ({ role }: { role: string }) => {
                       className={`flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 ${
                         active
                           ? "bg-primary text-white shadow-md"
-                          : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                          : "text-gray-800 hover:bg-primary hover:text-white hover:shadow dark:text-gray-200"
                       }`}
                     >
                       <span className="text-xl">{item.icon}</span>
@@ -108,7 +110,9 @@ const Sidebar = ({ role }: { role: string }) => {
           </nav>
 
           <nav className=" px-4 ">
-            <h1 className="px-4 text-sm text-primary font-bold">GENERAL</h1>
+            <h1 className="px-4 text-sm text-primary dark:text-secondary font-bold">
+              GENERAL
+            </h1>
             <div className="flex flex-col gap-1">
               {navItems.map((item) => (
                 <Link
@@ -117,7 +121,7 @@ const Sidebar = ({ role }: { role: string }) => {
                   className={`flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 ${
                     pathname === item.href
                       ? "bg-primary text-white shadow-md"
-                      : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                      : "text-gray-800 hover:bg-primary hover:text-white hover:shadow dark:text-gray-200"
                   }`}
                 >
                   <span className="text-xl">{item.icon}</span>
@@ -139,19 +143,21 @@ const Sidebar = ({ role }: { role: string }) => {
         </aside>
       </div>
 
-      <div className="flex justify-between items-center sticky top-0 z-20 md:hidden bg-gray-200 dark:bg-gray-900 shadow lg px-4">
-        <Link href="/">
-          <Image
-            src="/logo.png"
-            alt="logo"
-            width={100}
-            height={100}
-            className="w-[40vw]"
-          />
-        </Link>
+      <div className="flex md:hidden justify-between items-center sticky top-0 z-20  bg-gray-200 dark:bg-gray-900 shadow lg px-4">
+        <div className="relative w-36 md:w-44 h-12">
+          <Link href="/">
+            <Image
+              src="/logo.png"
+              alt="logo"
+              fill
+              className="object-contain"
+              priority
+            />
+          </Link>
+        </div>
         <div className="absolte top-1 right-0">
           <button
-            className="text-2xl  text-gray-700 p-4 z-20"
+            className="text-2xl text-gray-700 dark:text-white p-4 z-20"
             onClick={() => setIsOpen(true)}
           >
             <Menu size={25} />
@@ -161,7 +167,7 @@ const Sidebar = ({ role }: { role: string }) => {
           <div className="md:hidden bg-gray-200 dark:bg-gray-900 space-y-2 absolute top-0 right-1 px-3 shadow-2xl h-screen flex flex-col  z-30 py-2">
             <div className="absolte -top-20">
               <button
-                className="text-2xl  text-gray-700 z-20"
+                className="text-2xl text-gray-700 dark:text-white z-20"
                 onClick={() => setIsOpen(false)}
               >
                 <X size={25} />
@@ -170,7 +176,9 @@ const Sidebar = ({ role }: { role: string }) => {
 
             <div className="space-y-10">
               <div className="space-y-2">
-                <h1 className="px-4 text-sm text-primary font-bold">MENU</h1>
+                <h1 className="px-4 text-sm text-primary dark:text-secondary font-bold">
+                  MENU
+                </h1>
                 {role === USER_ROLE.mealProvider &&
                   mealProviderItems.map((link) => {
                     const active = pathname.startsWith(link.href);
@@ -182,7 +190,7 @@ const Sidebar = ({ role }: { role: string }) => {
                         className={`flex items-center gap-3 px-3 py-1 rounded-lg font-medium transition-all duration-200 ${
                           active
                             ? "bg-primary text-white shadow-md"
-                            : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                            : "text-gray-800 hover:bg-primary hover:text-white hover:shadow dark:text-gray-200"
                         }`}
                       >
                         <span>{link.icon}</span>
@@ -198,12 +206,12 @@ const Sidebar = ({ role }: { role: string }) => {
                       <Link
                         key={link.name}
                         href={link.href}
+                        onClick={() => setIsOpen(false)}
                         className={`flex items-center gap-3 px-3 py-1 rounded-lg font-medium transition-all duration-200 ${
                           active
                             ? "bg-primary text-white shadow-md"
-                            : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                            : "text-gray-800 hover:bg-primary hover:text-white hover:shadow dark:text-gray-200"
                         }`}
-                        onClick={() => setIsOpen(false)}
                       >
                         <span>{link.icon}</span>
                         <span>{link.name}</span>
@@ -218,12 +226,12 @@ const Sidebar = ({ role }: { role: string }) => {
                       <Link
                         key={link.name}
                         href={link.href}
+                        onClick={() => setIsOpen(false)}
                         className={`flex items-center gap-3 px-3 py-1 rounded-lg font-medium transition-all duration-200 ${
                           isActive
                             ? "bg-primary text-white shadow-md"
-                            : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                            : "text-gray-800 hover:bg-primary hover:text-white hover:shadow dark:text-gray-200"
                         }`}
-                        onClick={() => setIsOpen(false)}
                       >
                         <span>{link.icon}</span>
                         <span>{link.name}</span>
@@ -233,7 +241,9 @@ const Sidebar = ({ role }: { role: string }) => {
               </div>
 
               <div className="space-y-2">
-                <h1 className="px-4 text-sm text-primary font-bold">GENERAL</h1>
+                <h1 className="px-4 text-sm text-primary dark:text-secondary font-bold">
+                  GENERAL
+                </h1>
                 {navItems.map((link) => (
                   <Link
                     key={link.name}
@@ -241,7 +251,7 @@ const Sidebar = ({ role }: { role: string }) => {
                     className={`flex items-center gap-3 px-3 py-1 rounded-lg font-medium transition-all duration-200 ${
                       pathname === link.href
                         ? "bg-primary text-white shadow-md"
-                        : "text-gray-800 hover:bg-primary hover:text-white hover:shadow"
+                        : "text-gray-800 hover:bg-primary hover:text-white hover:shadow dark:text-gray-200"
                     }`}
                     onClick={() => setIsOpen(false)}
                   >
@@ -251,7 +261,7 @@ const Sidebar = ({ role }: { role: string }) => {
                 ))}
 
                 <button
-                  className=" w-full flex items-center gap-3 px-3 py-1 rounded-lg font-medium transition-all duration-200 text-gray-800 hover:bg-primary hover:text-white hover:shadow cursor-pointer"
+                  className=" w-full flex items-center gap-3 px-3 py-1 rounded-lg font-medium transition-all duration-200 text-gray-800 hover:bg-primary hover:text-white hover:shadow dark:text-gray-200 cursor-pointer"
                   onClick={handleLogout}
                 >
                   <span className="text-xl">

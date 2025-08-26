@@ -74,6 +74,29 @@ export const getMyOrders = async (query?: {
   }
 };
 
+export const getASingleOrder = async (id: string) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refreshToken")!.value;
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/order/single-order/${id}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+        next: {
+          tags: ["myOrder"],
+        },
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
 export const updateOrderStatus = async (id: string, data: Partial<TOrder>) => {
   const token = await getValidToken();
   try {

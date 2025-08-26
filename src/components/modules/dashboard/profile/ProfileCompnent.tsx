@@ -155,7 +155,7 @@ const ProfileCompnent = ({
   return (
     <section className="space-y-4 w-full">
       {/* personal info*/}
-      <div className="flex flex-col md:flex-row items-center gap-6 p-6 bg-gradient-to-r from-indigo-100 to-blue-100 dark:from-indigo-900 dark:to-blue-900 shadow-lg rounded-2xl w-full">
+      <div className="flex flex-col md:flex-row items-center gap-6 p-6 bg-gradient-to-r from-indigo-100 to-blue-100 dark:from-gray-800 dark:to-gray-700 shadow-lg rounded-2xl w-full">
         <ImageSection
           image={userdata?.profileImage as string}
           role={user?.role}
@@ -279,36 +279,38 @@ const ProfileCompnent = ({
 
       <div className="flex flex-col md:flex-row md:justify-between space-y-4 md:space-y-0 md:gap-10">
         {/* contact info */}
-        <div className="w-full p-6 bg-gradient-to-r from-blue-100 to-indigo-200 shadow-lg rounded-xl space-y-4">
+        <div className="w-full p-6 bg-gradient-to-r from-blue-100 to-indigo-200 dark:from-gray-800 dark:to-gray-700 shadow-lg rounded-xl space-y-4">
           <div className="flex justify-between items-center ">
-            <h3 className="text-2xl font-semibold "> Contact</h3>
+            <h3 className="text-2xl font-semibold dark:text-gray-100">
+              {" "}
+              Contact
+            </h3>
             <Link
-              className="bg-secondary  px-2 py-1 rounded-xl text-primary hover:bg-primary hover:text-white border border-primary dark:bg-gray-500 duration-500"
+              className="bg-secondary px-2 py-1 rounded-xl text-primary hover:bg-primary hover:text-white border border-primary dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-primary dark:hover:text-white duration-500"
               href="/settings"
             >
-              {" "}
-              Settings{" "}
+              Settings
             </Link>
           </div>
-          <p className="flex items-center gap-3 text-lg font-medium text-gray-800 bg-white px-4 py-3 rounded-lg shadow-md hover:bg-blue-50 transition duration-300 ease-in-out">
+          <p className="flex items-center gap-3 text-lg font-medium text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800 px-4 py-3 rounded-lg shadow-md hover:bg-blue-50 dark:hover:bg-gray-700 transition duration-300 ease-in-out">
             <FaEnvelope className="text-blue-500" />
             <span>{user?.email}</span>
           </p>
-          <p className="flex items-center gap-3 text-lg font-medium text-gray-800 bg-white px-4 py-3 rounded-lg shadow-md hover:bg-green-50 transition duration-300 ease-in-out">
+          <p className="flex items-center gap-3 text-lg font-medium text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800 px-4 py-3 rounded-lg shadow-md hover:bg-green-50 dark:hover:bg-gray-700 transition duration-300 ease-in-out">
             <FaPhoneAlt className="text-green-500" />
             <span>{user?.phone}</span>
           </p>
 
-          <div className=" bg-white px-4 py-3 flex items-center justify-between rounded-lg shadow-md hover:bg-yellow-50 transition duration-300 ease-in-out">
+          <div className="bg-white dark:bg-gray-800 px-4 py-3 flex items-center justify-between rounded-lg shadow-md hover:bg-yellow-50 dark:hover:bg-gray-700 transition duration-300 ease-in-out">
             {isAddressEditing ? (
               <input
                 type="text"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                className="px-2 py-1 border rounded-md w-44"
+                className="px-2 py-1 border rounded-md w-44 dark:bg-gray-700 dark:text-gray-200"
               />
             ) : (
-              <p className="flex items-center gap-3 text-lg font-medium text-gray-800 ">
+              <p className="flex items-center gap-3 text-lg font-medium text-gray-800 dark:text-gray-200">
                 <FaMapMarkerAlt className="text-yellow-500" />
                 <span>{userdata?.address || "Not Provided"}</span>
               </p>
@@ -325,16 +327,18 @@ const ProfileCompnent = ({
         </div>
 
         {/* detailed information*/}
-        <div className="w-full p-6 bg-gradient-to-r from-teal-100 to-cyan-200 shadow-lg rounded-xl space-y-4">
+        <div className="w-full p-6 bg-gradient-to-r from-teal-100 to-cyan-200 dark:from-gray-800 dark:to-gray-700 shadow-lg rounded-xl space-y-4">
           <div className="flex justify-between items-center md:gap-20">
-            <h3 className="text-2xl font-semibold ">Details</h3>
+            <h3 className="text-2xl font-semibold dark:text-gray-100">
+              Details
+            </h3>
             {user?.role === USER_ROLE.mealProvider && (
               <div>
                 {!user?.verifiedWithEmail && !userdata?.hasKitchen ? (
                   <Modal label="create Kitchen" />
                 ) : (
                   <Link
-                    className="bg-secondary  px-2 py-1 rounded-xl text-primary hover:bg-primary hover:text-white border border-primary not-visited:dark:bg-gray-500 duration-500"
+                    className="bg-secondary px-2 py-1 rounded-xl text-primary hover:bg-primary hover:text-white border border-primary dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-primary dark:hover:text-white duration-500"
                     href="/mealProvider/myKitchen"
                   >
                     {userdata?.hasKitchen ? "View Kitchen" : "Create Kitchen"}
@@ -346,7 +350,7 @@ const ProfileCompnent = ({
               <div>
                 {user?.verifiedWithEmail ? (
                   <Link
-                    className="bg-secondary  px-2 py-1 rounded-xl text-primary hover:bg-primary hover:text-white border border-primary dark:bg-gray-500 duration-500"
+                    className="bg-secondary px-2 py-1 rounded-xl text-primary hover:bg-primary hover:text-white border border-primary dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-primary dark:hover:text-white duration-500"
                     href={`/user/createPlan `}
                   >
                     Create Plan
@@ -360,17 +364,17 @@ const ProfileCompnent = ({
 
           {user?.role === USER_ROLE.mealProvider && (
             <div className="space-y-4">
-              <div className="flex items-center gap-3 text-lg font-medium text-gray-800 bg-white px-4 py-3 rounded-lg shadow-md hover:bg-green-50 transition duration-300 ease-in-out">
+              <div className="flex items-center gap-3 text-lg font-medium text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800 px-4 py-3 rounded-lg shadow-md hover:bg-green-50 dark:hover:bg-gray-700 transition duration-300 ease-in-out">
                 <GiCookingGlove className="text-green-600" />
                 <span>Kitchen : {userdata?.hasKitchen ? "Yes" : "No"}</span>
               </div>
-              <div className="flex items-center gap-3 text-lg font-medium text-gray-800 bg-white px-4 py-3 rounded-lg shadow-md hover:bg-teal-50 transition duration-300 ease-in-out">
+              <div className="flex items-center gap-3 text-lg font-medium text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800 px-4 py-3 rounded-lg shadow-md hover:bg-teal-50 dark:hover:bg-gray-700 transition duration-300 ease-in-out">
                 {isEditingExperience ? (
                   <input
                     type="number"
                     value={experience}
                     onChange={(e) => setExperience(Number(e.target.value))}
-                    className="w-20 px-2 py-1 border rounded-md outline-none"
+                    className="w-20 px-2 py-1 border rounded-md outline-none dark:bg-gray-700 dark:text-gray-200"
                   />
                 ) : (
                   <span>Experience: {userdata?.experienceYears} years</span>

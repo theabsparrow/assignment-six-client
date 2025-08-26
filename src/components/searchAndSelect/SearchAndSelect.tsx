@@ -54,7 +54,7 @@ const SearchAndSelect = <T extends string>({
         onClick={() => {
           setOpen(!open);
         }}
-        className="bg-secondary border border-primary text-primary p-2 flex items-center gap-4 rounded-lg cursor-pointer hover:bg-white duration-500"
+        className="bg-secondary border border-primary text-primary p-1 md:p-2 flex items-center gap-4 rounded-lg cursor-pointer hover:bg-white duration-500"
       >
         {value || "Select Cuisine "}
         <RiArrowDropDownLine

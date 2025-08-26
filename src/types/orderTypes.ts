@@ -1,4 +1,11 @@
-import { TCookingDay, TMealTime } from "./mealType";
+import { TGender } from "./customerRegistration";
+import {
+  FoodPreferenceOption,
+  TCookingDay,
+  TcuisineType,
+  TFoodCategory,
+  TMealTime,
+} from "./mealType";
 export type TOrderType = "once" | "regular";
 export type TDeliveryMode = "mealPlanner" | "manual";
 export type TOrderStatus =
@@ -43,5 +50,43 @@ export type TConfirmModal = {
   orderType: TOrderType | string;
   note?: string;
   deliveryAddress: string;
-  payment: "online" | "cash on delivery" | string;
+  payment: TPaymentOption | string;
+};
+
+type TKitchen = {
+  _id: string;
+  kitchenName: string;
+};
+type TCustomer = {
+  name: string;
+  address: string;
+  gender: TGender;
+};
+type TMeal = {
+  id: string;
+  title: string;
+  foodCategory: TFoodCategory;
+  cuisineType: TcuisineType;
+  foodPreference: FoodPreferenceOption;
+};
+
+export type TSingleOrder = {
+  _id: string;
+  createdAt: string;
+  deliveryAddress: string;
+  deliveryDays: TCookingDay[];
+  deliveryTime: TMealTime[];
+  deliveryMode: TDeliveryMode;
+  orderType: TOrderType;
+  payment: TPaymentOption;
+  quantity: number;
+  status: TOrderStatus;
+  totalPrice: number;
+  mealId: TMeal;
+  isActive?: boolean;
+  kitchenId?: TKitchen;
+  customerId?: TCustomer;
+  note?: string;
+  deliveredCount?: number;
+  endDate?: string;
 };

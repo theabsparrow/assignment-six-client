@@ -75,18 +75,20 @@ const Navbar = ({
           )}
         </div>
       </section>
-      <nav className="bg-gray-200 dark:bg-gray-900 shadow-xl sticky top-0 w-full z-50 transition duration-300 md:px-24 px-5 py-2 font-inter h-[10vh] ">
-        <div className="flex justify-between items-center h-[8vh] ">
+      <nav className="bg-gray-200 dark:bg-gray-900 shadow-xl sticky top-0 w-full z-50 transition duration-300 md:px-24 px-5 py-3 font-inter border">
+        <div className="flex justify-between items-center ">
           {/* Logo */}
-          <Link href="/">
-            <Image
-              className="w-[35vw] md:w-[10vw]"
-              src="/logo.png"
-              alt="logo"
-              width={500}
-              height={500}
-            />
-          </Link>
+          <div className="relative w-36 md:w-44 h-12">
+            <Link href="/">
+              <Image
+                src="/logo.png"
+                alt="logo"
+                fill
+                className="object-contain"
+                priority
+              />
+            </Link>
+          </div>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-6">
@@ -115,8 +117,8 @@ const Navbar = ({
                 href="/kitchen"
                 className={` transition text-lg px-2 py-1 rounded-lg font-semibold  ${
                   pathname.startsWith("/kitchen")
-                    ? "bg-secondary border border-primary "
-                    : "hover:bg-secondary hover:border hover:border-primary duration-300"
+                    ? "bg-secondary border border-primary text-gray-900"
+                    : "hover:bg-secondary hover:border hover:border-primary hover:text-gray-900 duration-300"
                 }`}
               >
                 Kitchen
@@ -158,7 +160,7 @@ const Navbar = ({
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden bg-gray-200 dark:bg-gray-900 px-4 py-2 absolute top-16 right-0 shadow-2xl  border-t-2 border-t-primary w-[50vw] rounded-b-md z-20">
+          <div className="md:hidden bg-gray-200 dark:bg-gray-900 py-2 absolute top-14 right-0 shadow-2xl  border-t-2 border-t-primary w-52 rounded-b-md z-20">
             {name && (
               <p className="flex items-center justify-between text-gray-700 dark:text-gray-200 pb-2 border-b border-b-gray-400  transition  ">
                 <span className="text-xl font-semibold text-primary dark:text-secondary">

@@ -42,9 +42,7 @@ const PasswordComponent = () => {
   return (
     <div className="border border-gray-400 px-10 py-5">
       <div className="flex flex-col">
-        <h3 className="text-2xl font-bold text-gray-700 text-center">
-          Password settings
-        </h3>
+        <h3 className="text-2xl font-bold text-center">Password settings</h3>
         {!open && (
           <button
             onClick={() => setOpen(true)}
@@ -84,14 +82,17 @@ const PasswordComponent = () => {
               validateMatch={watch("newPassword")}
             />
             <div>
-              <Link className="text-blue-700" href="/forgot-password">
+              <Link
+                className="text-blue-700 dark:text-secondary"
+                href="/forgot-password"
+              >
                 Forget Password?
               </Link>
             </div>
             <div className="flex gap-3">
               <button
                 type="submit"
-                className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+                className="bg-secondary text-primary px-4 py-2 rounded hover:bg-primary hover:text-white"
               >
                 {isSubmitting ? "Changing" : "Save"}
               </button>

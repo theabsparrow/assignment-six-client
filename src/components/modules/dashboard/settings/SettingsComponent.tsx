@@ -68,19 +68,15 @@ const SettingsComponent = ({ user }: { user: TSettingsInfo }) => {
   };
 
   return (
-    <section className="md:w-[70vw] mx-auto p-6 mt-10 bg-white shadow rounded-xl space-y-10">
-      <h2 className="text-3xl font-bold text-gray-800 text-center">
-        Account Settings
-      </h2>
+    <section className="md:w-[70vw] mx-auto p-6 mt-10 bg-white dark:bg-gray-800 shadow rounded-xl space-y-10">
+      <h2 className="text-3xl font-bold text-center">Account Settings</h2>
 
       <div className="border border-gray-400 px-10 py-5 space-y-4">
-        <h3 className="text-2xl font-bold text-gray-700 text-center">
-          Contact information
-        </h3>
+        <h3 className="text-2xl font-bold text-center">Contact information</h3>
         <div className="flex flex-col md:flex-row items-start gap-4 space-y-4">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
-              <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-200 flex items-center gap-2">
+              <h3 className="text-lg font-semibold flex items-center gap-2">
                 Email
                 <span
                   className={`text-sm font-medium px-2 py-0.5 rounded-full border ${
@@ -132,8 +128,8 @@ const SettingsComponent = ({ user }: { user: TSettingsInfo }) => {
               ) : (
                 <>
                   <div className="flex justify-between items-center">
-                    <p className="text-base text-gray-700">
-                      <span className="text-gray-600">{user?.email}</span>
+                    <p>
+                      <span>{user?.email}</span>
                     </p>
                     <button
                       onClick={() => {
@@ -162,7 +158,7 @@ const SettingsComponent = ({ user }: { user: TSettingsInfo }) => {
                   <div className="bg-gray-100 dark:bg-gray-900 w-[90%] md:w-[35vw] p-6 rounded-xl shadow-lg relative transition-all duration-300">
                     <button
                       onClick={() => setOpen(false)}
-                      className="absolute top-3 right-3 text-gray-600 dark:text-gray-300 hover:text-red-500"
+                      className="absolute top-3 right-3 hover:text-red-500"
                     >
                       <FaTimes />
                     </button>
@@ -198,7 +194,7 @@ const SettingsComponent = ({ user }: { user: TSettingsInfo }) => {
             )}
 
             <div className="space md:w-xs">
-              <h3 className="text-lg font-semibold text-gray-700">Phone</h3>
+              <h3 className="text-lg font-semibold">Phone</h3>
               {isEditingPhone ? (
                 <div className="flex flex-col gap-3">
                   <InputPhone
@@ -219,7 +215,6 @@ const SettingsComponent = ({ user }: { user: TSettingsInfo }) => {
                     <button
                       onClick={() => {
                         reset({ phone: user?.phone });
-                        // setPhone(user?.phone as string);
                         setIsEditingPhone(!isEditingPhone);
                         setIsEditing(true);
                       }}
@@ -231,7 +226,7 @@ const SettingsComponent = ({ user }: { user: TSettingsInfo }) => {
                 </div>
               ) : (
                 <div className="flex justify-between items-center">
-                  <p className="text-gray-600">{user?.phone}</p>
+                  <p>{user?.phone}</p>
                   <button
                     onClick={() => {
                       setIsEditingPhone(!isEditingPhone);

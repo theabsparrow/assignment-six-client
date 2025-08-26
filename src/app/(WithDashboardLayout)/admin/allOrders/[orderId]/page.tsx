@@ -1,7 +1,7 @@
 import OrderDetails from "@/components/modules/dashboard/orderDetails/OrderDetails";
 import { getASingleOrder } from "@/services/orderService";
 
-const MealProviderOrderDetails = async ({
+const AdminOrderDeatils = async ({
   params,
 }: {
   params: Promise<{ orderId: string }>;
@@ -16,4 +16,4 @@ const MealProviderOrderDetails = async ({
   );
 };
 
-export default MealProviderOrderDetails;
+export default AdminOrderDeatils;

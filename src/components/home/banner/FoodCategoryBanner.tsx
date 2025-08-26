@@ -9,12 +9,12 @@ const FoodCategoryBanner = () => {
   return (
     <section
       style={{ backgroundImage: `url('/food-category.webp')` }}
-      className="relative min-h-[50vh] md:min-h-[85vh]  bg-center bg-cover bg-no-repeat  px-5 md:px-20 py-5 md:py-10 overflow-hidden flex"
+      className="relative min-h-[400px] md:min-h-[625px] bg-center bg-cover bg-no-repeat  px-5 md:px-20 py-5 md:py-10 overflow-hidden flex"
     >
       <div className="absolute inset-0 bg-black/70  z-10 " />
-      <div className="absolute z-20 w-[95%] md:w-[80%] md:h-[90%] bg-[#1c1c1c] top-[4%] md:top-[5%] left-[3%] md:left-[10%] bg-[url('/category.webp')] bg-cover bg-center bg-no-repeat p-6 md:px-10 md:py-4">
+      <div className="absolute z-20 w-[95%] md:w-[80%] h-[80%] md:h-[90%] bg-[#1c1c1c] top-[20%] md:top-[5%] left-[3%] md:left-[10%] bg-[url('/category.webp')] bg-cover bg-center bg-no-repeat px-3 py-3 md:px-10 md:py-4">
         <div className="space-y-2 md:space-y-10 md:w-[35vw]">
-          <h2 className="text-3xl text-white md:text-7xl font-bold leading-tight font-playfair bg-gray-800/70 md:bg-transparent p-2 md:p-0 rounded-lg">
+          <h2 className="text-2xl text-white md:text-7xl font-bold leading-tight font-playfair bg-gray-800/70 md:bg-transparent p-2 md:p-0 rounded-lg">
             Discover Delicious Meals by Category
           </h2>
 
@@ -26,7 +26,7 @@ const FoodCategoryBanner = () => {
           </p>
 
           {/* Dropdown + Button */}
-          <div className="flex gap-4 md:gap-16 items-start sm:items-center mt-2 md:mt-0">
+          <div className="flex md:gap-16 items-start justify-between md:justify-start mt-2 md:mt-0">
             <InputDropdown
               options={foodCategory as TFoodCategory[]}
               filterBy={"foodCategory"}
@@ -35,7 +35,7 @@ const FoodCategoryBanner = () => {
             />
             <Link
               href="/meals"
-              className="bg-secondary text-primary border border-primary p-2 rounded-md hover:bg-white duration-500 transition"
+              className="bg-secondary text-primary border border-primary p-1 md:p-2 rounded-md hover:bg-white duration-500 transition"
             >
               Browse Meals
             </Link>

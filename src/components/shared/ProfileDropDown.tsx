@@ -50,16 +50,16 @@ const ProfileDropdown = ({
           <Image
             src={profileImage}
             alt="Profile"
-            width={40}
-            height={40}
+            width={100}
+            height={100}
             className="object-cover w-full h-full"
           />
         ) : (
           <Image
             src="/profile-icon.png"
             alt="Profile"
-            width={40}
-            height={40}
+            width={100}
+            height={100}
             className="object-cover w-full h-full"
           />
         )}

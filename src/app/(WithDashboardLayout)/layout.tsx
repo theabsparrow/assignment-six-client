@@ -5,7 +5,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const { userRole } = await getCurrentUser();
 
   return (
-    <div className="md:flex md:bg-gray-200">
+    <div className="md:flex md:bg-gray-200 dark:md:bg-gray-900">
       <Sidebar role={userRole} />
       {children}
     </div>
