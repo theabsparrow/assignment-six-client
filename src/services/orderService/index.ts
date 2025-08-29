@@ -6,6 +6,13 @@ import { revalidateTag } from "next/cache";
 import { getValidToken } from "../authService/validToken";
 import { cookies } from "next/headers";
 
+type TSingleOrderProps = {
+  orderId: string;
+  query?: {
+    [key: string]: string | string[] | undefined;
+  };
+};
+
 export const createOrder = async (orderInfo: TConfirmModal, id: string) => {
   const token = await getValidToken();
   try {
@@ -74,12 +81,24 @@ export const getMyOrders = async (query?: {
   }
 };
 
-export const getASingleOrder = async (id: string) => {
+export const getASingleOrder = async ({
+  orderId,
+  query,
+}: TSingleOrderProps) => {
   const cookieStore = await cookies();
   const token = cookieStore.get("refreshToken")!.value;
   try {
+    const params = new URLSearchParams();
+    const limit = 9;
+    params.append("limit", limit.toString());
+    if (query?.deliveryNumber) {
+      params.append("deliveryNumber", query?.deliveryNumber.toString());
+    }
+    if (query?.page) {
+      params.append("page", query?.page.toString());
+    }
     const res = await fetch(
-      `${config.next_public_base_api}/order/single-order/${id}`,
+      `${config.next_public_base_api}/order/single-order/${orderId}?${params}`,
       {
         method: "GET",
         headers: {
@@ -113,7 +132,6 @@ export const updateOrderStatus = async (id: string, data: Partial<TOrder>) => {
     );
     const result = await res.json();
     revalidateTag("myOrder");
-    revalidateTag("ProviderOrder");
     return result;
   } catch (error: any) {
     return Error(error);
@@ -134,7 +152,6 @@ export const deleteOrder = async (id: string) => {
     );
     const result = await res.json();
     revalidateTag("myOrder");
-    revalidateTag("ProviderOrder");
     return result;
   } catch (error: any) {
     return Error(error);

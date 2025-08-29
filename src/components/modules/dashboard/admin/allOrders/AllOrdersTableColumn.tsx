@@ -263,7 +263,7 @@ export const allOrderTableColumn = (): ColumnDef<TOrder>[] => [
       const id = row?.original?._id;
       return (
         <Link
-          href={`/mealProvider/myOrders/${id}`}
+          href={`/admin/allOrders/${id}`}
           className="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
         >
           Details

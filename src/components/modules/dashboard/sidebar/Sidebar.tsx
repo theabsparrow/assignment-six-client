@@ -32,7 +32,7 @@ const Sidebar = ({ role }: { role: string }) => {
   return (
     <>
       <div className="hidden md:flex ">
-        <aside className="sticky top-0 z-10 w-64 bg-gray-300 dark:bg-gray-800 transform min-h-screen flex flex-col justify-between py-6">
+        <aside className="sticky top-0 z-10 w-64 bg-gray-300 dark:bg-gray-800 transform h-screen flex flex-col justify-between py-6">
           <div className="relative w-60 h-12 px-8 ">
             <Link href="/">
               <Image

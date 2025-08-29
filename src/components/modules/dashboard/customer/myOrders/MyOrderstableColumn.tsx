@@ -7,6 +7,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "sonner";
+import { statusStyles } from "./myOrder.const";
 
 export const MyOrderTableColumn = (): ColumnDef<TOrder>[] => [
   {
@@ -144,15 +145,6 @@ export const MyOrderTableColumn = (): ColumnDef<TOrder>[] => [
     cell: ({ row }) => {
       const id = row.original?._id;
       const status = row.original?.status;
-      const statusStyles: Record<TOrderStatus, string> = {
-        Pending: "text-yellow-700 bg-yellow-100 hover:bg-yellow-200",
-        Confirmed: "text-blue-700 bg-blue-100 hover:bg-blue-200",
-        Delivered: "text-green-700 bg-green-100 hover:bg-green-200",
-        Cancelled: "text-red-800 bg-red-300 hover:bg-red-500",
-        Cooking: "text-orange-700 bg-orange-100 hover:bg-orange-200",
-        ReadyForPickup: "text-indigo-700 bg-indigo-100 hover:bg-indigo-200",
-        OutForDelivery: "text-purple-700 bg-purple-100 hover:bg-purple-200",
-      };
 
       const handleChange = async (
         option: TOrderStatus,

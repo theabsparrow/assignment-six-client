@@ -1,17 +1,28 @@
 import OrderDetails from "@/components/modules/dashboard/orderDetails/OrderDetails";
+import { getCurrentUser } from "@/services/authService";
 import { getASingleOrder } from "@/services/orderService";
 
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 const AdminOrderDeatils = async ({
   params,
+  searchParams,
 }: {
   params: Promise<{ orderId: string }>;
+  searchParams: SearchParams;
 }) => {
   const { orderId } = await params;
-  const { data } = await getASingleOrder(orderId);
-
+  const query = await searchParams;
+  const result = await getASingleOrder({ orderId, query });
+  const { isOrderExists, result: revirewdata, meta } = result;
+  const user = (await getCurrentUser()) || null;
   return (
     <section className="w-full">
-      <OrderDetails order={data} />
+      <OrderDetails
+        order={isOrderExists}
+        role={user?.userRole}
+        review={revirewdata}
+        meta={meta}
+      />
     </section>
   );
 };

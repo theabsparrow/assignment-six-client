@@ -8,6 +8,7 @@ import DeletionModal from "@/components/statusDropdown/DeletionModal";
 import { toast } from "sonner";
 import { Dispatch, SetStateAction } from "react";
 import { deleteMeal } from "@/services/mealService";
+import { TbCurrencyTaka } from "react-icons/tb";
 
 const MealProfile = ({ data }: { data: TMealProfile }) => {
   const date = new Date(data?.createdAt);
@@ -215,8 +216,9 @@ const MealProfile = ({ data }: { data: TMealProfile }) => {
           <div className="space-y-2">
             <p className="text-lg font-bold text-gray-800 dark:text-gray-200">
               Price:{" "}
-              <span className="bg-indigo-100 text-indigo-800 dark:bg-indigo-700 dark:text-indigo-100 px-3 py-1 rounded-full">
-                ৳{data?.price ? data.price.toFixed(2) : "0.00"}
+              <span className="bg-indigo-100 text-indigo-800 dark:bg-indigo-700 dark:text-indigo-100 px-3 py-1 rounded-full flex items-center gap-1">
+                <TbCurrencyTaka />{" "}
+                {data?.price ? data.price.toFixed(2) : "0.00"}
               </span>
             </p>
 

@@ -1,3 +1,4 @@
+import { LucideIcon } from "lucide-react";
 import { TGender } from "./customerRegistration";
 import {
   FoodPreferenceOption,
@@ -5,6 +6,7 @@ import {
   TcuisineType,
   TFoodCategory,
   TMealTime,
+  TPortionSize,
 } from "./mealType";
 export type TOrderType = "once" | "regular";
 export type TDeliveryMode = "mealPlanner" | "manual";
@@ -58,16 +60,20 @@ type TKitchen = {
   kitchenName: string;
 };
 type TCustomer = {
+  _id: string;
   name: string;
   address: string;
   gender: TGender;
 };
 type TMeal = {
-  id: string;
+  _id: string;
   title: string;
   foodCategory: TFoodCategory;
   cuisineType: TcuisineType;
   foodPreference: FoodPreferenceOption;
+  price: number;
+  imageUrl: string;
+  portionSize: TPortionSize;
 };
 
 export type TSingleOrder = {
@@ -90,3 +96,5 @@ export type TSingleOrder = {
   deliveredCount?: number;
   endDate?: string;
 };
+
+export type TSteps = { key: TOrderStatus; label: string; icon: LucideIcon };
