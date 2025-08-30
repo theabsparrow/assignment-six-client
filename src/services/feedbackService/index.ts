@@ -24,7 +24,7 @@ export const createFeedback = async (
     );
     const result = await res.json();
     revalidateTag("myOrder");
-    revalidateTag("Ratings");
+    revalidateTag("Meals");
     return result;
   } catch (error: any) {
     return Error(error);

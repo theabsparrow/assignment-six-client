@@ -8,6 +8,9 @@ import {
   TMealTime,
   TPortionSize,
 } from "./mealType";
+import { TUSerRole } from "./userType";
+import { TRating } from "./rating.types";
+import { TMetaDataProps } from ".";
 export type TOrderType = "once" | "regular";
 export type TDeliveryMode = "mealPlanner" | "manual";
 export type TOrderStatus =
@@ -98,3 +101,11 @@ export type TSingleOrder = {
 };
 
 export type TSteps = { key: TOrderStatus; label: string; icon: LucideIcon };
+
+export type TorderDetailsProps = {
+  order: TSingleOrder;
+  role: TUSerRole;
+  review?: TRating | TRating[];
+  meta?: TMetaDataProps;
+  isReview: boolean;
+};

@@ -8,9 +8,10 @@ const MealInfo = async ({
 }) => {
   const mealId = await params;
   const { data } = await getASingleMeal(mealId?.mealId);
+  const { isMealExists, feedbackResult } = data;
   return (
     <div className=" w-full py-10 md:px-24 px-5">
-      <MealDetails mealInfo={data} />
+      <MealDetails mealInfo={isMealExists} feedback={feedbackResult} />
     </div>
   );
 };

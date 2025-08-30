@@ -23,7 +23,7 @@ const CuisineCard = ({ data }: { data: TcuisineType[] }) => {
             {data.map((cuisine: TcuisineType) => (
               <div
                 key={cuisine}
-                className="min-w-[75vw] sm:min-w-[60vw] md:min-w-[45vw] lg:min-w-[22vw] p-4 sm:p-6 mx-2 rounded-2xl border border-primary shadow-sm bg-white dark:bg-gray-900 space-y-4 transition-all hover:shadow-md"
+                className="min-w-[75vw] md:min-w-[45vw] lg:min-w-[22vw] p-4 mx-2 rounded-2xl border border-primary shadow-sm bg-white dark:bg-gray-900 space-y-4 transition-all hover:shadow-md"
               >
                 <Image
                   src={cuisineTypePhoto[cuisine]}

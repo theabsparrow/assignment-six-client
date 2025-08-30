@@ -13,8 +13,9 @@ const CustomerOrderDetails = async ({
 }) => {
   const { orderId } = await params;
   const query = await searchParams;
+
   const { data } = await getASingleOrder({ orderId, query });
-  const { isOrderExists, result: revirewdata, meta } = data;
+  const { isOrderExists, result: revirewdata, meta, isReviewExists } = data;
   const user = (await getCurrentUser()) || null;
 
   return (
@@ -24,6 +25,7 @@ const CustomerOrderDetails = async ({
         role={user?.userRole}
         review={revirewdata}
         meta={meta}
+        isReview={isReviewExists}
       />
     </section>
   );

@@ -57,13 +57,13 @@ const Sidebar = ({ role }: { role: string }) => {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 ${
+                      className={`flex items-center gap-2 px-2 py-1 rounded-lg font-medium transition-all duration-200 ${
                         active
                           ? "bg-primary text-white shadow-md"
                           : "text-gray-800 hover:bg-primary hover:text-white hover:shadow dark:text-gray-200"
                       }`}
                     >
-                      <span className="text-xl">{item.icon}</span>
+                      <span>{item.icon}</span>
                       <span>{item.name}</span>
                     </Link>
                   );
@@ -76,13 +76,13 @@ const Sidebar = ({ role }: { role: string }) => {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 ${
+                      className={`flex items-center gap-2 px-2 py-1 rounded-lg font-medium transition-all duration-200 ${
                         active
                           ? "bg-primary text-white shadow-md"
                           : "text-gray-800 hover:bg-primary hover:text-white hover:shadow dark:text-gray-200"
                       }`}
                     >
-                      <span className="text-xl">{item.icon}</span>
+                      <span>{item.icon}</span>
                       <span>{item.name}</span>
                     </Link>
                   );
@@ -95,13 +95,13 @@ const Sidebar = ({ role }: { role: string }) => {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 ${
+                      className={`flex items-center gap-2 px-2 py-1 rounded-lg font-medium transition-all duration-200 ${
                         active
                           ? "bg-primary text-white shadow-md"
                           : "text-gray-800 hover:bg-primary hover:text-white hover:shadow dark:text-gray-200"
                       }`}
                     >
-                      <span className="text-xl">{item.icon}</span>
+                      <span>{item.icon}</span>
                       <span>{item.name}</span>
                     </Link>
                   );
@@ -118,23 +118,21 @@ const Sidebar = ({ role }: { role: string }) => {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 ${
+                  className={`flex items-center gap-2 px-2 py-1 rounded-lg font-medium transition-all duration-200 ${
                     pathname === item.href
                       ? "bg-primary text-white shadow-md"
                       : "text-gray-800 hover:bg-primary hover:text-white hover:shadow dark:text-gray-200"
                   }`}
                 >
-                  <span className="text-xl">{item.icon}</span>
+                  <span>{item.icon}</span>
                   <span>{item.name}</span>
                 </Link>
               ))}
               <button
                 onClick={handleLogout}
-                className=" w-full flex items-center gap-3 px-4 py-1 rounded-lg font-medium transition-all duration-200 text-gray-800 hover:bg-primary hover:text-white hover:shadow cursor-pointer"
+                className=" w-full flex items-center gap-1 px-2 py-1 rounded-lg font-medium transition-all duration-200 text-gray-800 hover:bg-primary hover:text-white hover:shadow cursor-pointer"
               >
-                <span className="text-xl">
-                  <LogOut />
-                </span>
+                <LogOut className="text-xs" />
                 <span>Logout</span>
               </button>
               <DarkModeToggle />

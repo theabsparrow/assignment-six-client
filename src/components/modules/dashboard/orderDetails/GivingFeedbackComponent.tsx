@@ -3,7 +3,7 @@
 import { Star } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { validateFeedback } from "./orderDetails.utills";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FeedbackFormData, TRating } from "@/types/rating.types";
 import { createFeedback } from "@/services/feedbackService";
 import { toast } from "sonner";
@@ -12,11 +12,14 @@ type TFeedbackProps = {
   id: string;
   review: TRating | TRating[];
   deliveryNumber?: number;
+  selectedDelivery?: number;
+  isReview: boolean;
 };
 const GivingFeedbackComponent = ({
   id,
-  review,
   deliveryNumber,
+  selectedDelivery,
+  isReview,
 }: TFeedbackProps) => {
   const {
     control,
@@ -26,23 +29,33 @@ const GivingFeedbackComponent = ({
     watch,
     reset,
   } = useForm<FeedbackFormData>({ mode: "onChange" });
-  const feedBackStatus =
-    (review as TRating) || (review as TRating[])?.length > 0 ? true : false;
-  const [open, setOpen] = useState(feedBackStatus);
+
+  const feedbackStatus = (() => {
+    if (!isReview) return false;
+    return true;
+  })();
+
+  const [open, setOpen] = useState(true);
   const [loading, setLoading] = useState(false);
   const feedbackValue = watch("feedback");
   const currentCount = feedbackValue?.length;
 
+  useEffect(() => {
+    setOpen(feedbackStatus);
+  }, [feedbackStatus, selectedDelivery]);
+
   const onSubmit = async (data: FeedbackFormData) => {
-    setLoading(true);
-    if (deliveryNumber) {
-      data.deliveryNumber = deliveryNumber;
+    if (selectedDelivery) {
+      data.deliveryNumber = selectedDelivery;
+    } else {
+      if (deliveryNumber) {
+        data.deliveryNumber = deliveryNumber;
+      }
     }
     try {
       const result = await createFeedback(data, id);
       if (result?.success) {
         toast.success(result?.message, { duration: 3000 });
-        setOpen(false);
         setLoading(false);
         reset();
       } else {
@@ -126,7 +139,10 @@ const GivingFeedbackComponent = ({
               <div className="flex items-center justify-between">
                 <button
                   disabled={loading}
-                  onClick={() => setOpen(true)}
+                  onClick={() => {
+                    setOpen(true);
+                    reset();
+                  }}
                   type="button"
                   className="bg-white text-gray-700 py-1 px-2 rounded-lg font-semibold border border-gray-400 hover:bg-gray-600 hover:text-white transition duration-500 shadow-sm cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-white"
                 >

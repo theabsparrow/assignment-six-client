@@ -1,6 +1,5 @@
 import { USER_ROLE } from "@/constant";
-import { TMetaDataProps, TUSerRole } from "@/types";
-import { TSingleOrder } from "@/types/orderTypes";
+import { TorderDetailsProps } from "@/types/orderTypes";
 import { convertDate } from "@/utills/dateConverter";
 import Image from "next/image";
 import { TbCurrencyTaka } from "react-icons/tb";
@@ -11,22 +10,22 @@ import OrderTracking from "./OrderTracking";
 import GivingFeedbackComponent from "./GivingFeedbackComponent";
 import FeedBackcard from "@/components/feedback/FeedBackcard";
 import Pagination from "@/components/pagination/Pagination";
+import SearchingFeedback from "./SearchingFeedback";
 
-type TorderDetailsProps = {
-  order: TSingleOrder;
-  role: TUSerRole;
-  review?: TRating | TRating[];
-  meta?: TMetaDataProps;
-};
-
-const OrderDetails = ({ order, role, review, meta }: TorderDetailsProps) => {
+const OrderDetails = ({
+  order,
+  role,
+  review,
+  meta,
+  isReview,
+}: TorderDetailsProps) => {
   const date = convertDate(new Date(order?.createdAt));
   const status = order?.status;
   const orderVia =
     order?.deliveryMode === "mealPlanner" ? "Meal Plan" : "Manual";
 
   return (
-    <section className="bg-gradient-to-br from-green-50 to-yellow-50 shadow-lg rounded-2xl dark:from-gray-800 dark:to-gray-700 overflow-hidden max-w-4xl mx-auto px-1 md:px-4">
+    <section className="bg-gradient-to-br from-green-50 to-yellow-50 shadow-lg rounded-2xl dark:from-gray-800 dark:to-gray-700 overflow-hidden max-w-4xl mx-auto px-1 md:px-4 py-4">
       {/* order details */}
       <div className="px-2 md:px-6 py-4 shadow-xl rounded-lg space-y-2 md:space-y-3">
         <h1 className="text-2xl font-bold text-gray-800 md:text-center">
@@ -307,13 +306,15 @@ const OrderDetails = ({ order, role, review, meta }: TorderDetailsProps) => {
             <GivingFeedbackComponent
               id={order?._id}
               review={review as TRating}
+              isReview={isReview}
             />
           )}
           {order?.orderType === "regular" && (
-            <GivingFeedbackComponent
+            <SearchingFeedback
               id={order?._id}
               review={review as TRating[]}
-              deliveryNumber={order?.deliveredCount}
+              deliveryCount={order?.deliveredCount as number}
+              isReview={isReview}
             />
           )}
         </>
@@ -321,15 +322,15 @@ const OrderDetails = ({ order, role, review, meta }: TorderDetailsProps) => {
       {order?.orderType === "once" && (review as TRating) && (
         <div className="px-2 md:px-6 py-4 shadow-xl rounded-lg space-y-3">
           <h1 className="text-2xl font-bold text-gray-800 md:text-center">
-            My Feedback
+            Feedback for this order
           </h1>
           <FeedBackcard feedbackData={review as TRating} />
         </div>
       )}
-      {order?.orderType === "regular" && (review as TRating[]).length > 0 && (
+      {order?.orderType === "regular" && (review as TRating[])?.length > 0 && (
         <div className="px-2 md:px-6 py-4 shadow-xl rounded-lg space-y-3">
           <h1 className="text-2xl font-bold text-gray-800 md:text-center">
-            My Feedback
+            Feedback for this order
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
             {(review as TRating[]).map((item) => (
