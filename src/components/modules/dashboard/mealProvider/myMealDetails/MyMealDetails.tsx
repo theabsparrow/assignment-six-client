@@ -35,19 +35,20 @@ import { allergyOptions } from "@/components/modules/auth/register/register.cons
 import EditInputArray from "@/components/modules/editArrayComponent/EditInputArray";
 import DeletionModal from "@/components/statusDropdown/DeletionModal";
 import { TbCurrencyTaka } from "react-icons/tb";
+import { TRating } from "@/types/rating.types";
+import { TMetaDataProps } from "@/types";
+import FeedBackcard from "@/components/feedback/FeedBackcard";
+import Pagination from "@/components/pagination/Pagination";
+import { convertDate } from "@/utills/dateConverter";
 
-const MyMealDetails = ({ data }: { data: TMyMealDetails }) => {
-  const date = new Date(data?.createdAt);
-  const creationDate = date.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-  const creationTime = date.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
+type TMymealProps = {
+  data: TMyMealDetails;
+  feedback: TRating[];
+  meta: TMetaDataProps;
+};
+
+const MyMealDetails = ({ data, feedback, meta }: TMymealProps) => {
+  const date = convertDate(new Date(data?.createdAt));
   const status = data?.isAvailable ? "active" : "blocked";
   const id = data?._id;
 
@@ -255,298 +256,315 @@ const MyMealDetails = ({ data }: { data: TMyMealDetails }) => {
   };
 
   return (
-    <section className="space-y-10 w-full bg-gradient-to-r from-indigo-100 to-blue-100 dark:from-indigo-900 dark:to-blue-900 px-4 md:px-16 py-6 shadow-xl">
-      <div className="flex flex-col md:flex-row md:items-center gap-10 md:gap-36 rounded-xl w-full">
-        <ImageUploadmeal image={data?.imageUrl} id={data?._id} />
-        <div className="text-left space-y-4 w-full">
-          <div>
-            {isTitleEditing ? (
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setTitle(value);
-                }}
-                className="px-2 py-1 border rounded-md w-44 dark:bg-gray-800 dark:text-white dark:border-gray-600"
-              />
-            ) : (
-              <h2 className="text-3xl md:text-4xl font-bold text-primary">
-                {data?.title}{" "}
-              </h2>
-            )}
-            <EditComponent
-              setValue={setTitle}
-              isEditing={isTitleEditing}
-              setIsEditing={setIsTitleEditing}
-              value={data?.title as string}
-              handleSubmit={handleSubmit}
-              field="title"
-            />
-          </div>
-          <div>
-            {isDescriptionEditing ? (
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="px-2 py-1 border rounded-md w-66 h-24 resize-none outline-none"
-              />
-            ) : (
-              <p className="text-lg font-light text-gray-500 italic mt-2">
-                {data?.description || "No description provided."}
-              </p>
-            )}
-            <EditComponent
-              setValue={setDescription}
-              isEditing={isDescriptionEditing}
-              setIsEditing={setIsDescriptionEditing}
-              value={data?.description as string}
-              handleSubmit={handleSubmit}
-              field="description"
-            />
-          </div>
-          <div className="flex justify-between">
+    <>
+      <section className="space-y-10 w-full bg-gradient-to-r from-indigo-100 to-blue-100 dark:from-indigo-900 dark:to-blue-900 px-4 md:px-16 py-6 shadow-xl">
+        <div className="flex flex-col md:flex-row md:items-center gap-10 md:gap-36 rounded-xl w-full">
+          <ImageUploadmeal image={data?.imageUrl} id={data?._id} />
+          <div className="text-left space-y-4 w-full">
             <div>
-              {isCategoryEditing ? (
-                <select
-                  value={categoryOption}
-                  onChange={(e) =>
-                    setCategoryOption(e.target.value as TFoodCategory)
-                  }
-                  className=" px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-gray-700"
-                >
-                  {foodCategory.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <div className="flex">
-                  <span className="bg-primary border border-seconday px-2 py-1 rounded-full text-secondary flex">
-                    {data?.foodCategory}
-                  </span>
-                </div>
-              )}
-              <EditComponent
-                setValue={setCategoryOption}
-                isEditing={isCategoryEditing}
-                setIsEditing={setIsCategoryEditing}
-                value={data?.foodCategory as TFoodCategory}
-                handleSubmit={handleSubmit}
-                field="foodCategory"
-              />
-            </div>
-            <div>
-              {isEditingPreference ? (
-                <select
-                  value={preferenceOption}
-                  onChange={(e) =>
-                    setPreferenceOption(e.target.value as FoodPreferenceOption)
-                  }
-                  className=" px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-gray-700"
-                >
-                  {foodPreferance.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <div className="flex">
-                  <span className="bg-primary border border-seconday px-2 py-1 rounded-full text-secondary flex">
-                    {data?.foodPreference}
-                  </span>
-                </div>
-              )}
-              <EditComponent
-                setValue={setPreferenceOption}
-                isEditing={isEditingPreference}
-                setIsEditing={setIsEditingPreference}
-                value={data?.foodPreference as FoodPreferenceOption}
-                handleSubmit={handleSubmit}
-                field="foodPreferance"
-              />
-            </div>
-            <div>
-              {isCuisingEditing ? (
-                <select
-                  value={cuisineOptions}
-                  onChange={(e) =>
-                    setCuisineOptions(e.target.value as TcuisineType)
-                  }
-                  className=" px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-gray-700"
-                >
-                  {cuisineType.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <div className="flex">
-                  <span className="bg-primary border border-seconday px-2 py-1 rounded-full text-secondary flex">
-                    {data?.cuisineType}
-                  </span>
-                </div>
-              )}
-              <EditComponent
-                setValue={setCuisineOptions}
-                isEditing={isCuisingEditing}
-                setIsEditing={setIsCuisingEditing}
-                value={data?.cuisineType as TcuisineType}
-                handleSubmit={handleSubmit}
-                field="cuisineType"
-              />
-            </div>
-            <div>
-              {isSizeEditing ? (
-                <select
-                  value={sizeOptions}
-                  onChange={(e) =>
-                    setSizeOptions(e.target.value as TPortionSize)
-                  }
-                  className=" px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-gray-700"
-                >
-                  {portionSize.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <div className="flex">
-                  <span className="bg-primary border border-seconday px-2 py-1 rounded-full text-secondary flex">
-                    {data?.portionSize}
-                  </span>
-                </div>
-              )}
-              <EditComponent
-                setValue={setSizeOptions}
-                isEditing={isSizeEditing}
-                setIsEditing={setIsSizeEditing}
-                value={data?.portionSize as TPortionSize}
-                handleSubmit={handleSubmit}
-                field="portionSize"
-              />
-            </div>
-          </div>
-          <div className="flex flex-col md:flex-row justify-between">
-            <p className="text-lg font-bold text-gray-800 dark:text-gray-200">
-              Rating:{" "}
-              {data?.ratingCount && data.ratingCount > 0 ? (
-                <span className="bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-100 px-3 py-1 rounded-full">
-                  {data?.avarageRating?.toFixed(1)} ★ ({data?.ratingCount}{" "}
-                  ratings)
-                </span>
-              ) : (
-                <span className="italic text-gray-500">No ratings yet</span>
-              )}
-            </p>
-            <div className="space-y-1">
-              <h1 className="text-lg font-semibold"> Creation</h1>
-              <span className="bg-primary border border-seconday px-2 py-1 rounded-full text-secondary">
-                {creationDate}, {creationTime}
-              </span>
-            </div>
-          </div>
-          <div className="flex items-center justify-between">
-            <div>
-              {isPriceEditing ? (
+              {isTitleEditing ? (
                 <input
                   type="text"
-                  value={price}
+                  value={title}
                   onChange={(e) => {
                     const value = e.target.value;
-                    setPrice(value);
+                    setTitle(value);
                   }}
                   className="px-2 py-1 border rounded-md w-44 dark:bg-gray-800 dark:text-white dark:border-gray-600"
                 />
               ) : (
-                <p className="text-lg font-bold text-gray-800 dark:text-gray-200 flex items-center">
-                  <span>Price:</span>
-                  <span className="bg-indigo-100 text-indigo-800 dark:bg-indigo-700 dark:text-indigo-100 px-3 py-1 rounded-full flex items-center gap-1">
-                    <TbCurrencyTaka />{" "}
-                    {data?.price ? data.price.toFixed(2) : "0.00"}
-                  </span>
+                <h2 className="text-3xl md:text-4xl font-bold text-primary">
+                  {data?.title}{" "}
+                </h2>
+              )}
+              <EditComponent
+                setValue={setTitle}
+                isEditing={isTitleEditing}
+                setIsEditing={setIsTitleEditing}
+                value={data?.title as string}
+                handleSubmit={handleSubmit}
+                field="title"
+              />
+            </div>
+            <div>
+              {isDescriptionEditing ? (
+                <textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="px-2 py-1 border rounded-md w-66 h-24 resize-none outline-none"
+                />
+              ) : (
+                <p className="text-lg font-light text-gray-500 italic mt-2">
+                  {data?.description || "No description provided."}
                 </p>
               )}
               <EditComponent
-                setValue={setPrice}
-                isEditing={isPriceEditing}
-                setIsEditing={setIsPriceEditing}
-                value={(data?.price).toString()}
+                setValue={setDescription}
+                isEditing={isDescriptionEditing}
+                setIsEditing={setIsDescriptionEditing}
+                value={data?.description as string}
                 handleSubmit={handleSubmit}
-                field="price"
+                field="description"
               />
             </div>
-            <StatusDropdown
-              status={status as TStatus}
-              options={["active", "blocked"]}
-              handleChange={handleChange}
-            />
+            <div className="flex justify-between">
+              <div>
+                {isCategoryEditing ? (
+                  <select
+                    value={categoryOption}
+                    onChange={(e) =>
+                      setCategoryOption(e.target.value as TFoodCategory)
+                    }
+                    className=" px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-gray-700"
+                  >
+                    {foodCategory.map((type) => (
+                      <option key={type} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <div className="flex">
+                    <span className="bg-primary border border-seconday px-2 py-1 rounded-full text-secondary flex">
+                      {data?.foodCategory}
+                    </span>
+                  </div>
+                )}
+                <EditComponent
+                  setValue={setCategoryOption}
+                  isEditing={isCategoryEditing}
+                  setIsEditing={setIsCategoryEditing}
+                  value={data?.foodCategory as TFoodCategory}
+                  handleSubmit={handleSubmit}
+                  field="foodCategory"
+                />
+              </div>
+              <div>
+                {isEditingPreference ? (
+                  <select
+                    value={preferenceOption}
+                    onChange={(e) =>
+                      setPreferenceOption(
+                        e.target.value as FoodPreferenceOption
+                      )
+                    }
+                    className=" px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-gray-700"
+                  >
+                    {foodPreferance.map((type) => (
+                      <option key={type} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <div className="flex">
+                    <span className="bg-primary border border-seconday px-2 py-1 rounded-full text-secondary flex">
+                      {data?.foodPreference}
+                    </span>
+                  </div>
+                )}
+                <EditComponent
+                  setValue={setPreferenceOption}
+                  isEditing={isEditingPreference}
+                  setIsEditing={setIsEditingPreference}
+                  value={data?.foodPreference as FoodPreferenceOption}
+                  handleSubmit={handleSubmit}
+                  field="foodPreferance"
+                />
+              </div>
+              <div>
+                {isCuisingEditing ? (
+                  <select
+                    value={cuisineOptions}
+                    onChange={(e) =>
+                      setCuisineOptions(e.target.value as TcuisineType)
+                    }
+                    className=" px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-gray-700"
+                  >
+                    {cuisineType.map((type) => (
+                      <option key={type} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <div className="flex">
+                    <span className="bg-primary border border-seconday px-2 py-1 rounded-full text-secondary flex">
+                      {data?.cuisineType}
+                    </span>
+                  </div>
+                )}
+                <EditComponent
+                  setValue={setCuisineOptions}
+                  isEditing={isCuisingEditing}
+                  setIsEditing={setIsCuisingEditing}
+                  value={data?.cuisineType as TcuisineType}
+                  handleSubmit={handleSubmit}
+                  field="cuisineType"
+                />
+              </div>
+              <div>
+                {isSizeEditing ? (
+                  <select
+                    value={sizeOptions}
+                    onChange={(e) =>
+                      setSizeOptions(e.target.value as TPortionSize)
+                    }
+                    className=" px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-gray-700"
+                  >
+                    {portionSize.map((type) => (
+                      <option key={type} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <div className="flex">
+                    <span className="bg-primary border border-seconday px-2 py-1 rounded-full text-secondary flex">
+                      {data?.portionSize}
+                    </span>
+                  </div>
+                )}
+                <EditComponent
+                  setValue={setSizeOptions}
+                  isEditing={isSizeEditing}
+                  setIsEditing={setIsSizeEditing}
+                  value={data?.portionSize as TPortionSize}
+                  handleSubmit={handleSubmit}
+                  field="portionSize"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row justify-between">
+              <p className="text-lg font-bold text-gray-800 dark:text-gray-200">
+                Rating:{" "}
+                {data?.ratingCount && data.ratingCount > 0 ? (
+                  <span className="bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-100 px-3 py-1 rounded-full">
+                    {data?.avarageRating?.toFixed(1)} ★ ({data?.ratingCount}{" "}
+                    ratings)
+                  </span>
+                ) : (
+                  <span className="italic text-gray-500">No ratings yet</span>
+                )}
+              </p>
+              <div className="space-y-1">
+                <h1 className="text-lg font-semibold"> Creation</h1>
+                <span className="bg-primary border border-seconday px-2 py-1 rounded-full text-secondary">
+                  {date?.creationDate}, {date?.creationTime}
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <div>
+                {isPriceEditing ? (
+                  <input
+                    type="text"
+                    value={price}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setPrice(value);
+                    }}
+                    className="px-2 py-1 border rounded-md w-44 dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                  />
+                ) : (
+                  <p className="text-lg font-bold text-gray-800 dark:text-gray-200 flex items-center">
+                    <span>Price:</span>
+                    <span className="bg-indigo-100 text-indigo-800 dark:bg-indigo-700 dark:text-indigo-100 px-3 py-1 rounded-full flex items-center gap-1">
+                      <TbCurrencyTaka />{" "}
+                      {data?.price ? data.price.toFixed(2) : "0.00"}
+                    </span>
+                  </p>
+                )}
+                <EditComponent
+                  setValue={setPrice}
+                  isEditing={isPriceEditing}
+                  setIsEditing={setIsPriceEditing}
+                  value={(data?.price).toString()}
+                  handleSubmit={handleSubmit}
+                  field="price"
+                />
+              </div>
+              <StatusDropdown
+                status={status as TStatus}
+                options={["active", "blocked"]}
+                handleChange={handleChange}
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className=" border-t border-primary pt-6 grid grid-cols-1 md:grid-cols-3 space-x-10 justify-between space-y-10 w-full">
-        {data?.availableDays.length && (
-          <EditArray
-            value={data?.availableDays as TCookingDay[]}
-            valueOptions={weekDays}
-            handleSubmit={handleSubmit}
-            label="Available Days"
-            styleClass="bg-secondary text-primary px-3 py-1 rounded-full "
-            style="flex flex-col justify-start items-start"
-          />
-        )}
-        {data?.availableTime.length && (
-          <EditArray
-            value={data?.availableTime as TMealTime[]}
-            valueOptions={mealTime}
-            handleSubmit={handleSubmit}
-            label="Meal Time"
-            styleClass="bg-secondary text-primary px-3 py-1 rounded-full "
-            style="flex flex-col justify-start items-start"
-          />
-        )}
-        {data?.allergies.length && (
-          <EditArray
-            value={data?.allergies as TAlergies[]}
-            valueOptions={allergyOptions}
-            handleSubmit={handleSubmit}
-            label="Allergies"
-            styleClass="bg-secondary text-primary px-3 py-1 rounded-full "
-            style="flex flex-col justify-start items-start"
-          />
-        )}
+        <div className=" border-t border-primary pt-6 grid grid-cols-1 md:grid-cols-3 space-x-10 justify-between space-y-10 w-full">
+          {data?.availableDays.length && (
+            <EditArray
+              value={data?.availableDays as TCookingDay[]}
+              valueOptions={weekDays}
+              handleSubmit={handleSubmit}
+              label="Available Days"
+              styleClass="bg-secondary text-primary px-3 py-1 rounded-full "
+              style="flex flex-col justify-start items-start"
+            />
+          )}
+          {data?.availableTime.length && (
+            <EditArray
+              value={data?.availableTime as TMealTime[]}
+              valueOptions={mealTime}
+              handleSubmit={handleSubmit}
+              label="Meal Time"
+              styleClass="bg-secondary text-primary px-3 py-1 rounded-full "
+              style="flex flex-col justify-start items-start"
+            />
+          )}
+          {data?.allergies.length && (
+            <EditArray
+              value={data?.allergies as TAlergies[]}
+              valueOptions={allergyOptions}
+              handleSubmit={handleSubmit}
+              label="Allergies"
+              styleClass="bg-secondary text-primary px-3 py-1 rounded-full "
+              style="flex flex-col justify-start items-start"
+            />
+          )}
 
-        {data?.availableTime.length && (
-          <EditArray
-            value={data?.dietaryPreferences as TDietaryPreference[]}
-            valueOptions={diateryPreference}
-            handleSubmit={handleSubmit}
-            label="Diatery Preference"
-            styleClass="bg-secondary text-primary px-3 py-1 rounded-full "
-            style="flex flex-col justify-start items-start"
-          />
-        )}
-        {data?.ingredients.length && (
-          <EditInputArray
-            value={data?.ingredients as string[]}
-            handleSubmit={handleSubmit}
-            label="Ingredients"
-          />
-        )}
-      </div>
-      <DeletionModal
-        name={data?.title}
-        collection="Meals"
-        handleDelete={handleDelete}
-        title="Meal Deletion"
-        buttonName="Delete meal"
-      />
-    </section>
+          {data?.availableTime.length && (
+            <EditArray
+              value={data?.dietaryPreferences as TDietaryPreference[]}
+              valueOptions={diateryPreference}
+              handleSubmit={handleSubmit}
+              label="Diatery Preference"
+              styleClass="bg-secondary text-primary px-3 py-1 rounded-full "
+              style="flex flex-col justify-start items-start"
+            />
+          )}
+          {data?.ingredients.length && (
+            <EditInputArray
+              value={data?.ingredients as string[]}
+              handleSubmit={handleSubmit}
+              label="Ingredients"
+            />
+          )}
+        </div>
+        <DeletionModal
+          name={data?.title}
+          collection="Meals"
+          handleDelete={handleDelete}
+          title="Meal Deletion"
+          buttonName="Delete meal"
+        />
+      </section>
+      {(feedback as TRating[]) && (feedback as TRating[])?.length > 0 && (
+        <div className="px-2 md:px-6 py-4 shadow-xl rounded-lg space-y-3">
+          <h1 className="text-2xl font-bold text-gray-800 md:text-center">
+            Feedback for this order
+          </h1>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+            {(feedback as TRating[]).map((item) => (
+              <FeedBackcard key={item?._id} feedbackData={item as TRating} />
+            ))}
+          </div>
+          <Pagination totalPage={meta?.totalPage as number} />
+        </div>
+      )}
+    </>
   );
 };
 

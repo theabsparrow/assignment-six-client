@@ -6,6 +6,8 @@ import { revalidateTag } from "next/cache";
 import { getValidToken } from "../authService/validToken";
 import { cookies } from "next/headers";
 
+export type TQueryProps = { [key: string]: string | string[] | undefined };
+
 export const createMeal = async (MealInfo: TMealFormData) => {
   const token = await getValidToken();
   try {
@@ -169,12 +171,16 @@ export const getCheckoutMeal = async (id: string) => {
   }
 };
 
-export const getAMealProfile = async (id: string) => {
+export const getAMealProfile = async (id: string, query?: TQueryProps) => {
   const cookieStore = await cookies();
   const token = cookieStore.get("refreshToken")!.value;
   try {
+    const params = new URLSearchParams();
+    if (query?.page) {
+      params.append("page", query?.page.toString());
+    }
     const res = await fetch(
-      `${config.next_public_base_api}/meal/get-mealProfile/${id}`,
+      `${config.next_public_base_api}/meal/get-mealProfile/${id}?${params}`,
       {
         method: "GET",
         headers: {
@@ -245,12 +251,16 @@ export const getMyMeals = async (query?: {
   }
 };
 
-export const getMyMealDetails = async (id: string) => {
+export const getMyMealDetails = async (id: string, query?: TQueryProps) => {
   const cookieStore = await cookies();
   const token = cookieStore.get("refreshToken")!.value;
   try {
+    const params = new URLSearchParams();
+    if (query?.page) {
+      params.append("page", query?.page.toString());
+    }
     const res = await fetch(
-      `${config.next_public_base_api}/meal/my-mealDetails/${id}`,
+      `${config.next_public_base_api}/meal/my-mealDetails/${id}?${params}`,
       {
         method: "GET",
         headers: {
