@@ -1,6 +1,4 @@
-"use client";
-
-const ProfileSceleton = () => {
+const ProfileLoadingComponent = () => {
   return (
     <section className="max-w-4xl mx-auto p-6 space-y-6 animate-pulse">
       {/* Profile Header */}
@@ -75,4 +73,4 @@ const ProfileSceleton = () => {
   );
 };
 
-export default ProfileSceleton;
+export default ProfileLoadingComponent;

@@ -43,6 +43,38 @@ export const getMyAllSubscription = async (query?: {
   }
 };
 
+export const getMyAllSubscribers = async (query?: {
+  [key: string]: string | string[] | undefined;
+}) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refreshToken")!.value;
+  try {
+    const params = new URLSearchParams();
+    if (query?.searchTerm) {
+      params.append("searchTerm", query?.searchTerm.toString());
+    }
+    if (query?.page) {
+      params.append("page", query?.page.toString());
+    }
+    const res = await fetch(
+      `${config.next_public_base_api}/kitchenSubscribe/my-subscribers?limit=100&${params}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+        next: {
+          tags: ["KitchenSubscriber"],
+        },
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
 export const beASubscriber = async (id: string) => {
   const token = await getValidToken();
   try {

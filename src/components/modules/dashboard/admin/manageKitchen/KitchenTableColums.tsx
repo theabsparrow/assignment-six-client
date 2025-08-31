@@ -4,6 +4,7 @@ import TableDropDown from "@/components/tableDropdown/TableDropDown";
 import { deleteKitchen, updateStatus } from "@/services/kitchenService";
 import { TAllKitchenType } from "@/types/kitchenType";
 import { TStatus } from "@/types/subscriber.types";
+import { convertDate } from "@/utills/dateConverter";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
@@ -111,21 +112,10 @@ export const kitchenTableColumn = (): ColumnDef<TAllKitchenType>[] => [
     id: "createdAt",
     header: "Creation",
     cell: ({ row }) => {
-      const date = new Date(row.original?.createdAt);
-      const time = new Date(row.original?.createdAt);
-      const creatDate = date.toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      });
-      const createTime = time.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      });
+      const date = convertDate(new Date(row?.original?.createdAt));
       return (
         <p>
-          {creatDate}, {createTime}
+          {date?.creationDate}, {date?.creationTime}
         </p>
       );
     },

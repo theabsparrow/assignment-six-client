@@ -8,9 +8,9 @@ const MyOrders = async ({ searchParams }: { searchParams: SearchParams }) => {
   const { meta, result } = data;
 
   return (
-    <div className=" w-full">
+    <section className=" w-full">
       <MyOrderCOmponent myOrders={result} meta={meta} />
-    </div>
+    </section>
   );
 };
 

@@ -6,6 +6,7 @@ import StatusDropdown from "@/components/statusDropdown/StatusDropdown";
 import { deleteKitchen, updateStatus } from "@/services/kitchenService";
 import { TKitchenProfile } from "@/types/kitchenType";
 import { TStatus } from "@/types/subscriber.types";
+import { convertDate } from "@/utills/dateConverter";
 import { CheckCircle, CircleX, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,17 +23,8 @@ const KitchenProfile = ({ data }: { data: TKitchenProfileProps }) => {
   const { isKitchenExists, totalMeal } = data;
   const id = isKitchenExists?._id;
   const status = isKitchenExists?.isActive ? "active" : "blocked";
-  const date = new Date(isKitchenExists?.createdAt);
-  const creationDate = date.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-  const creationTime = date.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
+  const date = convertDate(new Date(isKitchenExists?.createdAt));
+
   const handleChange = async (
     option: TStatus,
     setDropdownOpen: Dispatch<SetStateAction<boolean>>
@@ -189,7 +181,7 @@ const KitchenProfile = ({ data }: { data: TKitchenProfileProps }) => {
               <div className="space-y-1">
                 <h1 className="text-lg font-semibold"> Kitchen Creation</h1>
                 <span className="bg-primary border border-seconday px-2 py-1 rounded-full text-secondary">
-                  {creationDate}, {creationTime}
+                  {date?.creationDate}, {date?.creationTime}
                 </span>
               </div>
               <div className="space-y-1">

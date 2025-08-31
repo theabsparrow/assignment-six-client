@@ -34,6 +34,11 @@ export const mealProviderItems = [
     icon: "🔄",
   },
   {
+    name: "My Subscribers",
+    href: "/mealProvider/mySubscribers",
+    icon: "🔄",
+  },
+  {
     name: "All Meals",
     href: "/meals",
     icon: "🍽️",
@@ -74,6 +79,11 @@ export const customerItems = [
     name: "My Subscriptions",
     href: "/subscription",
     icon: "🔄",
+  },
+  {
+    name: "My Feedbacks",
+    href: "/user/myFeedBacks",
+    icon: "💬",
   },
   { name: "My Blogs", href: "/myBlogs", icon: "✍️" },
   {

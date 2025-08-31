@@ -2,6 +2,7 @@
 import ConfirmDelation from "@/components/confirmDeletion/ConfirmDeletion";
 import { deleteMeal } from "@/services/mealService";
 import { TMealListing } from "@/types/mealType";
+import { convertDate } from "@/utills/dateConverter";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
@@ -58,21 +59,10 @@ export const mealsTableColumn = (): ColumnDef<TMealListing>[] => [
     accessorKey: "createdAt",
     header: "Creation",
     cell: ({ row }) => {
-      const creationDate = new Date(row.original?.createdAt);
-      const creationTime = new Date(row.original?.createdAt);
-      const date = creationDate.toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      });
-      const time = creationTime.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      });
+      const date = convertDate(new Date(row?.original?.createdAt));
       return (
         <p>
-          {date} {time}
+          {date?.creationDate} {date?.creationTime}
         </p>
       );
     },

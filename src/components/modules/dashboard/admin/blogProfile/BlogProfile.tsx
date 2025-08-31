@@ -9,22 +9,13 @@ import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "sonner";
 import { FiEye } from "react-icons/fi";
+import { convertDate } from "@/utills/dateConverter";
 
 const BlogProfile = ({ data }: { data: TBlogProfile }) => {
   const blogTitletrimmed =
     data?.title.length > 40 ? data?.title.slice(0, 40) + "..." : data?.title;
   const status = data?.status;
-  const date = new Date(data?.createdAt);
-  const creationDate = date.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-  const creationTime = date.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
+  const date = convertDate(new Date(data?.createdAt));
 
   const handleDelete = async (
     setLoading: Dispatch<SetStateAction<boolean>>,
@@ -98,7 +89,7 @@ const BlogProfile = ({ data }: { data: TBlogProfile }) => {
       <div className="flex flex-col md:flex-row md:justify-between space-y-4 md:space-y-0">
         <div className="flex flex-col text-sm text-gray-600 dark:text-gray-300 gap-2">
           <p>
-            📅 {creationDate}, {creationTime}
+            📅 {date?.creationDate}, {date?.creationTime}
           </p>
           <Link
             href={`/admin/manageUsers/${data?.authorId?._id}`}

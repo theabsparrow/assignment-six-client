@@ -7,6 +7,7 @@ import { changeStatus, deleteSubscriber } from "@/services/newsLetterService";
 import { Dispatch, SetStateAction } from "react";
 import TableDropDown from "@/components/tableDropdown/TableDropDown";
 import ConfirmDelation from "@/components/confirmDeletion/ConfirmDeletion";
+import { convertDate } from "@/utills/dateConverter";
 
 export const subscriberTableColumn = (): ColumnDef<TSubscriber>[] => [
   {
@@ -71,24 +72,16 @@ export const subscriberTableColumn = (): ColumnDef<TSubscriber>[] => [
     accessorKey: "createdAt",
     header: "Subscribed Date",
     cell: ({ row }) => {
-      const date = new Date(row.original?.createdAt);
-      return date.toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      });
+      const date = convertDate(new Date(row?.original?.createdAt));
+      return <p>{date?.creationDate}</p>;
     },
   },
   {
     accessorKey: "updatedAt",
     header: "Subscribed Time",
     cell: ({ row }) => {
-      const time = new Date(row.original?.createdAt);
-      return time.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      });
+      const date = convertDate(new Date(row?.original?.createdAt));
+      return <p>{date?.creationTime}</p>;
     },
   },
   {

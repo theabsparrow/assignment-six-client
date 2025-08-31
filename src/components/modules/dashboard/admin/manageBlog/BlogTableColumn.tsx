@@ -3,6 +3,7 @@ import ConfirmDelation from "@/components/confirmDeletion/ConfirmDeletion";
 import TableDropDown from "@/components/tableDropdown/TableDropDown";
 import { deleteBlog, updateBlogStatus } from "@/services/blogService";
 import { BlogStatus, TAllBlogListing } from "@/types/blogTypes";
+import { convertDate } from "@/utills/dateConverter";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
@@ -93,24 +94,16 @@ export const blogTableColumn = (): ColumnDef<TAllBlogListing>[] => [
     accessorKey: "createdAt",
     header: "Create Date",
     cell: ({ row }) => {
-      const date = new Date(row.original?.createdAt);
-      return date.toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      });
+      const date = convertDate(new Date(row?.original?.createdAt));
+      return <p>{date?.creationDate}</p>;
     },
   },
   {
     accessorKey: "updatedAt",
     header: "Create Time",
     cell: ({ row }) => {
-      const time = new Date(row.original?.createdAt);
-      return time.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      });
+      const date = convertDate(new Date(row?.original?.createdAt));
+      return <p>{date?.creationTime}</p>;
     },
   },
   { accessorKey: "view", header: "Views" },

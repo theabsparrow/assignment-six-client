@@ -9,9 +9,9 @@ const MyOrders = async ({ searchParams }: { searchParams: SearchParams }) => {
   const { meta, result } = data;
 
   return (
-    <div className=" w-full min-h-screen">
+    <section className=" w-full min-h-screen">
       <MealProviderOrder meta={meta} myOrders={result} />
-    </div>
+    </section>
   );
 };
 
