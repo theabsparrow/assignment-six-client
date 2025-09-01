@@ -9,7 +9,6 @@ import BlogCard from "./BlogCard";
 import Pagination from "../pagination/Pagination";
 import { Archive, FileText } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import BlogCardSceleton from "../sceleton/BlogCardSceleton";
 
 const BlogComponent = ({
   role,
@@ -130,16 +129,11 @@ const BlogComponent = ({
       {open && <BlogForm setOpen={setOpen} />}
 
       <div className="flex flex-col items-center gap-8 place-items-center">
-        {blogInfo.length > 0 ? (
-          blogInfo.map((blog) => <BlogCard key={blog?._id} blog={blog} />)
-        ) : (
-          <>
-            <BlogCardSceleton />
-          </>
-        )}
+        {(blogInfo as TBlog[]).length > 0 &&
+          blogInfo.map((blog) => <BlogCard key={blog?._id} blog={blog} />)}
       </div>
 
-      {blogInfo?.length > 0 && (
+      {(blogInfo as TBlog[]).length > 0 && (
         <div className="mt-10 flex justify-center">
           <Pagination totalPage={meta?.totalPage} />
         </div>

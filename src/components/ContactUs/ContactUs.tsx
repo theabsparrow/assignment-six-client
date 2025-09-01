@@ -66,7 +66,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-gray-300 to-secondary py-6">
+    <section className="bg-gradient-to-r from-gray-300 to-secondary py-6">
       <div className="container mx-auto md:px-24 px-5 space-y-4">
         <h2 className="text-center text-4xl font-extrabold">Contact Us</h2>
 
@@ -159,7 +159,7 @@ const ContactUs = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

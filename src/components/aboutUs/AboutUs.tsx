@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const AboutUs = () => {
   return (
-    <div className="bg-gradient-to-b from-indigo-50 to-purple-100 dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-gray-100">
+    <section className="bg-gradient-to-b from-indigo-50 to-purple-100 dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-gray-100">
       <section className="relative h-[60vh] flex items-center justify-center text-center px-4">
         <Image
           src={coverImage}
@@ -98,7 +98,7 @@ const AboutUs = () => {
           </Link>
         </div>
       </section>
-    </div>
+    </section>
   );
 };
 

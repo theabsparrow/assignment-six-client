@@ -1,14 +1,11 @@
 import { TBlog } from "@/types/blogTypes";
+import { convertDate } from "@/utills/dateConverter";
 import Image from "next/image";
 
 const BlogDetailsComponent = ({ blog }: { blog: TBlog }) => {
-  const formattedDate = new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(blog?.createdAt));
+  const date = convertDate(new Date(blog?.createdAt));
   return (
-    <div className="bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-shadow duration-300 rounded-xl overflow-hidden w-full md:w-[90%] lg:w-[70%] mx-auto p-4 space-y-4">
+    <section className="bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-shadow duration-300 rounded-xl overflow-hidden w-full md:w-[90%] lg:w-[70%] mx-auto p-4 space-y-4">
       {blog?.coverImage && (
         <div className="relative w-full h-[200px] md:h-[500px] overflow-hidden rounded-lg">
           <Image
@@ -22,7 +19,9 @@ const BlogDetailsComponent = ({ blog }: { blog: TBlog }) => {
 
       <div className="flex flex-col md:flex-row justify-between md:items-center space-y-2 md:space-y-0">
         <div className="flex flex-col text-gray-600 dark:text-gray-300">
-          <p>📅 {formattedDate}</p>
+          <p>
+            📅 {date?.creationDate}, {date?.creationTime}
+          </p>
           <p className="text-xl font-semibold">✍️ {blog?.name}</p>
         </div>
         <div className="flex items-center">
@@ -51,7 +50,7 @@ const BlogDetailsComponent = ({ blog }: { blog: TBlog }) => {
           {blog?.content}
         </p>
       </div>
-    </div>
+    </section>
   );
 };
 

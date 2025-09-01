@@ -15,7 +15,7 @@ const MealComponent = ({
 }) => {
   const highestPrice = Math.max(...MealInfo.map((meal) => meal?.price));
   return (
-    <div className="flex flex-col md:flex-row gap-10">
+    <section className="flex flex-col md:flex-row gap-10">
       <div className="md:flex-1">
         <MealFiltering length={MealInfo?.length} highestPrice={highestPrice} />
       </div>
@@ -27,7 +27,7 @@ const MealComponent = ({
         </div>
         {MealInfo?.length > 0 && <Pagination totalPage={meta?.totalPage} />}
       </div>
-    </div>
+    </section>
   );
 };
 

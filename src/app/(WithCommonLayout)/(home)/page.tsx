@@ -15,9 +15,7 @@ import { Suspense } from "react";
 const HomePage = () => {
   return (
     <section className="space-y-16">
-      <Suspense fallback={<div>Loading banner...</div>}>
-        <Banner />
-      </Suspense>
+      <Banner />
       <RecentMeals />
       <OurMission />
       <Suspense fallback={<div>Loading categories...</div>}>
