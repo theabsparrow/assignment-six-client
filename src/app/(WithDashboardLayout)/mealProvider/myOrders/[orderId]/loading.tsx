@@ -1,4 +1,4 @@
-import LoadingComponent from "@/components/modules/dashboard/loadingComponent/LoadingComponent";
+import LoadingComponent from "@/components/loadingComponent/LoadingComponent";
 
 const Loading = () => {
   return <LoadingComponent />;

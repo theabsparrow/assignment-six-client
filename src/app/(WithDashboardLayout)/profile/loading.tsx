@@ -1,4 +1,4 @@
-import ProfileLoadingComponent from "@/components/modules/dashboard/loadingComponent/ProfileLoadingComponent";
+import ProfileLoadingComponent from "@/components/loadingComponent/ProfileLoadingComponent";
 
 const Loading = () => {
   return <ProfileLoadingComponent />;

@@ -6,9 +6,11 @@ const AddMeal = async () => {
   const userdata = data?.userdata;
   const hasKitchen = userdata?.hasKitchen;
   return (
-    <div className="min-h-screen mx-auto">
-      <CreateMeal hasKitchen={hasKitchen} />
-    </div>
+    <>
+      <section className="min-h-screen mx-auto">
+        <CreateMeal hasKitchen={hasKitchen} />
+      </section>
+    </>
   );
 };
 
