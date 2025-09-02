@@ -118,3 +118,34 @@ export type TBlogsStats = {
   };
   newBlogsByWeek: TNewUserLastWeek[];
 };
+
+type TTopMealStats = {
+  deliveredCount: number;
+  mealId: {
+    title: string;
+  };
+};
+export type TOrderStats = {
+  total: number;
+  topOrder: TTopMealStats[];
+  status: {
+    OutForDelivery: number;
+    cancel: number;
+    confirm: number;
+    cooking: number;
+    delivered: number;
+    pending: number;
+    readyForPickup: number;
+  };
+  types: {
+    activeOrder: number;
+    cashOnDelivery: number;
+    inActiveOrder: number;
+    manualDelivery: number;
+    onlineDelivery: number;
+    planDelivery: number;
+    regularOrder: number;
+    singleOrder: number;
+  };
+  newBlogsByWeek: TNewUserLastWeek[];
+};

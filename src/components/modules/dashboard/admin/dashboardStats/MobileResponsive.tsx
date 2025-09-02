@@ -9,6 +9,7 @@ import SubscriberStats from "./SubscriberStats";
 import KitchenStats from "./KitchenStats";
 import MealStats from "./MealStats";
 import BlogStats from "./BlogStats";
+import OrderStats from "./OrderStats";
 
 interface TMobileResponsiveStatsProps extends TDashboardProps {
   showCharts: TShowCharts;
@@ -21,6 +22,7 @@ const MobileResponsive = ({
   kitchen,
   meal,
   blog,
+  order,
   showCharts,
   setShowCharts,
 }: TMobileResponsiveStatsProps) => {
@@ -112,22 +114,26 @@ const MobileResponsive = ({
         {showCharts === "meal" && <MealStats data={meal} />}
       </div>
 
-      <button
-        onClick={() => setShowCharts("order")}
-        className={` px-2 py-2 rounded-xl cursor-pointer w-full ${
-          showCharts === "order"
-            ? "bg-primary border border-secondary text-white "
-            : "bg-secondary border border-primary text-primary hover:bg-primary hover:border hover:border-secondary hover:text-white duration-500"
-        }`}
-      >
-        <p className=" font-bold flex items-center justify-center gap-5">
-          Total Order <span className="text-xl font-bold">{meal?.total}</span>
-          <span className="bg-white p-1 rounded-full text-black">
-            {" "}
-            <MdOutlineArrowOutward />
-          </span>
-        </p>
-      </button>
+      <div className="space-y-4">
+        <button
+          onClick={() => setShowCharts("order")}
+          className={` px-2 py-2 rounded-xl cursor-pointer w-full ${
+            showCharts === "order"
+              ? "bg-primary border border-secondary text-white "
+              : "bg-secondary border border-primary text-primary hover:bg-primary hover:border hover:border-secondary hover:text-white duration-500"
+          }`}
+        >
+          <p className=" font-bold flex items-center justify-center gap-5">
+            Total Order{" "}
+            <span className="text-xl font-bold">{order?.total}</span>
+            <span className="bg-white p-1 rounded-full text-black">
+              {" "}
+              <MdOutlineArrowOutward />
+            </span>
+          </p>
+        </button>
+        {showCharts === "order" && <OrderStats data={order} />}
+      </div>
       <div className="space-y-4">
         <button
           onClick={() => setShowCharts("blog")}

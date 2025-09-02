@@ -68,7 +68,7 @@ const MealStats = ({ data }: { data: TMealStats }) => {
     meals: week.count,
   }));
   return (
-    <div className="space-y-10">
+    <section className="space-y-10">
       <div className="hidden md:flex flex-col md:items-start">
         <h3 className="font-semibold mb-2">Cuisine Breakdown</h3>
         <ResponsiveContainer width={1200} height={500}>
@@ -209,7 +209,7 @@ const MealStats = ({ data }: { data: TMealStats }) => {
           </BarChart>
         </ResponsiveContainer>
       </div>
-    </div>
+    </section>
   );
 };
 

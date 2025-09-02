@@ -4,6 +4,7 @@ import {
   TBlogsStats,
   TKitchen,
   TMealStats,
+  TOrderStats,
   TShowCharts,
   TSubscribe,
   TUserStats,
@@ -17,6 +18,7 @@ import KitchenStats from "./KitchenStats";
 import MealStats from "./MealStats";
 import BlogStats from "./BlogStats";
 import MobileResponsive from "./MobileResponsive";
+import OrderStats from "./OrderStats";
 
 export type TDashboardProps = {
   data: TUserStats;
@@ -24,6 +26,7 @@ export type TDashboardProps = {
   kitchen: TKitchen;
   meal: TMealStats;
   blog: TBlogsStats;
+  order: TOrderStats;
 };
 
 const DashboardStats = ({
@@ -32,6 +35,7 @@ const DashboardStats = ({
   kitchen,
   meal,
   blog,
+  order,
 }: TDashboardProps) => {
   const [showCharts, setShowCharts] = useState<TShowCharts>("user");
 
@@ -111,9 +115,7 @@ const DashboardStats = ({
                     <MdOutlineArrowOutward />
                   </span>
                 </p>
-                <span className="text-4xl font-bold">
-                  {data?.totals?.totalUsers}
-                </span>
+                <span className="text-4xl font-bold">{order?.total}</span>
               </div>
             )}
             {value.name === "blog" && (
@@ -137,6 +139,7 @@ const DashboardStats = ({
         {showCharts === "kitchen" && <KitchenStats data={kitchen} />}
         {showCharts === "meal" && <MealStats data={meal} />}
         {showCharts === "blog" && <BlogStats data={blog} />}
+        {showCharts === "order" && <OrderStats data={order} />}
       </div>
       <MobileResponsive
         data={data}
@@ -144,6 +147,7 @@ const DashboardStats = ({
         kitchen={kitchen}
         meal={meal}
         blog={blog}
+        order={order}
         showCharts={showCharts}
         setShowCharts={setShowCharts}
       />

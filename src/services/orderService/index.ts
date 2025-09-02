@@ -91,7 +91,6 @@ export const getASingleOrder = async ({
   try {
     const params = new URLSearchParams();
     const limit = 9;
-
     params.append("limit", limit.toString());
     if (query?.deliveryNumber) {
       params.append("deliveryNumber", query?.deliveryNumber.toString());

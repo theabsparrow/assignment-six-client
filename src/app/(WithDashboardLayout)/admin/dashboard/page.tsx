@@ -3,6 +3,7 @@ import {
   getBlogStats,
   getKitchenStats,
   getMealStats,
+  getOrderStats,
   getSubscriberStats,
   getUSerStats,
 } from "@/services/statsService";
@@ -13,6 +14,7 @@ const DashboardStatistic = async () => {
   const { data: kitchen } = await getKitchenStats();
   const { data: meal } = await getMealStats();
   const { data: blog } = await getBlogStats();
+  const { data: order } = await getOrderStats();
 
   return (
     <section className=" w-full">
@@ -22,6 +24,7 @@ const DashboardStatistic = async () => {
         kitchen={kitchen}
         meal={meal}
         blog={blog}
+        order={order}
       />
     </section>
   );

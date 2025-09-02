@@ -115,3 +115,25 @@ export const getBlogStats = async () => {
     return Error(error);
   }
 };
+export const getOrderStats = async () => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refreshToken")!.value;
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/statistics/order-stats`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+        next: {
+          tags: ["myOrder"],
+        },
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};

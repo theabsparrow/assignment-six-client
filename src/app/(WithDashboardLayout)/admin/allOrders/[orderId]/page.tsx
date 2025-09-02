@@ -12,9 +12,10 @@ const AdminOrderDeatils = async ({
 }) => {
   const { orderId } = await params;
   const query = await searchParams;
-  const result = await getASingleOrder({ orderId, query });
-  const { isOrderExists, result: revirewdata, meta, isReviewExists } = result;
+  const { data } = await getASingleOrder({ orderId, query });
+  const { isOrderExists, result: revirewdata, meta, isReviewExists } = data;
   const user = (await getCurrentUser()) || null;
+
   return (
     <section className="w-full">
       <OrderDetails
