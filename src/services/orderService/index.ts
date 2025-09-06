@@ -121,7 +121,7 @@ export const updateOrderStatus = async (id: string, data: Partial<TOrder>) => {
   const token = await getValidToken();
   try {
     const res = await fetch(
-      `${config.next_public_base_api}/order/change-status/${id}`,
+      `${config.next_public_base_api}/order/update-order/${id}`,
       {
         method: "PATCH",
         headers: {

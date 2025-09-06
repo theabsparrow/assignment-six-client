@@ -11,6 +11,7 @@ import GivingFeedbackComponent from "./GivingFeedbackComponent";
 import FeedBackcard from "@/components/feedback/FeedBackcard";
 import Pagination from "@/components/pagination/Pagination";
 import SearchingFeedback from "./SearchingFeedback";
+import NoteEditingComponent from "./NoteEditingComponent";
 
 const OrderDetails = ({
   order,
@@ -293,10 +294,16 @@ const OrderDetails = ({
               )}
           </div>
           {order?.note && (
-            <div className="font-semibold w-full">
-              <p className="font-bold">Note:</p>
-              <p>{order.note}</p>
-            </div>
+            <>
+              {role === USER_ROLE.customer ? (
+                <NoteEditingComponent noteInfo={order?.note} id={order?._id} />
+              ) : (
+                <div className="font-semibold w-full">
+                  <p className="font-bold">Note:</p>
+                  <p>{order.note}</p>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

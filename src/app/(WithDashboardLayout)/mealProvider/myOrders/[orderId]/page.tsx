@@ -15,7 +15,6 @@ const MealProviderOrderDetails = async ({
   const { data } = await getASingleOrder({ orderId, query });
   const { isOrderExists, result: revirewdata, meta, isReviewExists } = data;
   const user = (await getCurrentUser()) || null;
-  console.log();
   return (
     <section className="w-full">
       <OrderDetails

@@ -27,7 +27,7 @@ const ChangeStatus = ({
   const activity = isActive ? "Yes" : "No";
 
   return (
-    <div className="flex items-center md:gap-60 justify-between md:justify-start">
+    <div className="flex items-center md:gap-40 justify-between md:justify-start">
       {role === USER_ROLE.mealProvider ? (
         <OrderStatusDropdown
           status={status}

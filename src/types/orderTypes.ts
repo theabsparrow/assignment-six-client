@@ -37,6 +37,7 @@ export type TOrder = {
   endDate?: string;
   isActive: boolean;
   quantity?: number;
+  note?: string;
   totalPrice?: number;
   deliveredCount?: number;
   deliveryAddress?: string;

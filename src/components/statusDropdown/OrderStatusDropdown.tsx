@@ -77,11 +77,17 @@ const OrderStatusDropdown = <T extends string>({
         return;
       }
     }
+    if (status === "Cancelled") {
+      toast.error(`status is already ${status} you can't change it right now`, {
+        duration: 3000,
+      });
+      return;
+    }
     if (label === "Order Status") {
       data.status = option as TOrderStatus;
     }
     if (label === "Order Activity") {
-      const active = option === "Yes" && true;
+      const active = option === "Yes";
       data.isActive = active;
     }
     const toastId = toast.loading("updating status...");
@@ -117,7 +123,7 @@ const OrderStatusDropdown = <T extends string>({
       </button>
 
       {dropdownOpen && (
-        <div className="absolute w-28 md:w-36 rounded-lg shadow-md bg-white py-2 space-y-1 border border-gray-200">
+        <div className="absolute w-28 md:w-36 rounded-lg shadow-md bg-white py-2 space-y-1 border border-gray-200 z-20">
           {options.map((option) => {
             return (
               <button
