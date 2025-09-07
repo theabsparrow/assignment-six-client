@@ -16,7 +16,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 # Daly Dish (Meal service)
 
-Welcome to **Daily Dish**, a modern, responsive, and user-friendly car selling platform built with the MERN Stack. This platform allows users to explore, buy, and manage meal listings effortlessly with an intuitive interface and robust features.
+Welcome to **Daily Dish**, a modern, responsive, and user-friendly Meal service platform built with the MERN Stack. This platform allows users to explore, buy, and manage meal listings effortlessly with an intuitive interface and robust features.
 
 ---
 
@@ -38,6 +38,10 @@ Welcome to **Daily Dish**, a modern, responsive, and user-friendly car selling p
 - 📱 Fully Responsive for All Devices
 - 📤 Image Upload
 - 📧 Contact Form with EmailJS Integration
+- 📌email verification with OTP
+- 🛒order meals by planner and check the matching with percentage
+- ✨live delivery tracking system
+- real time noitification system
 
 ---
 
@@ -45,14 +49,19 @@ Welcome to **Daily Dish**, a modern, responsive, and user-friendly car selling p
 
 **used technology:**
 
+- TypeScript
 - Next.js
 - Tailwind CSS
 - Next Nevigation
 - React Hook Form
 - App router
-- Type scrpt
 - TanStack Table
-- jwt
+- jwt-decoder
+- emailJS
+- edgestore
+- framer-motion
+- react swiper slider
+- socket io
 
 ---
 
@@ -76,8 +85,13 @@ git clone https://github.com/theabsparrow/assignment-six-client.git
     Create a `.env` file in the root directory and add the following:
 
    ```env
-   NEXT_PUBLIC_BASE_API=backend-api
-   NEXT_PUBLIC_IMGBB_API_URL=imgbb-ur
-   NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY=recpcha-client
-   NEXT_PUBLIC_RECAPTCHA_SERVER_KEY=recaptcha-server
+   NEXT_PUBLIC_BASE_API=http://localhost:5000/api/v1
+   NEXT_PUBLIC_IMGBB_API_URL= imgbb api
+   NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY= google recpatcha client key
+   NEXT_PUBLIC_RECAPTCHA_SERVER_KEY= google recaptcha server key
+   EDGE_STORE_ACCESS_KEY= edge store access key
+   EDGE_STORE_SECRET_KEY= edge store secret key
+   NEXT_PUBLIC_SERVICE_ID= email js service id
+   NEXT_PUBLIC_TEMPLATE_ID= email js template id
+   NEXT_PUBLIC_PUBLIC_KEY= email js punlic key
    ```
