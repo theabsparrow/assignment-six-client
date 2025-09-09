@@ -58,7 +58,7 @@ const TableDropDown = <T extends string>({
     <div ref={dropdownRef} className="relative">
       <button
         onClick={handleToggle}
-        className={`flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full border transition duration-200 ease-in-out focus:outline-none cursor-pointer ${getStyle(
+        className={`flex items-center gap-1 px-2 py-1 text-xs font-semibold rounded-full border transition duration-200 ease-in-out focus:outline-none cursor-pointer ${getStyle(
           status
         )}`}
       >

@@ -18,14 +18,15 @@ import {
   navLinks,
 } from "@/constant/navbar.const";
 import Flag from "react-world-flags";
+import NotificationComponent from "./NotificationComponent";
 
-const Navbar = ({
-  name,
-  profileImage,
-}: {
+type TNavbarProps = {
   name?: string;
   profileImage?: string;
-}) => {
+  id?: string | null;
+};
+
+const Navbar = ({ name, profileImage, id }: TNavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { setIsLoading } = useUser();
   const router = useRouter();
@@ -91,7 +92,7 @@ const Navbar = ({
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-3">
             {navLinks.map((link) => {
               const isActive =
                 link.href === "/"
@@ -131,7 +132,7 @@ const Navbar = ({
               placeholder="search for meals"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="outline-none border rounded-l-lg px-4 py-1"
+              className="outline-none border rounded-l-lg px-4 py-1 w-44"
             />
             <button
               onClick={handleSearch}
@@ -141,13 +142,23 @@ const Navbar = ({
               Search
             </button>
           </div>
+          {id && (
+            <div className="hidden md:flex">
+              <NotificationComponent id={id} />
+            </div>
+          )}
           {/* dropdown */}
           <div className="hidden md:flex items-center gap-6">
             <ProfileDropdown name={name} profileImage={profileImage} />
             <DarkModeToggle />
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile responsive */}
+          {id && (
+            <div className="md:hidden">
+              <NotificationComponent id={id} />
+            </div>
+          )}
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -160,10 +171,10 @@ const Navbar = ({
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden bg-gray-200 dark:bg-gray-900 py-2 absolute top-14 right-0 shadow-2xl  border-t-2 border-t-primary w-52 rounded-b-md z-20">
+          <div className="md:hidden bg-gray-200 dark:bg-gray-900 py-2 absolute top-14 right-0 shadow-2xl  border-t-2 border-t-primary w-56 rounded-b-md z-20">
             {name && (
-              <p className="flex items-center justify-between text-gray-700 dark:text-gray-200 pb-2 border-b border-b-gray-400  transition  ">
-                <span className="text-xl font-semibold text-primary dark:text-secondary">
+              <p className="flex items-center justify-between text-gray-700 dark:text-gray-200 p-2 border-b border-b-gray-400  transition  ">
+                <span className=" font-semibold text-primary dark:text-secondary">
                   {name}
                 </span>
                 <Link href="/profile">
@@ -172,7 +183,7 @@ const Navbar = ({
                     alt="Profile"
                     width={40}
                     height={40}
-                    className="object-cover w-12 h-12 rounded-full overflow-hidden"
+                    className="object-cover w-10 h-10 rounded-full overflow-hidden"
                   />
                 </Link>
               </p>

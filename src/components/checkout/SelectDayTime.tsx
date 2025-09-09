@@ -1,12 +1,12 @@
 "use client";
-import { TcheckoutMeal, TCookingDay, TMealTime } from "@/types/mealType";
+import { TcheckoutMeal, TMealDay, TMealTime } from "@/types/mealType";
 import { Dispatch, SetStateAction } from "react";
 
 type TSelectDayTimeProps = {
   meal: TcheckoutMeal;
-  selectedDays: TCookingDay[];
+  selectedDays: TMealDay[];
   selectedTimes: TMealTime[];
-  setSelectedDays: Dispatch<SetStateAction<TCookingDay[]>>;
+  setSelectedDays: Dispatch<SetStateAction<TMealDay[]>>;
   setSelectedTimes: Dispatch<SetStateAction<TMealTime[]>>;
 };
 
@@ -17,7 +17,7 @@ const SelectDayTime = ({
   setSelectedDays,
   setSelectedTimes,
 }: TSelectDayTimeProps) => {
-  const toggleDay = (day: TCookingDay) => {
+  const toggleDay = (day: TMealDay) => {
     setSelectedDays((prev) =>
       prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]
     );

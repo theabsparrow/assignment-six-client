@@ -22,11 +22,11 @@ const ImagePreviewer = ({
   return (
     <div className="relative w-36 h-36 rounded-md overflow-hidden border border-dashed border-gray-300">
       <Image
-        width={500}
-        height={500}
+        width={900}
+        height={900}
         src={imagePreview}
         alt={`Profile image`}
-        className="  w-full h-full"
+        className="w-full h-full"
       />
       <button
         type="button"

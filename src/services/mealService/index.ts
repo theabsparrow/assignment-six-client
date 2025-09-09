@@ -21,6 +21,7 @@ export const createMeal = async (MealInfo: TMealFormData) => {
     });
     const result = await res.json();
     revalidateTag("Meals");
+    revalidateTag("Notification");
     return result;
   } catch (error: any) {
     return Error(error);

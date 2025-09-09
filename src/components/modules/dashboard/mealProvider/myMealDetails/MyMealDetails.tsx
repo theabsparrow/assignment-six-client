@@ -2,10 +2,10 @@
 
 import {
   FoodPreferenceOption,
-  TCookingDay,
   TcuisineType,
   TDietaryPreference,
   TFoodCategory,
+  TMealDay,
   TMealTime,
   TMyMealDetails,
   TPortionSize,
@@ -19,13 +19,11 @@ import {
   cuisineType,
   diateryPreference,
   foodCategory,
-  portionSize,
-} from "../createMeal/createMeal.const";
-import {
-  foodPreferance,
   mealTime,
+  portionSize,
   weekDays,
-} from "../kitchenProfile/kitchen.const";
+} from "../createMeal/createMeal.const";
+import { foodPreferance } from "../kitchenProfile/kitchen.const";
 import StatusDropdown from "@/components/statusDropdown/StatusDropdown";
 import { TStatus } from "@/types/subscriber.types";
 import { deleteMeal, updateMeal } from "@/services/mealService";
@@ -146,10 +144,10 @@ const MyMealDetails = ({ data, feedback, meta }: TMymealProps) => {
 
     if (field === "Available Days") {
       if (addOptions?.length > 0) {
-        updatedData.addAvailableDays = addOptions as TCookingDay[];
+        updatedData.addAvailableDays = addOptions as TMealDay[];
       }
       if (removeOptions.length > 0) {
-        updatedData.removeAvailableDays = removeOptions as TCookingDay[];
+        updatedData.removeAvailableDays = removeOptions as TMealDay[];
       }
     }
     if (field === "Meal Time") {
@@ -496,7 +494,7 @@ const MyMealDetails = ({ data, feedback, meta }: TMymealProps) => {
         <div className=" border-t border-primary pt-6 grid grid-cols-1 md:grid-cols-3 space-x-10 justify-between space-y-10 w-full">
           {data?.availableDays.length && (
             <EditArray
-              value={data?.availableDays as TCookingDay[]}
+              value={data?.availableDays as TMealDay[]}
               valueOptions={weekDays}
               handleSubmit={handleSubmit}
               label="Available Days"

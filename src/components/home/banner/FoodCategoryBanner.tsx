@@ -1,8 +1,7 @@
 "use client";
 
 import { foodCategory } from "@/components/modules/dashboard/mealProvider/createMeal/createMeal.const";
-import InputDropdown from "@/components/modules/formInput/InputDropdownDropdown";
-import { TFoodCategory } from "@/types/mealType";
+import SearchAndSelect from "@/components/searchAndSelect/SearchAndSelect";
 import Link from "next/link";
 
 const FoodCategoryBanner = () => {
@@ -27,11 +26,10 @@ const FoodCategoryBanner = () => {
 
           {/* Dropdown + Button */}
           <div className="flex md:gap-16 items-start justify-between md:justify-start mt-2 md:mt-0">
-            <InputDropdown
-              options={foodCategory as TFoodCategory[]}
+            <SearchAndSelect
+              options={foodCategory}
               filterBy={"foodCategory"}
-              name="Select Category"
-              clases="left-44 md:left-48 -top-16"
+              label="Select Category"
             />
             <Link
               href="/meals"

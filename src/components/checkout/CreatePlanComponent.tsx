@@ -3,8 +3,8 @@
 import { createMealPlan } from "@/services/mealPlannerService.ts";
 import {
   TcheckoutMeal,
-  TCookingDay,
   TDietaryPreference,
+  TMealDay,
   TMealTime,
 } from "@/types/mealType";
 import { useState } from "react";
@@ -19,7 +19,7 @@ const CreatePlanComponent = ({ meal }: { meal: TcheckoutMeal }) => {
   const [preferredMealTime, setPreferredMealTime] = useState<TMealTime[]>(
     meal?.availableTime || []
   );
-  const [preferredMealDay, setPreferredMealDay] = useState<TCookingDay[]>(
+  const [preferredMealDay, setPreferredMealDay] = useState<TMealDay[]>(
     meal?.availableDays || []
   );
   const [dietaryPreferences, setDietaryPreferences] = useState<

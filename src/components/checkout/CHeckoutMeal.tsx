@@ -3,7 +3,7 @@
 import {
   TCheckoutPlan,
   Tcheckoutprops,
-  TCookingDay,
+  TMealDay,
   TMealTime,
 } from "@/types/mealType";
 import { checkPlanMatch } from "@/utills/calculatePercentage";
@@ -25,7 +25,7 @@ const CHeckoutMeal = ({ checkoutInfo }: { checkoutInfo: Tcheckoutprops }) => {
   const [quantity, setQuantity] = useState<number>(0);
   const [orderType, setOrderType] = useState<TOrderType | string>("");
   const [deliveryMode, setDeliveryMode] = useState<TDeliveryMode | "">("");
-  const [selectedDays, setSelectedDays] = useState<TCookingDay[]>([]);
+  const [selectedDays, setSelectedDays] = useState<TMealDay[]>([]);
   const [selectedTimes, setSelectedTimes] = useState<TMealTime[]>([]);
   const [selectedPlan, setSelectedPlan] = useState<TCheckoutPlan | null>(null);
   const [matchResult, setMatchResult] = useState<TPercentage | null>(null);

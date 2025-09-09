@@ -18,8 +18,6 @@ import {
   dhakaAreas,
   foodPreferance,
   kitchenType,
-  mealTime,
-  weekDays,
 } from "../kitchenProfile/kitchen.const";
 
 const CreateKitchen = ({ verifiedEmail }: { verifiedEmail: boolean }) => {
@@ -32,8 +30,6 @@ const CreateKitchen = ({ verifiedEmail }: { verifiedEmail: boolean }) => {
   } = useForm<TKitchen>({
     defaultValues: {
       foodPreference: [],
-      mealTimePerDay: [],
-      cookingDays: [],
     },
     mode: "onChange",
   });
@@ -200,25 +196,6 @@ const CreateKitchen = ({ verifiedEmail }: { verifiedEmail: boolean }) => {
             options={foodPreferance}
             name="foodPreference"
             errors={errors}
-          />
-
-          <InputCheckboxArray
-            label="meal time"
-            register={register}
-            options={mealTime}
-            name="mealTimePerDay"
-            errors={errors}
-            required={true}
-          />
-
-          {/* Cooking Days */}
-          <InputCheckboxArray
-            label="cooking days"
-            register={register}
-            options={weekDays}
-            name="cookingDays"
-            errors={errors}
-            required={true}
           />
 
           <div className="mb-4">

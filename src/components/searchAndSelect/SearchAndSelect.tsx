@@ -7,11 +7,13 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 export type TSearchSelectProps<T extends string> = {
   options: T[];
   filterBy: string;
+  label: string;
 };
 
 const SearchAndSelect = <T extends string>({
   options,
   filterBy,
+  label,
 }: TSearchSelectProps<T>) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [open, setOpen] = useState(false);
@@ -56,7 +58,7 @@ const SearchAndSelect = <T extends string>({
         }}
         className="bg-secondary border border-primary text-primary p-1 md:p-2 flex items-center gap-4 rounded-lg cursor-pointer hover:bg-white duration-500"
       >
-        {value || "Select Cuisine "}
+        {value || label}
         <RiArrowDropDownLine
           className={`text-2xl ${open && "rotate-180 duration-500"}`}
         />

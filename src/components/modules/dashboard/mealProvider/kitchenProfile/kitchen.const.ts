@@ -1,23 +1,6 @@
-import {
-  FoodPreferenceOption,
-  TCookingDay,
-  TKitchenType,
-  TMealTime,
-} from "@/types/kitchenType";
-
-export const weekDays: TCookingDay[] = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-] as const;
+import { FoodPreferenceOption, TKitchenType } from "@/types/kitchenType";
 
 export const kitchenType: TKitchenType[] = ["Home-based", "Commercial"];
-
-export const mealTime: TMealTime[] = ["Breakfast", "Lunch", "Dinner"] as const;
 
 export const foodPreferance: FoodPreferenceOption[] = [
   "Veg",

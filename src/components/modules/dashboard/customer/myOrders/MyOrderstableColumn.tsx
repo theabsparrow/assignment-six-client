@@ -74,7 +74,24 @@ export const MyOrderTableColumn = (): ColumnDef<TOrder>[] => [
       );
     },
   },
-  { accessorKey: "endDate", header: "End Date" },
+  {
+    accessorKey: "endDate",
+    header: "End Date",
+    cell: ({ row }) => {
+      const endDate = row.original?.endDate;
+      if (!endDate) return null;
+      const [day, month, year] = endDate.split(" ");
+
+      return (
+        <div className="flex flex-col">
+          <p>
+            {day}, {month}
+          </p>
+          <p>{year}</p>
+        </div>
+      );
+    },
+  },
   {
     accessorKey: "isActive",
     header: "Active",
@@ -205,7 +222,7 @@ export const MyOrderTableColumn = (): ColumnDef<TOrder>[] => [
       return (
         <Link
           href={`/user/myOrders/${id}`}
-          className="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
+          className="text-sm bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 transition"
         >
           Details
         </Link>

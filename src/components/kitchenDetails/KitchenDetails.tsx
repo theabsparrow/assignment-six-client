@@ -85,37 +85,7 @@ const KitchenDetails = ({ data }: { data: TKitchenProfileProps }) => {
                 </ul>
               </div>
             )}
-            {result?.mealTimePerDay && (
-              <div className="space-y-2">
-                <h1 className="font-semibold text-xl">Meal Time:</h1>
-                <ul className="flex flex-wrap gap-2 ">
-                  {(result?.mealTimePerDay).map((mealTime, i) => (
-                    <li
-                      key={i}
-                      className="bg-primary text-secondary px-2 py-1 rounded-xl"
-                    >
-                      {mealTime}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
           </div>
-          {result?.cookingDays && (
-            <div className="space-y-2">
-              <h1 className="font-semibold text-xl">Cooking Day:</h1>
-              <ul className="flex flex-wrap gap-2 ">
-                {(result?.cookingDays).map((cookingDay, i) => (
-                  <li
-                    key={i}
-                    className="bg-primary text-secondary px-2 py-1 rounded-xl"
-                  >
-                    {cookingDay}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
           {result?.specialEquipments && (
             <div className="space-y-2">
               <h1 className="font-semibold text-xl">Special Equipment:</h1>

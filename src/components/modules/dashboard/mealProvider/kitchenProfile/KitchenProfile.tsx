@@ -3,22 +3,15 @@
 import {
   FoodPreferenceOption,
   KitchenProfileCardProps,
-  TCookingDay,
   TExtendedKitchen,
   TKitchenType,
-  TMealTime,
 } from "@/types/kitchenType";
 import { CheckCircle, CircleX, MapPin } from "lucide-react";
 import ImageUploadKitchen from "./ImageUploadKitchen";
 import Link from "next/link";
 import { useState } from "react";
 import EditComponent from "../../../editComponent/EditComponent";
-import {
-  foodPreferance,
-  kitchenType,
-  mealTime,
-  weekDays,
-} from "./kitchen.const";
+import { foodPreferance, kitchenType } from "./kitchen.const";
 import PdfUploader from "../../../pdfUploader/PdfUploader";
 import { toast } from "sonner";
 import pdfUpload from "@/utills/pdfUpload";
@@ -102,7 +95,6 @@ const KitchenProfile = ({
       updatedData.hygieneCertified = hygine;
       setIsHygieneEditing(false);
     }
-
     if (field === "Food Preferences") {
       if (addOptions?.length > 0) {
         updatedData.addFoodPreference = addOptions as FoodPreferenceOption[];
@@ -110,24 +102,6 @@ const KitchenProfile = ({
       if (removeOptions.length > 0) {
         updatedData.removeFoodPreference =
           removeOptions as FoodPreferenceOption[];
-      }
-    }
-
-    if (field === "Meal Times") {
-      if (addOptions?.length > 0) {
-        updatedData.addMealTimePerDay = addOptions as TMealTime[];
-      }
-      if (removeOptions.length > 0) {
-        updatedData.removeMealTimePerDay = removeOptions as TMealTime[];
-      }
-    }
-
-    if (field === "Cooking Days") {
-      if (addOptions?.length > 0) {
-        updatedData.addCookingDays = addOptions as TCookingDay[];
-      }
-      if (removeOptions.length > 0) {
-        updatedData.removeCookingDays = removeOptions as TCookingDay[];
       }
     }
     if (field === "Special Equipments") {
@@ -377,30 +351,10 @@ const KitchenProfile = ({
             style="flex flex-col justify-start items-start"
           />
         )}
-        {kitchenInfo?.mealTimePerDay.length && (
-          <EditArray
-            value={kitchenInfo?.mealTimePerDay as TMealTime[]}
-            valueOptions={mealTime}
-            handleSubmit={handleSubmit}
-            label="Meal Times"
-            styleClass="bg-secondary text-primary px-3 py-1 rounded-full "
-            style="flex flex-col justify-start items-start"
-          />
-        )}
-        {kitchenInfo?.cookingDays.length && (
-          <EditArray
-            value={kitchenInfo?.cookingDays as TCookingDay[]}
-            valueOptions={weekDays}
-            handleSubmit={handleSubmit}
-            label="Cooking Days"
-            styleClass="bg-secondary text-primary px-3 py-1 rounded-full "
-            style="flex flex-col justify-start items-start"
-          />
-        )}
 
         {kitchenInfo?.specialEquipments!.length && (
           <EditInputArray
-            value={kitchenInfo?.specialEquipments as TCookingDay[]}
+            value={kitchenInfo?.specialEquipments as string[]}
             handleSubmit={handleSubmit}
             label="Special Equipments"
           />

@@ -3,23 +3,19 @@
 import EditComponent from "@/components/modules/editComponent/EditComponent";
 import StatusDropdown from "@/components/statusDropdown/StatusDropdown";
 import { deletePlan, updatePlan } from "@/services/mealPlannerService.ts";
-import {
-  FoodPreferenceOption,
-  TCookingDay,
-  TMealTime,
-} from "@/types/kitchenType";
+import { FoodPreferenceOption } from "@/types/kitchenType";
 import { TmealPlannerDetails, TPlanUpdate } from "@/types/MealPlanType";
 import { TStatus } from "@/types/subscriber.types";
 import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "sonner";
+import { foodPreferance } from "../../mealProvider/kitchenProfile/kitchen.const";
+import EditArray from "@/components/modules/editArrayComponent/EditArray";
+import { TDietaryPreference, TMealDay, TMealTime } from "@/types/mealType";
 import {
-  foodPreferance,
+  diateryPreference,
   mealTime,
   weekDays,
-} from "../../mealProvider/kitchenProfile/kitchen.const";
-import EditArray from "@/components/modules/editArrayComponent/EditArray";
-import { TDietaryPreference } from "@/types/mealType";
-import { diateryPreference } from "../../mealProvider/createMeal/createMeal.const";
+} from "../../mealProvider/createMeal/createMeal.const";
 import DeletionModal from "@/components/statusDropdown/DeletionModal";
 
 const PlanDetails = ({ data }: { data: TmealPlannerDetails }) => {
@@ -88,10 +84,10 @@ const PlanDetails = ({ data }: { data: TmealPlannerDetails }) => {
     }
     if (field === "Meal Day") {
       if (addOptions?.length > 0) {
-        updatedData.addPreferredMealDay = addOptions as TCookingDay[];
+        updatedData.addPreferredMealDay = addOptions as TMealDay[];
       }
       if (removeOptions.length > 0) {
-        updatedData.removePreferredMealDay = removeOptions as TCookingDay[];
+        updatedData.removePreferredMealDay = removeOptions as TMealDay[];
       }
     }
     if (field === "Diatery Preference") {
@@ -275,7 +271,7 @@ const PlanDetails = ({ data }: { data: TmealPlannerDetails }) => {
         )}
         {data?.preferredMealDay.length && (
           <EditArray
-            value={data?.preferredMealDay as TCookingDay[]}
+            value={data?.preferredMealDay as TMealDay[]}
             valueOptions={weekDays}
             handleSubmit={handleSubmit}
             label="Meal Day"

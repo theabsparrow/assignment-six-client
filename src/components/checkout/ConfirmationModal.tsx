@@ -1,6 +1,6 @@
 "use client";
 
-import { TCookingDay, TMealTime } from "@/types/mealType";
+import { TMealDay, TMealTime } from "@/types/mealType";
 import { TConfirmModal, TDeliveryMode } from "@/types/orderTypes";
 import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "sonner";
@@ -11,7 +11,7 @@ type TConfirmModalProps = {
   quantity: number;
   orderType: "once" | "regular";
   deliveryMode: TDeliveryMode;
-  selectedDays: TCookingDay[];
+  selectedDays: TMealDay[];
   selectedTimes: TMealTime[];
   area: string;
   location: string;

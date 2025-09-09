@@ -1,7 +1,7 @@
 import {
   TcheckoutMeal,
   TCheckoutPersonInfo,
-  TCookingDay,
+  TMealDay,
   TMealTime,
 } from "@/types/mealType";
 import { TDeliveryMode } from "@/types/orderTypes";
@@ -9,7 +9,7 @@ import { TbCurrencyTaka } from "react-icons/tb";
 
 type TorderInfoProps = {
   orderType: "once" | "regular";
-  selectedDays: TCookingDay[];
+  selectedDays: TMealDay[];
   selectedTimes: TMealTime[];
   deliveryMode: TDeliveryMode;
   meal: TcheckoutMeal;

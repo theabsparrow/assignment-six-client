@@ -42,11 +42,14 @@ const InputSelect = ({
           ) : (
             <>
               <option value="">{label}</option>
-              {options.map((g) => (
-                <option key={g as string} value={g as string}>
-                  {g}
-                </option>
-              ))}
+              {options
+                .slice()
+                .sort((a, b) => a.localeCompare(b))
+                .map((g) => (
+                  <option key={g} value={g}>
+                    {g}
+                  </option>
+                ))}
             </>
           )}
         </select>

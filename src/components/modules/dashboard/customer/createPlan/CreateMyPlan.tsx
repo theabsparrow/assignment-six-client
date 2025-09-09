@@ -5,16 +5,16 @@ import InputType from "../../../formInput/InputType";
 import { TMealPlanner } from "@/types/MealPlanType";
 import InputTextArea from "../../../formInput/InputTextArea";
 import InputCheckboxArray from "../../../formInput/InputCheckboxArray";
-import {
-  foodPreferance,
-  mealTime,
-  weekDays,
-} from "../../mealProvider/kitchenProfile/kitchen.const";
+import { foodPreferance } from "../../mealProvider/kitchenProfile/kitchen.const";
 import InputSelect from "../../../formInput/InputSelect";
 import { createMealPlan } from "@/services/mealPlannerService.ts";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { diateryPreference } from "../../mealProvider/createMeal/createMeal.const";
+import {
+  diateryPreference,
+  mealTime,
+  weekDays,
+} from "../../mealProvider/createMeal/createMeal.const";
 
 const CreateMyPlan = () => {
   const router = useRouter();

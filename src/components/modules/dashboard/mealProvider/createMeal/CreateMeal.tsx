@@ -10,14 +10,12 @@ import {
   cuisineType,
   diateryPreference,
   foodCategory,
+  mealTime,
   portionSize,
+  weekDays,
 } from "./createMeal.const";
 import InputSelect from "@/components/modules/formInput/InputSelect";
-import {
-  foodPreferance,
-  mealTime,
-  weekDays,
-} from "../../mealProvider/kitchenProfile/kitchen.const";
+import { foodPreferance } from "../../mealProvider/kitchenProfile/kitchen.const";
 import { allergyOptions } from "@/components/modules/auth/register/register.const";
 import ImagePreviewer from "@/components/modules/imageUploader/ImagePreviewer";
 import ImageUploader from "@/components/modules/imageUploader/ImageUploader";

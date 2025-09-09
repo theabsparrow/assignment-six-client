@@ -1,7 +1,16 @@
 import { TAlergies } from "./customerRegistration";
 
-export type TMealTime = "Breakfast" | "Lunch" | "Dinner";
-export type TCookingDay =
+export type TMealTime =
+  | "Breakfast"
+  | "Brunch"
+  | "Lunch"
+  | "Snack"
+  | "Dinner"
+  | "Supper"
+  | "Tea Time"
+  | "Midnight Snack";
+
+export type TMealDay =
   | "Sunday"
   | "Monday"
   | "Tuesday"
@@ -10,9 +19,18 @@ export type TCookingDay =
   | "Friday"
   | "Saturday";
 
+export type TFoodCategory =
+  | TMealTime
+  | "Appetizer"
+  | "Dessert"
+  | "Beverage"
+  | "Side Dish"
+  | "Sea Food"
+  | "Street Food & Fast Food"
+  | "Healthy Meal";
+
 export type FoodPreferenceOption = "Veg" | "Non-Veg" | "Mixed";
 
-export type TFoodCategory = TMealTime | "Snack";
 export type TcuisineType =
   | "Bengali"
   | "Indian"
@@ -64,7 +82,7 @@ export type TMealFormData = {
   portionSize: TPortionSize;
   price: number;
   imageUrl: string;
-  availableDays: TCookingDay[];
+  availableDays: TMealDay[];
   availableTime: TMealTime[];
   _id?: string;
   avarageRating?: number;
@@ -119,7 +137,7 @@ export type TMealProfile = {
     _id: string;
   };
   allergies: TAlergies[];
-  availableDays: TCookingDay[];
+  availableDays: TMealDay[];
   availableTime: TMealTime[];
   avarageRating: number;
   createdAt: string;
@@ -153,8 +171,8 @@ export type TUpdatemealData = {
   removeIngredients: string[];
   addAllergies: TAlergies[];
   removeAllergies: TAlergies[];
-  addAvailableDays: TCookingDay[];
-  removeAvailableDays: TCookingDay[];
+  addAvailableDays: TMealDay[];
+  removeAvailableDays: TMealDay[];
   addAvailableTime: TMealTime[];
   removeAvailableTime: TMealTime[];
 };
@@ -172,7 +190,7 @@ export type TMyMealDetails = {
   ratingCount: number;
   price: number;
   allergies: TAlergies[];
-  availableDays: TCookingDay[];
+  availableDays: TMealDay[];
   availableTime: TMealTime[];
   ingredients: string[];
   dietaryPreferences: TDietaryPreference[];
@@ -184,7 +202,7 @@ export type TcheckoutMeal = {
   _id: string;
   title: string;
   kitchen: { _id: string; kitchenName: string };
-  availableDays: TCookingDay[];
+  availableDays: TMealDay[];
   availableTime: TMealTime[];
   dietaryPreferences: TDietaryPreference[];
   foodPreference: FoodPreferenceOption;
@@ -203,7 +221,7 @@ export type TCheckoutPlan = {
   title: string;
   dietaryPreferences: TDietaryPreference[];
   foodPreference: FoodPreferenceOption;
-  preferredMealDay: TCookingDay[];
+  preferredMealDay: TMealDay[];
   preferredMealTime: TMealTime[];
 };
 

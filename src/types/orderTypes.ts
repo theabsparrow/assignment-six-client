@@ -2,9 +2,9 @@ import { LucideIcon } from "lucide-react";
 import { TGender } from "./customerRegistration";
 import {
   FoodPreferenceOption,
-  TCookingDay,
   TcuisineType,
   TFoodCategory,
+  TMealDay,
   TMealTime,
   TPortionSize,
 } from "./mealType";
@@ -51,7 +51,7 @@ export type TPercentage = {
 export type TConfirmModal = {
   quantity: number;
   deliveryTime: TMealTime[];
-  deliveryDays: TCookingDay[];
+  deliveryDays: TMealDay[];
   deliveryMode: TDeliveryMode | "";
   orderType: TOrderType | string;
   note?: string;
@@ -84,7 +84,7 @@ export type TSingleOrder = {
   _id: string;
   createdAt: string;
   deliveryAddress: string;
-  deliveryDays: TCookingDay[];
+  deliveryDays: TMealDay[];
   deliveryTime: TMealTime[];
   deliveryMode: TDeliveryMode;
   orderType: TOrderType;

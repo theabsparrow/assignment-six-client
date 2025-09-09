@@ -1,13 +1,3 @@
-export type TMealTime = "Breakfast" | "Lunch" | "Dinner";
-export type TCookingDay =
-  | "Sunday"
-  | "Monday"
-  | "Tuesday"
-  | "Wednesday"
-  | "Thursday"
-  | "Friday"
-  | "Saturday";
-
 export type FoodPreferenceOption = "Veg" | "Non-Veg" | "Mixed";
 export type TKitchenType = "Home-based" | "Commercial";
 export type TKitchen = {
@@ -19,18 +9,12 @@ export type TKitchen = {
   hygieneCertificate?: string;
   licenseOrCertificate?: string;
   foodPreference: FoodPreferenceOption[];
-  mealTimePerDay: TMealTime[];
-  cookingDays: TCookingDay[];
   specialEquipments?: string | string[];
 };
 
 export interface TExtendedKitchen extends TKitchen {
   addFoodPreference: FoodPreferenceOption[];
   removeFoodPreference: FoodPreferenceOption[];
-  addMealTimePerDay: TMealTime[];
-  removeMealTimePerDay: TMealTime[];
-  addCookingDays: TCookingDay[];
-  removeCookingDays: TCookingDay[];
   addSpecialEquipments: string[];
   removeSpecialEquipments: string[];
 }
@@ -45,8 +29,6 @@ export interface KitchenProfileCardProps {
   hygieneCertificate?: string;
   licenseOrCertificate?: string;
   foodPreference: FoodPreferenceOption[];
-  mealTimePerDay: TMealTime[];
-  cookingDays: TCookingDay[];
   specialEquipments?: string[];
   _id?: string;
   isActive?: boolean;
@@ -90,7 +72,6 @@ export type TKitchenProfile = {
     name: string;
     _id: string;
   };
-  cookingDays: TCookingDay[];
   createdAt: string;
   foodHandlerExperience: string;
   foodPreference: FoodPreferenceOption[];
@@ -102,14 +83,12 @@ export type TKitchenProfile = {
   kitchenType: TKitchenType;
   licenseOrCertificate?: string;
   location: string;
-  mealTimePerDay: TMealTime[];
   specialEquipments?: string[];
   subscriber: number;
 };
 
 export type TKitchenDetails = {
   _id: string;
-  cookingDays: TCookingDay[];
   foodHandlerExperience: string;
   foodPreference: FoodPreferenceOption[];
   hygieneCertified: boolean;
@@ -117,7 +96,6 @@ export type TKitchenDetails = {
   kitchenPhoto: string;
   kitchenType: TKitchenType;
   location: string;
-  mealTimePerDay: TMealTime[];
   specialEquipments?: string[];
   subscriber: number;
 };

@@ -27,7 +27,11 @@ const FoodCuisineBanner = () => {
             sushi—we’ve got it all.
           </p>
           <div className="flex md:gap-16 items-start justify-between md:justify-start mt-2 md:mt-0 ">
-            <SearchAndSelect options={cuisineType} filterBy={"cuisineType"} />
+            <SearchAndSelect
+              options={cuisineType}
+              filterBy={"cuisineType"}
+              label="Select Cuisine"
+            />
             <Link
               href="/meals"
               className="bg-secondary text-primary border border-primary p-1 md:p-2 rounded-md hover:bg-white duration-500 transition"

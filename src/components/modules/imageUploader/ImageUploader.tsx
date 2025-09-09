@@ -27,7 +27,7 @@ const ImageUploader = ({ setImageFile, setImagePreview }: TImageUploader) => {
       />
       <label
         htmlFor="uploadImage"
-        className="md:w-[13vw] w-[40vw] h-[15vh] flex items-center justify-center border-2 border-dashed rounded-lg cursor-pointer bg-white dark:bg-gray-800 border-secondary dark:border-gray-600 hover:border-primary transition"
+        className="md:w-[13vw] w-[40vw] h-28 flex items-center justify-center border-2 border-dashed rounded-lg cursor-pointer bg-white dark:bg-gray-800 border-secondary dark:border-gray-600 hover:border-primary transition"
       >
         {" "}
         <span className="text-gray-500 dark:text-gray-400 text-sm text-center font-playfair">
