@@ -23,7 +23,7 @@ Welcome to **Daily Dish**, a modern, responsive, and user-friendly Meal service 
 ## 🔗 Live Demo
 
 👉 [Live Website link](https://mealbx-client.vercel.app/)  
-👉 [Server Live Link] https://mealbox-server-kappa.vercel.app
+👉 [Server Live Link](https://daily-dish-server-murex.vercel.app)
 👉 [Server GitHub Repository](https://github.com/theabsparrow/assignment-six-server.git)
 
 ---
