@@ -11,7 +11,6 @@ const MySubscribersPage = async ({
   const query = await searchParams;
   const { data } = await getMyAllSubscribers(query);
   const { mySubscribers, meta, totalSubscribers } = data;
-  console.log(data);
   return (
     <section className=" w-full min-h-screen">
       <GetMySubscribersComponent

@@ -4,7 +4,6 @@ import Image from "next/image";
 import { FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 
 const CustomerProfile = ({ customerData }: { customerData: TuserProfile }) => {
-  console.log(customerData);
   return (
     <section className="max-w-4xl mx-auto p-6 space-y-6">
       <div className="col-span-2 flex flex-col md:flex-row items-center gap-6 p-6 bg-gradient-to-r from-indigo-100 to-blue-100 dark:from-indigo-900 dark:to-blue-900 shadow-lg rounded-2xl">

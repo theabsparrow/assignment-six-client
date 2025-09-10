@@ -25,7 +25,7 @@ const CategoryCard = <TId,>({
   return (
     <>
       <div className="hidden md:flex">
-        {data.length > 0 && (
+        {data?.length > 0 && (
           <Marquee pauseOnHover>
             <div className="flex items-stretch">
               {data.map((category, i) => (
@@ -68,7 +68,7 @@ const CategoryCard = <TId,>({
         )}
       </div>
       <div className="md:hidden">
-        {data.length > 0 && (
+        {data?.length > 0 && (
           <div className="flex flex-col items-center gap-4">
             {data.map((item, i) => (
               <div

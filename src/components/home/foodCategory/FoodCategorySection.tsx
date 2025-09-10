@@ -3,7 +3,7 @@ import CategoryCard from "./CategoryCard";
 import { TCategoryCard, TFoodCategory } from "@/types/mealType";
 
 const FoodCategorySection = async () => {
-  const { data } = await getFoodCategory();
+  const { data } = (await getFoodCategory()) || [];
   return (
     <section className="md:px-24 px-5 mb-20 space-y-8">
       <div className="max-w-4xl mx-auto text-center space-y-4 px-2 md:px-6">

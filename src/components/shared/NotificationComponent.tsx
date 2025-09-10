@@ -49,7 +49,6 @@ const NotificationComponent = ({ id }: { id: string }) => {
       socket.emit("join", id);
     });
     socket.on("notification", (payload: TNotification) => {
-      console.log("🔔 New notification:", payload);
       setNotifications((prev) => [payload, ...prev]);
       setUnreadCount((prev) => prev + 1);
     });
@@ -78,7 +77,6 @@ const NotificationComponent = ({ id }: { id: string }) => {
     notificationId: string,
     link?: string
   ) => {
-    console.log(notificationId);
     try {
       const result = await updateNotification(notificationId);
       if (result?.success) {

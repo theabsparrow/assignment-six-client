@@ -104,7 +104,6 @@ const SettingsComponent = ({ user }: { user: TSettingsInfo }) => {
                       type="button"
                       onClick={async () => {
                         const valid = await trigger("email");
-                        console.log(valid);
                         if (valid) {
                           setOpen(true);
                         }

@@ -14,7 +14,6 @@ import {
 
 const OrderStats = ({ data }: { data: TOrderStats }) => {
   const COLORS = ["#4CAF50", "#FF9800", "#2196F3", "#9C27B0", "#F44336"];
-  console.log(data?.topOrder);
   const topOrders = data?.topOrder.map(
     (order: { deliveredCount: number; mealId: { title: string } }) => ({
       title:
