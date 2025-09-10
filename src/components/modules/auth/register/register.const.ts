@@ -12,8 +12,14 @@ export const allergyOptions: TAlergies[] = [
   "Fish",
   "Sesame",
   "Peanuts",
-  "None",
   "Dairy",
+  "Mollusks",
+  "Mustard",
+  "Celery",
+  "Lupin",
+  "Corn",
+  "Sulfites",
+  "None",
 ];
 
 export const isCertified: string[] = ["true", "false"];

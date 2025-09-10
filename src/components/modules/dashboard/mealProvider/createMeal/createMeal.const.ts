@@ -2,10 +2,12 @@ import {
   TcuisineType,
   TDietaryPreference,
   TFoodCategory,
+  TFoodPreference,
   TMealDay,
   TMealTime,
   TPortionSize,
 } from "@/types/mealType";
+import { foodPreferance } from "../kitchenProfile/kitchen.const";
 
 export const diateryPreference: TDietaryPreference[] = [
   "Vegan",
@@ -78,4 +80,14 @@ export const foodCategory: TFoodCategory[] = [
   "Sea Food",
   "Street Food & Fast Food",
   "Healthy Meal",
+];
+
+export const foodPreferenceOptions: TFoodPreference[] = [
+  ...foodPreferance,
+  "Vegan",
+  "Pescatarian",
+  "Eggetarian",
+  "Halal",
+  "Kosher",
+  "Jain",
 ];

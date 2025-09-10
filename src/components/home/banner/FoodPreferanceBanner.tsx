@@ -1,7 +1,6 @@
 "use client";
-import { foodPreferance } from "@/components/modules/dashboard/mealProvider/kitchenProfile/kitchen.const";
-import InputDropdown from "@/components/modules/formInput/InputDropdownDropdown";
-import { FoodPreferenceOption } from "@/types/mealType";
+import { foodPreferenceOptions } from "@/components/modules/dashboard/mealProvider/createMeal/createMeal.const";
+import SearchAndSelect from "@/components/searchAndSelect/SearchAndSelect";
 import Link from "next/link";
 
 const FoodPreferanceBanner = () => {
@@ -28,11 +27,10 @@ const FoodPreferanceBanner = () => {
           </p>
 
           <div className="flex md:gap-16 items-start justify-between md:justify-start mt-2 md:mt-0">
-            <InputDropdown
-              options={foodPreferance as FoodPreferenceOption[]}
+            <SearchAndSelect
+              options={foodPreferenceOptions}
               filterBy={"foodPreference"}
-              name="Select Preference"
-              clases="left-44 md:left-48 -top-10"
+              label="Select Preference"
             />
             <Link
               href="/meals"

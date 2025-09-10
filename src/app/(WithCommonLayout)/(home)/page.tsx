@@ -10,25 +10,32 @@ import GetMostSearchedMeals from "@/components/home/mostSearchedMeals/GetMostSea
 import NewsLetter from "@/components/home/newsLetter/NewsLetter";
 import OurMission from "@/components/home/ourMission/OurMission";
 import RecentMeals from "@/components/home/RecentMeals.jsx/RecentMeals";
+import LoadingBanner from "@/components/loadingComponent/LoadingBanner";
+import LoadingCategory from "@/components/loadingComponent/LoadingCategory";
+import LoadingCuisine from "@/components/loadingComponent/LoadingCuisine";
+import LoadingPreference from "@/components/loadingComponent/LoadingPreference";
 import { Suspense } from "react";
 
 const HomePage = () => {
   return (
     <section className="space-y-16">
-      <Banner />
+      <Suspense fallback={<LoadingBanner />}>
+        <Banner />
+      </Suspense>
       <RecentMeals />
-      <OurMission />
-      <Suspense fallback={<div>Loading categories...</div>}>
+      <Suspense fallback={<LoadingCategory />}>
         <FoodCategorySection />
       </Suspense>
 
-      <Suspense fallback={<div>Loading preferences...</div>}>
+      <Suspense fallback={<LoadingPreference />}>
         <PreferenceSection />
       </Suspense>
 
-      <Suspense fallback={<div>Loading cuisines...</div>}>
+      <Suspense fallback={<LoadingCuisine />}>
         <CuisineSection />
       </Suspense>
+
+      <OurMission />
       <GetMostSearchedMeals />
       <KitchenSection />
       <LatestArticle />

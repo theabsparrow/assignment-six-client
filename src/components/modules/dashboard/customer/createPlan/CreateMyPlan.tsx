@@ -5,13 +5,13 @@ import InputType from "../../../formInput/InputType";
 import { TMealPlanner } from "@/types/MealPlanType";
 import InputTextArea from "../../../formInput/InputTextArea";
 import InputCheckboxArray from "../../../formInput/InputCheckboxArray";
-import { foodPreferance } from "../../mealProvider/kitchenProfile/kitchen.const";
 import InputSelect from "../../../formInput/InputSelect";
 import { createMealPlan } from "@/services/mealPlannerService.ts";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import {
   diateryPreference,
+  foodPreferenceOptions,
   mealTime,
   weekDays,
 } from "../../mealProvider/createMeal/createMeal.const";
@@ -25,6 +25,7 @@ const CreateMyPlan = () => {
     reset,
     formState: { errors, isSubmitting },
   } = useForm<TMealPlanner>();
+
   const onSubmit = async (data: TMealPlanner) => {
     try {
       const result = await createMealPlan(data);
@@ -59,7 +60,7 @@ const CreateMyPlan = () => {
             name="foodPreference"
             label="Food Preferance"
             error={errors.foodPreference}
-            options={foodPreferance}
+            options={foodPreferenceOptions}
             required={true}
           />
           <InputTextArea

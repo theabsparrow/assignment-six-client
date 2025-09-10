@@ -7,7 +7,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { TStatus } from "@/types/subscriber.types";
 import { IoIosArrowDown } from "react-icons/io";
-import { FoodPreferenceOption } from "@/types/mealType";
+import { TFoodPreference } from "@/types/mealType";
+import { foodPreferenceOptions } from "../../mealProvider/createMeal/createMeal.const";
 
 const MyPlanComponent = ({ myPlans }: { myPlans: TMyMealPlanner[] }) => {
   const router = useRouter();
@@ -16,7 +17,7 @@ const MyPlanComponent = ({ myPlans }: { myPlans: TMyMealPlanner[] }) => {
   const [search, setSearch] = useState<string>("");
   const [status, setStatus] = useState<TStatus | string>("");
   const [foodPreference, setFoodPreference] = useState<
-    FoodPreferenceOption | string
+    TFoodPreference | string
   >("");
   const [open, setOpen] = useState(false);
 
@@ -96,13 +97,11 @@ const MyPlanComponent = ({ myPlans }: { myPlans: TMyMealPlanner[] }) => {
                 className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
               >
                 <option value="">Type</option>
-                {(["Veg", "Non-Veg", "Mixed"] as FoodPreferenceOption[]).map(
-                  (item) => (
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  )
-                )}
+                {foodPreferenceOptions.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="space-y-2 ">
@@ -174,13 +173,11 @@ const MyPlanComponent = ({ myPlans }: { myPlans: TMyMealPlanner[] }) => {
                   className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                 >
                   <option value="">Type</option>
-                  {(["Veg", "Non-Veg", "Mixed"] as FoodPreferenceOption[]).map(
-                    (item) => (
-                      <option key={item} value={item}>
-                        {item}
-                      </option>
-                    )
-                  )}
+                  {foodPreferenceOptions.map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="space-y-2 ">

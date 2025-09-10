@@ -1,9 +1,9 @@
 import { LucideIcon } from "lucide-react";
 import { TGender } from "./customerRegistration";
 import {
-  FoodPreferenceOption,
   TcuisineType,
   TFoodCategory,
+  TFoodPreference,
   TMealDay,
   TMealTime,
   TPortionSize,
@@ -74,7 +74,7 @@ type TMeal = {
   title: string;
   foodCategory: TFoodCategory;
   cuisineType: TcuisineType;
-  foodPreference: FoodPreferenceOption;
+  foodPreference: TFoodPreference;
   price: number;
   imageUrl: string;
   portionSize: TPortionSize;

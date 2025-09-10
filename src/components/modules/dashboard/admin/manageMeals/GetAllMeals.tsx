@@ -4,16 +4,15 @@ import Pagination from "@/components/pagination/Pagination";
 import Table from "@/components/table/Table";
 import { TMetaDataProps } from "@/types";
 import {
-  FoodPreferenceOption,
   TcuisineType,
   TFoodCategory,
+  TFoodPreference,
   TMealListing,
   TPortionSize,
 } from "@/types/mealType";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { mealsTableColumn } from "./MealsTableColumn";
-import { foodPreferance } from "../../mealProvider/kitchenProfile/kitchen.const";
 import { TbCurrencyTaka } from "react-icons/tb";
 import ReactRangeSliderInput from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
@@ -21,6 +20,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import {
   cuisineType,
   foodCategory,
+  foodPreferenceOptions,
 } from "../../mealProvider/createMeal/createMeal.const";
 
 const GetAllMeals = ({
@@ -40,9 +40,7 @@ const GetAllMeals = ({
   const [search, setSearch] = useState<string>("");
   const [category, setCategory] = useState<TFoodCategory | string>("");
   const [cuisine, setCuisine] = useState<TcuisineType | string>("");
-  const [preference, setPreference] = useState<FoodPreferenceOption | string>(
-    ""
-  );
+  const [preference, setPreference] = useState<TFoodPreference | string>("");
   const [portionSize, setPortionSize] = useState<TPortionSize | string>("");
   const [available, setAvailable] = useState<"Yes" | "No" | string>("");
   const [priceRange, setPriceRange] = useState<[number, number]>([1, 1]);
@@ -194,7 +192,7 @@ const GetAllMeals = ({
                   className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                 >
                   <option value="">Preference</option>
-                  {foodPreferance.map((item) => (
+                  {foodPreferenceOptions.map((item) => (
                     <option key={item} value={item}>
                       {item}
                     </option>
@@ -380,7 +378,7 @@ const GetAllMeals = ({
                   className="w-full border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                 >
                   <option value="">Preference</option>
-                  {foodPreferance.map((item) => (
+                  {foodPreferenceOptions.map((item) => (
                     <option key={item} value={item}>
                       {item}
                     </option>

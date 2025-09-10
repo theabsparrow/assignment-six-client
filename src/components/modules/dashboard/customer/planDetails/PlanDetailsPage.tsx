@@ -3,16 +3,20 @@
 import EditComponent from "@/components/modules/editComponent/EditComponent";
 import StatusDropdown from "@/components/statusDropdown/StatusDropdown";
 import { deletePlan, updatePlan } from "@/services/mealPlannerService.ts";
-import { FoodPreferenceOption } from "@/types/kitchenType";
 import { TmealPlannerDetails, TPlanUpdate } from "@/types/MealPlanType";
 import { TStatus } from "@/types/subscriber.types";
 import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "sonner";
-import { foodPreferance } from "../../mealProvider/kitchenProfile/kitchen.const";
 import EditArray from "@/components/modules/editArrayComponent/EditArray";
-import { TDietaryPreference, TMealDay, TMealTime } from "@/types/mealType";
+import {
+  TDietaryPreference,
+  TFoodPreference,
+  TMealDay,
+  TMealTime,
+} from "@/types/mealType";
 import {
   diateryPreference,
+  foodPreferenceOptions,
   mealTime,
   weekDays,
 } from "../../mealProvider/createMeal/createMeal.const";
@@ -224,11 +228,11 @@ const PlanDetails = ({ data }: { data: TmealPlannerDetails }) => {
               <select
                 value={preference}
                 onChange={(e) =>
-                  setPreference(e.target.value as FoodPreferenceOption)
+                  setPreference(e.target.value as TFoodPreference)
                 }
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-gray-700"
               >
-                {foodPreferance.map((type) => (
+                {foodPreferenceOptions.map((type) => (
                   <option key={type} value={type}>
                     {type}
                   </option>
@@ -243,7 +247,7 @@ const PlanDetails = ({ data }: { data: TmealPlannerDetails }) => {
               setValue={setPreference}
               isEditing={isPreferenceEditing}
               setIsEditing={setIsPreferenceEditing}
-              value={data?.foodPreference as FoodPreferenceOption}
+              value={data?.foodPreference as TFoodPreference}
               handleSubmit={handleSubmit}
               field="foodPreference"
             />

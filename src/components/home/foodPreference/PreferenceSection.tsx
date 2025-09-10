@@ -1,6 +1,6 @@
 import { getFoodPreference } from "@/services/mealService";
-import { FoodPreferenceOption } from "@/types/mealType";
-import FoodPreferenceCard from "./FoodPreferenceCard";
+import CategoryCard from "../foodCategory/CategoryCard";
+import { TCategoryCard, TFoodPreference } from "@/types/mealType";
 
 const PreferenceSection = async () => {
   const { data } = await getFoodPreference();
@@ -20,11 +20,10 @@ const PreferenceSection = async () => {
         className="h-[20vw] md:h-[25vh] w-full  bg-cover bg-[center_70%] bg-no-repeat shadow-md"
         style={{ backgroundImage: `url('/food-preference.webp')` }}
       />
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 justify-between items-center">
-        {data.map((preference: FoodPreferenceOption) => (
-          <FoodPreferenceCard key={preference} preference={preference} />
-        ))}
-      </div>
+      <CategoryCard
+        data={data as TCategoryCard<TFoodPreference>[]}
+        label="foodPreference"
+      />
     </section>
   );
 };

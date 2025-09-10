@@ -1,4 +1,5 @@
 import { TAlergies } from "./customerRegistration";
+import { FoodPreferenceOption } from "./kitchenType";
 
 export type TMealTime =
   | "Breakfast"
@@ -29,7 +30,14 @@ export type TFoodCategory =
   | "Street Food & Fast Food"
   | "Healthy Meal";
 
-export type FoodPreferenceOption = "Veg" | "Non-Veg" | "Mixed";
+export type TFoodPreference =
+  | FoodPreferenceOption
+  | "Vegan"
+  | "Pescatarian"
+  | "Eggetarian"
+  | "Halal"
+  | "Kosher"
+  | "Jain";
 
 export type TcuisineType =
   | "Bengali"
@@ -76,7 +84,7 @@ export type TMealFormData = {
   dietaryPreferences: TDietaryPreference[];
   foodCategory: TFoodCategory;
   cuisineType: TcuisineType;
-  foodPreference: FoodPreferenceOption;
+  foodPreference: TFoodPreference;
   ingredients: string[] | string;
   allergies: TAlergies[];
   portionSize: TPortionSize;
@@ -96,7 +104,7 @@ export type TMyMealsList = {
   createdAt: string;
   cuisineType: TcuisineType;
   foodCategory: TFoodCategory;
-  foodPreference: FoodPreferenceOption;
+  foodPreference: TFoodPreference;
   isAvailable: boolean;
   portionSize: TPortionSize;
   price: number;
@@ -109,7 +117,7 @@ export type TSixMealData = {
   imageUrl: string;
   price: number;
   cuisineType: TcuisineType;
-  foodPreference: FoodPreferenceOption;
+  foodPreference: TFoodPreference;
   foodCategory: TFoodCategory;
 };
 
@@ -119,7 +127,7 @@ export type TMealListing = {
   title: string;
   foodCategory: TFoodCategory;
   cuisineType: TcuisineType;
-  foodPreference: FoodPreferenceOption;
+  foodPreference: TFoodPreference;
   portionSize: TPortionSize;
   price: number;
   isAvailable?: boolean;
@@ -145,7 +153,7 @@ export type TMealProfile = {
   description: string;
   dietaryPreferences: TDietaryPreference[];
   foodCategory: TFoodCategory;
-  foodPreference: FoodPreferenceOption;
+  foodPreference: TFoodPreference;
   imageUrl: string;
   ingredients: string[];
   isAvailable: boolean;
@@ -160,7 +168,7 @@ export type TUpdatemealData = {
   description: string;
   foodCategory: TFoodCategory;
   cuisineType: TcuisineType;
-  foodPreference: FoodPreferenceOption;
+  foodPreference: TFoodPreference;
   portionSize: TPortionSize;
   price: number;
   imageUrl: string;
@@ -182,7 +190,7 @@ export type TMyMealDetails = {
   title: string;
   description: string;
   foodCategory: TFoodCategory;
-  foodPreference: FoodPreferenceOption;
+  foodPreference: TFoodPreference;
   cuisineType: TcuisineType;
   portionSize: TPortionSize;
   imageUrl: string;
@@ -205,7 +213,7 @@ export type TcheckoutMeal = {
   availableDays: TMealDay[];
   availableTime: TMealTime[];
   dietaryPreferences: TDietaryPreference[];
-  foodPreference: FoodPreferenceOption;
+  foodPreference: TFoodPreference;
   price: number;
 };
 
@@ -220,7 +228,7 @@ export type TCheckoutPlan = {
   _id: string;
   title: string;
   dietaryPreferences: TDietaryPreference[];
-  foodPreference: FoodPreferenceOption;
+  foodPreference: TFoodPreference;
   preferredMealDay: TMealDay[];
   preferredMealTime: TMealTime[];
 };
@@ -229,4 +237,11 @@ export type Tcheckoutprops = {
   isMealExists: TcheckoutMeal;
   personalInfo: TCheckoutPersonInfo;
   result: TCheckoutPlan[];
+};
+
+export type TCategoryCard<TId = string> = {
+  id: string;
+  imageUrl: string;
+  title: string;
+  _id: TId;
 };

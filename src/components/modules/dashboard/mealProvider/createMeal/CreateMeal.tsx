@@ -10,12 +10,12 @@ import {
   cuisineType,
   diateryPreference,
   foodCategory,
+  foodPreferenceOptions,
   mealTime,
   portionSize,
   weekDays,
 } from "./createMeal.const";
 import InputSelect from "@/components/modules/formInput/InputSelect";
-import { foodPreferance } from "../../mealProvider/kitchenProfile/kitchen.const";
 import { allergyOptions } from "@/components/modules/auth/register/register.const";
 import ImagePreviewer from "@/components/modules/imageUploader/ImagePreviewer";
 import ImageUploader from "@/components/modules/imageUploader/ImageUploader";
@@ -113,7 +113,7 @@ const CreateMeal = ({ hasKitchen }: { hasKitchen: boolean }) => {
                 name="foodPreference"
                 label="food preference"
                 error={errors.foodPreference}
-                options={foodPreferance}
+                options={foodPreferenceOptions}
                 required={true}
               />
               <InputSelect

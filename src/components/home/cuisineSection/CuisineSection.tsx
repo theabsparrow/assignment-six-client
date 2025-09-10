@@ -1,8 +1,10 @@
 import { getCuisineType } from "@/services/mealService";
-import CuisineCard from "./CuisineCard";
+import CategoryCard from "../foodCategory/CategoryCard";
+import { TCategoryCard, TcuisineType } from "@/types/mealType";
 
 const CuisineSection = async () => {
   const { data } = await getCuisineType();
+  console.log(data);
   return (
     <section className="md:px-24 px-5 mb-20 space-y-8">
       <div className="max-w-4xl mx-auto text-center space-y-4 px-2 md:px-6">
@@ -18,7 +20,10 @@ const CuisineSection = async () => {
         className="h-[20vw] md:h-[25vh] w-full  bg-cover bg-[center_70%] bg-no-repeat shadow-md"
         style={{ backgroundImage: `url('/cuisine-type.webp')` }}
       />
-      <CuisineCard data={data} />
+      <CategoryCard
+        data={data as TCategoryCard<TcuisineType>[]}
+        label="cuisineType"
+      />
     </section>
   );
 };

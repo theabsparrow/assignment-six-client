@@ -1,4 +1,4 @@
-const Loading = () => {
+const LoadingBanner = () => {
   return (
     <section className="relative min-h-[400px] md:min-h-[625px] bg-gray-300 dark:bg-gray-700 px-5 md:px-20 py-5 md:py-10 overflow-hidden flex animate-pulse">
       <div className="absolute z-20 w-[95%] md:w-[80%] h-[80%] md:h-[90%] top-[20%] md:top-[5%] left-[3%] md:left-[10%] bg-gray-400 dark:bg-gray-800 px-3 py-3 md:px-10 md:py-4 rounded-lg flex flex-col justify-between">
@@ -15,4 +15,4 @@ const Loading = () => {
   );
 };
 
-export default Loading;
+export default LoadingBanner;

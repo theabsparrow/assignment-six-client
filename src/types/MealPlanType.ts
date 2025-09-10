@@ -1,6 +1,6 @@
 import {
-  FoodPreferenceOption,
   TDietaryPreference,
+  TFoodPreference,
   TMealDay,
   TMealTime,
 } from "./mealType";
@@ -9,7 +9,7 @@ export type TMealPlanner = {
   title: string;
   preferredMealTime: TMealTime[];
   preferredMealDay: TMealDay[];
-  foodPreference: FoodPreferenceOption;
+  foodPreference: TFoodPreference;
   dietaryPreferences: TDietaryPreference[];
   notes: string;
 };
@@ -17,7 +17,7 @@ export type TMealPlanner = {
 export type TMyMealPlanner = {
   _id: string;
   createdAt: string;
-  foodPreference: FoodPreferenceOption;
+  foodPreference: TFoodPreference;
   isActive: boolean;
   preferredMealTime: TMealTime[];
   title: string;
@@ -28,7 +28,7 @@ export type TmealPlannerDetails = {
   title: string;
   preferredMealTime: TMealTime[];
   preferredMealDay: TMealDay[];
-  foodPreference: FoodPreferenceOption;
+  foodPreference: TFoodPreference;
   dietaryPreferences: TDietaryPreference[];
   notes: string;
   isActive: boolean;
@@ -37,7 +37,7 @@ export type TmealPlannerDetails = {
 
 export type TPlanUpdate = {
   title: string;
-  foodPreference: FoodPreferenceOption;
+  foodPreference: TFoodPreference;
   notes: string;
   isActive: boolean;
   addPreferredMealTime: TMealTime[];
