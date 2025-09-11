@@ -15,27 +15,28 @@ export const usersTableColumn = (): ColumnDef<TUserListingType>[] => [
     header: "Name",
     cell: ({ row }) => {
       const name = row.original?.profile?.name;
+      const trimedName = name.length > 16 ? name.slice(0, 16) + "..." : name;
       const id = row.original?._id;
       return (
-        <Link
-          href={`/admin/manageUsers/${id}`}
-          className="text-primary hover:underline duration-500"
-        >
-          {name}
-        </Link>
+        <div className="relative group inline-block">
+          <h1>
+            {" "}
+            <Link
+              href={`/admin/manageUsers/${id}`}
+              className="text-primary hover:underline duration-500"
+            >
+              {trimedName}
+            </Link>
+          </h1>
+          <p className="absolute bottom-full left-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
+            {name}
+          </p>
+        </div>
       );
     },
   },
   { accessorKey: "email", header: "Email" },
   { accessorKey: "phone", header: "Phone" },
-  {
-    id: "address",
-    header: "Address",
-    cell: ({ row }) => {
-      const address = row.original?.profile?.address;
-      return <span>{address}</span>;
-    },
-  },
   {
     id: "gender",
     header: "Gender",

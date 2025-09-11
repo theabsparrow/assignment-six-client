@@ -4,6 +4,7 @@ import ConfirmDelation from "@/components/confirmDeletion/ConfirmDeletion";
 import TableDropDown from "@/components/tableDropdown/TableDropDown";
 import { deleteOrder, updateOrderStatus } from "@/services/orderService";
 import { TOrder, TOrderStatus } from "@/types/orderTypes";
+import { convertDate } from "@/utills/dateConverter";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
@@ -15,19 +16,19 @@ export const allOrderTableColumn = (): ColumnDef<TOrder>[] => [
     header: "Meal",
     cell: ({ row }) => {
       const title = row.original?.mealId?.title;
-
       const id = row.original?.mealId?._id;
       return (
         <div className="relative group inline-block">
-          <Link
-            href={`/admin/manageMeal/${id}`}
-            className="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
-          >
-            View
-          </Link>
-
-          {/* Tooltip */}
-          <p className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
+          <h1>
+            {" "}
+            <Link
+              href={`/admin/manageMeal/${id}`}
+              className="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
+            >
+              View
+            </Link>
+          </h1>
+          <p className="absolute bottom-full left-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
             {title}
           </p>
         </div>
@@ -39,19 +40,19 @@ export const allOrderTableColumn = (): ColumnDef<TOrder>[] => [
     header: "Kitchen",
     cell: ({ row }) => {
       const title = row.original?.kitchenId?.kitchenName;
-
       const id = row.original?.kitchenId?._id;
       return (
         <div className="relative group inline-block">
-          <Link
-            href={`/admin/manageKitchen/${id}`}
-            className="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
-          >
-            View
-          </Link>
-
-          {/* Tooltip */}
-          <p className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
+          <h1>
+            {" "}
+            <Link
+              href={`/admin/manageKitchen/${id}`}
+              className="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
+            >
+              View
+            </Link>
+          </h1>
+          <p className="absolute bottom-full left-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
             {title}
           </p>
         </div>
@@ -63,19 +64,19 @@ export const allOrderTableColumn = (): ColumnDef<TOrder>[] => [
     header: "Customer",
     cell: ({ row }) => {
       const title = row.original?.customerId?.name;
-
       const id = row.original?.customerId?._id;
       return (
         <div className="relative group inline-block">
-          <Link
-            href={`/admin/manageUsers/${id}`}
-            className="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
-          >
-            View
-          </Link>
-
-          {/* Tooltip */}
-          <p className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
+          <h1>
+            {" "}
+            <Link
+              href={`/admin/manageUsers/${id}`}
+              className="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
+            >
+              View
+            </Link>
+          </h1>
+          <p className="absolute bottom-full left-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
             {title}
           </p>
         </div>
@@ -84,26 +85,32 @@ export const allOrderTableColumn = (): ColumnDef<TOrder>[] => [
   },
   { accessorKey: "deliveryMode", header: " Mode" },
   { accessorKey: "orderType", header: " Type" },
-  { accessorKey: "payment", header: "Payment" },
+  {
+    accessorKey: "payment",
+    header: "Payment",
+    cell: ({ row }) => {
+      const payment =
+        row.original?.payment === "cash on delivery"
+          ? "COD"
+          : row.original?.payment;
+      return (
+        <div className="relative group inline-block">
+          <h1>{payment}</h1>
+          <p className="absolute bottom-full left-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
+            {row.original?.payment}
+          </p>
+        </div>
+      );
+    },
+  },
   {
     accessorKey: "createdAt",
     header: "Creation",
     cell: ({ row }) => {
-      const creationDate = new Date(row.original?.createdAt as string);
-      const creationTime = new Date(row.original?.createdAt as string);
-      const date = creationDate.toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      });
-      const time = creationTime.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      });
+      const date = convertDate(new Date(row?.original?.createdAt as string));
       return (
         <p className="flex flex-col">
-          <span>{date}</span> <span>{time}</span>
+          <span>{date?.creationDate}</span> <span>{date?.creationTime}</span>
         </p>
       );
     },
@@ -113,14 +120,14 @@ export const allOrderTableColumn = (): ColumnDef<TOrder>[] => [
     header: "Address",
     cell: ({ row }) => {
       const address = row.original?.deliveryAddress;
-      const trimmedTitle =
+      const trimmedAddress =
         address!.length > 15 ? address!.slice(0, 15) + "..." : address;
       return (
-        <div className="relative group w-max">
-          <p>{trimmedTitle}</p>
-          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
+        <div className="relative group inline-block">
+          <h1>{trimmedAddress}</h1>
+          <p className="absolute bottom-full left-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
             {address}
-          </div>
+          </p>
         </div>
       );
     },

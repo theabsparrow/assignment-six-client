@@ -227,7 +227,7 @@ const ProfileCompnent = ({
               {user?.role}
             </span>
             {userdata?.gender && (
-              <span className="inline-block px-4 py-2 text-sm font-medium text-white bg-green-800 hover:bg-green-700 transition rounded-full">
+              <span className="inline-block px-4 py-2 text-sm font-medium text-white bg-primary hover:bg-green-700 transition rounded-full">
                 {userdata?.gender}
               </span>
             )}
@@ -258,7 +258,7 @@ const ProfileCompnent = ({
                 />
               </div>
             ) : (
-              <span className="inline-block px-4 py-2 text-sm font-medium text-white bg-purple-600  transition rounded-full">
+              <span className="inline-block px-4 py-2 text-sm font-medium text-white bg-primary  transition rounded-full">
                 {new Date(userdata?.dateOfBirth as string).toDateString()} (
                 {calculateAge(userdata?.dateOfBirth as string)} years old)
               </span>
@@ -356,7 +356,7 @@ const ProfileCompnent = ({
                     Create Plan
                   </Link>
                 ) : (
-                  <Modal label="create meal" />
+                  <Modal label="Create Plan" />
                 )}
               </div>
             )}

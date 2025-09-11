@@ -11,12 +11,20 @@ type TModal = {
 const Modal = ({ label }: TModal) => {
   const [open, setOpen] = useState(false);
   return (
-    <>
-      {open ? (
+    <section>
+      <div>
+        <button
+          className="bg-secondary px-2 py-1 rounded-xl text-primary hover:bg-primary hover:text-white border border-primary dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-primary dark:hover:text-white duration-500 cursor-pointer"
+          onClick={() => setOpen(true)}
+        >
+          {label}
+        </button>
+      </div>
+      {open && (
         <div>
           <div>
             <button
-              className="fixed inset-0 bg-black bg-opacity-50 z-40"
+              className="fixed inset-0 bg-black/70 bg-opacity-50 z-40"
               onClick={() => {
                 setOpen(false);
               }}
@@ -24,7 +32,7 @@ const Modal = ({ label }: TModal) => {
           </div>
 
           <div className="fixed inset-0 flex items-center justify-center z-50">
-            <div className="bg-gray-100 dark:bg-gray-900 w-[90%] md:w-[35vw] p-6 rounded-xl shadow-lg relative transition-all duration-300">
+            <div className="bg-gray-100 dark:bg-gray-900 w-[90%] md:w-[30vw] p-6 rounded-xl shadow-lg relative transition-all duration-300">
               <button
                 onClick={() => {
                   setOpen(false);
@@ -33,7 +41,7 @@ const Modal = ({ label }: TModal) => {
               >
                 <FaTimes />
               </button>
-              <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mb-2">
+              <h2 className="text-xl font-semibold text-red-700 mb-2">
                 Your account is not verified
               </h2>
               <p className="text-gray-700 dark:text-gray-300 text-sm">
@@ -44,7 +52,7 @@ const Modal = ({ label }: TModal) => {
               <div className=" mt-6">
                 <Link
                   href="/settings"
-                  className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-semibold px-5 py-2 rounded-lg shadow-md transition disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed"
+                  className="bg-secondary px-2 py-1 rounded-xl text-primary hover:bg-primary hover:text-white border border-primary dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-primary dark:hover:text-white duration-500"
                 >
                   Verify Email
                 </Link>
@@ -52,21 +60,8 @@ const Modal = ({ label }: TModal) => {
             </div>
           </div>
         </div>
-      ) : (
-        <>
-          {label && (
-            <div>
-              <button
-                className="bg-purple-500 px-2 py-1 rounded-xl text-white hover:bg-indigo-800 dark:bg-gray-500 duration-500 cursor-pointer"
-                onClick={() => setOpen(true)}
-              >
-                {label}
-              </button>
-            </div>
-          )}
-        </>
       )}
-    </>
+    </section>
   );
 };
 

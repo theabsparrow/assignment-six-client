@@ -67,7 +67,6 @@ export type TBlogProfile = {
 export type TMyBlogs = {
   _id: string;
   createdAt: string;
-  excerpts: string;
   status: BlogStatus;
   title: string;
   view: number;

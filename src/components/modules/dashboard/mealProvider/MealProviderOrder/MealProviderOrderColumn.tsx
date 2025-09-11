@@ -34,32 +34,21 @@ export const MealProviderTableColumn = (): ColumnDef<TOrder>[] => [
   },
   { accessorKey: "deliveryMode", header: " Mode" },
   { accessorKey: "orderType", header: " Type" },
-  { accessorKey: "payment", header: "Payment" },
   {
-    id: "quantity",
-    header: "Quantity",
+    accessorKey: "payment",
+    header: "Payment",
     cell: ({ row }) => {
-      const quantity = row.original?.quantity;
+      const payment =
+        row.original?.payment === "cash on delivery"
+          ? "COD"
+          : row.original?.payment;
       return (
-        <p className="flex items-center gap-1">
-          {quantity} <span>Piece</span>
-        </p>
-      );
-    },
-  },
-  {
-    id: "deliveredCount",
-    header: "Count",
-    cell: ({ row }) => {
-      const count = row.original?.deliveredCount;
-      return (
-        <>
-          {count! >= 0 && (
-            <p className="flex items-center gap-1">
-              {count} <span>Times</span>
-            </p>
-          )}
-        </>
+        <div className="relative group inline-block">
+          <h1>{payment}</h1>
+          <p className="absolute bottom-full left-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
+            {row.original?.payment}
+          </p>
+        </div>
       );
     },
   },

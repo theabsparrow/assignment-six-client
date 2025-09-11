@@ -27,27 +27,6 @@ export const myBlogTableCOlumn = (): ColumnDef<TMyBlogs>[] => [
     },
   },
   {
-    accessorKey: "excerpts",
-    header: "Blog Content",
-    cell: ({ row }) => {
-      const excerpts: string = row.original.excerpts;
-      const trimmedTitle =
-        excerpts.length > 50 ? excerpts.slice(0, 50) + "..." : excerpts;
-      return (
-        <div className="relative group inline-block md:w-[20vw]">
-          <h1>{trimmedTitle}</h1>
-          <p
-            className="absolute left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block 
-     bg-gray-800 text-white text-xs rounded-lg px-3 py-2 shadow-md z-10
-     max-w-xs whitespace-normal break-words"
-          >
-            {excerpts}
-          </p>
-        </div>
-      );
-    },
-  },
-  {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {

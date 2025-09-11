@@ -1,12 +1,8 @@
 "use client";
-import ConfirmDelation from "@/components/confirmDeletion/ConfirmDeletion";
-import { deleteBlog } from "@/services/blogService";
 import { TGetAllSubscribersType } from "@/types/kitchenSubscriberTypes";
 import { convertDate } from "@/utills/dateConverter";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
-import { Dispatch, SetStateAction } from "react";
-import { toast } from "sonner";
 
 export const mySubscribertableColumn =
   (): ColumnDef<TGetAllSubscribersType>[] => [
@@ -27,15 +23,19 @@ export const mySubscribertableColumn =
       },
     },
     {
-      accessorKey: "createdAt",
+      id: "createdAt",
+      header: "Subscription Date",
+      cell: ({ row }) => {
+        const date = convertDate(new Date(row?.original?.createdAt));
+        return <p>{date?.creationDate}</p>;
+      },
+    },
+    {
+      id: "creationTime",
       header: "Subscription Time",
       cell: ({ row }) => {
         const date = convertDate(new Date(row?.original?.createdAt));
-        return (
-          <p>
-            {date?.creationDate} {date?.creationTime}
-          </p>
-        );
+        return <p>{date?.creationTime}</p>;
       },
     },
     {
@@ -50,48 +50,6 @@ export const mySubscribertableColumn =
           >
             View Subscriber`s Info
           </Link>
-        );
-      },
-    },
-    {
-      id: "delete",
-      header: "Action",
-      cell: ({ row }) => {
-        const id = row?.original?._id;
-        const name = row.original?.subscriberInfo?.name;
-
-        const handleDelete = async (
-          setLoading: Dispatch<SetStateAction<boolean>>,
-          setOpen: Dispatch<SetStateAction<boolean>>
-        ) => {
-          setLoading(true);
-          if (!id) {
-            toast.error("falid to remove blog", { duration: 3000 });
-            setLoading(false);
-            return;
-          }
-          const toastId = toast.loading("Removing blog...");
-          try {
-            const result = await deleteBlog(id);
-            if (result?.success) {
-              toast.success(result?.message, { id: toastId, duration: 3000 });
-              setOpen(false);
-              setLoading(false);
-            } else {
-              toast.error(result?.message, { id: toastId, duration: 3000 });
-              setLoading(false);
-            }
-          } catch (error: any) {
-            console.log(error);
-          }
-          setLoading(true);
-        };
-
-        return (
-          <ConfirmDelation
-            value={`${name}'s subscription`}
-            handleDelete={handleDelete}
-          />
         );
       },
     },

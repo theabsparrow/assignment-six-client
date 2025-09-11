@@ -335,7 +335,7 @@ const OrderDetails = ({
         </div>
       )}
       {order?.orderType === "regular" && (review as TRating[])?.length > 0 && (
-        <div className="px-2 md:px-6 py-4 shadow-xl rounded-lg space-y-3">
+        <div className=" py-4 rounded-lg space-y-3">
           <h1 className="text-2xl font-bold text-gray-800 md:text-center">
             Feedback for this order
           </h1>

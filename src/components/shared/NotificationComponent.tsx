@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { toast } from "sonner";
+import NotificationDeleteModal from "./NotificationDeleteModal";
 
 const NotificationComponent = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
@@ -113,8 +114,8 @@ const NotificationComponent = ({ id }: { id: string }) => {
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute top-14 -right-24 md:-right-64 w-80 bg-white dark:bg-gray-800 shadow-lg rounded-lg py-2 z-50">
-          <ul className="max-h-64 overflow-y-auto divide-y divide-gray-200 dark:divide-gray-700">
+        <div className="absolute top-14 -right-24 md:-right-64 w-80 md:w-96 bg-white dark:bg-gray-800 shadow-lg rounded-lg py-1 md:py-3 z-40">
+          <ul className="max-h-96 overflow-y-auto divide-y divide-gray-200 dark:divide-gray-700 ">
             {notifications.length === 0 && (
               <li className="text-gray-500 text-sm p-4 text-center">
                 No notifications
@@ -124,17 +125,66 @@ const NotificationComponent = ({ id }: { id: string }) => {
               <li
                 key={i}
                 onClick={() => handleClickNotification(n?._id, n?.link)}
-                className={`relative flex flex-col gap-1 py-3 px-4 cursor-pointer transition-colors duration-200
+                className={`relative group flex flex-col gap-1 px-4 py-2 cursor-pointer transition-colors duration-200
             ${
               n?.isRead
                 ? "bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700"
                 : "bg-blue-50 dark:bg-gray-700 font-semibold hover:bg-blue-100 dark:hover:bg-gray-600"
             }`}
               >
+                <div className="hidden md:flex">
+                  <NotificationDeleteModal
+                    id={n?._id}
+                    onDelete={(deletedId) => {
+                      setNotifications((prev) =>
+                        prev.filter((notif) => notif._id !== deletedId)
+                      );
+                      if (!n.isRead) {
+                        setUnreadCount((prev) => Math.max(prev - 1, 0));
+                      }
+                    }}
+                    onMarkRead={(readId) => {
+                      setNotifications((prev) =>
+                        prev.map((notif) =>
+                          notif._id === readId
+                            ? { ...notif, isRead: true }
+                            : notif
+                        )
+                      );
+                      setUnreadCount((prev) => Math.max(prev - 1, 0));
+                    }}
+                  />
+                </div>
                 {!n?.isRead && (
                   <span className="absolute top-4 left-2 h-2 w-2 bg-blue-500 rounded-full"></span>
                 )}
-                <span className="text-sm">{n?.content}</span>
+                <span className="text-sm hidden md:block">{n?.content}</span>
+                <div className="text-sm md:hidden flex items-center gap-6">
+                  <p className="flex-grow">{n?.content}</p>{" "}
+                  <div>
+                    <NotificationDeleteModal
+                      id={n?._id}
+                      onDelete={(deletedId) => {
+                        setNotifications((prev) =>
+                          prev.filter((notif) => notif._id !== deletedId)
+                        );
+                        if (!n.isRead) {
+                          setUnreadCount((prev) => Math.max(prev - 1, 0));
+                        }
+                      }}
+                      onMarkRead={(readId) => {
+                        setNotifications((prev) =>
+                          prev.map((notif) =>
+                            notif._id === readId
+                              ? { ...notif, isRead: true }
+                              : notif
+                          )
+                        );
+                        setUnreadCount((prev) => Math.max(prev - 1, 0));
+                      }}
+                    />
+                  </div>
+                </div>
                 <span className="text-xs text-gray-500">
                   {timeAgo(n?.createdAt)}
                 </span>

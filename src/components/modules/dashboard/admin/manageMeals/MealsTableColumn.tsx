@@ -15,15 +15,23 @@ export const mealsTableColumn = (): ColumnDef<TMealListing>[] => [
     cell: ({ row }) => {
       const title: string = row.original.title;
       const trimmedTitle =
-        title.length > 30 ? title.slice(0, 30) + "..." : title;
+        title.length > 20 ? title.slice(0, 20) + "..." : title;
       const id = row.original?._id;
       return (
-        <Link
-          href={`/admin/manageMeal/${id}`}
-          className="text-primary hover:underline"
-        >
-          {trimmedTitle}
-        </Link>
+        <div className="relative group inline-block">
+          <h1>
+            {" "}
+            <Link
+              href={`/admin/manageMeal/${id}`}
+              className="text-primary hover:underline"
+            >
+              {trimmedTitle}
+            </Link>
+          </h1>
+          <p className="absolute bottom-full left-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
+            {title}
+          </p>
+        </div>
       );
     },
   },
@@ -32,14 +40,23 @@ export const mealsTableColumn = (): ColumnDef<TMealListing>[] => [
     header: "Kitchen",
     cell: ({ row }) => {
       const name = row.original?.kitchen?.kitchenName;
+      const trimedName = name.length > 16 ? name.slice(0, 16) + "..." : name;
       const id = row.original?.kitchen?._id;
       return (
-        <Link
-          href={`/admin/manageKitchen/${id}`}
-          className="text-primary hover:underline"
-        >
-          {name}
-        </Link>
+        <div className="relative group inline-block">
+          <h1>
+            {" "}
+            <Link
+              href={`/admin/manageKitchen/${id}`}
+              className="text-primary hover:underline"
+            >
+              {trimedName}
+            </Link>
+          </h1>
+          <p className="absolute bottom-full left-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
+            {name}
+          </p>
+        </div>
       );
     },
   },
@@ -61,8 +78,8 @@ export const mealsTableColumn = (): ColumnDef<TMealListing>[] => [
     cell: ({ row }) => {
       const date = convertDate(new Date(row?.original?.createdAt));
       return (
-        <p>
-          {date?.creationDate} {date?.creationTime}
+        <p className="flex flex-col ">
+          <span>{date?.creationDate}</span> <span>{date?.creationTime}</span>
         </p>
       );
     },

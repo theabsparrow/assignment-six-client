@@ -2,6 +2,7 @@
 
 import SubscribedButton from "@/components/kitchenDetails/SubscribedButton";
 import { TKItchenSubscriber } from "@/types/kitchenSubscriberTypes";
+import { convertDate } from "@/utills/dateConverter";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 
@@ -12,15 +13,32 @@ export const mySubscriptionTableColumn =
       header: "Kitchen Name",
       cell: ({ row }) => {
         const name = row.original?.kitchen?.kitchenName;
-        return <span>{name}</span>;
+        const trimedName = name.length > 16 ? name.slice(0, 16) + "..." : name;
+        return (
+          <div className="relative group inline-block">
+            <h1>{trimedName}</h1>
+            <p className="absolute bottom-full left-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
+              {name}
+            </p>
+          </div>
+        );
       },
     },
     {
       id: "location",
       header: "Kitchen Location",
       cell: ({ row }) => {
-        const type = row.original?.kitchen?.location;
-        return <span>{type}</span>;
+        const location = row.original?.kitchen?.location;
+        const trimmedLocation =
+          location.length > 20 ? location.slice(0, 20) + "..." : location;
+        return (
+          <div className="relative group inline-block">
+            <h1>{trimmedLocation}</h1>
+            <p className="absolute bottom-full left-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
+              {location}
+            </p>
+          </div>
+        );
       },
     },
     {
@@ -43,21 +61,11 @@ export const mySubscriptionTableColumn =
       id: "creation",
       header: "Subscribed At",
       cell: ({ row }) => {
-        const date = new Date(row.original?.createdAt);
-        const convertedDate = date.toLocaleDateString("en-GB", {
-          day: "numeric",
-          month: "long",
-          year: "numeric",
-        });
-        const convertedTime = date.toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: true,
-        });
+        const date = convertDate(new Date(row.original?.createdAt));
         return (
-          <span>
-            {convertedDate}, {convertedTime}
-          </span>
+          <p className="flex flex-col ">
+            <span>{date?.creationDate}</span> <span>{date?.creationTime}</span>
+          </p>
         );
       },
     },

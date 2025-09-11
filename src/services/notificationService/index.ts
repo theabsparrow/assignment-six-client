@@ -47,3 +47,23 @@ export const updateNotification = async (id: string) => {
     return Error(error);
   }
 };
+
+export const DeleteNotification = async (id: string) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/notification/delete-notification/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    const result = await res.json();
+    revalidateTag("Notification");
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};

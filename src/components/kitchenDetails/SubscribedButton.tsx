@@ -64,7 +64,7 @@ const SubscribedButton = ({
       onClick={isSubscribed ? handleUnsibscribe : handleSubscribe}
       disabled={loading}
       className={`
-        flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all cursor-pointer
+        flex items-center justify-center gap-2 rounded-lg px-2 py-1 text-sm font-medium transition-all cursor-pointer
         ${
           isSubscribed
             ? "bg-secondary text-primary border border-primary hover:bg-primary hover:text-white duration-500"

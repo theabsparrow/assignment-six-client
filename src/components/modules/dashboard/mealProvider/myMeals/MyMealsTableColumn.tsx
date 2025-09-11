@@ -4,6 +4,7 @@ import TableDropDown from "@/components/tableDropdown/TableDropDown";
 import { deleteMeal, updateMeal } from "@/services/mealService";
 import { TMyMealsList, TUpdatemealData } from "@/types/mealType";
 import { TStatus } from "@/types/subscriber.types";
+import { convertDate } from "@/utills/dateConverter";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
@@ -17,7 +18,7 @@ export const MyMealsTableColums = (): ColumnDef<TMyMealsList>[] => [
     cell: ({ row }) => {
       const title: string = row.original.title;
       const trimmedTitle =
-        title.length > 30 ? title.slice(0, 30) + "..." : title;
+        title.length > 25 ? title.slice(0, 25) + "..." : title;
       const id = row.original?._id;
       return (
         <Link
@@ -44,14 +45,6 @@ export const MyMealsTableColums = (): ColumnDef<TMyMealsList>[] => [
           <TbCurrencyTaka /> {price ? price.toFixed(2) : "0.00"}
         </p>
       );
-    },
-  },
-  {
-    id: "rating",
-    header: "Rating",
-    cell: ({ row }) => {
-      const rating = row?.original?.avarageRating;
-      return <span>{rating}</span>;
     },
   },
   {
@@ -113,21 +106,10 @@ export const MyMealsTableColums = (): ColumnDef<TMyMealsList>[] => [
     accessorKey: "createdAt",
     header: "Creation",
     cell: ({ row }) => {
-      const creationDate = new Date(row.original?.createdAt);
-      const creationTime = new Date(row.original?.createdAt);
-      const date = creationDate.toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      });
-      const time = creationTime.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      });
+      const date = convertDate(new Date(row.original?.createdAt));
       return (
-        <p>
-          {date} {time}
+        <p className="flex flex-col ">
+          <span>{date?.creationDate}</span> <span>{date?.creationTime}</span>
         </p>
       );
     },

@@ -17,13 +17,22 @@ export const kitchenTableColumn = (): ColumnDef<TAllKitchenType>[] => [
     cell: ({ row }) => {
       const id = row.original?._id;
       const name = row.original?.kitchenName;
+      const trimedName = name.length > 16 ? name.slice(0, 16) + "..." : name;
       return (
-        <Link
-          href={`/admin/manageKitchen/${id}`}
-          className="text-primary hover:underline"
-        >
-          {name}
-        </Link>
+        <div className="relative group inline-block">
+          <h1>
+            {" "}
+            <Link
+              href={`/admin/manageKitchen/${id}`}
+              className="text-primary hover:underline"
+            >
+              {trimedName}
+            </Link>
+          </h1>
+          <p className="absolute bottom-full left-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
+            {name}
+          </p>
+        </div>
       );
     },
   },
@@ -33,17 +42,42 @@ export const kitchenTableColumn = (): ColumnDef<TAllKitchenType>[] => [
     cell: ({ row }) => {
       const name = row.original?.owner?.name;
       const id = row.original?.owner?._id;
+      const trimedName = name.length > 16 ? name.slice(0, 16) + "..." : name;
       return (
-        <Link
-          href={`/admin/manageUsers/${id}`}
-          className="text-primary hover:underline"
-        >
-          {name}
-        </Link>
+        <div className="relative group inline-block">
+          <h1>
+            {" "}
+            <Link
+              href={`/admin/manageUsers/${id}`}
+              className="text-primary hover:underline"
+            >
+              {trimedName}
+            </Link>
+          </h1>
+          <p className="absolute bottom-full left-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
+            {name}
+          </p>
+        </div>
       );
     },
   },
-  { accessorKey: "location", header: "Location" },
+  {
+    accessorKey: "location",
+    header: "Location",
+    cell: ({ row }) => {
+      const location = row.original?.location;
+      const trimmedLocation =
+        location.length > 20 ? location.slice(0, 20) + "..." : location;
+      return (
+        <div className="relative group inline-block">
+          <h1>{trimmedLocation}</h1>
+          <p className="absolute bottom-full left-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
+            {location}
+          </p>
+        </div>
+      );
+    },
+  },
   {
     accessorKey: "isActive",
     header: "Status",
@@ -114,8 +148,8 @@ export const kitchenTableColumn = (): ColumnDef<TAllKitchenType>[] => [
     cell: ({ row }) => {
       const date = convertDate(new Date(row?.original?.createdAt));
       return (
-        <p>
-          {date?.creationDate}, {date?.creationTime}
+        <p className="flex flex-col ">
+          <span>{date?.creationDate}</span> <span>{date?.creationTime}</span>
         </p>
       );
     },

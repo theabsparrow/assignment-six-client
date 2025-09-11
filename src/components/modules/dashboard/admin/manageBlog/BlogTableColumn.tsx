@@ -16,8 +16,15 @@ export const blogTableColumn = (): ColumnDef<TAllBlogListing>[] => [
     cell: ({ row }) => {
       const title: string = row.original.title;
       const trimmedTitle =
-        title.length > 40 ? title.slice(0, 40) + "..." : title;
-      return <span>{trimmedTitle}</span>;
+        title.length > 20 ? title.slice(0, 20) + "..." : title;
+      return (
+        <div className="relative group inline-block">
+          <h1>{trimmedTitle}</h1>
+          <p className="absolute bottom-full left-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
+            {title}
+          </p>
+        </div>
+      );
     },
   },
   {
@@ -25,14 +32,23 @@ export const blogTableColumn = (): ColumnDef<TAllBlogListing>[] => [
     header: "Author Name",
     cell: ({ row }) => {
       const name = row.original?.name;
+      const trimedName = name.length > 16 ? name.slice(0, 16) + "..." : name;
       const id = row.original?.authorId?._id;
       return (
-        <Link
-          href={`/admin/manageUsers/${id}`}
-          className="text-primary hover:underline"
-        >
-          {name}
-        </Link>
+        <div className="relative group inline-block">
+          <h1>
+            {" "}
+            <Link
+              href={`/admin/manageUsers/${id}`}
+              className="text-primary hover:underline"
+            >
+              {trimedName}
+            </Link>
+          </h1>
+          <p className="absolute bottom-full left-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
+            {name}
+          </p>
+        </div>
       );
     },
   },
@@ -89,21 +105,16 @@ export const blogTableColumn = (): ColumnDef<TAllBlogListing>[] => [
       );
     },
   },
-
   {
     accessorKey: "createdAt",
     header: "Create Date",
     cell: ({ row }) => {
       const date = convertDate(new Date(row?.original?.createdAt));
-      return <p>{date?.creationDate}</p>;
-    },
-  },
-  {
-    accessorKey: "updatedAt",
-    header: "Create Time",
-    cell: ({ row }) => {
-      const date = convertDate(new Date(row?.original?.createdAt));
-      return <p>{date?.creationTime}</p>;
+      return (
+        <p className="flex flex-col ">
+          <span>{date?.creationDate}</span> <span>{date?.creationTime}</span>
+        </p>
+      );
     },
   },
   { accessorKey: "view", header: "Views" },
@@ -113,7 +124,6 @@ export const blogTableColumn = (): ColumnDef<TAllBlogListing>[] => [
     cell: ({ row }) => {
       const id = row?.original?._id;
       const name = row.original?.name;
-
       const handleDelete = async (
         setLoading: Dispatch<SetStateAction<boolean>>,
         setOpen: Dispatch<SetStateAction<boolean>>

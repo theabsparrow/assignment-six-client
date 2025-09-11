@@ -148,7 +148,7 @@ const RegisterCustomer = ({
   };
 
   return (
-    <section className="w-[85vw] md:w-[30vw] rounded-2xl text-gray-800 dark:text-white font-inter bg-gray-200 dark:bg-transparent py-2 px-4">
+    <section className="w-[85vw] md:w-[35vw] rounded-2xl text-gray-800 dark:text-white font-inter bg-gray-200 dark:bg-transparent py-2 px-4">
       {otpPage ? (
         <OtpVerification setOtpPage={setOtpPage} />
       ) : (
