@@ -40,7 +40,7 @@ export const blogTableColumn = (): ColumnDef<TAllBlogListing>[] => [
             {" "}
             <Link
               href={`/admin/manageUsers/${id}`}
-              className="text-primary hover:underline"
+              className="text-primary dark:text-secondary hover:underline"
             >
               {trimedName}
             </Link>

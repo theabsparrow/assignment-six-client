@@ -72,7 +72,7 @@ const TableDropDown = <T extends string>({
 
       {dropdownOpen && (
         <div
-          className={`absolute ${position} z-50 w-32 rounded-md flex flex-col bg-gray-200`}
+          className={`absolute ${position} z-50 w-32 rounded-md flex flex-col bg-gray-200 dark:bg-gray-900`}
         >
           {options.map((option) => (
             <button

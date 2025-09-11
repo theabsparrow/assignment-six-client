@@ -23,7 +23,7 @@ export const mealsTableColumn = (): ColumnDef<TMealListing>[] => [
             {" "}
             <Link
               href={`/admin/manageMeal/${id}`}
-              className="text-primary hover:underline"
+              className="text-primary  dark:text-secondary hover:underline"
             >
               {trimmedTitle}
             </Link>
@@ -48,7 +48,7 @@ export const mealsTableColumn = (): ColumnDef<TMealListing>[] => [
             {" "}
             <Link
               href={`/admin/manageKitchen/${id}`}
-              className="text-primary hover:underline"
+              className="text-primary dark:text-secondary hover:underline"
             >
               {trimedName}
             </Link>

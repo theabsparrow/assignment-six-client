@@ -61,7 +61,7 @@ const HowItWorks = () => {
   }, [hasScrolledPastIntro]);
 
   return (
-    <section className="md:px-24 px-5 mb-20 space-y-8">
+    <section className="w-full lg:px-16 px-4 space-y-6">
       <div
         ref={introRef}
         className="max-w-4xl mx-auto text-center space-y-4 px-2 md:px-6"
@@ -74,9 +74,10 @@ const HowItWorks = () => {
           table—without the hassle.
         </p>
       </div>
-      <div className="hidden md:flex justify-center gap-24 relative">
-        <div className="w-[45vw] h-[500px] sticky top-24 hidden md:block">
-          <div className="relative w-full h-full">
+
+      <div className="hidden lg:flex justify-between relative gap-10">
+        <div className="w-full">
+          <div className=" w-[45vw] h-[500px] sticky top-24">
             <Image
               src={steps[currentStep].image}
               alt="Step Visual"
@@ -86,7 +87,7 @@ const HowItWorks = () => {
           </div>
         </div>
 
-        <div className=" w-[25vw] ">
+        <div className=" w-full ">
           {steps.map((step, index) => (
             <div
               key={index}
@@ -110,7 +111,7 @@ const HowItWorks = () => {
           ))}
         </div>
       </div>
-      <div className="md:hidden space-y-10 ">
+      <div className="lg:hidden space-y-10 ">
         {steps.map((step, index) => (
           <div key={index} className="space-y-4">
             <Image

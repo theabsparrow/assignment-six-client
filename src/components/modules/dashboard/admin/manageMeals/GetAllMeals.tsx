@@ -258,12 +258,12 @@ const GetAllMeals = ({
               <div className="w-[20vw] space-y-2">
                 <label className="block font-medium ">Price range</label>
                 <div className="flex items-center md:gap-2">
-                  <p className="font-bold text-black flex items-center">
+                  <p className="font-bold flex items-center">
                     <TbCurrencyTaka className="text-xl" />{" "}
                     {priceRange[0].toLocaleString()}
                   </p>{" "}
                   <p>TO</p>{" "}
-                  <p className="font-bold text-black flex items-center">
+                  <p className="font-bold flex items-center">
                     <TbCurrencyTaka className="text-xl" />{" "}
                     {priceRange[1].toLocaleString()}
                   </p>

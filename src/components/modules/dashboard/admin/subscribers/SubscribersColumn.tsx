@@ -22,7 +22,8 @@ export const subscriberTableColumn = (): ColumnDef<TSubscriber>[] => [
       const status = row.original?.status as TStatus;
       const id = row.original?._id;
       const statusStyles: Record<TStatus, string> = {
-        active: "text-green-700 hover:bg-green-50  ",
+        active:
+          "text-primary hover:bg-green-50 dark:text-secondary dark:hover:bg-gray-800",
         blocked: "text-red-700 hover:bg-red-50 ",
       };
 

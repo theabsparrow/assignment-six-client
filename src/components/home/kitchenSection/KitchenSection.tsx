@@ -14,20 +14,20 @@ export type TMagicSection = "service" | "hygiene" | "flavour";
 const KitchenSection = () => {
   const [value, setValue] = useState<TMagicSection>("service");
   return (
-    <>
+    <section className="space-y-6">
       <div className="max-w-4xl mx-auto text-center space-y-4 px-2 md:px-6">
         <h2 className="text-2xl md:text-5xl font-extrabold tracking-tight text-gray-800 dark:text-white">
           Where the Magic Happens
         </h2>
         <p className="text-lg md:text-xl font-medium text-gray-600 dark:text-gray-300 leading-relaxed">
           At Daily Dish, every meal begins in a thoughtfully organized kitchen
-          where quality, cleanliness, and care come first. While you won’t see
-          the kitchen itself, what you will experience is the result of high
-          standards behind the scenes.
+          where quality, cleanliness, and care come first. Here you will
+          experience is the high standards.
         </p>
       </div>
-      <section className="md:px-24 px-5 mb-20 space-y-8 bg-primary min-h-[70vh] flex flex-col-reverse md:flex-row justify-between">
-        <div className="py-10 space-y-4">
+
+      <div className="w-full lg:px-16 px-4 bg-primary flex flex-col-reverse lg:flex-row justify-between">
+        <div className="py-4 space-y-4 w-full">
           <h1 className="text-2xl md:text-5xl text-white font-medium">
             HomeStyle Tiffins Bringing Family Recipes to You
           </h1>
@@ -51,7 +51,7 @@ const KitchenSection = () => {
                 height={1000}
                 width={1000}
                 alt="customer-image"
-                className="w-[13vw] h-[28vh]"
+                className="w-[15vw] h-[28vh]"
               />
               <div className="space-y-3 text-white/70">
                 <h2 className="text-xl ">Our Kitchen Services</h2>
@@ -73,7 +73,7 @@ const KitchenSection = () => {
                 height={1000}
                 width={1000}
                 alt="customer-image"
-                className="w-[13vw] h-[28vh]"
+                className="w-[15vw] h-[28vh]"
               />
               <div className="space-y-3 text-white/70">
                 <h2 className="text-xl ">Hygiene & Quality Standards</h2>
@@ -95,7 +95,7 @@ const KitchenSection = () => {
                 height={1000}
                 width={1000}
                 alt="customer-image"
-                className="w-[13vw] h-[28vh]"
+                className="w-[15vw] h-[28vh]"
               />
               <div className="space-y-3 text-white/70">
                 <h2 className="text-xl ">Behind the Flavors</h2>
@@ -112,17 +112,17 @@ const KitchenSection = () => {
           )}
           <ForMobile value={value} setValue={setValue} />
         </div>
-        <div>
+        <div className="w-full flex justify-end">
           <Image
             src="https://i.ibb.co/cX3z3JNL/cooking.webp"
             alt="magic section"
             height={1000}
             width={1000}
-            className="object-cover md:w-[70vw] md:h-[70vh] shadow-xl transition-all duration-500"
+            className="object-cover lg:w-[40vw] h-full shadow-xl transition-all duration-500"
           />
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 

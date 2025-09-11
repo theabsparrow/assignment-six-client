@@ -7,26 +7,22 @@ const FoodPreferanceBanner = () => {
   return (
     <section
       style={{ backgroundImage: `url('/food-preference.webp')` }}
-      className="relative min-h-[400px] md:min-h-[625px] bg-[center_100%] bg-cover bg-no-repeat  px-5 md:px-20 py-5 md:py-10 overflow-hidden flex"
+      className="relative min-h-[400px] lg:min-h-[625px] bg-[center_100%] bg-cover bg-no-repeat  px-5 md:px-20 py-5 md:py-10 overflow-hidden flex"
     >
       <div className="absolute inset-0 bg-black/70  z-10 " />
-      <div className="absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-[#1c1c1c] top-[4%] md:top-[5%] left-[3%] md:left-[10%] bg-[url('/preferance.webp')] bg-cover bg-[center_100%] bg-no-repeat p-6 md:p-10  rounded-lg">
-        <div className="space-y-2 md:space-y-10 md:w-[35vw]">
-          <h2 className="text-2xl text-white md:text-6xl font-bold leading-tight font-playfair bg-gray-800/70 md:bg-transparent p-2 md:p-0 rounded-lg">
-            Choose Meals That Match Your Taste and Lifestyle
+      <div className="absolute z-20 w-[95%] lg:w-[90%] h-[80%] lg:h-[95%] bg-[#1c1c1c] top-[20%] lg:top-[2%] left-[3%] lg:left-[5%] bg-[url('/preferance.webp')] bg-cover bg-[center_100%] bg-no-repeat px-3 py-3 lg:px-10 lg:py-4">
+        <div className="space-y-2 lg:space-y-6 lg:w-[600px]">
+          <h2 className="text-2xl lg:text-7xl text-white font-bold leading-tight font-playfair bg-gray-800/70 lg:bg-black/70 p-2 lg:p-3 rounded-lg">
+            Choose Meals That Match Your Taste
           </h2>
 
-          <p className=" text-gray-300 md:w-[25vw] font-inter bg-gray-800/70 md:bg-transparent p-2 md:p-0 rounded-lg">
+          <p className=" text-gray-300 lg:w-[600px] font-inter bg-gray-800/70 lg:bg-black/70 p-2 lg:p-3 rounded-lg">
             From vegetarian and vegan delights to high-protein and gluten-free
-            options{" "}
-            <span className="hidden md:flex">
-              — personalize your meals based on your preferences.
-            </span>{" "}
-            Enjoy curated dishes that suit your lifestyle, health goals, and
-            cravings.
+            options personalize your meals based on your preferences. Enjoy
+            curated dishes that suit your lifestyle
           </p>
 
-          <div className="flex md:gap-16 items-start justify-between md:justify-start mt-2 md:mt-0">
+          <div className="flex lg:gap-16 items-start justify-between lg:justify-start mt-2 lg:mt-0">
             <SearchAndSelect
               options={foodPreferenceOptions}
               filterBy={"foodPreference"}

@@ -16,9 +16,9 @@ export type TMission = "mission" | "vision" | "value";
 const MissionContent = () => {
   const [value, setValue] = useState<TMission>("mission");
   return (
-    <section className="md:w-[45vw] space-y-8">
+    <section className="space-y-4 w-full">
       <div className="space-y-4">
-        <h1 className="text-2xl md:text-5xl font-semibold">
+        <h1 className="text-2xl lg:text-4xl font-semibold">
           Fresh Home Food Delivered At Your Door step
         </h1>
         <p className="text-lg">
@@ -50,7 +50,7 @@ const MissionContent = () => {
             height={1000}
             width={1000}
             alt="customer-image"
-            className="w-[13vw] h-[28vh] border-8 border-white "
+            className="w-[17vw] h-[28vh]"
           />
           <div className="space-y-3">
             <h2 className="text-xl ">Quality Ingredients</h2>
@@ -72,7 +72,7 @@ const MissionContent = () => {
             height={1000}
             width={1000}
             alt="customer-image"
-            className="w-[13vw] h-[28vh] border-8 border-white "
+            className="w-[17vw] h-[28vh]"
           />
           <div className="space-y-3">
             <h2 className="text-xl ">Quality Ingredients</h2>
@@ -94,7 +94,7 @@ const MissionContent = () => {
             height={1000}
             width={1000}
             alt="customer-image"
-            className="w-[13vw] h-[28vh] border-8 border-white "
+            className="w-[17vw] h-[28vh]"
           />
           <div className="space-y-3">
             <h2 className="text-xl ">Quality Ingredients</h2>

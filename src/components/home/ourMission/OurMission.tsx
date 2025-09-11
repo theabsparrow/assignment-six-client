@@ -3,21 +3,21 @@ import MissionContent from "./MissionContent";
 
 const OurMission = () => {
   return (
-    <section className="md:px-24 px-5 mb-20 flex flex-col md:flex-row justify-between gap-4 md:gap-0">
-      <div className="relative">
+    <section className="w-full lg:px-16 px-4 flex flex-col lg:flex-row justify-between lg:items-center gap-4 lg:gap-0">
+      <div className="relative w-full">
         <Image
           src="https://i.ibb.co/CKzRPSVm/nuddles-photo.webp"
           height={1000}
           width={1000}
           alt="mission-image"
-          className="md:w-[32vw] md:h-[88vh]"
+          className="lg:w-[37vw] lg:h-[640px]"
         />
         <Image
           src="https://i.ibb.co/TqhXFhkV/customer-2.webp"
           height={1000}
           width={1000}
           alt="customer-image"
-          className="w-[13vw] h-[28vh] border-8 border-white absolute bottom-10 -right-20 hidden md:flex"
+          className="w-[13vw] h-[28vh] border-8 border-white absolute bottom-10 right-10 hidden md:flex"
         />
       </div>
       <MissionContent />
@@ -26,3 +26,25 @@ const OurMission = () => {
 };
 
 export default OurMission;
+
+{
+  /* <section className="w-full lg:px-16 px-4 flex flex-col lg:flex-row justify-between gap-4 lg:gap-0">
+  <div className="relative">
+    <Image
+      src="https://i.ibb.co/CKzRPSVm/nuddles-photo.webp"
+      height={1000}
+      width={1000}
+      alt="mission-image"
+      className="lg:w-[500px] lg:h-[600px]"
+    />
+    <Image
+      src="https://i.ibb.co/TqhXFhkV/customer-2.webp"
+      height={1000}
+      width={1000}
+      alt="customer-image"
+      className="lg:w-[200px] lg:h-[200px] border-8 border-white absolute bottom-20 -right-20 hidden md:flex"
+    />
+  </div>
+  <MissionContent />
+</section>; */
+}

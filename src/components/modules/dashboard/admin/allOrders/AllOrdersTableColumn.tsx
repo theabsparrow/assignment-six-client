@@ -141,7 +141,7 @@ export const allOrderTableColumn = (): ColumnDef<TOrder>[] => [
       const status = row.original?.status;
       const orderType = row?.original?.orderType;
       const statusStyles: Record<"Yes" | "No", string> = {
-        Yes: "text-green-700 hover:bg-green-50  ",
+        Yes: "text-primary hover:bg-green-50 dark:text-secondary dark:hover:bg-gray-800",
         No: "text-red-700 hover:bg-red-50 ",
       };
 

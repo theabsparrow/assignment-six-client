@@ -7,16 +7,16 @@ export const magicTabs = [
 export const serviceOptions = [
   { option: "Personalized weekly meal plans" },
   { option: "Made-to-order dishes — no pre-cooked stock" },
-  { option: "Vegetarian, high-protein, low-carb, and seasonal options" },
+  { option: "Vegetarian, high-protein, low-carb" },
   { option: "Meals freshly packed right before delivery" },
   { option: "Bulk ordering for office/home" },
 ];
 export const hygieneOptions = [
-  { option: "Daily sanitization protocols (surfaces, tools, hands)" },
-  { option: "Regular health checks and certified food handlers" },
-  { option: "Use of fresh ingredients only — no leftovers used" },
-  { option: "Zero cross-contamination policy for allergen safety" },
-  { option: "Periodic kitchen audits to maintain quality control" },
+  { option: "Daily sanitization protocols (surfaces, tools)" },
+  { option: "Regular health checks and certified food " },
+  { option: "Use of fresh ingredients only — no leftovers" },
+  { option: "Zero cross-contamination policy for allergen " },
+  { option: "Periodic kitchen audits to maintain quality " },
 ];
 export const flavourOptions = [
   { option: "Regional spices, traditional techniques)" },

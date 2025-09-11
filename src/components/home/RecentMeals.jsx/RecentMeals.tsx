@@ -12,8 +12,8 @@ const RecentMeals = async () => {
   const mealInfo = data?.result || [];
 
   return (
-    <section className="w-full md:px-24 px-5 py-10  space-y-10">
-      <div className=" md:max-w-4xl mx-auto text-center space-y-4   pb-4 px-2 md:px-6">
+    <section className="w-full lg:px-16 px-4 space-y-6">
+      <div className=" md:max-w-4xl mx-auto text-center space-y-4 pb-4 px-2 md:px-6">
         <h2 className="text-2xl md:text-5xl font-extrabold tracking-tight text-gray-800 dark:text-white">
           Explore Our Latest Culinary Creations
         </h2>
@@ -30,7 +30,7 @@ const RecentMeals = async () => {
         }}
       />
 
-      <div className="grid grid-cols-1  md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {mealInfo.map((item: TMealFormData) => (
           <MealCard key={item?._id} meal={item} />
         ))}

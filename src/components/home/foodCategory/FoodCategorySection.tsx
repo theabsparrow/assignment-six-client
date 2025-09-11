@@ -5,7 +5,7 @@ import { TCategoryCard, TFoodCategory } from "@/types/mealType";
 const FoodCategorySection = async () => {
   const { data } = (await getFoodCategory()) || [];
   return (
-    <section className="md:px-24 px-5 mb-20 space-y-8">
+    <section className="w-full lg:px-16 px-4 space-y-6">
       <div className="max-w-4xl mx-auto text-center space-y-4 px-2 md:px-6">
         <h2 className="text-2xl md:text-5xl font-extrabold tracking-tight text-gray-800 dark:text-white">
           Discover Your Food Mood
@@ -17,13 +17,15 @@ const FoodCategorySection = async () => {
       </div>
 
       <div
-        className="h-[20vw] md:h-[25vh] w-full  bg-cover bg-center shadow-md"
+        className="h-[20vw] md:h-[25vh] w-full bg-cover bg-center shadow-md"
         style={{ backgroundImage: `url('/food-category.webp')` }}
       />
-      <CategoryCard
-        data={data as TCategoryCard<TFoodCategory>[]}
-        label="foodCategory"
-      />
+      <div>
+        <CategoryCard
+          data={data as TCategoryCard<TFoodCategory>[]}
+          label="foodCategory"
+        />
+      </div>
     </section>
   );
 };

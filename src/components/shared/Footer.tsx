@@ -11,7 +11,7 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white/70 border-t border-gray-200 dark:border-gray-800 md:px-24 px-5 py-10">
+    <footer className="bg-gray-800 text-white/70 dark:border-gray-800 lg:px-16 px-4 py-10">
       <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 mb-6">
         {/* Brand */}
         <div>
@@ -103,7 +103,7 @@ const Footer = () => {
       </div>
 
       {/* Footer bottom */}
-      <div className="text-center text-xs pt-6 border-t border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400">
+      <div className="text-center text-xs pt-6 border-t border-gray-200 dark:border-gray-800 ">
         © {new Date().getFullYear()} MealBox. All rights reserved.
       </div>
     </footer>

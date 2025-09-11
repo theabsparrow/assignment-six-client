@@ -18,14 +18,14 @@ const Table = <T,>({ data, columns }: TableProps<T>) => {
   });
   return (
     <div className="overflow-x-auto w-full pb-44">
-      <table className="min-w-full divide-y divide-blue-200 bg-white shadow-md rounded-xl ">
-        <thead className="bg-primary">
+      <table className="min-w-full divide-y divide-blue-200 bg-white dark:bg-gray-800 shadow-md rounded-xl ">
+        <thead className="bg-primary dark:bg-secondary">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className="px-2 py-3 text-left text-sm font-semibold text-white tracking-wide uppercase"
+                  className="px-2 py-3 text-left text-sm font-semibold text-white dark:text-primary tracking-wide uppercase"
                 >
                   {flexRender(
                     header.column.columnDef.header,
@@ -36,11 +36,11 @@ const Table = <T,>({ data, columns }: TableProps<T>) => {
             </tr>
           ))}
         </thead>
-        <tbody className="divide-y divide-gray-200 text-gray-800">
+        <tbody className="divide-y divide-gray-200 ">
           {table.getRowModel().rows.map((row) => (
             <tr
               key={row.id}
-              className="hover:bg-blue-50 transition-colors duration-200"
+              className="hover:bg-blue-50 dark:hover:bg-gray-600 transition-colors duration-200"
             >
               {row.getVisibleCells().map((cell) => (
                 <td

@@ -32,12 +32,12 @@ const NewsLetter = () => {
   };
 
   return (
-    <section className="w-full md:px-24 px-5 py-10  space-y-10 bg-secondary dark:bg-gray-900">
-      <div className="max-w-2xl mx-auto text-center">
+    <section className="w-full lg:px-16 px-4 space-y-6 py-10 bg-primary dark:bg-gray-900">
+      <div className="max-w-2xl mx-auto text-center text-white">
         <h2 className="text-3xl md:text-4xl font-bold  mb-2">
           Subscribe to Our Newsletter
         </h2>
-        <p className=" mb-6">
+        <p className="mb-6">
           Get the latest recipes, trending meals, and exclusive offers delivered
           right to your inbox.
         </p>
@@ -50,7 +50,7 @@ const NewsLetter = () => {
             <input
               type="email"
               placeholder="Enter your email"
-              className="w-full px-4 py-2 rounded-l-xl border border-primary bg-gray outline-none"
+              className="w-full px-4 py-2 rounded-l-xl border border-secondary bg-gray outline-none "
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />

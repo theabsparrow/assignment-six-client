@@ -23,7 +23,7 @@ export const usersTableColumn = (): ColumnDef<TUserListingType>[] => [
             {" "}
             <Link
               href={`/admin/manageUsers/${id}`}
-              className="text-primary hover:underline duration-500"
+              className="text-primary dark:text-secondary hover:underline duration-500"
             >
               {trimedName}
             </Link>
@@ -36,7 +36,6 @@ export const usersTableColumn = (): ColumnDef<TUserListingType>[] => [
     },
   },
   { accessorKey: "email", header: "Email" },
-  { accessorKey: "phone", header: "Phone" },
   {
     id: "gender",
     header: "Gender",
@@ -53,7 +52,8 @@ export const usersTableColumn = (): ColumnDef<TUserListingType>[] => [
       const id = row.original?._id;
       const status = row.original?.status;
       const statusStyles: Record<TStatus, string> = {
-        active: "text-green-700 hover:bg-green-50  ",
+        active:
+          "text-primary hover:bg-green-50 dark:text-secondary dark:hover:bg-gray-800",
         blocked: "text-red-700 hover:bg-red-50 ",
       };
 

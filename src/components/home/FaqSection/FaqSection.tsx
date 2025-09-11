@@ -12,7 +12,7 @@ const FaqSection = () => {
   };
 
   return (
-    <section className="w-full md:px-24 px-5  space-y-10 ">
+    <section className="w-full lg:px-16 px-4 space-y-6">
       <div className="md:hidden max-w-4xl mx-auto text-center space-y-4 px-2 ">
         <h2 className="text-2xl  font-extrabold tracking-tight text-gray-800 dark:text-white">
           Frequently Asked Questions

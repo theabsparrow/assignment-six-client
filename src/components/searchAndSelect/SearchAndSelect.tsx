@@ -65,7 +65,7 @@ const SearchAndSelect = <T extends string>({
       </button>
 
       {open && (
-        <div className="absolute -top-24 md:-top-24 left-56 md:left-[232px] w-[30vw] md:w-[10vw] bg-gray-800 rounded-lg border border-secondary shadow-lg z-50 animate-fade-in overflow-y-auto">
+        <div className="absolute -top-24 lg:-top-24 left-56 lg:left-[170px] w-[30vw] lg:w-[13vw] bg-gray-800 rounded-lg border border-secondary shadow-lg z-50 animate-fade-in overflow-y-auto">
           <input
             type="text"
             ref={inputRef}

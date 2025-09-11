@@ -24,7 +24,7 @@ export const kitchenTableColumn = (): ColumnDef<TAllKitchenType>[] => [
             {" "}
             <Link
               href={`/admin/manageKitchen/${id}`}
-              className="text-primary hover:underline"
+              className="text-primary dark:text-secondary hover:underline"
             >
               {trimedName}
             </Link>
@@ -49,7 +49,7 @@ export const kitchenTableColumn = (): ColumnDef<TAllKitchenType>[] => [
             {" "}
             <Link
               href={`/admin/manageUsers/${id}`}
-              className="text-primary hover:underline"
+              className="text-primary dark:text-secondary hover:underline"
             >
               {trimedName}
             </Link>
@@ -85,7 +85,8 @@ export const kitchenTableColumn = (): ColumnDef<TAllKitchenType>[] => [
       const id = row.original?._id;
       const status = row.original?.isActive ? "active" : "blocked";
       const statusStyles: Record<TStatus, string> = {
-        active: "text-green-700 hover:bg-green-50  ",
+        active:
+          "text-primary hover:bg-green-50 dark:text-secondary dark:hover:bg-gray-800",
         blocked: "text-red-700 hover:bg-red-50 ",
       };
 
