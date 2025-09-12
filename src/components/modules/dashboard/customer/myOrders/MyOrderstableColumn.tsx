@@ -50,27 +50,21 @@ export const MyOrderTableColumn = (): ColumnDef<TOrder>[] => [
   },
   { accessorKey: "deliveryMode", header: " Mode" },
   { accessorKey: "orderType", header: " Type" },
-  { accessorKey: "payment", header: "Payment" },
   {
-    accessorKey: "createdAt",
-    header: "Creation",
+    accessorKey: "payment",
+    header: "Payment",
     cell: ({ row }) => {
-      const creationDate = new Date(row.original?.createdAt as string);
-      const creationTime = new Date(row.original?.createdAt as string);
-      const date = creationDate.toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      });
-      const time = creationTime.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      });
+      const payment =
+        row.original?.payment === "cash on delivery"
+          ? "COD"
+          : row.original?.payment;
       return (
-        <p className="flex flex-col">
-          <span>{date}</span> <span>{time}</span>
-        </p>
+        <div className="relative group inline-block">
+          <h1>{payment}</h1>
+          <p className="absolute bottom-full left-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded-lg px-2 py-1 shadow-md whitespace-nowrap z-10">
+            {row.original?.payment}
+          </p>
+        </div>
       );
     },
   },

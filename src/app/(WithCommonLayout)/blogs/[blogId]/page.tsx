@@ -9,7 +9,7 @@ const Blogdetails = async ({
   const blogId = await params;
   const { data } = await getASingleBlog(blogId?.blogId);
   return (
-    <section className="md:px-24 px-5">
+    <section className="w-full py-10 lg:px-16 px-5">
       <BlogDetailsComponent blog={data} />
     </section>
   );

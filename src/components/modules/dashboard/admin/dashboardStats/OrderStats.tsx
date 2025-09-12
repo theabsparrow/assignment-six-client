@@ -17,8 +17,8 @@ const OrderStats = ({ data }: { data: TOrderStats }) => {
   const topOrders = data?.topOrder.map(
     (order: { deliveredCount: number; mealId: { title: string } }) => ({
       title:
-        order?.mealId?.title.length > 45
-          ? order?.mealId?.title.slice(0, 45) + "..."
+        order?.mealId?.title.length > 25
+          ? order?.mealId?.title.slice(0, 25) + "..."
           : order?.mealId?.title,
       delivery: order?.deliveredCount,
     })
@@ -54,9 +54,10 @@ const OrderStats = ({ data }: { data: TOrderStats }) => {
   ];
   return (
     <section className="space-y-10">
-      <div className="hidden md:flex flex-col items-start">
+      {/* status breakdown */}
+      <div className="hidden md:flex flex-col items-start text-xs">
         <h3 className="font-semibold mb-2">Status Breakdown</h3>
-        <ResponsiveContainer width={1200} height={500}>
+        <ResponsiveContainer width={1000} height={500}>
           <BarChart
             data={statusBreakDown}
             margin={{ top: 20, right: 20, left: -20, bottom: 20 }}
@@ -69,7 +70,7 @@ const OrderStats = ({ data }: { data: TOrderStats }) => {
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <div className="md:hidden flex flex-col items-center">
+      <div className="lg:hidden flex flex-col items-center text-xs">
         <h3 className="font-semibold md:mb-2">Status Breakdown</h3>
         <ResponsiveContainer width={380} height={500}>
           <BarChart
@@ -84,9 +85,10 @@ const OrderStats = ({ data }: { data: TOrderStats }) => {
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <div className="hidden md:flex flex-col items-start">
+      {/* top meals by delivery */}
+      <div className="hidden lg:flex flex-col items-start text-xs">
         <h3 className="font-semibold">Top Meals by delivery</h3>
-        <ResponsiveContainer width={500} height={500}>
+        <ResponsiveContainer width={700} height={500}>
           <BarChart
             data={topOrders}
             margin={{ top: 20, right: 20, left: -20, bottom: 20 }}
@@ -99,7 +101,7 @@ const OrderStats = ({ data }: { data: TOrderStats }) => {
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <div className="md:hidden flex flex-col items-center">
+      <div className="lg:hidden flex flex-col items-center text-xs">
         <h3 className="font-semibold">Top Meals by delivery</h3>
         <ResponsiveContainer width={380} height={500}>
           <BarChart

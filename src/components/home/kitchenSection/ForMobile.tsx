@@ -23,7 +23,7 @@ const ForMobile = ({
           onClick={() => setValue("service")}
           className={`${
             value === "service" ? " bg-secondary text-primary " : "text-white"
-          }  w-full border border-primary text-lg font-medium py-2 cursor-pointer rounded-xl `}
+          }  w-full border border-primary text-lg font-medium py-2 cursor-pointer rounded-xl hover:bg-secondary hover:text-primary duration-500`}
         >
           Our Service
         </button>
@@ -34,7 +34,7 @@ const ForMobile = ({
               height={1000}
               width={1000}
               alt="customer-image"
-              className="w-[60vw] md:w-[13vw] h-[28vh]  "
+              className="w-full "
             />
             <div className="space-y-3 text-white/70">
               <h2 className="text-xl ">Our Kitchen Services</h2>
@@ -56,7 +56,7 @@ const ForMobile = ({
           onClick={() => setValue("hygiene")}
           className={`${
             value === "hygiene" ? " bg-secondary text-primary " : "text-white"
-          }  w-full border border-primary text-lg font-medium py-2 cursor-pointer rounded-xl`}
+          }  w-full border border-primary text-lg font-medium py-2 cursor-pointer rounded-xl hover:bg-secondary hover:text-primary duration-500`}
         >
           Our Hygiene
         </button>
@@ -67,7 +67,7 @@ const ForMobile = ({
               height={1000}
               width={1000}
               alt="customer-image"
-              className="w-[60vw] md:w-[13vw] h-[28vh] "
+              className="w-full"
             />
             <div className="space-y-3 text-white">
               <h2 className="text-xl ">Hygiene & Quality Standards</h2>
@@ -89,7 +89,7 @@ const ForMobile = ({
           onClick={() => setValue("flavour")}
           className={`${
             value === "flavour" ? " bg-secondary text-primary " : "text-white"
-          }  w-full border border-primary text-lg font-medium py-2 cursor-pointer rounded-xl `}
+          }  w-full border border-primary text-lg font-medium py-2 cursor-pointer rounded-xl hover:bg-secondary hover:text-primary duration-500`}
         >
           Our Value
         </button>
@@ -100,7 +100,7 @@ const ForMobile = ({
               height={1000}
               width={1000}
               alt="customer-image"
-              className="w-[60vw] md:w-[13vw] h-[28vh] "
+              className="w-full"
             />
             <div className="space-y-3 text-white">
               <h2 className="text-xl ">Behind the Flavors</h2>

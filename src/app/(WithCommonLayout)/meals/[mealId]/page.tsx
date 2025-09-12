@@ -10,7 +10,7 @@ const MealInfo = async ({
   const { data } = await getASingleMeal(mealId?.mealId);
   const { isMealExists, feedbackResult } = data;
   return (
-    <div className=" w-full py-10 md:px-24 px-5">
+    <div className="w-full py-10 lg:px-16 px-5">
       <MealDetails mealInfo={isMealExists} feedback={feedbackResult} />
     </div>
   );

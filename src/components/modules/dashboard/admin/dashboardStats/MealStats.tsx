@@ -34,15 +34,32 @@ const MealStats = ({ data }: { data: TMealStats }) => {
     { name: "Korean", value: data?.cuisine?.KoreanMeal },
   ];
   const categoryBreakDown = [
-    { name: "Breakfast", value: data?.category?.breakFastMeal },
-    { name: "Lunch", value: data?.category?.lunchMeal },
-    { name: "Dinner", value: data?.category?.dinnerMeal },
-    { name: "Snack", value: data?.category?.snackMeal },
+    { name: "Breakfast", value: data?.category?.breakFast },
+    { name: "Lunch", value: data?.category?.lunch },
+    { name: "Dinner", value: data?.category?.dinner },
+    { name: "Snack", value: data?.category?.snack },
+    { name: "Brunch", value: data?.category?.brunch },
+    { name: "Supper", value: data?.category?.supper },
+    { name: "TeaTime", value: data?.category?.teaTime },
+    { name: "Midnight", value: data?.category?.midNight },
+    { name: "Appetizer", value: data?.category?.appetizer },
+    { name: "Dessert", value: data?.category?.dessert },
+    { name: "Beverage", value: data?.category?.breakFast },
+    { name: "SideDish", value: data?.category?.sideDish },
+    { name: "SeaFood", value: data?.category?.seaFood },
+    { name: "StreetFood", value: data?.category?.streetFood },
+    { name: "Healthy", value: data?.category?.healthyMeal },
   ];
   const preferenceBreakDown = [
-    { name: "Mixed", value: data?.preference?.mixedFood },
-    { name: "Veg", value: data?.preference?.vegFood },
-    { name: "Non-veg", value: data?.preference?.nonVegFood },
+    { name: "mixedFood", value: data?.preference?.mixedFood },
+    { name: "vegFood", value: data?.preference?.vegFood },
+    { name: "nonVeg", value: data?.preference?.nonVeg },
+    { name: "vegan", value: data?.preference?.vegan },
+    { name: "pescatarian", value: data?.preference?.pescatarian },
+    { name: "Eggetarian", value: data?.preference?.Eggetarian },
+    { name: "Halal", value: data?.preference?.Halal },
+    { name: "Kosher", value: data?.preference?.Kosher },
+    { name: "Jain", value: data?.preference?.Jain },
   ];
   const sizeBreakDown = [
     { name: "Small", value: data?.size?.smallSize },
@@ -69,9 +86,10 @@ const MealStats = ({ data }: { data: TMealStats }) => {
   }));
   return (
     <section className="space-y-10">
-      <div className="hidden md:flex flex-col md:items-start">
+      {/* cuisine breakdown */}
+      <div className="hidden lg:flex flex-col items-start text-xs">
         <h3 className="font-semibold mb-2">Cuisine Breakdown</h3>
-        <ResponsiveContainer width={1200} height={500}>
+        <ResponsiveContainer width={1000} height={500}>
           <BarChart
             data={cuisineBreakDown}
             margin={{ top: 20, right: 20, left: -20, bottom: 20 }}
@@ -84,7 +102,7 @@ const MealStats = ({ data }: { data: TMealStats }) => {
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <div className="md:hidden flex flex-col items-center md:items-start">
+      <div className="lg:hidden flex flex-col items-center text-xs">
         <h3 className="font-semibold md:mb-2">Cuisine Breakdown</h3>
         <ResponsiveContainer width={380} height={500}>
           <BarChart
@@ -99,55 +117,86 @@ const MealStats = ({ data }: { data: TMealStats }) => {
           </BarChart>
         </ResponsiveContainer>
       </div>
-
-      <div className="flex flex-col md:flex-row items-start md:items-center md:justify-between gap-10 md:gap-0">
-        <div className="flex flex-col items-center md:items-start">
-          <h3 className="font-semibold md:mb-2">Category Breakdown</h3>
-          <ResponsiveContainer width={350} height={500}>
-            <BarChart
-              data={categoryBreakDown}
-              margin={{ top: 20, right: 20, left: -20, bottom: 20 }}
-            >
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="value" fill="#8884d8" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-        <div className="flex flex-col items-center md:items-start">
-          <h3 className="font-semibold md:mb-2">Preference Breakdown</h3>
-          <ResponsiveContainer width={350} height={500}>
-            <BarChart
-              data={preferenceBreakDown}
-              margin={{ top: 20, right: 20, left: -10, bottom: 20 }}
-            >
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="value" fill="#8884d8" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-        <div className="flex flex-col items-center md:items-start">
-          <h3 className="font-semibold mb-2">Size Breakdown</h3>
-          <ResponsiveContainer width={350} height={500}>
-            <BarChart
-              data={sizeBreakDown}
-              margin={{ top: 20, right: 20, left: -10, bottom: 20 }}
-            >
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="value" fill="#8884d8" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+      {/* category breakdown */}
+      <div className="hidden lg:flex flex-col items-start text-xs">
+        <h3 className="font-semibold md:mb-2">Category Breakdown</h3>
+        <ResponsiveContainer width={1000} height={500}>
+          <BarChart
+            data={categoryBreakDown}
+            margin={{ top: 20, right: 20, left: -20, bottom: 20 }}
+          >
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="value" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
-      <div className="flex flex-col md:flex-row items-center justify-center gap-5 md:gap-30">
+      <div className="lg:hidden flex flex-col items-center text-xs">
+        <h3 className="font-semibold md:mb-2">Category Breakdown</h3>
+        <ResponsiveContainer width={380} height={500}>
+          <BarChart
+            data={categoryBreakDown}
+            margin={{ top: 20, right: 20, left: -20, bottom: 20 }}
+          >
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="value" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      {/* preference breakdown */}
+      <div className="hidden lg:flex flex-col items-start text-xs">
+        <h3 className="font-semibold md:mb-2">Preference Breakdown</h3>
+        <ResponsiveContainer width={1000} height={500}>
+          <BarChart
+            data={preferenceBreakDown}
+            margin={{ top: 20, right: 20, left: -10, bottom: 20 }}
+          >
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="value" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="lg:hidden flex flex-col items-center text-xs">
+        <h3 className="font-semibold md:mb-2">Preference Breakdown</h3>
+        <ResponsiveContainer width={1000} height={500}>
+          <BarChart
+            data={preferenceBreakDown}
+            margin={{ top: 20, right: 20, left: -10, bottom: 20 }}
+          >
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="value" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      {/* size breakdown */}
+      <div className="flex flex-col items-center md:items-start">
+        <h3 className="font-semibold mb-2">Size Breakdown</h3>
+        <ResponsiveContainer width={350} height={500}>
+          <BarChart
+            data={sizeBreakDown}
+            margin={{ top: 20, right: 20, left: -10, bottom: 20 }}
+          >
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="value" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div className="flex flex-col lg:flex-row items-center justify-center gap-5 lg:gap-20">
         <div className=" w-full flex flex-col items-center">
           <h3 className="font-semibold ">Price (Higest/Lowest)</h3>
           <ResponsiveContainer width="100%" height={300}>
@@ -195,6 +244,7 @@ const MealStats = ({ data }: { data: TMealStats }) => {
           </ResponsiveContainer>
         </div>
       </div>
+
       <div className="flex flex-col items-center md:items-start">
         <h3 className="font-semibold md:mb-2">New Meals (Last 4 Weeks)</h3>
         <ResponsiveContainer width={350} height={300}>

@@ -4,11 +4,12 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import coverImage from "../../app/assets/about us.png";
 import Link from "next/link";
+import { aboutUsConst } from "./aboutUs.const";
 
 const AboutUs = () => {
   return (
     <section className="bg-gradient-to-b from-indigo-50 to-purple-100 dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-gray-100">
-      <section className="relative h-[60vh] flex items-center justify-center text-center px-4">
+      <div className="relative h-[60vh] flex items-center justify-center text-center px-4">
         <Image
           src={coverImage}
           alt="About Us"
@@ -24,9 +25,9 @@ const AboutUs = () => {
             and exceptional service.
           </p>
         </div>
-      </section>
+      </div>
 
-      <section className="max-w-6xl mx-auto px-6 py-16 text-center space-y-8">
+      <div className="max-w-6xl mx-auto lg:px-16 px-5 py-16 text-center space-y-8">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -45,27 +46,11 @@ const AboutUs = () => {
           diverse, quality kitchens and unforgettable culinary moments — all in
           one place.
         </motion.p>
-      </section>
+      </div>
 
-      <section className="py-16 bg-white dark:bg-gray-900">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
-          {[
-            {
-              title: "Quality First",
-              desc: "We ensure top-tier standards in every kitchen and every bite.",
-              icon: "🥇",
-            },
-            {
-              title: "Diversity & Inclusion",
-              desc: "Celebrating culture through culinary variety from all backgrounds.",
-              icon: "🌍",
-            },
-            {
-              title: "Customer-Centric",
-              desc: "Our users are the heart of everything we do.",
-              icon: "💖",
-            },
-          ].map((value, index) => (
+      <div className="py-16 lg:px-16 px-5 bg-white dark:bg-gray-900">
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-10 text-center">
+          {aboutUsConst.map((value, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 40 }}
@@ -81,9 +66,9 @@ const AboutUs = () => {
             </motion.div>
           ))}
         </div>
-      </section>
+      </div>
 
-      <section className="py-20 bg-gradient-to-r from-secondary to-gray-400 text-center">
+      <div className="py-20 lg:px-16 px-5 bg-gradient-to-r from-secondary to-gray-400 text-center">
         <div className="max-w-2xl mx-auto space-y-6 px-4">
           <h2 className="text-3xl md:text-4xl font-bold">Join Our Journey</h2>
           <p className="text-lg">
@@ -97,7 +82,7 @@ const AboutUs = () => {
             Get Started
           </Link>
         </div>
-      </section>
+      </div>
     </section>
   );
 };

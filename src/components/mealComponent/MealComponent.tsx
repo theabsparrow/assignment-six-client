@@ -15,12 +15,12 @@ const MealComponent = ({
 }) => {
   const highestPrice = Math.max(...MealInfo.map((meal) => meal?.price));
   return (
-    <section className="flex flex-col md:flex-row gap-10">
+    <section className="flex flex-col lg:flex-row lg:justify-between gap-4 lg:gap-0">
       <div className="md:flex-1">
         <MealFiltering length={MealInfo?.length} highestPrice={highestPrice} />
       </div>
-      <div className="py-32 md:py-10">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="py-32 lg:py-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {MealInfo.map((item: TMealFormData) => (
             <MealCard key={item?._id} meal={item} />
           ))}

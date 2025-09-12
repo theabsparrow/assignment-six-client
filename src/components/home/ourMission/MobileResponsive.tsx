@@ -34,7 +34,7 @@ const MobileResponsive = ({
               height={1000}
               width={1000}
               alt="customer-image"
-              className="w-[60vw] md:w-[13vw] h-[28vh] border-8 border-white "
+              className="w-full "
             />
             <div className="space-y-3">
               <h2 className="text-xl ">Quality Ingredients</h2>
@@ -67,7 +67,7 @@ const MobileResponsive = ({
               height={1000}
               width={1000}
               alt="customer-image"
-              className="w-[60vw] md:w-[13vw] h-[28vh] border-8 border-white "
+              className="w-full"
             />
             <div className="space-y-3">
               <h2 className="text-xl ">Quality Ingredients</h2>
@@ -100,7 +100,7 @@ const MobileResponsive = ({
               height={1000}
               width={1000}
               alt="customer-image"
-              className="w-[60vw] md:w-[13vw] h-[28vh] border-8 border-white "
+              className="w-full "
             />
             <div className="space-y-3">
               <h2 className="text-xl ">Quality Ingredients</h2>

@@ -4,6 +4,7 @@ import TableDropDown from "@/components/tableDropdown/TableDropDown";
 import { deletePlan, updatePlan } from "@/services/mealPlannerService.ts";
 import { TMyMealPlanner } from "@/types/MealPlanType";
 import { TStatus } from "@/types/subscriber.types";
+import { convertDate } from "@/utills/dateConverter";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
@@ -12,25 +13,28 @@ import { toast } from "sonner";
 export const myPlanTableColumn = (): ColumnDef<TMyMealPlanner>[] => [
   { accessorKey: "title", header: "Title" },
   { accessorKey: "foodPreference", header: "Preference" },
-  { accessorKey: "preferredMealTime", header: "Meal Time" },
+  {
+    accessorKey: "preferredMealTime",
+    header: "Meal Time",
+    cell: ({ row }) => {
+      const mealTime = row.original?.preferredMealTime;
+      return (
+        <p className="grid grid-cols-2 gap-1">
+          {mealTime.map((time, i) => (
+            <span key={i}>{time}</span>
+          ))}
+        </p>
+      );
+    },
+  },
   {
     id: "createdAt",
     header: "Creation",
     cell: ({ row }) => {
-      const date = new Date(row.original?.createdAt);
-      const creatDate = date.toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      });
-      const createTime = date.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      });
+      const date = convertDate(new Date(row?.original?.createdAt as string));
       return (
-        <p>
-          {creatDate}, {createTime}
+        <p className="flex flex-col ">
+          <span>{date?.creationDate}</span> <span>{date?.creationTime}</span>
         </p>
       );
     },

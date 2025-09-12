@@ -2,9 +2,9 @@ import ContactUs from "@/components/ContactUs/ContactUs";
 
 const Contact = () => {
   return (
-    <div>
+    <section>
       <ContactUs />
-    </div>
+    </section>
   );
 };
 

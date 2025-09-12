@@ -10,7 +10,7 @@ const Kitchens = async ({ searchParams }: { searchParams: SearchParams }) => {
   const kitchenInfo = data?.result || [];
   const meta = data?.meta;
   return (
-    <div className="md:px-24 px-5 ">
+    <div className="lg:px-16 px-5">
       <KitchenComponent kitchenInfo={kitchenInfo} meta={meta} />
     </div>
   );

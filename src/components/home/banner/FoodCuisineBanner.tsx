@@ -11,8 +11,8 @@ const FoodCuisineBanner = () => {
       className="relative min-h-[400px] lg:min-h-[625px] bg-center bg-cover bg-no-repeat  px-5 md:px-20 py-5 md:py-10 overflow-hidden flex"
     >
       <div className="absolute inset-0 bg-black/70  z-10 " />
-      <div className="absolute z-20 w-[95%] lg:w-[90%] h-[80%] lg:h-[95%] bg-[#1c1c1c] top-[20%] lg:top-[2%] left-[3%] lg:left-[5%] bg-[url('/cuisine.webp')] bg-cover bg-center bg-no-repeat px-3 py-3 lg:px-10 lg:py-4 flex lg:justify-end rounded-lg">
-        <div className="space-y-2 lg:space-y-6 lg:w-[600px] lg:flex flex-col items-end">
+      <div className="absolute z-20 w-[95%] lg:w-[90%] h-[80%] lg:h-[95%] bg-[#1c1c1c] top-[10%] lg:top-[2%] left-[3%] lg:left-[5%] bg-[url('/cuisine.webp')] bg-cover bg-center bg-no-repeat px-3 py-3 lg:px-10 lg:py-4 flex lg:justify-end rounded-lg">
+        <div className="space-y-4 lg:space-y-6 lg:w-[600px] lg:flex flex-col items-end">
           <h2 className="ext-2xl lg:text-7xl text-white font-bold leading-tight font-playfair bg-gray-800/70 lg:bg-black/70 p-2 lg:p-3 rounded-lg text-right">
             Delicious Cuisines Around the World
           </h2>

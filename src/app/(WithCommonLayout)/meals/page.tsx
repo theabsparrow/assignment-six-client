@@ -7,7 +7,7 @@ const Meal = async ({ searchParams }: { searchParams: SearchParams }) => {
   const MealInfo = data?.result;
   const meta = data?.meta;
   return (
-    <div className="md:px-16 px-5">
+    <div className="lg:px-16 px-5">
       <MealComponent MealInfo={MealInfo} meta={meta} />
     </div>
   );

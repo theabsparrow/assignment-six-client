@@ -79,15 +79,32 @@ export type TMealStats = {
     KoreanMeal: number;
   };
   category: {
-    breakFastMeal: number;
-    lunchMeal: number;
-    dinnerMeal: number;
-    snackMeal: number;
+    breakFast: number;
+    lunch: number;
+    dinner: number;
+    snack: number;
+    brunch: number;
+    supper: number;
+    teaTime: number;
+    midNight: number;
+    appetizer: number;
+    dessert: number;
+    beverage: number;
+    sideDish: number;
+    seaFood: number;
+    streetFood: number;
+    healthyMeal: number;
   };
   preference: {
     mixedFood: number;
     vegFood: number;
-    nonVegFood: number;
+    nonVeg: number;
+    vegan: number;
+    pescatarian: number;
+    Eggetarian: number;
+    Halal: number;
+    Kosher: number;
+    Jain: number;
   };
   size: {
     smallSize: number;

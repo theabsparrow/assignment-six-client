@@ -40,13 +40,13 @@ const DashboardStats = ({
   const [showCharts, setShowCharts] = useState<TShowCharts>("user");
 
   return (
-    <section className="p-4 md:p-8 space-y-10 ">
-      <div className="hidden md:flex items-center gap-10">
+    <section className="p-4 space-y-10 ">
+      <div className="hidden lg:flex items-center gap-6">
         {statsButtonValues.map((value, index) => (
           <div
             key={index}
             onClick={() => setShowCharts(value.name)}
-            className={` p-4  rounded-xl cursor-pointer ${
+            className={` p-2 rounded-xl cursor-pointer ${
               showCharts === value.name
                 ? "bg-primary border border-secondary text-white "
                 : "bg-secondary border border-primary text-primary hover:bg-primary hover:border hover:border-secondary hover:text-white duration-500"

@@ -11,8 +11,8 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white/70 dark:border-gray-800 lg:px-16 px-4 py-10">
-      <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 mb-6">
+    <footer className="bg-gray-800 text-white/70 dark:border-gray-800 lg:px-16 px-4 py-10 border border-green-500">
+      <div className=" grid grid-cols-2 lg:grid-cols-4 gap-10 mb-6">
         {/* Brand */}
         <div>
           <h2 className="text-2xl font-bold text-orange-500">

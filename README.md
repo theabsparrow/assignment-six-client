@@ -23,6 +23,7 @@ Welcome to **Daily Dish**, a modern, responsive, and user-friendly Meal service 
 ## 🔗 Live Demo
 
 👉 [Live Website link](https://mealbx-client.vercel.app/)  
+👉 [Live Website link](https://assignment-six-server.onrender.com/)  
 👉 [Server Live Link](https://daily-dish-server-murex.vercel.app)
 👉 [Server GitHub Repository](https://github.com/theabsparrow/assignment-six-server.git)
 
@@ -86,6 +87,7 @@ git clone https://github.com/theabsparrow/assignment-six-client.git
 
    ```env
    NEXT_PUBLIC_BASE_API=http://localhost:5000/api/v1
+   NEXT_PUBLIC_SOCKET_API=http://localhost:5000
    NEXT_PUBLIC_IMGBB_API_URL= imgbb api
    NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY= google recpatcha client key
    NEXT_PUBLIC_RECAPTCHA_SERVER_KEY= google recaptcha server key

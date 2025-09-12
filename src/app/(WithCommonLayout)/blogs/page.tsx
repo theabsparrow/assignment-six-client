@@ -11,7 +11,7 @@ const Blogs = async ({ searchParams }: { searchParams: SearchParams }) => {
   const meta = blogData?.meta;
 
   return (
-    <section className="md:px-24 px-5">
+    <section className="lg:px-16 px-5">
       <BlogComponent role={user?.userRole} blogInfo={blogInfo} meta={meta} />
     </section>
   );

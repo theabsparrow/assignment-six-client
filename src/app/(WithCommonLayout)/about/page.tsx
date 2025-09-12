@@ -2,9 +2,9 @@ import AboutUs from "@/components/aboutUs/AboutUs";
 
 const About = () => {
   return (
-    <div>
+    <section>
       <AboutUs />
-    </div>
+    </section>
   );
 };
 

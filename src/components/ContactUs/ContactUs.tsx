@@ -66,12 +66,12 @@ const ContactUs = () => {
   };
 
   return (
-    <section className="bg-gradient-to-r from-gray-300 to-secondary py-6">
-      <div className="container mx-auto md:px-24 px-5 space-y-4">
+    <section className="bg-gradient-to-r from-gray-300 to-secondary py-6 lg:px-16 px-5">
+      <div className="container mx-auto space-y-4">
         <h2 className="text-center text-4xl font-extrabold">Contact Us</h2>
 
-        <div className="grid md:grid-cols-2 gap-12">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
+        <div className="flex flex-col lg:flex-row justify-between lg:gap-10">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full">
             <h3 className="text-2xl font-semibold text-gray-800 mb-4">
               Get In Touch
             </h3>
@@ -129,7 +129,7 @@ const ContactUs = () => {
             </form>
           </div>
 
-          <div className="space-y-8">
+          <div className="space-y-8 w-full">
             <h3 className="text-2xl font-semibold text-gray-800">
               Our Location
             </h3>

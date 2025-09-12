@@ -9,7 +9,7 @@ const MyKitchn = async () => {
   const user = data?.user;
   const { data: kitchenInfo } = await getMyKitchen();
   return (
-    <section className=" min-h-screen mx-auto">
+    <section className=" min-h-screen mx-auto py-10">
       {userdata?.hasKitchen ? (
         <KitchenProfile
           kitchenInfo={kitchenInfo}

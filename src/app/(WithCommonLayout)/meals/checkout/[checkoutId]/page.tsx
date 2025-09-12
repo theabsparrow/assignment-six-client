@@ -9,7 +9,7 @@ const CheckoutPage = async ({
   const { checkoutId } = await params;
   const { data } = await getCheckoutMeal(checkoutId);
   return (
-    <div className=" w-full py-10 md:px-24 px-5">
+    <div className="w-full py-10 lg:px-16 px-5">
       <CHeckoutMeal checkoutInfo={data} />
     </div>
   );

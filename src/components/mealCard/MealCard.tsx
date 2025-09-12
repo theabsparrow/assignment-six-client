@@ -20,7 +20,7 @@ const MealCard = ({ meal }: { meal: TMealFormData }) => {
         />
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-4 text-sm">
+      <div className="grid grid-cols-2 gap-4 text-sm">
         <div className="flex items-center gap-2 px-3 py-1 bg-secondary dark:bg-blue-800 text-primary dark:text-blue-100 rounded-full shadow-sm">
           <MdOutlineFastfood className="text-base" />
           <span className="font-medium capitalize">{meal?.cuisineType}</span>
