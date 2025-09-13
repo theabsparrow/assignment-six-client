@@ -114,6 +114,9 @@ export const logout = async () => {
   (await cookies()).delete("refreshToken");
   (await cookies()).delete("accessToken");
   (await cookies()).delete("refresh1Token");
+  (await cookies()).delete("edgestore-ctx");
+  (await cookies()).delete("edgestore-token");
+
   // (await cookies()).delete("refreshToken");
   // await fetch(`${config.next_public_base_api}/auth/logout`, {
   //   method: "POST",

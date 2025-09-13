@@ -2,9 +2,7 @@ import Sidebar from "@/components/modules/dashboard/sidebar/Sidebar";
 import { getCurrentUser } from "@/services/authService";
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
-  const data = await getCurrentUser();
-  const { userRole } = data || null;
-
+  const { userRole } = await getCurrentUser();
   return (
     <div className="md:flex md:bg-gray-200 dark:md:bg-gray-900">
       <Sidebar role={userRole} />

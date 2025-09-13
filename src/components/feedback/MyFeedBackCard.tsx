@@ -19,7 +19,7 @@ const MyFeedBackCard = ({ feedback }: { feedback: TMyRatingFeedback }) => {
 
       <div className="flex flex-col">
         <Link
-          href={`/mealProvider/customer/${feedback?.mealId?._id}`}
+          href={`/meals/${feedback?.mealId?._id}`}
           className="font-semibold text-primary dark:text-secondary hover:underline"
         >
           {feedback?.mealId?.title}

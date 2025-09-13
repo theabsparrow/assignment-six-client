@@ -65,7 +65,7 @@ const CreateMeal = ({ hasKitchen }: { hasKitchen: boolean }) => {
     <div className=" mx-auto p-6 bg-gray-200 dark:bg-gray-900 rounded-2xl shadow-xl text-gray-800 dark:text-white">
       {!hasKitchen ? (
         <div className="text-center">
-          <h2 className="text-3xl sm:text-4xl font-extrabold mb-4 text-blue-700 dark:text-blue-400">
+          <h2 className="text-3xl sm:text-4xl font-extrabold mb-4 text-primary dark:text-secondary">
             You Don`t Have a Kitchen Yet
           </h2>
           <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
@@ -73,7 +73,7 @@ const CreateMeal = ({ hasKitchen }: { hasKitchen: boolean }) => {
           </p>
           <Link
             href="/mealProvider/myKitchen"
-            className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full transition-all duration-300"
+            className="inline-block bg-secondary hover:bg-primary text-primary border border-primary hover:text-white font-semibold py-2 px-6 rounded-full transition-all duration-500"
           >
             Create Kitchen
           </Link>

@@ -1,14 +1,16 @@
+import { TMyProfileQUery } from "@/app/(WithCommonLayout)/layout";
 import CreateMeal from "@/components/modules/dashboard/mealProvider/createMeal/CreateMeal";
 import { getMyProfle } from "@/services/profileService";
 
 const AddMeal = async () => {
-  const { data } = await getMyProfle();
-  const userdata = data?.userdata;
-  const hasKitchen = userdata?.hasKitchen;
+  const query: Record<string, TMyProfileQUery | undefined> = {};
+  query.for = "kitchen";
+  const result = await getMyProfle(query);
+  const data = result?.data || null;
   return (
     <>
       <section className="min-h-screen mx-auto">
-        <CreateMeal hasKitchen={hasKitchen} />
+        <CreateMeal hasKitchen={data?.hasKitchen} />
       </section>
     </>
   );

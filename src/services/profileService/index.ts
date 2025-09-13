@@ -21,7 +21,7 @@ export const getMyProfle = async (query?: {
       params.append("for", query?.for.toString());
     }
     const res = await fetch(
-      `${config.next_public_base_api}/user/my-profile${params}`,
+      `${config.next_public_base_api}/user/my-profile?${params}`,
       {
         method: "GET",
         headers: {
