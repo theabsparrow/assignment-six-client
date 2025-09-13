@@ -3,6 +3,7 @@ import { TMealFormData } from "@/types/mealType";
 import MealCard from "@/components/mealCard/MealCard";
 import Link from "next/link";
 import { IoArrowForward } from "react-icons/io5";
+import LoadingCategory from "@/components/loadingComponent/LoadingCategory";
 
 const RecentMeals = async () => {
   const query: Record<string, string | string[] | number | undefined> = {};
@@ -29,12 +30,15 @@ const RecentMeals = async () => {
           backgroundImage: `url('https://i.ibb.co/Z6p0SvDf/recent-meal.webp')`,
         }}
       />
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {mealInfo.map((item: TMealFormData) => (
-          <MealCard key={item?._id} meal={item} />
-        ))}
-      </div>
+      {mealInfo?.length > 0 ? (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {mealInfo.map((item: TMealFormData) => (
+            <MealCard key={item?._id} meal={item} />
+          ))}
+        </div>
+      ) : (
+        <LoadingCategory />
+      )}
 
       <div className="flex justify-center items-center">
         <Link

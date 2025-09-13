@@ -8,7 +8,7 @@ import ProfileDropdown from "./ProfileDropDown";
 import Image from "next/image";
 import { useUser } from "@/context/UserContext";
 import { logout } from "@/services/authService";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import {
@@ -20,31 +20,23 @@ import {
 import Flag from "react-world-flags";
 import NotificationComponent from "./NotificationComponent";
 
-type TNavbarProps = {
-  name?: string;
+type TNavbar = {
+  user: string;
+  name: string;
   profileImage?: string;
-  id?: string | null;
 };
 
-const Navbar = ({ name, profileImage, id }: TNavbarProps) => {
+const Navbar = ({ user }: { user: TNavbar }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { setIsLoading } = useUser();
   const router = useRouter();
   const pathname = usePathname();
-  const [searchTerm, setSearchTerm] = useState("");
-  const searchParams = useSearchParams();
 
   const handleLogout = async () => {
     await logout();
     setIsOpen(false);
     setIsLoading(true);
     router.push("/login");
-  };
-
-  const handleSearch = () => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("searchTerm", searchTerm.toString());
-    router.push(`/meals?${params.toString()}`, { scroll: false });
   };
 
   return (
@@ -57,22 +49,6 @@ const Navbar = ({ name, profileImage, id }: TNavbarProps) => {
             <Flag code="BD" style={{ width: "24px", marginLeft: "8px" }} />
           </p>
         </div>
-        <div className="flex items-center">
-          <input
-            type="text"
-            placeholder="search for meals"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="outline-none border rounded-l-lg px-4 py-1 w-44"
-          />
-          <button
-            onClick={handleSearch}
-            disabled={searchTerm === ""}
-            className=" bg-secondary text-primary border border-primary rounded-r-lg px-2 py-1 font-bold cursor-pointer disabled:bg-green-200 disabled:cursor-not-allowed"
-          >
-            Search
-          </button>
-        </div>
         <div className="flex items-center gap-16">
           <div className="flex items-center gap-4 text-lg ">
             {icons.map((icon, i) => (
@@ -81,7 +57,7 @@ const Navbar = ({ name, profileImage, id }: TNavbarProps) => {
               </Link>
             ))}
           </div>
-          {!name && (
+          {!user && (
             <div className="flex items-center gap-4  ">
               <Link className="border-x border-gray-600 px-4" href="/login">
                 sign in
@@ -128,7 +104,7 @@ const Navbar = ({ name, profileImage, id }: TNavbarProps) => {
               );
             })}
 
-            {name && (
+            {user && (
               <Link
                 href="/kitchen"
                 className={` transition text-lg px-2 py-1 rounded-lg font-semibold  ${
@@ -144,15 +120,18 @@ const Navbar = ({ name, profileImage, id }: TNavbarProps) => {
 
           {/* dropdown */}
           <div className="hidden md:flex items-center gap-4">
-            {id && <NotificationComponent id={id} />}
-            <ProfileDropdown name={name} profileImage={profileImage} />
+            {user && <NotificationComponent id={user?.user} />}
+            <ProfileDropdown
+              name={user?.name}
+              profileImage={user?.profileImage}
+            />
             <DarkModeToggle />
           </div>
 
           {/* Mobile responsive */}
-          {id && (
+          {user && (
             <div className="md:hidden">
-              <NotificationComponent id={id} />
+              <NotificationComponent id={user?.user} />
             </div>
           )}
           <div className="md:hidden">
@@ -168,19 +147,29 @@ const Navbar = ({ name, profileImage, id }: TNavbarProps) => {
         {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden bg-gray-200 dark:bg-gray-900 py-2 absolute top-14 right-0 shadow-2xl  border-t-2 border-t-primary w-56 rounded-b-md z-20">
-            {name && (
+            {user && (
               <p className="flex items-center justify-between text-gray-700 dark:text-gray-200 p-2 border-b border-b-gray-400  transition  ">
                 <span className=" font-semibold text-primary dark:text-secondary">
-                  {name}
+                  {user?.name}
                 </span>
                 <Link href="/profile">
-                  <Image
-                    src={profileImage as string}
-                    alt="Profile"
-                    width={40}
-                    height={40}
-                    className="object-cover w-10 h-10 rounded-full overflow-hidden"
-                  />
+                  {user?.profileImage ? (
+                    <Image
+                      src={user?.profileImage as string}
+                      alt="Profile"
+                      width={40}
+                      height={40}
+                      className="object-cover w-10 h-10 rounded-full overflow-hidden"
+                    />
+                  ) : (
+                    <Image
+                      src="/profile-icon.png"
+                      alt="Profile"
+                      width={40}
+                      height={40}
+                      className="object-cover w-10 h-10 rounded-full overflow-hidden"
+                    />
+                  )}
                 </Link>
               </p>
             )}
@@ -195,7 +184,7 @@ const Navbar = ({ name, profileImage, id }: TNavbarProps) => {
                 <FaArrowRightLong />
               </Link>
             ))}
-            {name ? (
+            {user ? (
               <>
                 {navLinkForMobileForUser.map((link, i) => (
                   <Link

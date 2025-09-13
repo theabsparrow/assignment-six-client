@@ -13,12 +13,22 @@ import { FaTimes } from "react-icons/fa";
 import Link from "next/link";
 import DeleteAccount from "./DeleteAccount";
 
-const SettingsComponent = ({ user }: { user: TSettingsInfo }) => {
+type tSettings = {
+  user: {
+    _id: string;
+    email: string;
+    phone: string;
+    verifiedWithEmail: true;
+  };
+};
+
+const SettingsComponent = ({ userData }: { userData: tSettings }) => {
+  const { user } = userData;
   const [open, setOpen] = useState(false);
   const [isEditingEmail, setIsEditingEmail] = useState(false);
   const [isEditingPhone, setIsEditingPhone] = useState(false);
   const [isEditing, setIsEditing] = useState(true);
-
+  console.log(user);
   const {
     register,
     handleSubmit,

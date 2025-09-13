@@ -2,13 +2,11 @@ import ProfileCompnent from "@/components/modules/dashboard/profile/ProfileCompn
 import { getMyProfle } from "@/services/profileService";
 
 const Profile = async () => {
-  const { data } = await getMyProfle();
-  const user = data?.user;
-  const userdata = data?.userdata;
-
+  const result = await getMyProfle();
+  const data = result?.data || null;
   return (
     <section className="min-h-screen mx-auto py-10">
-      <ProfileCompnent user={user} userdata={userdata} />
+      <ProfileCompnent userdata={data} />
     </section>
   );
 };

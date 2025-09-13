@@ -10,24 +10,23 @@ export type TUSer = {
   userRole: TUSerRole;
 };
 
-export type TUserInfo = {
-  email: string;
-  phone: string;
-  password: string;
-  role: TUSerRole;
-  verifiedWithEmail: boolean;
-};
-
-export type TUserData = {
+export type TUserProfile = {
   name: string;
-  bio: string;
-  profileImage: string;
-  gender: TGender;
+  profileImage?: string;
   dateOfBirth: string;
+  gender: TGender;
   address: string;
-  hasKitchen: boolean;
-  experienceYears: number;
-  allergies: TAlergies[];
+  allergies?: TAlergies[];
+  bio?: string;
+  hasKitchen?: boolean;
+  experienceYears?: number;
+  user: {
+    _id: string;
+    email: string;
+    phone: string;
+    verifiedWithEmail: boolean;
+    role: TUSerRole;
+  };
 };
 
 export type TUpdatedUserData = {

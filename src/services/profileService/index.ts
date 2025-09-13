@@ -5,23 +5,31 @@ import { TSettingsInfo, TUpdatedUserData } from "@/types";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { getValidToken } from "../authService/validToken";
+import { TMyProfileQUery } from "@/app/(WithCommonLayout)/layout";
 
-export const getMyProfle = async () => {
+export const getMyProfle = async (query?: {
+  [key: string]: TMyProfileQUery | undefined;
+}) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("refreshToken")!.value;
   try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("refreshToken")?.value;
-    if (!token) {
-      throw new Error("you are not authorized");
+    const params = new URLSearchParams();
+
+    if (query?.for) {
+      params.append("for", query?.for.toString());
     }
-    const res = await fetch(`${config.next_public_base_api}/user/my-profile`, {
-      method: "GET",
-      headers: {
-        Authorization: token,
-      },
-      next: {
-        tags: ["Profile"],
-      },
-    });
+    const res = await fetch(
+      `${config.next_public_base_api}/user/my-profile?${params}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+        next: {
+          tags: ["Profile"],
+        },
+      }
+    );
     const result = await res.json();
     return result;
   } catch (error: any) {

@@ -8,7 +8,7 @@ import {
   FaExclamationTriangle,
 } from "react-icons/fa";
 import { GiCookingGlove } from "react-icons/gi";
-import { TUpdatedUserData, TUserData, TUserInfo } from "@/types";
+import { TUpdatedUserData, TUserProfile } from "@/types";
 import { useState } from "react";
 import { calculateAge } from "@/utills/calculateAge";
 import { USER_ROLE } from "@/constant";
@@ -27,13 +27,8 @@ import ImageSection from "./ImageSection";
 import EditArray from "../../editArrayComponent/EditArray";
 import Modal from "../../warningModal/Modal";
 
-const ProfileCompnent = ({
-  user,
-  userdata,
-}: {
-  user: TUserInfo;
-  userdata: Partial<TUserData>;
-}) => {
+const ProfileCompnent = ({ userdata }: { userdata: TUserProfile }) => {
+  const { user } = userdata;
   // name state
   const [isNameEditing, setIsEditingName] = useState(false);
   const [name, setName] = useState(userdata?.name ?? "");

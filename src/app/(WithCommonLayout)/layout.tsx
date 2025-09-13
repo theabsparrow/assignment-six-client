@@ -1,23 +1,17 @@
 import Footer from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
-import { getCurrentUser } from "@/services/authService";
 import { getMyProfle } from "@/services/profileService";
-import { Suspense } from "react";
+
+export type TMyProfileQUery = "navbar" | "profile" | "settings";
 
 const CommonLayout = async ({ children }: { children: React.ReactNode }) => {
-  const { data } = await getMyProfle();
-  const user = (await getCurrentUser()) || null;
-  const userId = user?.userId;
+  const query: Record<string, TMyProfileQUery | undefined> = {};
+  query.for = "navbar";
+  const result = await getMyProfle(query);
+  const data = result?.data || null;
   return (
     <div>
-      <Suspense fallback={<div>Loading navbar...</div>}>
-        <Navbar
-          name={data?.userdata?.name}
-          profileImage={data?.userdata?.profileImage}
-          id={userId}
-        />
-      </Suspense>
-
+      <Navbar user={data} />
       <main className="min-h-screen ">{children}</main>
       <Footer />
     </div>
