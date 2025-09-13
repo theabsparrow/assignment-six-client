@@ -8,7 +8,7 @@ const CommonLayout = async ({ children }: { children: React.ReactNode }) => {
   const query: Record<string, TMyProfileQUery | undefined> = {};
   query.for = "navbar";
   const result = await getMyProfle(query);
-  const data = result?.data || null;
+  const data = result?.data;
   return (
     <div>
       <Navbar user={data} />

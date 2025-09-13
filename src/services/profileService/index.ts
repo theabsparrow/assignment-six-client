@@ -10,16 +10,18 @@ import { TMyProfileQUery } from "@/app/(WithCommonLayout)/layout";
 export const getMyProfle = async (query?: {
   [key: string]: TMyProfileQUery | undefined;
 }) => {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("refreshToken")!.value;
   try {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("refreshToken")?.value;
+    if (!token) {
+      throw new Error("you are not authorized");
+    }
     const params = new URLSearchParams();
-
     if (query?.for) {
       params.append("for", query?.for.toString());
     }
     const res = await fetch(
-      `${config.next_public_base_api}/user/my-profile?${params}`,
+      `${config.next_public_base_api}/user/my-profile${params}`,
       {
         method: "GET",
         headers: {
