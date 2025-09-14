@@ -307,22 +307,38 @@ const OrderDetails = ({
           )}
         </div>
       </div>
-      {role === USER_ROLE.customer && order?.status === "Delivered" && (
+      {order?.status === "Delivered" && (
         <>
-          {order?.orderType === "once" && (
-            <GivingFeedbackComponent
-              id={order?._id}
-              review={review as TRating}
-              isReview={isReview}
-            />
-          )}
-          {order?.orderType === "regular" && (
-            <SearchingFeedback
-              id={order?._id}
-              review={review as TRating[]}
-              deliveryCount={order?.deliveredCount as number}
-              isReview={isReview}
-            />
+          {role === USER_ROLE.customer ? (
+            <>
+              {order?.orderType === "once" && (
+                <GivingFeedbackComponent
+                  id={order?._id}
+                  review={review as TRating}
+                  isReview={isReview}
+                />
+              )}
+              {order?.orderType === "regular" && (
+                <SearchingFeedback
+                  id={order?._id}
+                  review={review as TRating[]}
+                  deliveryCount={order?.deliveredCount as number}
+                  isReview={isReview}
+                  role={role}
+                />
+              )}
+            </>
+          ) : (
+            <>
+              {order?.orderType === "regular" && (
+                <SearchingFeedback
+                  id={order?._id}
+                  review={review as TRating[]}
+                  deliveryCount={order?.deliveredCount as number}
+                  isReview={isReview}
+                />
+              )}
+            </>
           )}
         </>
       )}
@@ -331,7 +347,7 @@ const OrderDetails = ({
           <h1 className="text-2xl font-bold text-gray-800 md:text-center">
             Feedback for this order
           </h1>
-          <FeedBackcard feedbackData={review as TRating} />
+          <FeedBackcard feedbackData={review as TRating} role={role} />
         </div>
       )}
       {order?.orderType === "regular" && (review as TRating[])?.length > 0 && (
@@ -341,7 +357,11 @@ const OrderDetails = ({
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
             {(review as TRating[]).map((item) => (
-              <FeedBackcard key={item?._id} feedbackData={item as TRating} />
+              <FeedBackcard
+                key={item?._id}
+                feedbackData={item as TRating}
+                role={role}
+              />
             ))}
           </div>
           <Pagination totalPage={meta?.totalPage as number} />

@@ -1,18 +1,24 @@
+import { USER_ROLE } from "@/constant";
+import { TUSerRole } from "@/types";
 import { TRating } from "@/types/rating.types";
 import { convertDate } from "@/utills/dateConverter";
 import { Star } from "lucide-react";
 import Image from "next/image";
+import FeedBackDropdown from "../statusDropdown/FeedBackDropdown";
+import DeleteFeedbackModal from "../statusDropdown/DeleteFeedbackModal";
+import Link from "next/link";
 
 type FeedbackCardProps = {
   feedbackData: TRating;
   classInfo?: string;
+  role?: TUSerRole;
 };
 
-const FeedBackcard = ({ feedbackData, classInfo }: FeedbackCardProps) => {
+const FeedBackcard = ({ feedbackData, classInfo, role }: FeedbackCardProps) => {
   const date = convertDate(new Date(feedbackData?.createdAt));
   return (
     <div
-      className={`w-full px-2 md:px-6 py-3 rounded-2xl shadow-lg border border-primary dark:border-gray-700 transition-colors duration-300 space-y-2 ${
+      className={`w-full px-2 md:px-6 py-3 rounded-2xl shadow-lg border border-primary dark:border-gray-700 transition-colors duration-300 space-y-2 relative group ${
         classInfo ? `${classInfo}` : "max-w-lg mx-auto"
       }`}
     >
@@ -37,9 +43,36 @@ const FeedBackcard = ({ feedbackData, classInfo }: FeedbackCardProps) => {
       )}
 
       <div>
-        <h3 className="font-semibold text-gray-900 dark:text-gray-100">
-          {feedbackData?.userId?.name}
-        </h3>
+        {role ? (
+          <>
+            {(role === USER_ROLE.admin || role === USER_ROLE.superAdmin) && (
+              <Link
+                href={`/admin/manageUsers/${feedbackData?.userId?._id}`}
+                className="text-primary dark:text-secondary font-semibold hover:font-bold duration-500"
+              >
+                {feedbackData?.userId?.name}
+              </Link>
+            )}
+            {role === USER_ROLE.mealProvider && (
+              <Link
+                href={`/mealProvider/customer/${feedbackData?.userId?._id}`}
+                className="text-primary dark:text-secondary font-semibold hover:font-bold duration-500"
+              >
+                {feedbackData?.userId?.name}
+              </Link>
+            )}
+            {role === USER_ROLE.customer && (
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+                {feedbackData?.userId?.name}
+              </h3>
+            )}
+          </>
+        ) : (
+          <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+            {feedbackData?.userId?.name}
+          </h3>
+        )}
+
         <p className=" text-gray-500 dark:text-gray-400 text-sm">
           {date?.creationDate}, {date?.creationTime}
         </p>
@@ -63,6 +96,19 @@ const FeedBackcard = ({ feedbackData, classInfo }: FeedbackCardProps) => {
       <p className="text-gray-700 dark:text-gray-300 text-sm">
         {feedbackData?.feedback}
       </p>
+      {role && (
+        <>
+          {role === USER_ROLE.customer ? (
+            <FeedBackDropdown
+              id={feedbackData?._id}
+              feedback={feedbackData?.feedback}
+              rating={feedbackData?.rating}
+            />
+          ) : (
+            <DeleteFeedbackModal id={feedbackData?._id} />
+          )}
+        </>
+      )}
     </div>
   );
 };

@@ -38,6 +38,7 @@ import { TMetaDataProps } from "@/types";
 import FeedBackcard from "@/components/feedback/FeedBackcard";
 import Pagination from "@/components/pagination/Pagination";
 import { convertDate } from "@/utills/dateConverter";
+import { USER_ROLE } from "@/constant";
 
 type TMymealProps = {
   data: TMyMealDetails;
@@ -431,7 +432,7 @@ const MyMealDetails = ({ data, feedback, meta }: TMymealProps) => {
                 />
               </div>
             </div>
-            <div className="flex flex-col md:flex-row justify-between">
+            <div className="space-y-2">
               <p className="text-lg font-bold text-gray-800 dark:text-gray-200">
                 Rating:{" "}
                 {data?.ratingCount && data.ratingCount > 0 ? (
@@ -554,7 +555,11 @@ const MyMealDetails = ({ data, feedback, meta }: TMymealProps) => {
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
             {(feedback as TRating[]).map((item) => (
-              <FeedBackcard key={item?._id} feedbackData={item as TRating} />
+              <FeedBackcard
+                key={item?._id}
+                feedbackData={item as TRating}
+                role={USER_ROLE.mealProvider}
+              />
             ))}
           </div>
           <Pagination totalPage={meta?.totalPage as number} />

@@ -1,4 +1,5 @@
 type TuserRating = {
+  _id: string;
   profileImage?: string;
   name: string;
 };

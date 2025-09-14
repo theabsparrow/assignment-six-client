@@ -3,11 +3,12 @@ import { convertDate } from "@/utills/dateConverter";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import FeedBackDropdown from "../statusDropdown/FeedBackDropdown";
 
 const MyFeedBackCard = ({ feedback }: { feedback: TMyRatingFeedback }) => {
   const date = convertDate(new Date(feedback?.createdAt));
   return (
-    <div className="max-w-lg mx-auto w-full px-2 md:px-6 py-3 rounded-2xl shadow-lg border border-primary dark:border-gray-700 transition-colors duration-300 space-y-1">
+    <div className="max-w-lg mx-auto w-full px-2 md:px-6 py-3 rounded-2xl shadow-lg border border-primary dark:border-gray-700 transition-colors duration-300 space-y-1 relative group">
       <div className="relative w-12 h-12 rounded-full overflow-hidden border border-gray-300 dark:border-gray-700">
         <Image
           src={feedback?.mealId?.imageUrl ?? "/profile-icon.png"}
@@ -53,6 +54,11 @@ const MyFeedBackCard = ({ feedback }: { feedback: TMyRatingFeedback }) => {
       <p className="text-gray-700 dark:text-gray-300 text-sm">
         {feedback?.feedback}
       </p>
+      <FeedBackDropdown
+        id={feedback?._id}
+        feedback={feedback?.feedback}
+        rating={feedback?.rating}
+      />
     </div>
   );
 };

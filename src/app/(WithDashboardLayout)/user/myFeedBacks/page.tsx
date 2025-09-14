@@ -8,8 +8,8 @@ const MyFeedbackPage = async ({
   searchParams: SearchParams;
 }) => {
   const query = await searchParams;
-  const { data } = await getMyAllFeedbacks(query);
-  const { meta, result, totalFeedback } = data;
+  const feedback = await getMyAllFeedbacks(query);
+  const { meta, result, totalFeedback } = feedback?.data;
   return (
     <section className=" w-full md:px-10">
       <MyFeedbackComponent

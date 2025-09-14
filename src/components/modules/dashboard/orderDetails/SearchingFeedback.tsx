@@ -4,18 +4,22 @@ import { useState } from "react";
 import GivingFeedbackComponent from "./GivingFeedbackComponent";
 import { TRating } from "@/types/rating.types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { TUSerRole } from "@/types";
+import { USER_ROLE } from "@/constant";
 
 type TSearchingComponent = {
   id: string;
   review: TRating[];
   deliveryCount: number;
   isReview: boolean;
+  role?: TUSerRole;
 };
 const SearchingFeedback = ({
   id,
   review,
   deliveryCount,
   isReview,
+  role,
 }: TSearchingComponent) => {
   const router = useRouter();
   const pathName = usePathname();
@@ -75,13 +79,15 @@ const SearchingFeedback = ({
           </select>
         </div>
       )}
-      <GivingFeedbackComponent
-        id={id}
-        review={review as TRating[]}
-        deliveryNumber={deliveryCount}
-        selectedDelivery={selectedDelivery as number}
-        isReview={isReview}
-      />
+      {role && role === USER_ROLE.customer && (
+        <GivingFeedbackComponent
+          id={id}
+          review={review as TRating[]}
+          deliveryNumber={deliveryCount}
+          selectedDelivery={selectedDelivery as number}
+          isReview={isReview}
+        />
+      )}
     </>
   );
 };

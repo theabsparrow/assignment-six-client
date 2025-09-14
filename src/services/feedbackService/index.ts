@@ -63,3 +63,53 @@ export const getMyAllFeedbacks = async (query?: {
     return Error(error);
   }
 };
+
+export const deleteMyFeedback = async (id: string) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${config.next_public_base_api}/rating/remove-rating/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    const result = await res.json();
+    revalidateTag("myOrder");
+    revalidateTag("Meals");
+    revalidateTag("Feedbacks");
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const updateMyFeedback = async (
+  id: string,
+  payload: Partial<FeedbackFormData>
+) => {
+  const token = await getValidToken();
+  try {
+    console.log(payload);
+    const res = await fetch(
+      `${config.next_public_base_api}/rating/update-feedback/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+    const result = await res.json();
+    revalidateTag("myOrder");
+    revalidateTag("Meals");
+    revalidateTag("Feedbacks");
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};

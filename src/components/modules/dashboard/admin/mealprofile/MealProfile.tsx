@@ -14,6 +14,7 @@ import { TMetaDataProps } from "@/types";
 import { convertDate } from "@/utills/dateConverter";
 import FeedBackcard from "@/components/feedback/FeedBackcard";
 import Pagination from "@/components/pagination/Pagination";
+import { USER_ROLE } from "@/constant";
 
 type TMymealProps = {
   data: TMealProfile;
@@ -250,7 +251,11 @@ const MealProfile = ({ data, feedback, meta }: TMymealProps) => {
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
             {(feedback as TRating[]).map((item) => (
-              <FeedBackcard key={item?._id} feedbackData={item as TRating} />
+              <FeedBackcard
+                key={item?._id}
+                feedbackData={item as TRating}
+                role={USER_ROLE.admin || USER_ROLE.superAdmin}
+              />
             ))}
           </div>
           <Pagination totalPage={meta?.totalPage as number} />
