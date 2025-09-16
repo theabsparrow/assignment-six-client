@@ -27,7 +27,7 @@ const RecentMeals = async () => {
       <div
         className="h-[20vw] md:h-[25vh] w-full  bg-cover bg-center shadow-md"
         style={{
-          backgroundImage: `url('https://i.ibb.co/Z6p0SvDf/recent-meal.webp')`,
+          backgroundImage: `url('/recent-meal.webp')`,
         }}
       />
       {mealInfo?.length > 0 ? (

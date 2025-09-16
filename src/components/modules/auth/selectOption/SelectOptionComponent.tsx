@@ -9,17 +9,17 @@ const SelectOptionComponent = ({
   setRegisteredRole: Dispatch<SetStateAction<string | null>>;
 }) => {
   return (
-    <div className="flex flex-col md:flex-row items-end md:items-center justify-between md:w-[30vw] rounded-2xl space-y-6 md:space-y-0 font-Inter">
+    <div className="flex flex-col md:flex-row items-end md:items-center justify-between rounded-2xl space-y-6 md:space-y-0 font-Inter">
       <button
         onClick={() => {
           localStorage.setItem("customerForm", "customer");
           setRegisteredRole("customer");
         }}
-        className="flex flex-col items-center justify-center gap-4 border border-primary dark:border-secondary rounded-xl p-1 md:p-2 hover:bg-blue-50 dark:hover:bg-green-800 transition shadow-sm hover:shadow-lg cursor-pointer bg-secondary dark:bg-primary "
+        className="flex flex-col items-center justify-center gap-1 border border-primary dark:border-secondary rounded-xl p-1 md:p-2 hover:bg-blue-50 dark:hover:bg-green-800 transition shadow-sm hover:shadow-lg cursor-pointer bg-secondary dark:bg-primary "
       >
         <User size={40} className="text-primary dark:text-secondary" />
         <span className="md:text-lg text-primary dark:text-secondary">
-          Register as Customer
+          Register as <br /> Customer
         </span>
       </button>
 
@@ -28,11 +28,11 @@ const SelectOptionComponent = ({
           localStorage.setItem("mealProviderForm", "mealProvider");
           setRegisteredRole("mealProvider");
         }}
-        className="flex flex-col items-center justify-center gap-4 border border-primary dark:border-secondary rounded-xl p-1 md:p-2 hover:bg-blue-50 dark:hover:bg-green-800 transition shadow-sm hover:shadow-lg cursor-pointer bg-secondary dark:bg-primary"
+        className="flex flex-col items-center justify-center gap-1 border border-primary dark:border-secondary rounded-xl p-1 md:p-2 hover:bg-blue-50 dark:hover:bg-green-800 transition shadow-sm hover:shadow-lg cursor-pointer bg-secondary dark:bg-primary"
       >
         <ChefHat size={40} className="text-primary dark:text-secondary" />
         <span className="md:text-lg text-primary dark:text-secondary">
-          Register as Meal Provider
+          Register as <br /> Provider
         </span>
       </button>
     </div>

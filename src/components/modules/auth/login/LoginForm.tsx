@@ -97,29 +97,26 @@ const LoginForm = () => {
   };
 
   return (
-    <div className=" w-[65vw] md:w-[25vw] rounded-2xl text-gray-800 dark:text-white space-y-5 md:space-y-6">
-      <h2 className="text-xl md:text-4xl font-bold text-primary dark:text-green-600 font-playfair">
-        Login you account
-      </h2>
+    <div className=" w-full lg:w-80 shadow-2xl space-y-5 bg-gray-200 dark:bg-gray-700 lg:space-y-6 px-4 py-2 rounded-xl">
       <div className="flex items gap-2 md:gap-4 font-inter">
         <button
           onClick={() => handleLoginAUto("admin")}
           type="button"
-          className="w-full bg-secondary hover:bg-white dark:bg-primary dark:border dark:border-secondary dark:text-secondary dark:hover:bg-green-700 duration-500 text-primary border border-primary md:font-semibold py-1 md:py-3 px-1 md:px-4 rounded-lg shadow-md transition cursor-pointer"
+          className="w-full bg-secondary hover:bg-white dark:bg-primary dark:border dark:border-secondary dark:text-secondary dark:hover:bg-green-700 duration-500 text-primary border border-primary md:font-semibold py-1 px-1 rounded-lg shadow-md transition cursor-pointer"
         >
           Admin
         </button>
         <button
           onClick={() => handleLoginAUto("customer")}
           type="button"
-          className="w-full bg-secondary hover:bg-white dark:bg-primary dark:border dark:border-secondary dark:text-secondary dark:hover:bg-green-700 duration-500 text-primary border border-primary md:font-semibold py-1 md:py-3 px-1 md:px-4 rounded-lg shadow-md transition cursor-pointer"
+          className="w-full bg-secondary hover:bg-white dark:bg-primary dark:border dark:border-secondary dark:text-secondary dark:hover:bg-green-700 duration-500 text-primary border border-primary md:font-semibold py-1 px-1 rounded-lg shadow-md transition cursor-pointer"
         >
           Customer
         </button>
         <button
           onClick={() => handleLoginAUto("mealProvider")}
           type="button"
-          className="w-full bg-secondary hover:bg-white dark:bg-primary dark:border dark:border-secondary dark:text-secondary dark:hover:bg-green-700 duration-500 text-primary border border-primary md:font-semibold py-1 md:py-3 px-1 md:px-4 rounded-lg shadow-md transition cursor-pointer"
+          className="w-full bg-secondary hover:bg-white dark:bg-primary dark:border dark:border-secondary dark:text-secondary dark:hover:bg-green-700 duration-500 text-primary border border-primary md:font-semibold py-1 px-1 rounded-lg shadow-md transition cursor-pointer"
         >
           Provider
         </button>
@@ -163,12 +160,9 @@ const LoginForm = () => {
         </button>
       </form>
 
-      <div className="flex gap-[2px] md:gap-2 items-center mt-2 font-Inter">
+      <div className="flex gap-2 items-center mt-2 font-Inter">
         <h1>New to this site? Please</h1>
-        <Link
-          className="text-secondary md:text-primary dark:text-green-600"
-          href="/register"
-        >
+        <Link className="text-primary dark:text-green-600" href="/register">
           {" "}
           Register
         </Link>

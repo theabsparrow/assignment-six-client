@@ -18,7 +18,7 @@ const MissionContent = () => {
   return (
     <section className="space-y-4 w-full">
       <div className="space-y-4">
-        <h1 className="text-2xl lg:text-4xl font-semibold">
+        <h1 className="text-2xl lg:text-4xl font-bold">
           Fresh Home Food Delivered At Your Door step
         </h1>
         <p className="text-lg">

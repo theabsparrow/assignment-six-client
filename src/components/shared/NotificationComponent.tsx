@@ -18,17 +18,25 @@ const NotificationComponent = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const [notifications, setNotifications] = useState<TNotification[]>([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const socketRef = useRef<Socket | null>(null);
+  const listRef = useRef<HTMLUListElement>(null);
   const router = useRouter();
+  const limit = 5;
 
   useEffect(() => {
-    if (!id) return;
     const fetchNotifications = async () => {
       try {
-        const data = await getMyNotifications();
+        const query = { page: 1, limit };
+        const data = await getMyNotifications(query);
         const myNotifications = data?.data || [];
-        setNotifications(myNotifications);
+        setNotifications((prev) =>
+          page === 1 ? myNotifications : [...prev, ...myNotifications]
+        );
+        setPage(1);
+        setHasMore(myNotifications.length === limit);
         const unread = myNotifications.filter(
           (n: TNotification) => !n.isRead
         ).length;
@@ -42,7 +50,6 @@ const NotificationComponent = ({ id }: { id: string }) => {
 
   useEffect(() => {
     if (!id) return;
-    if (socketRef.current) return;
     const socket: Socket = io(config.next_public_socket_api as string, {
       withCredentials: true,
     });
@@ -74,6 +81,53 @@ const NotificationComponent = ({ id }: { id: string }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (!open) return;
+    const handleScroll = async () => {
+      if (!listRef.current || loadingMore || !hasMore) return;
+      const { scrollTop, scrollHeight, clientHeight } = listRef.current;
+      if (scrollTop + clientHeight >= scrollHeight - 50) {
+        setLoadingMore(true);
+        try {
+          const nextPage = page + 1;
+          const query = { page: nextPage, limit };
+          const data = await getMyNotifications(query);
+          const newNotifications = data?.data || [];
+          if (newNotifications.length > 0) {
+            setNotifications((prev) => [...prev, ...newNotifications]);
+            setPage(nextPage);
+            setHasMore(newNotifications.length === limit);
+          } else {
+            setHasMore(false);
+          }
+        } catch (err) {
+          console.error("❌ Failed to load more:", err);
+        } finally {
+          setLoadingMore(false);
+        }
+      }
+    };
+    const list = listRef.current;
+    list?.addEventListener("scroll", handleScroll);
+    return () => list?.removeEventListener("scroll", handleScroll);
+  }, [open, page, loadingMore, hasMore]);
+
+  useEffect(() => {
+    if (!listRef.current) return;
+    const list = listRef.current;
+    const handleWheel = (e: WheelEvent) => {
+      const { scrollTop, scrollHeight, clientHeight } = list;
+      const atTop = scrollTop === 0;
+      const atBottom = scrollTop + clientHeight >= scrollHeight;
+
+      if ((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)) {
+        e.preventDefault();
+      }
+    };
+    list.addEventListener("wheel", handleWheel, { passive: false });
+    return () => list.removeEventListener("wheel", handleWheel);
+  }, [open]);
+
   const handleClickNotification = async (
     notificationId: string,
     link?: string
@@ -92,7 +146,7 @@ const NotificationComponent = ({ id }: { id: string }) => {
       console.log(error);
     }
   };
-
+  console.log(notifications);
   return (
     <section className="relative" ref={dropdownRef}>
       <button
@@ -114,8 +168,11 @@ const NotificationComponent = ({ id }: { id: string }) => {
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute top-14 -right-24 md:-right-64 w-80 md:w-96 bg-white dark:bg-gray-800 shadow-lg rounded-lg py-1 md:py-3 z-40">
-          <ul className="max-h-96 overflow-y-auto divide-y divide-gray-200 dark:divide-gray-700 ">
+        <div className="absolute top-14 -right-24 lg:-right-64 w-80 lg:w-96 bg-white dark:bg-gray-800 shadow-lg rounded-lg py-1 md:py-3 z-40 ">
+          <ul
+            ref={listRef}
+            className="max-h-72 overflow-y-auto divide-y divide-gray-200 dark:divide-gray-700"
+          >
             {notifications.length === 0 && (
               <li className="text-gray-500 text-sm p-4 text-center">
                 No notifications
@@ -132,7 +189,7 @@ const NotificationComponent = ({ id }: { id: string }) => {
                 : "bg-blue-50 dark:bg-gray-700 font-semibold hover:bg-blue-100 dark:hover:bg-gray-600"
             }`}
               >
-                <div className="hidden md:flex">
+                <div className="hidden lg:flex">
                   <NotificationDeleteModal
                     id={n?._id}
                     onDelete={(deletedId) => {
@@ -159,7 +216,7 @@ const NotificationComponent = ({ id }: { id: string }) => {
                   <span className="absolute top-4 left-2 h-2 w-2 bg-blue-500 rounded-full"></span>
                 )}
                 <span className="text-sm hidden md:block">{n?.content}</span>
-                <div className="text-sm md:hidden flex items-center gap-6">
+                <div className="text-sm lg:hidden flex items-center gap-6">
                   <p className="flex-grow">{n?.content}</p>{" "}
                   <div>
                     <NotificationDeleteModal
@@ -190,6 +247,9 @@ const NotificationComponent = ({ id }: { id: string }) => {
                 </span>
               </li>
             ))}
+            {loadingMore && (
+              <li className="text-center p-2 text-gray-500">Loading more...</li>
+            )}
           </ul>
         </div>
       )}

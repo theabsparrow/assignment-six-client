@@ -113,3 +113,30 @@ export const updateMyFeedback = async (
     return Error(error);
   }
 };
+
+export const getAllMealsOfAMeal = async (
+  id: string,
+  query?: {
+    [key: string]: string | string[] | number | undefined;
+  }
+) => {
+  try {
+    const params = new URLSearchParams();
+    if (query?.page) {
+      params.append("page", query?.page.toString());
+    }
+    const res = await fetch(
+      `${config.next_public_base_api}/rating/all-feedback/${id}?${params}`,
+      {
+        method: "GET",
+        next: {
+          tags: ["Feedbacks"],
+        },
+      }
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};

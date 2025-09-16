@@ -6,7 +6,6 @@ import SelectOptionComponent from "./SelectOptionComponent";
 import Link from "next/link";
 import { IoHomeOutline } from "react-icons/io5";
 import { IoIosLogIn } from "react-icons/io";
-import { FaArrowAltCircleLeft } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa6";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -78,36 +77,6 @@ const SelectOption = () => {
             <div className="absolute inset-0 bg-black/60  z-10 " />
             {registeredRole === "customer" && (
               <div className="space-y-4 ">
-                <div className="flex justify-between items-center font-inter">
-                  <Link
-                    onClick={() => {
-                      localStorage.removeItem("customerForm");
-                      localStorage.removeItem("mealProviderForm");
-                      localStorage.removeItem("otpExpiry");
-                      localStorage.removeItem("verifyOtpForm");
-                      setRegisteredRole("");
-                    }}
-                    href="/"
-                    className="cursor-pointer flex items-center gap-1 text-secondary font-Inter md:text-lg font-medium hover:underline duration-500"
-                  >
-                    <IoHomeOutline className="text-xl" /> Back to home
-                  </Link>
-                  <button
-                    onClick={() => {
-                      localStorage.removeItem("customerForm");
-                      localStorage.removeItem("mealProviderForm");
-                      localStorage.removeItem("otpExpiry");
-                      localStorage.removeItem("verifyOtpForm");
-                      setRegisteredRole("");
-                    }}
-                    className="cursor-pointer"
-                  >
-                    <FaArrowAltCircleLeft className="text-secondary text-xl" />
-                  </button>
-                </div>
-                <h2 className="text-2xl md:text-3xl font-bold text-primary font-playfair">
-                  Be a Customer
-                </h2>
                 <div
                   style={{ backgroundImage: `url(${customerActiveBg})` }}
                   className={`absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white dark:bg-gray-800 top-[5%] md:top-[5%] left-[2.5%] md:left-[10%] bg-cover bg-center bg-no-repeat p-3 md:px-10 md:py-4 flex justify-center md:justify-start overflow-hidden`}
@@ -152,36 +121,6 @@ const SelectOption = () => {
             )}
             {registeredRole === "mealProvider" && (
               <div className="space-y-4 ">
-                <div className="flex justify-between items-center font-inter">
-                  <Link
-                    onClick={() => {
-                      localStorage.removeItem("customerForm");
-                      localStorage.removeItem("mealProviderForm");
-                      localStorage.removeItem("otpExpiry");
-                      localStorage.removeItem("verifyOtpForm");
-                      setRegisteredRole("");
-                    }}
-                    href="/"
-                    className="cursor-pointer flex items-center gap-1 text-secondary font-Inter md:text-lg font-medium hover:underline duration-500"
-                  >
-                    <IoHomeOutline className="text-xl" /> Back to home
-                  </Link>
-                  <button
-                    onClick={() => {
-                      localStorage.removeItem("customerForm");
-                      localStorage.removeItem("mealProviderForm");
-                      localStorage.removeItem("otpExpiry");
-                      localStorage.removeItem("verifyOtpForm");
-                      setRegisteredRole("");
-                    }}
-                    className="cursor-pointer"
-                  >
-                    <FaArrowAltCircleLeft className="text-secondary text-xl" />
-                  </button>
-                </div>
-                <h2 className="text-2xl md:text-3xl font-bold text-primary font-playfair">
-                  Be a Meal Provider
-                </h2>
                 <div
                   style={{ backgroundImage: `url(${providerActiveBg})` }}
                   className={`absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white dark:bg-gray-800 top-[5%] md:top-[5%] right-[2.5%] md:left-[10%] bg-cover bg-center bg-no-repeat px-3 py-3 md:px-10 md:py-4 flex justify-end md:justify-end overflow-hidden`}
@@ -228,34 +167,16 @@ const SelectOption = () => {
             )}
           </>
         )}
+
         {!registeredRole && (
           <div
             style={{ backgroundImage: `url('/selection-banner.webp')` }}
-            className="relative h-screen  bg-center bg-cover bg-no-repeat  px-5 md:px-20 py-5 md:py-10 overflow-hidden flex"
+            className="relative h-screen bg-center bg-cover bg-no-repeat px-5 md:px-20 py-5 md:py-10 overflow-hidden flex"
           >
             <div className="absolute inset-0 bg-black/60  z-10 " />
-            <div className="space-y-4 md:space-y-10">
-              <div className="flex items-center justify-between">
-                <Link
-                  href="/"
-                  className="cursor-pointer flex items-center gap-1 text-secondary font-Inter md:text-lg font-medium hover:underline duration-500"
-                >
-                  <IoHomeOutline className="text-xl" /> Back to home
-                </Link>
-                <Link
-                  href="/login"
-                  className="cursor-pointer flex items-center gap-1 text-secondary font-Inter md:text-lg font-medium hover:underline duration-500"
-                >
-                  <IoIosLogIn className="text-xl" /> Back to Login
-                </Link>
-              </div>
-              <h2 className="text-2xl md:text-5xl font-bold text-primary font-playfair">
-                Register As
-              </h2>
-              <SelectOptionComponent setRegisteredRole={setRegisteredRole} />
-
+            <div className="space-y-4 lg:space-y-10 ">
               <div className="absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white dark:bg-gray-800 top-[4%] md:top-[5%] left-[3%] md:left-[10%] bg-[url('/selection-banner.webp')] bg-cover bg-center bg-no-repeat p-6 md:p-10 flex justify-end">
-                <div className="space-y-2 md:space-y-10">
+                <div className="space-y-2 lg:space-y-10 w-96">
                   <div className="flex items-center justify-between">
                     <Link
                       href="/"
@@ -274,7 +195,7 @@ const SelectOption = () => {
                       <span className="md:hidden flex"> login</span>
                     </Link>
                   </div>
-                  <h2 className="text-2xl md:text-5xl text-end font-bold text-primary font-playfair dark:text-green-600">
+                  <h2 className="text-2xl lg:text-5xl text-center font-bold text-primary font-playfair dark:text-green-600">
                     Register As
                   </h2>
                   <SelectOptionComponent

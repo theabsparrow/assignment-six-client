@@ -6,31 +6,31 @@ const Login = () => {
   return (
     <section className=" h-screen bg-[url('/login-banner.webp')] bg-cover bg-center bg-no-repeat bg-gray-200 dark:bg-gray-900 px-5 md:px-20 py-5 md:py-10 relative">
       <div className="absolute inset-0 bg-black/80  z-10 " />
-      <div>
-        <Link
-          href="/"
-          className="cursor-pointer flex items-center gap-1 text-secondary font-Inter md:text-lg font-medium hover:underline duration-500"
-        >
-          <FaHome /> Back to home
-        </Link>
-        <h2 className="text-2xl md:text-6xl font-bold my-6 text-primary font-playfair">
-          Welcome to Daily Dish
-        </h2>
-        <LoginForm />
-      </div>
-      <div className="absolute z-20 w-[95%] md:w-[80%] h-[90%] bg-white dark:bg-gray-800 top-[2%] md:top-[5%] left-[3%] md:left-[10%] bg-[url('/login-banner.webp')] bg-cover bg-center bg-no-repeat p-3 md:p-10">
-        <div>
+      <div className="hidden lg:flex absolute z-20 w-[95%] lg:w-[80%] h-[90%] bg-white dark:bg-gray-800 top-[2%] lg:top-[5%] left-[3%] lg:left-[11%] bg-[url('/login-banner1.webp')] bg-cover bg-center bg-no-repeat px-10 py-4">
+        <div className="space-y-4">
           <Link
             href="/"
             className="cursor-pointer flex items-center gap-1 text-primary dark:text-green-600 font-Inter md:text-lg font-medium hover:underline duration-500"
           >
             <FaHome /> Back to home
           </Link>
-          <h2 className="text-2xl md:text-5xl font-bold my-2 text-primary dark:text-green-600 font-playfair">
-            Welcome to Daily Dish
+          <h2 className="text-xl md:text-4xl font-bold text-primary dark:text-green-600 font-playfair">
+            Login you account
           </h2>
           <LoginForm />
         </div>
+      </div>
+      <div className="lg:hidden absolute z-20 space-y-4 bg-gray-200 dark:bg-gray-700 p-6 rounded-lg top-[15%] w-full left-[1%]">
+        <Link
+          href="/"
+          className="cursor-pointer flex items-center gap-1 text-primary dark:text-green-600 font-Inter md:text-lg font-medium hover:underline duration-500"
+        >
+          <FaHome /> Back to home
+        </Link>
+        <h2 className="text-xl md:text-4xl font-bold text-primary dark:text-green-600 font-playfair">
+          Login you account
+        </h2>
+        <LoginForm />
       </div>
     </section>
   );

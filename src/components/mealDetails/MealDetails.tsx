@@ -7,12 +7,21 @@ import Link from "next/link";
 import { MdOutlineSoupKitchen } from "react-icons/md";
 import FeedBackcard from "../feedback/FeedBackcard";
 import Marquee from "react-fast-marquee";
+import { TMetaDataProps } from "@/types";
+import ShowAllFeedback from "./ShowAllFeedback";
 
 type TMealDetailsProps = {
   mealInfo: TMealProfile;
   feedback: TRating[];
+  feedbackInfo: TRating[];
+  meta: TMetaDataProps;
 };
-const MealDetails = async ({ mealInfo, feedback }: TMealDetailsProps) => {
+const MealDetails = async ({
+  mealInfo,
+  feedback,
+  feedbackInfo,
+  meta,
+}: TMealDetailsProps) => {
   const user = (await getCurrentUser()) || null;
 
   return (
@@ -221,6 +230,11 @@ const MealDetails = async ({ mealInfo, feedback }: TMealDetailsProps) => {
               ))}
             </div>
           </Marquee>
+        </div>
+      )}
+      {(feedbackInfo as TRating[]) && feedbackInfo.length > 0 && (
+        <div className=" py-4 shadow-xl rounded-lg space-y-3 bg-gradient-to-br from-green-50 to-yellow-50 dark:bg-gray-600 overflow-hidden">
+          <ShowAllFeedback feedbacks={feedbackInfo} meta={meta} />
         </div>
       )}
     </>

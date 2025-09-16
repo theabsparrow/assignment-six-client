@@ -67,7 +67,7 @@ const NotificationDeleteModal = ({
   return (
     <section ref={dropdownRef}>
       <div
-        className="absolute right-6 top-3 opacity-0 group-hover:opacity-100 transition-opacity hidden md:flex"
+        className="absolute right-4 top-3 opacity-0 group-hover:opacity-100 transition-opacity hidden md:flex"
         onMouseEnter={(e) => e.stopPropagation()}
       >
         <button

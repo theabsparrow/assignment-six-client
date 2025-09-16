@@ -26,25 +26,3 @@ const OurMission = () => {
 };
 
 export default OurMission;
-
-{
-  /* <section className="w-full lg:px-16 px-4 flex flex-col lg:flex-row justify-between gap-4 lg:gap-0">
-  <div className="relative">
-    <Image
-      src="https://i.ibb.co/CKzRPSVm/nuddles-photo.webp"
-      height={1000}
-      width={1000}
-      alt="mission-image"
-      className="lg:w-[500px] lg:h-[600px]"
-    />
-    <Image
-      src="https://i.ibb.co/TqhXFhkV/customer-2.webp"
-      height={1000}
-      width={1000}
-      alt="customer-image"
-      className="lg:w-[200px] lg:h-[200px] border-8 border-white absolute bottom-20 -right-20 hidden md:flex"
-    />
-  </div>
-  <MissionContent />
-</section>; */
-}

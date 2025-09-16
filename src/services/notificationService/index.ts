@@ -5,12 +5,21 @@ import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { getValidToken } from "../authService/validToken";
 
-export const getMyNotifications = async () => {
+export const getMyNotifications = async (query?: {
+  [key: string]: number | undefined;
+}) => {
   const cookieStore = await cookies();
   const token = cookieStore.get("refreshToken")!.value;
   try {
+    const params = new URLSearchParams();
+    if (query?.page) {
+      params.append("page", query?.page.toString());
+    }
+    if (query?.limit) {
+      params.append("limit", query?.limit.toString());
+    }
     const res = await fetch(
-      `${config.next_public_base_api}/notification/my-notification`,
+      `${config.next_public_base_api}/notification/my-notification?${params}`,
       {
         method: "GET",
         headers: {
