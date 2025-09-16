@@ -146,7 +146,6 @@ const NotificationComponent = ({ id }: { id: string }) => {
       console.log(error);
     }
   };
-  console.log(notifications);
   return (
     <section className="relative" ref={dropdownRef}>
       <button

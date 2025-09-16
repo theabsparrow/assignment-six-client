@@ -92,7 +92,6 @@ export const updateMyFeedback = async (
 ) => {
   const token = await getValidToken();
   try {
-    console.log(payload);
     const res = await fetch(
       `${config.next_public_base_api}/rating/update-feedback/${id}`,
       {

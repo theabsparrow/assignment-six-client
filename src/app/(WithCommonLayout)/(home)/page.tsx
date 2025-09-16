@@ -10,6 +10,13 @@ import GetMostSearchedMeals from "@/components/home/mostSearchedMeals/GetMostSea
 import NewsLetter from "@/components/home/newsLetter/NewsLetter";
 import OurMission from "@/components/home/ourMission/OurMission";
 import RecentMeals from "@/components/home/RecentMeals.jsx/RecentMeals";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home - Daily Dish",
+  description:
+    "Discover delicious meals, explore categories, and order your favorites with Daily Dish.",
+};
 
 const HomePage = () => {
   return (

@@ -1,6 +1,26 @@
 import BlogDetailsComponent from "@/components/blog/BlogDetailsComponent";
 import { getASingleBlog } from "@/services/blogService";
 
+export const generateMetadata = async ({
+  params,
+}: {
+  params: Promise<{ blogId: string }>;
+}) => {
+  const blogId = await params;
+  const { data } = await getASingleBlog(blogId?.blogId);
+  if (!data) {
+    return {
+      title: "Blog not found - Daily Dish",
+      description: "Sorry, this blog could not be found.",
+    };
+  }
+
+  return {
+    title: `${data?.title} - Daily Dish`,
+    description: data?.excerpts || "Discover this blog on Daily Dish.",
+  };
+};
+
 const Blogdetails = async ({
   params,
 }: {

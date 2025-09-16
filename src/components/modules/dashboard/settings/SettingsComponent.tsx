@@ -28,7 +28,6 @@ const SettingsComponent = ({ userData }: { userData: tSettings }) => {
   const [isEditingEmail, setIsEditingEmail] = useState(false);
   const [isEditingPhone, setIsEditingPhone] = useState(false);
   const [isEditing, setIsEditing] = useState(true);
-  console.log(user);
   const {
     register,
     handleSubmit,

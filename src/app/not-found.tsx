@@ -1,6 +1,13 @@
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Not found - Daily Dish",
+  description:
+    "This is not found page. after any irrelevent route hitting you will be redirected to this page",
+};
 
 const NotFound = () => {
   return (

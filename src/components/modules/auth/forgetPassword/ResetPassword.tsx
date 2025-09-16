@@ -50,7 +50,7 @@ const ResetPassword = ({ userInfo }: { userInfo: Partial<TUSerWithEmail> }) => {
           />
         </div>
 
-        <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white text-center">
+        <h2 className="text-xl font-semibold text-gray-800 dark:text-white text-center">
           Hello, {userInfo?.userInfo?.name}
         </h2>
         {!open && (

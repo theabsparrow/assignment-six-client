@@ -1,8 +1,14 @@
 import KitchenComponent from "@/components/kitchen/KitchenComponent";
 import { getAllKitchen } from "@/services/kitchenService";
+import { Metadata } from "next";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
+export const metadata: Metadata = {
+  title: "Kitchens - Daily Dish",
+  description:
+    "Explore the kitchens of daily dish. find your prefer kitchen and know more about others kitchen also.",
+};
 const Kitchens = async ({ searchParams }: { searchParams: SearchParams }) => {
   const query = await searchParams;
   query.isActive = "true";

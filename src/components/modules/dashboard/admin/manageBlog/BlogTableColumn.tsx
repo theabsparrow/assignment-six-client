@@ -77,7 +77,6 @@ export const blogTableColumn = (): ColumnDef<TAllBlogListing>[] => [
         const data = {
           status: option,
         };
-        console.log(data);
         const toastId = toast.loading("updating status...");
         try {
           const result = await updateBlogStatus(id, data);

@@ -121,7 +121,7 @@ const ForgetPassOtpPage = ({ email }: { email: string }) => {
               onChange={(e) => handleChange(index, e.target.value)}
               onKeyDown={(e) => handleBackspace(index, e)}
               onPaste={handlePaste}
-              className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg text-xl sm:text-2xl font-bold text-center border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-secondary transition"
+              className="w-8 h-8 md:w-12 md:h-12 rounded-lg text-xl sm:text-2xl font-bold text-center border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-secondary transition"
             />
           ))}
         </div>

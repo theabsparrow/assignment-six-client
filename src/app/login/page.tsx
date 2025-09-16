@@ -1,7 +1,13 @@
 import LoginForm from "@/components/modules/auth/login/LoginForm";
+import { Metadata } from "next";
 import Link from "next/link";
 import { FaHome } from "react-icons/fa";
 
+export const metadata: Metadata = {
+  title: "Login - Daily Dish",
+  description:
+    "This is a loggin page. Access to your registered account with proper email and passowrd",
+};
 const Login = () => {
   return (
     <section className=" h-screen bg-[url('/login-banner.webp')] bg-cover bg-center bg-no-repeat bg-gray-200 dark:bg-gray-900 px-5 md:px-20 py-5 md:py-10 relative">
