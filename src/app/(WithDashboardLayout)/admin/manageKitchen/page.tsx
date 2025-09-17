@@ -1,8 +1,13 @@
 import GetAllKitchens from "@/components/modules/dashboard/admin/manageKitchen/GetAllKitchens";
 import { getAllKitchen } from "@/services/kitchenService";
+import { Metadata } from "next";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
-
+export const metadata: Metadata = {
+  title: "Kitchens - Daily Dish",
+  description:
+    "All the kitchens are here to be controlled through the admin. The kitchens are here with filter pagination searching.",
+};
 const ManageKitchenPage = async ({
   searchParams,
 }: {

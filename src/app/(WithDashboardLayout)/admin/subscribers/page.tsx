@@ -1,8 +1,13 @@
 import GetAllSubscribers from "@/components/modules/dashboard/admin/subscribers/GetAllSubscribers";
 import { getAllSubscribers } from "@/services/newsLetterService";
+import { Metadata } from "next";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
-
+export const metadata: Metadata = {
+  title: "Subscribers - Daily Dish",
+  description:
+    "This page is responsible for showing the users who subscribed dalydish. the subscribed users will notify user through email",
+};
 const SubscribersPage = async ({
   searchParams,
 }: {

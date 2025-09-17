@@ -7,6 +7,13 @@ import {
   getSubscriberStats,
   getUSerStats,
 } from "@/services/statsService";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dashboard - Daily Dish",
+  description:
+    "All the sites statistic is being shown here with the graph, pie chart. Here all the activity is monitored here.",
+};
 
 const DashboardStatistic = async () => {
   const { data } = await getUSerStats();

@@ -67,7 +67,7 @@ const Navbar = ({ user }: { user: TNavbar }) => {
           )}
         </div>
       </section>
-      <nav className="bg-gray-200 dark:bg-gray-900 shadow-xl sticky top-0 w-full z-50 transition duration-300 lg:px-16 px-4 py-3 font-inter border">
+      <nav className="bg-gray-200 dark:bg-gray-900 shadow-xl sticky top-0 w-full z-50 transition duration-300 lg:px-16 px-4 py-3 font-inter">
         <div className="flex justify-between items-center ">
           {/* Logo */}
           <div className="relative w-36 md:w-44 h-12">

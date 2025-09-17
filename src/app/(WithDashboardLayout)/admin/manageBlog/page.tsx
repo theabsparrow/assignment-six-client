@@ -1,7 +1,13 @@
 import GetAllBlogs from "@/components/modules/dashboard/admin/manageBlog/GetAllBlogs";
 import { getAllBlogsList } from "@/services/blogService";
+import { Metadata } from "next";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+export const metadata: Metadata = {
+  title: "Blogs - Daily Dish",
+  description:
+    "All the blogs created by the admin , customner or provider is here in one place together to be controlled by the admin",
+};
 const ManageBlogPage = async ({
   searchParams,
 }: {

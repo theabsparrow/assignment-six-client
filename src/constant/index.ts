@@ -55,11 +55,11 @@ export const mealProviderItems = [
   },
 ];
 export const customerItems = [
-  {
-    name: "Dashboard",
-    href: "/user/dashboard",
-    icon: "📊",
-  },
+  // {
+  //   name: "Dashboard",
+  //   href: "/user/dashboard",
+  //   icon: "📊",
+  // },
   {
     name: "Create Plan",
     href: "/user/createPlan",
