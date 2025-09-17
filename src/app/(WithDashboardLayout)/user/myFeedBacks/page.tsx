@@ -1,7 +1,13 @@
 import MyFeedbackComponent from "@/components/modules/dashboard/customer/myFeedback/MyFeedbackComponent";
 import { getMyAllFeedbacks } from "@/services/feedbackService";
+import { Metadata } from "next";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+export const metadata: Metadata = {
+  title: "My Feedbacks - Daily Dish",
+  description:
+    "The user`s feedback activity is gere . from where he can controlled the feedback edit and delete",
+};
 const MyFeedbackPage = async ({
   searchParams,
 }: {

@@ -1,7 +1,14 @@
 import { TMyProfileQUery } from "@/app/(WithCommonLayout)/layout";
 import CreateMyPlan from "@/components/modules/dashboard/customer/createPlan/CreateMyPlan";
 import { getMyProfle } from "@/services/profileService";
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Create Plan - Daily Dish",
+  description:
+    "This is a create plan page. A customer can cerate a meal plan for his meal order. by filling the requirment properly you can create a meal plan",
+};
 
 const CreatePlan = async () => {
   const query: Record<string, TMyProfileQUery | undefined> = {};

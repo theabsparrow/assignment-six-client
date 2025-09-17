@@ -21,6 +21,7 @@ import {
   weekDays,
 } from "../../mealProvider/createMeal/createMeal.const";
 import DeletionModal from "@/components/statusDropdown/DeletionModal";
+import { convertDate } from "@/utills/dateConverter";
 
 const PlanDetails = ({ data }: { data: TmealPlannerDetails }) => {
   const [isTitleEditing, setIsTitleEditing] = useState(false);
@@ -33,17 +34,7 @@ const PlanDetails = ({ data }: { data: TmealPlannerDetails }) => {
 
   const status = data?.isActive ? "active" : "blocked";
   const id = data?._id;
-  const date = new Date(data?.createdAt);
-  const creatDate = date.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-  const createTime = date.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
+  const date = convertDate(new Date(data?.createdAt));
 
   const handleSubmit = async (
     field: string,
@@ -220,7 +211,7 @@ const PlanDetails = ({ data }: { data: TmealPlannerDetails }) => {
           />
         </div>
         <p className=" text-gray-500">
-          Created on {creatDate}, {createTime}
+          Created on {date?.creationDate}, {date?.creationTime}
         </p>
         <div className="flex items-start justify-between mt-6">
           <div>

@@ -43,7 +43,7 @@ const CreateMyPlan = () => {
 
   return (
     <div className=" mx-auto p-6 bg-gray-200 dark:bg-gray-900 rounded-2xl shadow-xl text-gray-800 dark:text-white">
-      <h2 className="text-3xl font-bold mb-6 text-center text-blue-600 dark:text-blue-400">
+      <h2 className="text-3xl font-bold mb-6 text-center text-primary dark:text-secondary">
         Create a plan
       </h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
