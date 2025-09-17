@@ -3,7 +3,13 @@ import CreateKitchen from "@/components/modules/dashboard/mealProvider/createKtc
 import KitchenProfile from "@/components/modules/dashboard/mealProvider/kitchenProfile/KitchenProfile";
 import { getMyKitchen } from "@/services/kitchenService";
 import { getMyProfle } from "@/services/profileService";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "My Kitchen - Daily Dish",
+  description:
+    "This page is responsible for meal providers kitchen. From here he can controll his kitchen and edit every details if he wants",
+};
 const MyKitchn = async () => {
   const query: Record<string, TMyProfileQUery | undefined> = {};
   query.for = "kitchen";

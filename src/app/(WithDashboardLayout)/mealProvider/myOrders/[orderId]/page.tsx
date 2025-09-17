@@ -3,6 +3,29 @@ import { getCurrentUser } from "@/services/authService";
 import { getASingleOrder } from "@/services/orderService";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+export const generateMetadata = async ({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ orderId: string }>;
+  searchParams: SearchParams;
+}) => {
+  const { orderId } = await params;
+  const query = await searchParams;
+  const { data } = await getASingleOrder({ orderId, query });
+  const result = data?.isOrderExists;
+  if (!result) {
+    return {
+      title: "order not found - Daily Dish",
+      description: "Sorry, this blog could not be found.",
+    };
+  }
+  return {
+    title: `Order | ${result?.mealId?.title} - Daily Dish`,
+    description:
+      "This page is responsible for the details shown of a specific meal order which can be shown and controlled by the provider.",
+  };
+};
 const MealProviderOrderDetails = async ({
   params,
   searchParams,
