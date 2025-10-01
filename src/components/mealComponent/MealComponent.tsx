@@ -5,19 +5,29 @@ import { TMetaDataProps } from "@/types";
 import { TMealFormData } from "@/types/mealType";
 import MealFiltering from "./MealFiltering";
 import MealCard from "@/components/mealCard/MealCard";
-
+type TMealComponentProps = {
+  MealInfo: TMealFormData[];
+  meta: TMetaDataProps;
+  total: number;
+  minPrice: number;
+  maxPrice: number;
+};
 const MealComponent = ({
   MealInfo,
   meta,
-}: {
-  MealInfo: TMealFormData[];
-  meta: TMetaDataProps;
-}) => {
-  const highestPrice = Math.max(...MealInfo.map((meal) => meal?.price));
+  total,
+  minPrice,
+  maxPrice,
+}: TMealComponentProps) => {
   return (
     <section className="flex flex-col lg:flex-row lg:justify-between gap-4 lg:gap-0">
       <div className="md:flex-1">
-        <MealFiltering length={MealInfo?.length} highestPrice={highestPrice} />
+        <MealFiltering
+          length={MealInfo?.length}
+          total={total}
+          minPrice={minPrice}
+          maxPrice={maxPrice}
+        />
       </div>
       <div className="py-32 lg:py-4 flex-grow">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">

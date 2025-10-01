@@ -17,40 +17,31 @@ export type TQuery = {
   cuisineType?: string;
   foodPreference?: string;
 };
-
+type TFilterComponentProps = {
+  length: number;
+  total: number;
+  minPrice: number;
+  maxPrice: number;
+};
 const MealFiltering = ({
   length,
-  highestPrice,
-}: {
-  length: number;
-  highestPrice: number;
-}) => {
-  const [stableMax, setStableMax] = useState<number>(0);
+  total,
+  minPrice,
+  maxPrice,
+}: TFilterComponentProps) => {
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
-  const [priceRange, setPriceRange] = useState<[number, number]>([1, 1]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([
+    minPrice,
+    maxPrice,
+  ]);
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  useEffect(() => {
-    if (!highestPrice) return;
-    const currentMax = highestPrice + 10;
-
-    setStableMax((prevMax) => {
-      return currentMax > prevMax ? currentMax : prevMax;
-    });
-  }, [highestPrice]);
-
-  useEffect(() => {
-    if (stableMax) {
-      setPriceRange([1, stableMax]);
-    }
-  }, [stableMax]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -77,7 +68,10 @@ const MealFiltering = ({
 
   return (
     <>
-      <section className="hidden md:flex flex-col  bg-gray-50 rounded-md shadow-md w-2xs px-5 py-5 space-y-5 h-[calc(100vh-64px)] sticky top-[64px] z-10">
+      <section className="hidden md:flex flex-col bg-gray-50 dark:bg-gray-800 rounded-md shadow-md w-2xs px-5 py-5 space-y-4 h-[calc(100vh-64px)] sticky top-[64px] z-10">
+        <h1 className="text-xl text-primary font-bold dark:text-secondary">
+          Total meals: {total}
+        </h1>
         <div className="flex gap-3">
           <button
             onClick={handleStatus}
@@ -87,8 +81,8 @@ const MealFiltering = ({
           </button>
         </div>
         <div className="flex items-center justify-between">
-          <h1 className="text-xl text-primary font-bold">
-            Total meals: {length ? length : 0}
+          <h1 className="text-lg text-primary font-bold dark:text-secondary">
+            This Page: {length} Meals
           </h1>
           <button
             onClick={() => router.push(`${pathName}`)}
@@ -116,7 +110,7 @@ const MealFiltering = ({
             name="foodCategory"
             onChange={handleChange}
             value={searchParams.get("foodCategory") || ""}
-            className="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+            className="w-full border border-gray-300 px-3 py-2 dark:bg-gray-800 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
           >
             <option value="">All</option>
             {foodCategory.map((cat) => (
@@ -133,7 +127,7 @@ const MealFiltering = ({
             name="cuisineType"
             onChange={handleChange}
             value={searchParams.get("cuisineType") || ""}
-            className="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+            className="w-full border border-gray-300 px-3 py-2 dark:bg-gray-800 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
           >
             <option value="">All</option>
             {cuisineType.map((type) => (
@@ -152,7 +146,7 @@ const MealFiltering = ({
             name="foodPreference"
             onChange={handleChange}
             value={searchParams.get("foodPreference") || ""}
-            className="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+            className="w-full border border-gray-300 px-3 py-2 dark:bg-gray-800 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
           >
             <option value="">All</option>
             {foodPreferance.map((pref) => (
@@ -165,19 +159,19 @@ const MealFiltering = ({
         <div>
           <label className="block text-sm font-medium mb-3">Price range</label>
           <div className="flex items-center mb-3 md:gap-3">
-            <p className="font-bold text-black flex items-center">
+            <p className="font-bold text-black dark:text-gray-100 flex items-center">
               <TbCurrencyTaka className="text-xl" />{" "}
               {priceRange[0].toLocaleString()}
             </p>{" "}
             <p>TO</p>{" "}
-            <p className="font-bold text-black flex items-center">
+            <p className="font-bold text-black dark:text-gray-100 flex items-center">
               <TbCurrencyTaka className="text-xl" />{" "}
               {priceRange[1].toLocaleString()}
             </p>
           </div>
           <RangeSlider
-            min={1}
-            max={stableMax}
+            min={minPrice}
+            max={maxPrice}
             step={1}
             value={priceRange}
             onInput={(value) => {
@@ -189,16 +183,21 @@ const MealFiltering = ({
         </div>
       </section>
 
-      <section className="md:hidden bg-gray-50 rounded-md shadow-md w-full px-5 py-5 space-y-2 max-h-[calc(100vh-64px)] fixed top-[64px] right-0 z-10 mb-10">
-        <button
-          onClick={handleStatus}
-          className={`flex items-center gap-2 px-4 py-1 rounded-md transition font-medium shadow-sm border cursor-pointer bg-secondary text-primary border-primary`}
-        >
-          See Unavailable Meals
-        </button>
+      <section className="md:hidden bg-gray-50 dark:bg-gray-800  rounded-md shadow-md w-full px-5 py-5 space-y-2 max-h-[calc(100vh-64px)] fixed top-[64px] right-0 z-10 mb-10">
+        <div className="flex justify-between items-center">
+          <button
+            onClick={handleStatus}
+            className={`flex items-center gap-2 px-4 py-1 rounded-md transition font-medium shadow-sm border cursor-pointer bg-secondary text-primary border-primary`}
+          >
+            Unavailable Meals
+          </button>
+          <h1 className="text-xl text-primary dark:text-secondary font-bold">
+            Total meals: {total}
+          </h1>
+        </div>
         <div className="flex items-center justify-between">
-          <h1 className="text-xl text-primary font-bold">
-            Total meals: {length ? length : 0}
+          <h1 className="text-xl text-primary dark:text-secondary font-bold">
+            In this page : {length ? length : 0}
           </h1>
           <button
             onClick={() => router.push(`${pathName}`)}
@@ -227,7 +226,7 @@ const MealFiltering = ({
               <select
                 name="foodCategory"
                 onChange={handleChange}
-                className="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                className="w-full border border-gray-300 px-3 py-2 dark:bg-gray-800 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
               >
                 <option value="">All</option>
                 {foodCategory.map((cat) => (
@@ -244,7 +243,7 @@ const MealFiltering = ({
               <select
                 name="cuisineType"
                 onChange={handleChange}
-                className="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                className="w-full border border-gray-300 px-3 py-2 dark:bg-gray-800 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
               >
                 <option value="">All</option>
                 {cuisineType.map((type) => (
@@ -261,7 +260,7 @@ const MealFiltering = ({
               <select
                 name="foodPreference"
                 onChange={handleChange}
-                className="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                className="w-full border border-gray-300 px-3 py-2 dark:bg-gray-800 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
               >
                 <option value="">All</option>
                 {foodPreferance.map((pref) => (
@@ -275,20 +274,20 @@ const MealFiltering = ({
               <label className="block text-sm font-medium mb-3">
                 Price range
               </label>
-              <div className="flex items-center mb-3 md:gap-3">
-                <p className="font-bold text-black flex items-center">
+              <div className="flex items-center mb-3 gap-2 md:gap-3">
+                <p className="font-bold text-black dark:text-gray-100 flex items-center">
                   <TbCurrencyTaka className="text-xl" />{" "}
                   {priceRange[0].toLocaleString()}
                 </p>{" "}
-                <p>TO</p>{" "}
-                <p className="font-bold text-black flex items-center">
+                <p>to</p>{" "}
+                <p className="font-bold text-black dark:text-gray-100 flex items-center">
                   <TbCurrencyTaka className="text-xl" />{" "}
                   {priceRange[1].toLocaleString()}
                 </p>
               </div>
               <RangeSlider
-                min={1}
-                max={stableMax}
+                min={minPrice}
+                max={maxPrice}
                 step={1}
                 value={priceRange}
                 onInput={(value) => {
