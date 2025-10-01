@@ -11,12 +11,17 @@ export const metadata: Metadata = {
 const MyMeals = async ({ searchParams }: { searchParams: SearchParams }) => {
   const query = await searchParams;
   const { data } = await getMyMeals(query);
-  const meta = data?.meta;
-  const result = data?.result;
+  const { meta, result, totalMeal, minPrice, maxPrice } = data || {};
 
   return (
     <div className=" w-full">
-      <MyMealsComponent meta={meta} result={result} />
+      <MyMealsComponent
+        meta={meta}
+        result={result}
+        total={totalMeal}
+        minPrice={minPrice}
+        maxPrice={maxPrice}
+      />
     </div>
   );
 };

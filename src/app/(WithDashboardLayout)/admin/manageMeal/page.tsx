@@ -15,12 +15,17 @@ const ManageMealPage = async ({
 }) => {
   const query = await searchParams;
   const { data } = await getAllMealList(query);
-  const meta = data?.meta;
-  const result = data?.result || [];
+  const { meta, result, totalMeal, maxPrice, minPrice } = data || {};
 
   return (
     <section className=" w-full">
-      <GetAllMeals meta={meta} result={result} />
+      <GetAllMeals
+        meta={meta}
+        result={result}
+        total={totalMeal}
+        maxPrice={maxPrice}
+        minPrice={minPrice}
+      />
     </section>
   );
 };

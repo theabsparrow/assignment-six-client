@@ -2,7 +2,7 @@
 import RangeSlider from "react-range-slider-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { foodPreferance } from "../modules/dashboard/mealProvider/kitchenProfile/kitchen.const";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "react-range-slider-input/dist/style.css";
 import { TbCurrencyTaka } from "react-icons/tb";
 import { IoIosArrowDown } from "react-icons/io";
@@ -37,11 +37,6 @@ const MealFiltering = ({
     maxPrice,
   ]);
   const [open, setOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -207,7 +202,7 @@ const MealFiltering = ({
           </button>
         </div>
 
-        {mounted && open && (
+        {open && (
           <div className="space-y-5">
             <div>
               <label className="block text-sm font-medium mb-1">Search</label>

@@ -11,7 +11,7 @@ import {
   TPortionSize,
 } from "@/types/mealType";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { mealsTableColumn } from "./MealsTableColumn";
 import { TbCurrencyTaka } from "react-icons/tb";
 import ReactRangeSliderInput from "react-range-slider-input";
@@ -22,18 +22,20 @@ import {
   foodCategory,
   foodPreferenceOptions,
 } from "../../mealProvider/createMeal/createMeal.const";
-
+type TGetAllMealsProps = {
+  meta: TMetaDataProps;
+  result: TMealListing[];
+  total: number;
+  maxPrice: number;
+  minPrice: number;
+};
 const GetAllMeals = ({
   meta,
   result,
-}: {
-  meta: TMetaDataProps;
-  result: TMealListing[];
-}) => {
-  const prices = result
-    .map((meal: TMealListing) => meal?.price)
-    .filter(Boolean);
-  const highestPrice = prices.length ? Math.max(...prices) : 1;
+  total,
+  maxPrice,
+  minPrice,
+}: TGetAllMealsProps) => {
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
@@ -43,24 +45,12 @@ const GetAllMeals = ({
   const [preference, setPreference] = useState<TFoodPreference | string>("");
   const [portionSize, setPortionSize] = useState<TPortionSize | string>("");
   const [available, setAvailable] = useState<"Yes" | "No" | string>("");
-  const [priceRange, setPriceRange] = useState<[number, number]>([1, 1]);
-  const [stableMax, setStableMax] = useState<number>(0);
+  const [priceRange, setPriceRange] = useState<[number, number]>([
+    minPrice,
+    maxPrice,
+  ]);
   const [sort, setSort] = useState<"asc" | "desc" | string>("");
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    if (!highestPrice) return;
-    const currentMax = highestPrice + 10;
-    setStableMax((prevMax) => {
-      return currentMax > prevMax ? currentMax : prevMax;
-    });
-  }, [highestPrice]);
-
-  useEffect(() => {
-    if (stableMax) {
-      setPriceRange([1, stableMax]);
-    }
-  }, [stableMax]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -108,12 +98,20 @@ const GetAllMeals = ({
       )}
       <section className="container mx-auto md:px-4 font-inter space-y-10 md:space-y-6">
         <div className="flex flex-col rounded-xl bg-white shadow-md dark:bg-gray-900 dark:border-gray-700 py-2 px-4 md:px-4 md:py-4 space-y-2 md:space-y-4 sticky top-10 md:top-0 z-10">
-          <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 font-medium md:mt-1">
-            Total Meals:{" "}
-            <span className="text-primary font-semibold">
-              {result?.length ?? 0}
-            </span>
-          </p>
+          <div className="flex justify-between items-center">
+            <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 font-medium md:mt-1">
+              Total Meals:{" "}
+              <span className="text-primary dark:text-secondary font-semibold">
+                {total}
+              </span>
+            </p>
+            <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 font-medium md:mt-1">
+              In this page:{" "}
+              <span className="text-primary dark:text-secondary font-semibold">
+                {result?.length ?? 0} meals
+              </span>
+            </p>
+          </div>
           {!open && (
             <div className="absolute left-44 top-11 flex md:hidden">
               <button
@@ -247,7 +245,7 @@ const GetAllMeals = ({
                   setPortionSize("");
                   setAvailable("");
                   setSort("");
-                  setPriceRange([1, stableMax]);
+                  setPriceRange([minPrice, maxPrice]);
                 }}
                 className="bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition cursor-pointer"
               >
@@ -262,15 +260,15 @@ const GetAllMeals = ({
                     <TbCurrencyTaka className="text-xl" />{" "}
                     {priceRange[0].toLocaleString()}
                   </p>{" "}
-                  <p>TO</p>{" "}
+                  <p>to</p>{" "}
                   <p className="font-bold flex items-center">
                     <TbCurrencyTaka className="text-xl" />{" "}
                     {priceRange[1].toLocaleString()}
                   </p>
                 </div>
                 <ReactRangeSliderInput
-                  min={1}
-                  max={stableMax}
+                  min={minPrice}
+                  max={maxPrice}
                   step={1}
                   value={priceRange}
                   onInput={(value) => {
@@ -444,20 +442,20 @@ const GetAllMeals = ({
               </div>
               <div className=" space-y-2">
                 <label className="block font-medium ">Price range</label>
-                <div className="flex items-center md:gap-2">
+                <div className="flex items-center gap-2">
                   <p className="font-bold text-black flex items-center">
                     <TbCurrencyTaka className="text-xl" />{" "}
                     {priceRange[0].toLocaleString()}
                   </p>{" "}
-                  <p>TO</p>{" "}
+                  <p>to</p>{" "}
                   <p className="font-bold text-black flex items-center">
                     <TbCurrencyTaka className="text-xl" />{" "}
                     {priceRange[1].toLocaleString()}
                   </p>
                 </div>
                 <ReactRangeSliderInput
-                  min={1}
-                  max={stableMax}
+                  min={minPrice}
+                  max={maxPrice}
                   step={1}
                   value={priceRange}
                   onInput={(value) => {
@@ -476,7 +474,7 @@ const GetAllMeals = ({
                   setPortionSize("");
                   setAvailable("");
                   setSort("");
-                  setPriceRange([1, stableMax]);
+                  setPriceRange([minPrice, maxPrice]);
                 }}
                 className="bg-[#00823e] hover:bg-green-800 dark:bg-blue-400 dark:hover:bg-blue-500 duration-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition cursor-pointer"
               >
